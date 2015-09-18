@@ -31,3 +31,6 @@ v0.1
 
 ## Contributors / beta testers
 * Henry
+* Oliver
+* Christina
+* Carmen
