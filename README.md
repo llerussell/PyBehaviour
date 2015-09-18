@@ -21,8 +21,10 @@ In development
 * GUI window needs to be better organised
 
 ## Features to add
-* Specific proportion of stimulus type
-* Specify cue cahnnels per stimulus
+* Specific proportion of stimulus types
+* Specify cue channels per stimulus
+* Auto transition
+* Adpatiation phase, no stimuli, all responses are rewarded 
 * ...
 
 ## Tested compatibility
