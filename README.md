@@ -9,7 +9,11 @@ In development
 
 ## Prerequisites
 * Python (3.4 recommended)
-  * PyQT5
+  * numpy
+  * matplotlib
+  * scipy
+  * seaborn
+  * PyQt5
 * Arduino (MEGA 2560 recommended)
   * [TaskScheduler](http://playground.arduino.cc/Code/TaskScheduler)
   * [ElapsedMillis](http://playground.arduino.cc/Code/ElapsedMillis)
