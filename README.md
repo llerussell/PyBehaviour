@@ -2,7 +2,7 @@
 Behavioural testing software, Python, arduino
 
 ## Disclaimer
-v0.1
+In development. Please acknowledge use.
 
 ## Screenshots
 ![Imgur](http://i.imgur.com/Fzr6LJq.png)
