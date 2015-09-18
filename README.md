@@ -3,7 +3,7 @@
 ## Description
 * Python
 * arduino
-* 
+
 ## Disclaimer
 Beta
 
@@ -12,7 +12,6 @@ Beta
 ## Prerequisites
 * PyQt5
 * ...
-* 
 
 ## Known issues
 * globals
