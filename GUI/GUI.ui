@@ -1,0 +1,2743 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>758</width>
+    <height>1000</height>
+   </rect>
+  </property>
+  <property name="font">
+   <font>
+    <pointsize>9</pointsize>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>pyBehaviour</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">font-size: 9pt;</string>
+  </property>
+  <property name="animated">
+   <bool>true</bool>
+  </property>
+  <property name="tabShape">
+   <enum>QTabWidget::Rounded</enum>
+  </property>
+  <property name="unifiedTitleAndToolBarOnMac">
+   <bool>false</bool>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout_8">
+    <item>
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="font">
+       <font>
+        <pointsize>9</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QTabWidget&gt;QWidget&gt;QWidget{background: white;}</string>
+      </property>
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="setupTab">
+       <attribute name="title">
+        <string>Setup</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_7">
+        <item>
+         <layout class="QVBoxLayout" name="setupTabVerticalLayout">
+          <item>
+           <layout class="QGridLayout" name="setupSessionArduinoLayout">
+            <item row="0" column="1">
+             <widget class="QGroupBox" name="arduino_GroupBox">
+              <property name="layoutDirection">
+               <enum>Qt::LeftToRight</enum>
+              </property>
+              <property name="title">
+               <string>Arduino</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+              </property>
+              <property name="flat">
+               <bool>false</bool>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayout_3" stretch="0,0,0">
+               <property name="spacing">
+                <number>-1</number>
+               </property>
+               <item>
+                <layout class="QGridLayout" name="gridLayout_5">
+                 <item row="0" column="1">
+                  <widget class="QComboBox" name="device_ComboBox">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="focusPolicy">
+                    <enum>Qt::StrongFocus</enum>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="1">
+                  <widget class="QComboBox" name="baudRate_ComboBox">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="focusPolicy">
+                    <enum>Qt::StrongFocus</enum>
+                   </property>
+                   <item>
+                    <property name="text">
+                     <string>115200</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                 <item row="1" column="0">
+                  <widget class="QLabel" name="baudRateLabel">
+                   <property name="text">
+                    <string>Baud rate</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="deviceLabel">
+                   <property name="text">
+                    <string>Device</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <widget class="QLabel" name="arduinoConnectedText_Label">
+                 <property name="styleSheet">
+                  <string notr="true">color:rgb(255, 0, 100)</string>
+                 </property>
+                 <property name="text">
+                  <string>Not connected</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <layout class="QGridLayout" name="gridLayout_6">
+                 <item row="0" column="1">
+                  <widget class="QSpinBox" name="testStimNum_SpinBox">
+                   <property name="minimum">
+                    <number>1</number>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="0">
+                  <widget class="QPushButton" name="testReward_Button">
+                   <property name="enabled">
+                    <bool>true</bool>
+                   </property>
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="focusPolicy">
+                    <enum>Qt::StrongFocus</enum>
+                   </property>
+                   <property name="text">
+                    <string>Test Reward</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="1">
+                  <widget class="QSpinBox" name="testRewardNum_SpinBox">
+                   <property name="minimum">
+                    <number>1</number>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="0">
+                  <widget class="QPushButton" name="testStim_Button">
+                   <property name="enabled">
+                    <bool>true</bool>
+                   </property>
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="focusPolicy">
+                    <enum>Qt::StrongFocus</enum>
+                   </property>
+                   <property name="text">
+                    <string>Test Stim</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item row="0" column="0">
+             <widget class="QGroupBox" name="session_GroupBox">
+              <property name="font">
+               <font>
+                <pointsize>9</pointsize>
+               </font>
+              </property>
+              <property name="title">
+               <string>Session</string>
+              </property>
+              <property name="flat">
+               <bool>false</bool>
+              </property>
+              <layout class="QHBoxLayout" name="horizontalLayout_13">
+               <item>
+                <layout class="QGridLayout" name="gridLayout_4">
+                 <item row="2" column="0">
+                  <widget class="QLabel" name="numberOfTrialsLabel">
+                   <property name="text">
+                    <string>Duration</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="0">
+                  <widget class="QLabel" name="weightLabel">
+                   <property name="text">
+                    <string>Weight</string>
+                   </property>
+                   <property name="textFormat">
+                    <enum>Qt::AutoText</enum>
+                   </property>
+                   <property name="scaledContents">
+                    <bool>false</bool>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                   </property>
+                   <property name="margin">
+                    <number>0</number>
+                   </property>
+                   <property name="indent">
+                    <number>-1</number>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="mouseIDLabel">
+                   <property name="text">
+                    <string>Subject ID</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="1">
+                  <widget class="QDoubleSpinBox" name="weight_SpinBox">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="singleStep">
+                    <double>0.100000000000000</double>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="1">
+                  <widget class="QLineEdit" name="subjectID_LineEdit">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="inputMask">
+                    <string/>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="1">
+                  <widget class="QComboBox" name="loadPreset_ComboBox">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="focusPolicy">
+                    <enum>Qt::StrongFocus</enum>
+                   </property>
+                   <item>
+                    <property name="text">
+                     <string>No configs found</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                 <item row="3" column="0">
+                  <widget class="QLabel" name="loadPresetLabel">
+                   <property name="text">
+                    <string>Load preset</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="1">
+                  <layout class="QGridLayout" name="gridLayout">
+                   <item row="0" column="0">
+                    <widget class="QSpinBox" name="sessionDuration_SpinBox">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="minimum">
+                      <number>1</number>
+                     </property>
+                     <property name="maximum">
+                      <number>1000</number>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="0" column="1">
+                    <widget class="QComboBox" name="sessionDurationMode_ComboBox">
+                     <item>
+                      <property name="text">
+                       <string>Trials</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Minutes</string>
+                      </property>
+                     </item>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QGroupBox" name="trial_GroupBox">
+            <property name="styleSheet">
+             <string notr="true">background-color: none;</string>
+            </property>
+            <property name="title">
+             <string>Advanced</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+            </property>
+            <property name="flat">
+             <bool>false</bool>
+            </property>
+            <property name="checkable">
+             <bool>false</bool>
+            </property>
+            <property name="checked">
+             <bool>false</bool>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_7">
+             <item>
+              <widget class="QScrollArea" name="scrollArea">
+               <property name="enabled">
+                <bool>true</bool>
+               </property>
+               <property name="font">
+                <font>
+                 <pointsize>9</pointsize>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QScrollArea&gt;QWidget&gt;QWidget {
+background-color: white;
+}
+
+QScrollArea&gt;QWidget&gt;QScrollBar {
+background-color: none;
+}</string>
+               </property>
+               <property name="verticalScrollBarPolicy">
+                <enum>Qt::ScrollBarAsNeeded</enum>
+               </property>
+               <property name="horizontalScrollBarPolicy">
+                <enum>Qt::ScrollBarAsNeeded</enum>
+               </property>
+               <property name="widgetResizable">
+                <bool>true</bool>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+               </property>
+               <widget class="QWidget" name="scrollAreaWidgetContents">
+                <property name="geometry">
+                 <rect>
+                  <x>0</x>
+                  <y>0</y>
+                  <width>639</width>
+                  <height>865</height>
+                 </rect>
+                </property>
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout">
+                 <item>
+                  <widget class="QGroupBox" name="groupBox_3">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="title">
+                    <string>Trial initiation</string>
+                   </property>
+                   <layout class="QHBoxLayout" name="horizontalLayout_18">
+                    <item>
+                     <layout class="QGridLayout" name="gridLayout_2">
+                      <item row="0" column="0">
+                       <layout class="QGridLayout" name="gridLayout_12">
+                        <item row="0" column="0">
+                         <widget class="QLabel" name="label_11">
+                          <property name="enabled">
+                           <bool>false</bool>
+                          </property>
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
+                          </property>
+                          <property name="minimumSize">
+                           <size>
+                            <width>100</width>
+                            <height>0</height>
+                           </size>
+                          </property>
+                          <property name="text">
+                           <string>Active initiation</string>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="0" column="1">
+                         <layout class="QHBoxLayout" name="horizontalLayout_23">
+                          <item>
+                           <widget class="QCheckBox" name="checkBox_3">
+                            <property name="enabled">
+                             <bool>false</bool>
+                            </property>
+                            <property name="text">
+                             <string/>
+                            </property>
+                           </widget>
+                          </item>
+                          <item>
+                           <widget class="QDoubleSpinBox" name="doubleSpinBox_2">
+                            <property name="enabled">
+                             <bool>false</bool>
+                            </property>
+                            <property name="sizePolicy">
+                             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                              <horstretch>0</horstretch>
+                              <verstretch>0</verstretch>
+                             </sizepolicy>
+                            </property>
+                            <property name="prefix">
+                             <string>Response: </string>
+                            </property>
+                            <property name="decimals">
+                             <number>0</number>
+                            </property>
+                           </widget>
+                          </item>
+                         </layout>
+                        </item>
+                        <item row="1" column="0">
+                         <widget class="QLabel" name="label_2">
+                          <property name="text">
+                           <string>Withold before stim</string>
+                          </property>
+                          <property name="alignment">
+                           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="1" column="1">
+                         <layout class="QHBoxLayout" name="horizontalLayout_10">
+                          <item>
+                           <widget class="QCheckBox" name="witholdBeforeStim_CheckBox">
+                            <property name="sizePolicy">
+                             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                              <horstretch>0</horstretch>
+                              <verstretch>0</verstretch>
+                             </sizepolicy>
+                            </property>
+                            <property name="focusPolicy">
+                             <enum>Qt::StrongFocus</enum>
+                            </property>
+                            <property name="text">
+                             <string/>
+                            </property>
+                           </widget>
+                          </item>
+                          <item>
+                           <widget class="QDoubleSpinBox" name="witholdBeforeStimMin_SpinBox">
+                            <property name="enabled">
+                             <bool>false</bool>
+                            </property>
+                            <property name="sizePolicy">
+                             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                              <horstretch>0</horstretch>
+                              <verstretch>0</verstretch>
+                             </sizepolicy>
+                            </property>
+                            <property name="focusPolicy">
+                             <enum>Qt::StrongFocus</enum>
+                            </property>
+                            <property name="prefix">
+                             <string>Min: </string>
+                            </property>
+                            <property name="suffix">
+                             <string> s</string>
+                            </property>
+                           </widget>
+                          </item>
+                          <item>
+                           <widget class="QDoubleSpinBox" name="witholdBeforeStimMax_SpinBox">
+                            <property name="enabled">
+                             <bool>false</bool>
+                            </property>
+                            <property name="sizePolicy">
+                             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                              <horstretch>0</horstretch>
+                              <verstretch>0</verstretch>
+                             </sizepolicy>
+                            </property>
+                            <property name="focusPolicy">
+                             <enum>Qt::StrongFocus</enum>
+                            </property>
+                            <property name="prefix">
+                             <string>Max: </string>
+                            </property>
+                            <property name="suffix">
+                             <string> s</string>
+                            </property>
+                           </widget>
+                          </item>
+                         </layout>
+                        </item>
+                       </layout>
+                      </item>
+                     </layout>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QGroupBox" name="groupBox_5">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="title">
+                    <string>Stimuli and responses</string>
+                   </property>
+                   <layout class="QHBoxLayout" name="horizontalLayout_22">
+                    <property name="topMargin">
+                     <number>12</number>
+                    </property>
+                    <item>
+                     <layout class="QGridLayout" name="gridLayout_3">
+                      <property name="spacing">
+                       <number>-1</number>
+                      </property>
+                      <item row="5" column="0">
+                       <widget class="QLabel" name="label_16">
+                        <property name="text">
+                         <string>Reward removal</string>
+                        </property>
+                        <property name="alignment">
+                         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="2" column="0">
+                       <widget class="QLabel" name="reportChannelsLabel">
+                        <property name="text">
+                         <string>Response channels</string>
+                        </property>
+                        <property name="alignment">
+                         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="16" column="1">
+                       <layout class="QHBoxLayout" name="horizontalLayout_4">
+                        <item>
+                         <widget class="QDoubleSpinBox" name="stimLength_SpinBox">
+                          <property name="focusPolicy">
+                           <enum>Qt::StrongFocus</enum>
+                          </property>
+                          <property name="suffix">
+                           <string> s</string>
+                          </property>
+                          <property name="singleStep">
+                           <double>0.500000000000000</double>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QCheckBox" name="respStopsStim_CheckBox">
+                          <property name="text">
+                           <string>Response stops stim</string>
+                          </property>
+                         </widget>
+                        </item>
+                       </layout>
+                      </item>
+                      <item row="21" column="1">
+                       <layout class="QHBoxLayout" name="horizontalLayout_5">
+                        <item>
+                         <widget class="QCheckBox" name="autoReward_CheckBox">
+                          <property name="focusPolicy">
+                           <enum>Qt::StrongFocus</enum>
+                          </property>
+                          <property name="text">
+                           <string/>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QDoubleSpinBox" name="autoRewardDelay_SpinBox">
+                          <property name="enabled">
+                           <bool>false</bool>
+                          </property>
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
+                          </property>
+                          <property name="focusPolicy">
+                           <enum>Qt::StrongFocus</enum>
+                          </property>
+                          <property name="prefix">
+                           <string>Delay: </string>
+                          </property>
+                          <property name="singleStep">
+                           <double>0.100000000000000</double>
+                          </property>
+                         </widget>
+                        </item>
+                       </layout>
+                      </item>
+                      <item row="19" column="0">
+                       <widget class="QLabel" name="label_14">
+                        <property name="text">
+                         <string>End of trial delay</string>
+                        </property>
+                        <property name="alignment">
+                         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="5" column="1">
+                       <layout class="QHBoxLayout" name="horizontalLayout_8">
+                        <item>
+                         <widget class="QCheckBox" name="rewardRemoval_checkBox">
+                          <property name="text">
+                           <string/>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QDoubleSpinBox" name="rewardRemovalDelay_SpinBox">
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
+                          </property>
+                          <property name="prefix">
+                           <string>After: </string>
+                          </property>
+                          <property name="suffix">
+                           <string> s</string>
+                          </property>
+                          <property name="decimals">
+                           <number>2</number>
+                          </property>
+                          <property name="singleStep">
+                           <double>0.100000000000000</double>
+                          </property>
+                         </widget>
+                        </item>
+                       </layout>
+                      </item>
+                      <item row="6" column="0">
+                       <widget class="QLabel" name="stimOrderLabel">
+                        <property name="text">
+                         <string>Stim order</string>
+                        </property>
+                        <property name="alignment">
+                         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="14" column="0">
+                       <widget class="QLabel" name="label_3">
+                        <property name="text">
+                         <string>Cue to stim delay</string>
+                        </property>
+                        <property name="alignment">
+                         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="14" column="1">
+                       <widget class="QDoubleSpinBox" name="cueToStimDelay_SpinBox">
+                        <property name="focusPolicy">
+                         <enum>Qt::StrongFocus</enum>
+                        </property>
+                        <property name="suffix">
+                         <string> s</string>
+                        </property>
+                        <property name="singleStep">
+                         <double>0.500000000000000</double>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="11" column="1">
+                       <layout class="QHBoxLayout" name="horizontalLayout_9">
+                        <item>
+                         <widget class="QCheckBox" name="cueTrial_CheckBox">
+                          <property name="focusPolicy">
+                           <enum>Qt::StrongFocus</enum>
+                          </property>
+                          <property name="text">
+                           <string>Trial</string>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QCheckBox" name="cueStim_CheckBox">
+                          <property name="focusPolicy">
+                           <enum>Qt::StrongFocus</enum>
+                          </property>
+                          <property name="text">
+                           <string>Stim</string>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QCheckBox" name="cueResponse_CheckBox">
+                          <property name="focusPolicy">
+                           <enum>Qt::StrongFocus</enum>
+                          </property>
+                          <property name="text">
+                           <string>Response</string>
+                          </property>
+                         </widget>
+                        </item>
+                       </layout>
+                      </item>
+                      <item row="2" column="1">
+                       <layout class="QHBoxLayout" name="horizontalLayout_2">
+                        <item>
+                         <widget class="QCheckBox" name="response1_CheckBox">
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
+                          </property>
+                          <property name="focusPolicy">
+                           <enum>Qt::StrongFocus</enum>
+                          </property>
+                          <property name="text">
+                           <string>1</string>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QCheckBox" name="response2_CheckBox">
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
+                          </property>
+                          <property name="focusPolicy">
+                           <enum>Qt::StrongFocus</enum>
+                          </property>
+                          <property name="text">
+                           <string>2</string>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QCheckBox" name="response3_CheckBox">
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
+                          </property>
+                          <property name="focusPolicy">
+                           <enum>Qt::StrongFocus</enum>
+                          </property>
+                          <property name="text">
+                           <string>3</string>
+                          </property>
+                         </widget>
+                        </item>
+                       </layout>
+                      </item>
+                      <item row="7" column="0">
+                       <widget class="QLabel" name="firstStimLabel">
+                        <property name="text">
+                         <string>First stim</string>
+                        </property>
+                        <property name="alignment">
+                         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="6" column="1">
+                       <layout class="QHBoxLayout" name="horizontalLayout_3">
+                        <item>
+                         <widget class="QComboBox" name="stimOrder_ComboBox">
+                          <property name="focusPolicy">
+                           <enum>Qt::StrongFocus</enum>
+                          </property>
+                          <item>
+                           <property name="text">
+                            <string>Random</string>
+                           </property>
+                          </item>
+                          <item>
+                           <property name="text">
+                            <string>Interleaved</string>
+                           </property>
+                          </item>
+                          <item>
+                           <property name="text">
+                            <string>Repeating</string>
+                           </property>
+                          </item>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QSpinBox" name="stimOrderGroupSize_SpinBox">
+                          <property name="suffix">
+                           <string/>
+                          </property>
+                          <property name="prefix">
+                           <string>Number repeats: </string>
+                          </property>
+                         </widget>
+                        </item>
+                       </layout>
+                      </item>
+                      <item row="22" column="0">
+                       <widget class="QLabel" name="label_15">
+                        <property name="text">
+                         <string>Auto reward transition</string>
+                        </property>
+                        <property name="alignment">
+                         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="21" column="0">
+                       <widget class="QLabel" name="label_7">
+                        <property name="text">
+                         <string>Auto reward</string>
+                        </property>
+                        <property name="alignment">
+                         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="19" column="1">
+                       <widget class="QDoubleSpinBox" name="endOfTrialDelay_SpinBox">
+                        <property name="suffix">
+                         <string> s</string>
+                        </property>
+                        <property name="singleStep">
+                         <double>0.500000000000000</double>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="17" column="1">
+                       <widget class="QDoubleSpinBox" name="postStimDelay_SpinBox">
+                        <property name="focusPolicy">
+                         <enum>Qt::StrongFocus</enum>
+                        </property>
+                        <property name="suffix">
+                         <string> s</string>
+                        </property>
+                        <property name="singleStep">
+                         <double>0.100000000000000</double>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="17" column="0">
+                       <widget class="QLabel" name="label_5">
+                        <property name="text">
+                         <string>Post stim delay</string>
+                        </property>
+                        <property name="alignment">
+                         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="16" column="0">
+                       <widget class="QLabel" name="label_4">
+                        <property name="text">
+                         <string>Stim length</string>
+                        </property>
+                        <property name="alignment">
+                         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="3" column="0">
+                       <widget class="QLabel" name="label_20">
+                        <property name="text">
+                         <string>Reward channels</string>
+                        </property>
+                        <property name="alignment">
+                         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="18" column="0">
+                       <widget class="QLabel" name="label_6">
+                        <property name="text">
+                         <string>Response window</string>
+                        </property>
+                        <property name="alignment">
+                         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="8" column="1">
+                       <layout class="QHBoxLayout" name="horizontalLayout_17">
+                        <item>
+                         <widget class="QCheckBox" name="repeatIfIncorrect_CheckBox">
+                          <property name="focusPolicy">
+                           <enum>Qt::StrongFocus</enum>
+                          </property>
+                          <property name="text">
+                           <string/>
+                          </property>
+                         </widget>
+                        </item>
+                       </layout>
+                      </item>
+                      <item row="7" column="1">
+                       <widget class="QComboBox" name="firstStim_ComboBox">
+                        <property name="mouseTracking">
+                         <bool>false</bool>
+                        </property>
+                        <property name="focusPolicy">
+                         <enum>Qt::StrongFocus</enum>
+                        </property>
+                        <item>
+                         <property name="text">
+                          <string>Random</string>
+                         </property>
+                        </item>
+                       </widget>
+                      </item>
+                      <item row="8" column="0">
+                       <widget class="QLabel" name="label_9">
+                        <property name="text">
+                         <string>Repeat if incorrect</string>
+                        </property>
+                        <property name="alignment">
+                         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="22" column="1">
+                       <layout class="QHBoxLayout" name="horizontalLayout_6">
+                        <item>
+                         <widget class="QCheckBox" name="checkBox">
+                          <property name="enabled">
+                           <bool>false</bool>
+                          </property>
+                          <property name="text">
+                           <string/>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QDoubleSpinBox" name="doubleSpinBox">
+                          <property name="enabled">
+                           <bool>false</bool>
+                          </property>
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
+                          </property>
+                          <property name="prefix">
+                           <string>By: </string>
+                          </property>
+                          <property name="suffix">
+                           <string> s</string>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QSpinBox" name="spinBox_2">
+                          <property name="enabled">
+                           <bool>false</bool>
+                          </property>
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
+                          </property>
+                          <property name="suffix">
+                           <string/>
+                          </property>
+                          <property name="prefix">
+                           <string>After: </string>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QComboBox" name="comboBox">
+                          <property name="enabled">
+                           <bool>false</bool>
+                          </property>
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
+                          </property>
+                          <item>
+                           <property name="text">
+                            <string>Performance</string>
+                           </property>
+                          </item>
+                          <item>
+                           <property name="text">
+                            <string>Trials</string>
+                           </property>
+                          </item>
+                          <item>
+                           <property name="text">
+                            <string>Correct trials</string>
+                           </property>
+                          </item>
+                          <item>
+                           <property name="text">
+                            <string>Minutes</string>
+                           </property>
+                          </item>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QSpinBox" name="spinBox">
+                          <property name="enabled">
+                           <bool>false</bool>
+                          </property>
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
+                          </property>
+                          <property name="suffix">
+                           <string> min</string>
+                          </property>
+                          <property name="prefix">
+                           <string>For: </string>
+                          </property>
+                         </widget>
+                        </item>
+                       </layout>
+                      </item>
+                      <item row="18" column="1">
+                       <widget class="QDoubleSpinBox" name="responseWindow_SpinBox">
+                        <property name="focusPolicy">
+                         <enum>Qt::StrongFocus</enum>
+                        </property>
+                        <property name="suffix">
+                         <string> s</string>
+                        </property>
+                        <property name="singleStep">
+                         <double>0.500000000000000</double>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="24" column="1">
+                       <widget class="Line" name="line_4">
+                        <property name="orientation">
+                         <enum>Qt::Horizontal</enum>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="25" column="0">
+                       <widget class="QLabel" name="label_8">
+                        <property name="text">
+                         <string>Punish</string>
+                        </property>
+                        <property name="alignment">
+                         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="9" column="0">
+                       <widget class="QLabel" name="label_10">
+                        <property name="text">
+                         <string>Auto transition config</string>
+                        </property>
+                        <property name="alignment">
+                         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="11" column="0">
+                       <widget class="QLabel" name="label">
+                        <property name="text">
+                         <string>Cues</string>
+                        </property>
+                        <property name="alignment">
+                         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="4" column="0">
+                       <layout class="QGridLayout" name="gridLayout_7">
+                        <item row="0" column="0">
+                         <widget class="QLabel" name="label_12">
+                          <property name="text">
+                           <string>Stim channels</string>
+                          </property>
+                          <property name="alignment">
+                           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="2" column="0">
+                         <widget class="QLabel" name="label_13">
+                          <property name="text">
+                           <string>Rewarded channel</string>
+                          </property>
+                          <property name="alignment">
+                           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="1" column="0">
+                         <widget class="QLabel" name="label_18">
+                          <property name="text">
+                           <string>Response required</string>
+                          </property>
+                          <property name="alignment">
+                           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                          </property>
+                         </widget>
+                        </item>
+                       </layout>
+                      </item>
+                      <item row="26" column="1">
+                       <widget class="Line" name="line_2">
+                        <property name="orientation">
+                         <enum>Qt::Horizontal</enum>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="10" column="1">
+                       <widget class="Line" name="line">
+                        <property name="orientation">
+                         <enum>Qt::Horizontal</enum>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="25" column="1">
+                       <layout class="QHBoxLayout" name="horizontalLayout_12">
+                        <item>
+                         <widget class="QCheckBox" name="punish_CheckBox">
+                          <property name="focusPolicy">
+                           <enum>Qt::StrongFocus</enum>
+                          </property>
+                          <property name="text">
+                           <string/>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QComboBox" name="punishType_ComboBox">
+                          <property name="enabled">
+                           <bool>false</bool>
+                          </property>
+                          <property name="focusPolicy">
+                           <enum>Qt::StrongFocus</enum>
+                          </property>
+                          <item>
+                           <property name="text">
+                            <string>Delay</string>
+                           </property>
+                          </item>
+                          <item>
+                           <property name="text">
+                            <string>Trigger</string>
+                           </property>
+                          </item>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QDoubleSpinBox" name="punishLength_SpinBox">
+                          <property name="enabled">
+                           <bool>false</bool>
+                          </property>
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
+                          </property>
+                          <property name="focusPolicy">
+                           <enum>Qt::StrongFocus</enum>
+                          </property>
+                          <property name="prefix">
+                           <string>Length: </string>
+                          </property>
+                          <property name="suffix">
+                           <string> s</string>
+                          </property>
+                          <property name="singleStep">
+                           <double>0.500000000000000</double>
+                          </property>
+                         </widget>
+                        </item>
+                       </layout>
+                      </item>
+                      <item row="3" column="1">
+                       <layout class="QHBoxLayout" name="horizontalLayout_16">
+                        <item>
+                         <widget class="QCheckBox" name="reward1_CheckBox">
+                          <property name="focusPolicy">
+                           <enum>Qt::StrongFocus</enum>
+                          </property>
+                          <property name="text">
+                           <string>1</string>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QCheckBox" name="reward2_CheckBox">
+                          <property name="focusPolicy">
+                           <enum>Qt::StrongFocus</enum>
+                          </property>
+                          <property name="text">
+                           <string>2</string>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QCheckBox" name="checkBox_2">
+                          <property name="text">
+                           <string>3</string>
+                          </property>
+                         </widget>
+                        </item>
+                       </layout>
+                      </item>
+                      <item row="9" column="1">
+                       <layout class="QHBoxLayout" name="horizontalLayout_14">
+                        <item>
+                         <widget class="QCheckBox" name="autoTransition_CheckBox">
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
+                          </property>
+                          <property name="focusPolicy">
+                           <enum>Qt::StrongFocus</enum>
+                          </property>
+                          <property name="text">
+                           <string/>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QComboBox" name="autoTransitionTo_ComboBox">
+                          <property name="enabled">
+                           <bool>false</bool>
+                          </property>
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
+                          </property>
+                          <property name="focusPolicy">
+                           <enum>Qt::StrongFocus</enum>
+                          </property>
+                          <item>
+                           <property name="text">
+                            <string>Browse...</string>
+                           </property>
+                          </item>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QDoubleSpinBox" name="autoTransitionAfterNum_SpinBox">
+                          <property name="enabled">
+                           <bool>false</bool>
+                          </property>
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
+                          </property>
+                          <property name="focusPolicy">
+                           <enum>Qt::StrongFocus</enum>
+                          </property>
+                          <property name="prefix">
+                           <string>After: </string>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QComboBox" name="autoTransitionAfterCriteria_ComboBox">
+                          <property name="enabled">
+                           <bool>false</bool>
+                          </property>
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
+                          </property>
+                          <property name="focusPolicy">
+                           <enum>Qt::StrongFocus</enum>
+                          </property>
+                          <item>
+                           <property name="text">
+                            <string>Performance</string>
+                           </property>
+                          </item>
+                          <item>
+                           <property name="text">
+                            <string>Trials</string>
+                           </property>
+                          </item>
+                          <item>
+                           <property name="text">
+                            <string>Correct trials</string>
+                           </property>
+                          </item>
+                          <item>
+                           <property name="text">
+                            <string>Minutes</string>
+                           </property>
+                          </item>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QSpinBox" name="autoTransitionFor_SpinBox">
+                          <property name="enabled">
+                           <bool>false</bool>
+                          </property>
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
+                          </property>
+                          <property name="suffix">
+                           <string> min</string>
+                          </property>
+                          <property name="prefix">
+                           <string>For: </string>
+                          </property>
+                         </widget>
+                        </item>
+                       </layout>
+                      </item>
+                      <item row="4" column="1">
+                       <widget class="QWidget" name="widget" native="true">
+                        <layout class="QHBoxLayout" name="horizontalLayout">
+                         <property name="leftMargin">
+                          <number>0</number>
+                         </property>
+                         <property name="topMargin">
+                          <number>0</number>
+                         </property>
+                         <property name="rightMargin">
+                          <number>0</number>
+                         </property>
+                         <property name="bottomMargin">
+                          <number>0</number>
+                         </property>
+                         <item>
+                          <layout class="QGridLayout" name="gridLayout_10">
+                           <property name="leftMargin">
+                            <number>0</number>
+                           </property>
+                           <property name="topMargin">
+                            <number>0</number>
+                           </property>
+                           <property name="rightMargin">
+                            <number>0</number>
+                           </property>
+                           <property name="bottomMargin">
+                            <number>0</number>
+                           </property>
+                           <property name="spacing">
+                            <number>5</number>
+                           </property>
+                           <item row="2" column="7">
+                            <widget class="QSpinBox" name="respReq8_SpinBox">
+                             <property name="enabled">
+                              <bool>false</bool>
+                             </property>
+                             <property name="sizePolicy">
+                              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                               <horstretch>0</horstretch>
+                               <verstretch>0</verstretch>
+                              </sizepolicy>
+                             </property>
+                             <property name="font">
+                              <font>
+                               <pointsize>9</pointsize>
+                              </font>
+                             </property>
+                             <property name="toolTip">
+                              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;0: No response&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;1: Choice 1&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;2: Choice 2&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;3: Lick&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                             </property>
+                             <property name="alignment">
+                              <set>Qt::AlignCenter</set>
+                             </property>
+                             <property name="buttonSymbols">
+                              <enum>QAbstractSpinBox::NoButtons</enum>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="2" column="3">
+                            <widget class="QSpinBox" name="respReq4_SpinBox">
+                             <property name="enabled">
+                              <bool>false</bool>
+                             </property>
+                             <property name="sizePolicy">
+                              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                               <horstretch>0</horstretch>
+                               <verstretch>0</verstretch>
+                              </sizepolicy>
+                             </property>
+                             <property name="font">
+                              <font>
+                               <pointsize>9</pointsize>
+                              </font>
+                             </property>
+                             <property name="toolTip">
+                              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;0: No response&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;1: Choice 1&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;2: Choice 2&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;3: Lick&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                             </property>
+                             <property name="alignment">
+                              <set>Qt::AlignCenter</set>
+                             </property>
+                             <property name="buttonSymbols">
+                              <enum>QAbstractSpinBox::NoButtons</enum>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="2" column="4">
+                            <widget class="QSpinBox" name="respReq5_SpinBox">
+                             <property name="enabled">
+                              <bool>false</bool>
+                             </property>
+                             <property name="sizePolicy">
+                              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                               <horstretch>0</horstretch>
+                               <verstretch>0</verstretch>
+                              </sizepolicy>
+                             </property>
+                             <property name="font">
+                              <font>
+                               <pointsize>9</pointsize>
+                              </font>
+                             </property>
+                             <property name="toolTip">
+                              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;0: No response&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;1: Choice 1&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;2: Choice 2&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;3: Lick&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                             </property>
+                             <property name="alignment">
+                              <set>Qt::AlignCenter</set>
+                             </property>
+                             <property name="buttonSymbols">
+                              <enum>QAbstractSpinBox::NoButtons</enum>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="0" column="1">
+                            <widget class="QCheckBox" name="stim2_CheckBox">
+                             <property name="sizePolicy">
+                              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                               <horstretch>0</horstretch>
+                               <verstretch>0</verstretch>
+                              </sizepolicy>
+                             </property>
+                             <property name="focusPolicy">
+                              <enum>Qt::StrongFocus</enum>
+                             </property>
+                             <property name="text">
+                              <string>2</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="2" column="2">
+                            <widget class="QSpinBox" name="respReq3_SpinBox">
+                             <property name="enabled">
+                              <bool>false</bool>
+                             </property>
+                             <property name="sizePolicy">
+                              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                               <horstretch>0</horstretch>
+                               <verstretch>0</verstretch>
+                              </sizepolicy>
+                             </property>
+                             <property name="font">
+                              <font>
+                               <pointsize>9</pointsize>
+                              </font>
+                             </property>
+                             <property name="toolTip">
+                              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;0: No response&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;1: Choice 1&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;2: Choice 2&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;3: Lick&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                             </property>
+                             <property name="alignment">
+                              <set>Qt::AlignCenter</set>
+                             </property>
+                             <property name="buttonSymbols">
+                              <enum>QAbstractSpinBox::NoButtons</enum>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="0" column="7">
+                            <widget class="QCheckBox" name="stim8_CheckBox">
+                             <property name="enabled">
+                              <bool>true</bool>
+                             </property>
+                             <property name="sizePolicy">
+                              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                               <horstretch>0</horstretch>
+                               <verstretch>0</verstretch>
+                              </sizepolicy>
+                             </property>
+                             <property name="focusPolicy">
+                              <enum>Qt::StrongFocus</enum>
+                             </property>
+                             <property name="text">
+                              <string>8</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="0" column="2">
+                            <widget class="QCheckBox" name="stim3_CheckBox">
+                             <property name="sizePolicy">
+                              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                               <horstretch>0</horstretch>
+                               <verstretch>0</verstretch>
+                              </sizepolicy>
+                             </property>
+                             <property name="focusPolicy">
+                              <enum>Qt::StrongFocus</enum>
+                             </property>
+                             <property name="text">
+                              <string>3</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="0" column="5">
+                            <widget class="QCheckBox" name="stim6_CheckBox">
+                             <property name="sizePolicy">
+                              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                               <horstretch>0</horstretch>
+                               <verstretch>0</verstretch>
+                              </sizepolicy>
+                             </property>
+                             <property name="focusPolicy">
+                              <enum>Qt::StrongFocus</enum>
+                             </property>
+                             <property name="text">
+                              <string>6</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="0" column="0">
+                            <widget class="QCheckBox" name="stim1_CheckBox">
+                             <property name="sizePolicy">
+                              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                               <horstretch>0</horstretch>
+                               <verstretch>0</verstretch>
+                              </sizepolicy>
+                             </property>
+                             <property name="focusPolicy">
+                              <enum>Qt::StrongFocus</enum>
+                             </property>
+                             <property name="text">
+                              <string>1</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="0" column="3">
+                            <widget class="QCheckBox" name="stim4_CheckBox">
+                             <property name="sizePolicy">
+                              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                               <horstretch>0</horstretch>
+                               <verstretch>0</verstretch>
+                              </sizepolicy>
+                             </property>
+                             <property name="focusPolicy">
+                              <enum>Qt::StrongFocus</enum>
+                             </property>
+                             <property name="text">
+                              <string>4</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="2" column="1">
+                            <widget class="QSpinBox" name="respReq2_SpinBox">
+                             <property name="enabled">
+                              <bool>false</bool>
+                             </property>
+                             <property name="sizePolicy">
+                              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                               <horstretch>0</horstretch>
+                               <verstretch>0</verstretch>
+                              </sizepolicy>
+                             </property>
+                             <property name="font">
+                              <font>
+                               <pointsize>9</pointsize>
+                              </font>
+                             </property>
+                             <property name="toolTip">
+                              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;0: No response&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;1: Choice 1&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;2: Choice 2&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;3: Lick&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                             </property>
+                             <property name="alignment">
+                              <set>Qt::AlignCenter</set>
+                             </property>
+                             <property name="buttonSymbols">
+                              <enum>QAbstractSpinBox::NoButtons</enum>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="0" column="6">
+                            <widget class="QCheckBox" name="stim7_CheckBox">
+                             <property name="sizePolicy">
+                              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                               <horstretch>0</horstretch>
+                               <verstretch>0</verstretch>
+                              </sizepolicy>
+                             </property>
+                             <property name="focusPolicy">
+                              <enum>Qt::StrongFocus</enum>
+                             </property>
+                             <property name="text">
+                              <string>7</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="2" column="6">
+                            <widget class="QSpinBox" name="respReq7_SpinBox">
+                             <property name="enabled">
+                              <bool>false</bool>
+                             </property>
+                             <property name="sizePolicy">
+                              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                               <horstretch>0</horstretch>
+                               <verstretch>0</verstretch>
+                              </sizepolicy>
+                             </property>
+                             <property name="font">
+                              <font>
+                               <pointsize>9</pointsize>
+                              </font>
+                             </property>
+                             <property name="toolTip">
+                              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;0: No response&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;1: Choice 1&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;2: Choice 2&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;3: Lick&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                             </property>
+                             <property name="alignment">
+                              <set>Qt::AlignCenter</set>
+                             </property>
+                             <property name="buttonSymbols">
+                              <enum>QAbstractSpinBox::NoButtons</enum>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="0" column="4">
+                            <widget class="QCheckBox" name="stim5_CheckBox">
+                             <property name="sizePolicy">
+                              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                               <horstretch>0</horstretch>
+                               <verstretch>0</verstretch>
+                              </sizepolicy>
+                             </property>
+                             <property name="focusPolicy">
+                              <enum>Qt::StrongFocus</enum>
+                             </property>
+                             <property name="text">
+                              <string>5</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="2" column="5">
+                            <widget class="QSpinBox" name="respReq6_SpinBox">
+                             <property name="enabled">
+                              <bool>false</bool>
+                             </property>
+                             <property name="sizePolicy">
+                              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                               <horstretch>0</horstretch>
+                               <verstretch>0</verstretch>
+                              </sizepolicy>
+                             </property>
+                             <property name="font">
+                              <font>
+                               <pointsize>9</pointsize>
+                              </font>
+                             </property>
+                             <property name="toolTip">
+                              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;0: No response&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;1: Choice 1&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;2: Choice 2&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;3: Lick&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                             </property>
+                             <property name="alignment">
+                              <set>Qt::AlignCenter</set>
+                             </property>
+                             <property name="buttonSymbols">
+                              <enum>QAbstractSpinBox::NoButtons</enum>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="3" column="4">
+                            <widget class="QSpinBox" name="rewardedChan5_SpinBox">
+                             <property name="enabled">
+                              <bool>false</bool>
+                             </property>
+                             <property name="alignment">
+                              <set>Qt::AlignCenter</set>
+                             </property>
+                             <property name="buttonSymbols">
+                              <enum>QAbstractSpinBox::NoButtons</enum>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="2" column="0">
+                            <widget class="QSpinBox" name="respReq1_SpinBox">
+                             <property name="enabled">
+                              <bool>false</bool>
+                             </property>
+                             <property name="sizePolicy">
+                              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                               <horstretch>0</horstretch>
+                               <verstretch>0</verstretch>
+                              </sizepolicy>
+                             </property>
+                             <property name="font">
+                              <font>
+                               <pointsize>9</pointsize>
+                              </font>
+                             </property>
+                             <property name="toolTip">
+                              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;0: No response&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;1: Choice 1&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;2: Choice 2&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;3: Lick&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                             </property>
+                             <property name="alignment">
+                              <set>Qt::AlignCenter</set>
+                             </property>
+                             <property name="buttonSymbols">
+                              <enum>QAbstractSpinBox::NoButtons</enum>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="3" column="1">
+                            <widget class="QSpinBox" name="rewardedChan2_SpinBox">
+                             <property name="enabled">
+                              <bool>false</bool>
+                             </property>
+                             <property name="alignment">
+                              <set>Qt::AlignCenter</set>
+                             </property>
+                             <property name="buttonSymbols">
+                              <enum>QAbstractSpinBox::NoButtons</enum>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="3" column="3">
+                            <widget class="QSpinBox" name="rewardedChan4_SpinBox">
+                             <property name="enabled">
+                              <bool>false</bool>
+                             </property>
+                             <property name="alignment">
+                              <set>Qt::AlignCenter</set>
+                             </property>
+                             <property name="buttonSymbols">
+                              <enum>QAbstractSpinBox::NoButtons</enum>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="3" column="2">
+                            <widget class="QSpinBox" name="rewardedChan3_SpinBox">
+                             <property name="enabled">
+                              <bool>false</bool>
+                             </property>
+                             <property name="alignment">
+                              <set>Qt::AlignCenter</set>
+                             </property>
+                             <property name="buttonSymbols">
+                              <enum>QAbstractSpinBox::NoButtons</enum>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="3" column="0">
+                            <widget class="QSpinBox" name="rewardedChan1_SpinBox">
+                             <property name="enabled">
+                              <bool>false</bool>
+                             </property>
+                             <property name="alignment">
+                              <set>Qt::AlignCenter</set>
+                             </property>
+                             <property name="buttonSymbols">
+                              <enum>QAbstractSpinBox::NoButtons</enum>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="3" column="6">
+                            <widget class="QSpinBox" name="rewardedChan7_SpinBox">
+                             <property name="enabled">
+                              <bool>false</bool>
+                             </property>
+                             <property name="alignment">
+                              <set>Qt::AlignCenter</set>
+                             </property>
+                             <property name="buttonSymbols">
+                              <enum>QAbstractSpinBox::NoButtons</enum>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="3" column="5">
+                            <widget class="QSpinBox" name="rewardedChan6_SpinBox">
+                             <property name="enabled">
+                              <bool>false</bool>
+                             </property>
+                             <property name="alignment">
+                              <set>Qt::AlignCenter</set>
+                             </property>
+                             <property name="buttonSymbols">
+                              <enum>QAbstractSpinBox::NoButtons</enum>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="3" column="7">
+                            <widget class="QSpinBox" name="rewardedChan8_SpinBox">
+                             <property name="enabled">
+                              <bool>false</bool>
+                             </property>
+                             <property name="alignment">
+                              <set>Qt::AlignCenter</set>
+                             </property>
+                             <property name="buttonSymbols">
+                              <enum>QAbstractSpinBox::NoButtons</enum>
+                             </property>
+                            </widget>
+                           </item>
+                          </layout>
+                         </item>
+                        </layout>
+                       </widget>
+                      </item>
+                     </layout>
+                    </item>
+                    <item>
+                     <layout class="QGridLayout" name="gridLayout_9"/>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="saveAsPreset_Button">
+                   <property name="focusPolicy">
+                    <enum>Qt::StrongFocus</enum>
+                   </property>
+                   <property name="text">
+                    <string>Save as preset...</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QPushButton" name="begin_Button">
+          <property name="focusPolicy">
+           <enum>Qt::StrongFocus</enum>
+          </property>
+          <property name="text">
+           <string>Begin</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="setDefaults_Button">
+          <property name="focusPolicy">
+           <enum>Qt::StrongFocus</enum>
+          </property>
+          <property name="text">
+           <string>Set defaults</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="liveTab">
+       <attribute name="title">
+        <string>Live</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <widget class="QGroupBox" name="groupBox">
+          <property name="title">
+           <string>Session control</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_4">
+           <item>
+            <layout class="QVBoxLayout" name="liveTabVerticalLayout">
+             <item>
+              <widget class="QLabel" name="sessionTimer_label">
+               <property name="font">
+                <font>
+                 <pointsize>18</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">font-size: 18pt; font-weight: bold;</string>
+               </property>
+               <property name="text">
+                <string>0:00:00</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_11">
+               <item>
+                <widget class="QLabel" name="label_17">
+                 <property name="text">
+                  <string>Trial:</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="trialNum_label">
+                 <property name="text">
+                  <string>0</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_20">
+               <item>
+                <widget class="QPushButton" name="sessionPause_pushButton">
+                 <property name="text">
+                  <string>Pause</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="sessionAbort_pushButton">
+                 <property name="text">
+                  <string>Abort</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="groupBox_4">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="title">
+           <string>Results</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_6">
+           <item>
+            <layout class="QVBoxLayout" name="preTrialResponseVerticalLayout">
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="resultsFigsHorizontalLayout">
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="groupBox_2">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="title">
+           <string>Communication</string>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_15">
+           <item>
+            <widget class="QTextEdit" name="sessionFeed_textEdit">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+               <horstretch>1</horstretch>
+               <verstretch>1</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="font">
+              <font>
+               <family>Courier New</family>
+               <pointsize>9</pointsize>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">font-family: &quot;Courier New&quot;;</string>
+             </property>
+             <property name="autoFormatting">
+              <set>QTextEdit::AutoBulletList</set>
+             </property>
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>758</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionFile"/>
+    <addaction name="actionOpen"/>
+    <addaction name="actionSave"/>
+   </widget>
+   <widget class="QMenu" name="menuAbout">
+    <property name="title">
+     <string>About</string>
+    </property>
+    <addaction name="actionUs"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuAbout"/>
+  </widget>
+  <action name="actionFile">
+   <property name="text">
+    <string>New</string>
+   </property>
+  </action>
+  <action name="actionOpen">
+   <property name="text">
+    <string>Open</string>
+   </property>
+  </action>
+  <action name="actionSave">
+   <property name="text">
+    <string>Save</string>
+   </property>
+  </action>
+  <action name="actionUs">
+   <property name="text">
+    <string>Us</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="3" margin="5"/>
+ <tabstops>
+  <tabstop>subjectID_LineEdit</tabstop>
+  <tabstop>weight_SpinBox</tabstop>
+  <tabstop>sessionDuration_SpinBox</tabstop>
+  <tabstop>sessionDurationMode_ComboBox</tabstop>
+  <tabstop>loadPreset_ComboBox</tabstop>
+  <tabstop>device_ComboBox</tabstop>
+  <tabstop>baudRate_ComboBox</tabstop>
+  <tabstop>testStim_Button</tabstop>
+  <tabstop>testStimNum_SpinBox</tabstop>
+  <tabstop>testReward_Button</tabstop>
+  <tabstop>testRewardNum_SpinBox</tabstop>
+  <tabstop>checkBox_3</tabstop>
+  <tabstop>doubleSpinBox_2</tabstop>
+  <tabstop>witholdBeforeStim_CheckBox</tabstop>
+  <tabstop>witholdBeforeStimMin_SpinBox</tabstop>
+  <tabstop>witholdBeforeStimMax_SpinBox</tabstop>
+  <tabstop>response1_CheckBox</tabstop>
+  <tabstop>response2_CheckBox</tabstop>
+  <tabstop>response3_CheckBox</tabstop>
+  <tabstop>reward1_CheckBox</tabstop>
+  <tabstop>reward2_CheckBox</tabstop>
+  <tabstop>checkBox_2</tabstop>
+  <tabstop>stim1_CheckBox</tabstop>
+  <tabstop>respReq1_SpinBox</tabstop>
+  <tabstop>rewardedChan1_SpinBox</tabstop>
+  <tabstop>stim2_CheckBox</tabstop>
+  <tabstop>respReq2_SpinBox</tabstop>
+  <tabstop>rewardedChan2_SpinBox</tabstop>
+  <tabstop>stim3_CheckBox</tabstop>
+  <tabstop>respReq3_SpinBox</tabstop>
+  <tabstop>rewardedChan3_SpinBox</tabstop>
+  <tabstop>stim4_CheckBox</tabstop>
+  <tabstop>respReq4_SpinBox</tabstop>
+  <tabstop>rewardedChan4_SpinBox</tabstop>
+  <tabstop>stim5_CheckBox</tabstop>
+  <tabstop>respReq5_SpinBox</tabstop>
+  <tabstop>rewardedChan5_SpinBox</tabstop>
+  <tabstop>stim6_CheckBox</tabstop>
+  <tabstop>respReq6_SpinBox</tabstop>
+  <tabstop>rewardedChan6_SpinBox</tabstop>
+  <tabstop>stim7_CheckBox</tabstop>
+  <tabstop>respReq7_SpinBox</tabstop>
+  <tabstop>rewardedChan7_SpinBox</tabstop>
+  <tabstop>stim8_CheckBox</tabstop>
+  <tabstop>respReq8_SpinBox</tabstop>
+  <tabstop>rewardedChan8_SpinBox</tabstop>
+  <tabstop>rewardRemoval_checkBox</tabstop>
+  <tabstop>rewardRemovalDelay_SpinBox</tabstop>
+  <tabstop>stimOrder_ComboBox</tabstop>
+  <tabstop>stimOrderGroupSize_SpinBox</tabstop>
+  <tabstop>firstStim_ComboBox</tabstop>
+  <tabstop>repeatIfIncorrect_CheckBox</tabstop>
+  <tabstop>autoTransition_CheckBox</tabstop>
+  <tabstop>autoTransitionTo_ComboBox</tabstop>
+  <tabstop>autoTransitionAfterNum_SpinBox</tabstop>
+  <tabstop>autoTransitionAfterCriteria_ComboBox</tabstop>
+  <tabstop>autoTransitionFor_SpinBox</tabstop>
+  <tabstop>cueTrial_CheckBox</tabstop>
+  <tabstop>cueStim_CheckBox</tabstop>
+  <tabstop>cueResponse_CheckBox</tabstop>
+  <tabstop>cueToStimDelay_SpinBox</tabstop>
+  <tabstop>stimLength_SpinBox</tabstop>
+  <tabstop>respStopsStim_CheckBox</tabstop>
+  <tabstop>postStimDelay_SpinBox</tabstop>
+  <tabstop>responseWindow_SpinBox</tabstop>
+  <tabstop>endOfTrialDelay_SpinBox</tabstop>
+  <tabstop>autoReward_CheckBox</tabstop>
+  <tabstop>autoRewardDelay_SpinBox</tabstop>
+  <tabstop>checkBox</tabstop>
+  <tabstop>doubleSpinBox</tabstop>
+  <tabstop>spinBox_2</tabstop>
+  <tabstop>comboBox</tabstop>
+  <tabstop>spinBox</tabstop>
+  <tabstop>punish_CheckBox</tabstop>
+  <tabstop>punishType_ComboBox</tabstop>
+  <tabstop>punishLength_SpinBox</tabstop>
+  <tabstop>saveAsPreset_Button</tabstop>
+  <tabstop>begin_Button</tabstop>
+  <tabstop>setDefaults_Button</tabstop>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>sessionAbort_pushButton</tabstop>
+  <tabstop>scrollArea</tabstop>
+  <tabstop>sessionPause_pushButton</tabstop>
+  <tabstop>sessionFeed_textEdit</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>witholdBeforeStim_CheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>witholdBeforeStimMin_SpinBox</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>209</x>
+     <y>398</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>448</x>
+     <y>400</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>witholdBeforeStim_CheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>witholdBeforeStimMax_SpinBox</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>209</x>
+     <y>398</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1056</x>
+     <y>400</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>punish_CheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>punishType_ComboBox</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>208</x>
+     <y>1085</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>291</x>
+     <y>1090</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>punish_CheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>punishLength_SpinBox</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>208</x>
+     <y>1085</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>828</x>
+     <y>1087</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>autoTransition_CheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>autoTransitionTo_ComboBox</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>208</x>
+     <y>726</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>384</x>
+     <y>723</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>autoTransition_CheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>autoTransitionAfterNum_SpinBox</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>208</x>
+     <y>726</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>621</x>
+     <y>724</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>autoTransition_CheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>autoTransitionAfterCriteria_ComboBox</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>208</x>
+     <y>726</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>835</x>
+     <y>723</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>autoReward_CheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>autoRewardDelay_SpinBox</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>208</x>
+     <y>992</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>736</x>
+     <y>994</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>doubleSpinBox</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>208</x>
+     <y>1031</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>343</x>
+     <y>1033</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>spinBox_2</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>208</x>
+     <y>1031</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>621</x>
+     <y>1033</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>comboBox</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>208</x>
+     <y>1031</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>835</x>
+     <y>1036</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>autoReward_CheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>checkBox</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>208</x>
+     <y>992</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>208</x>
+     <y>1031</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>spinBox</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>208</x>
+     <y>1031</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1043</x>
+     <y>1033</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>stim1_CheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>rewardedChan1_SpinBox</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>204</x>
+     <y>520</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>228</x>
+     <y>558</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>stim1_CheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>respReq1_SpinBox</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>256</x>
+     <y>519</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>257</x>
+     <y>535</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>stim8_CheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>respReq8_SpinBox</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>977</x>
+     <y>515</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>980</x>
+     <y>534</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>stim8_CheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>rewardedChan8_SpinBox</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>944</x>
+     <y>522</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>946</x>
+     <y>562</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>stim7_CheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>respReq7_SpinBox</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>842</x>
+     <y>518</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>847</x>
+     <y>537</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>stim7_CheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>rewardedChan7_SpinBox</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>899</x>
+     <y>520</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>890</x>
+     <y>562</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>stim6_CheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>respReq6_SpinBox</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>775</x>
+     <y>522</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>775</x>
+     <y>542</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>stim6_CheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>rewardedChan6_SpinBox</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>757</x>
+     <y>521</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>747</x>
+     <y>571</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>stim5_CheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>respReq5_SpinBox</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>628</x>
+     <y>519</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>633</x>
+     <y>537</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>stim5_CheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>rewardedChan5_SpinBox</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>692</x>
+     <y>516</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>687</x>
+     <y>564</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>stim4_CheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>respReq4_SpinBox</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>534</x>
+     <y>517</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>533</x>
+     <y>529</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>stim4_CheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>rewardedChan4_SpinBox</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>577</x>
+     <y>520</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>577</x>
+     <y>557</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>stim3_CheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>respReq3_SpinBox</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>447</x>
+     <y>522</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>444</x>
+     <y>541</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>stim3_CheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>rewardedChan3_SpinBox</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>417</x>
+     <y>515</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>423</x>
+     <y>566</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>stim2_CheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>respReq2_SpinBox</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>324</x>
+     <y>520</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>321</x>
+     <y>529</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>stim2_CheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>rewardedChan2_SpinBox</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>379</x>
+     <y>521</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>345</x>
+     <y>566</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <designerdata>
+  <property name="gridDeltaX">
+   <number>5</number>
+  </property>
+  <property name="gridDeltaY">
+   <number>5</number>
+  </property>
+  <property name="gridSnapX">
+   <bool>true</bool>
+  </property>
+  <property name="gridSnapY">
+   <bool>true</bool>
+  </property>
+  <property name="gridVisible">
+   <bool>true</bool>
+  </property>
+ </designerdata>
+</ui>
