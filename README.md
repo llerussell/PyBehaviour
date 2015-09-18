@@ -1,6 +1,5 @@
 # pyBehaviour
-
-## Description
+Behavioural testing software
 * Python
 * arduino
 
