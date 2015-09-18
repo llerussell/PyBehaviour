@@ -100,7 +100,7 @@
                    </property>
                    <item>
                     <property name="text">
-                     <string>115200</string>
+                     <string>19200</string>
                     </property>
                    </item>
                   </widget>

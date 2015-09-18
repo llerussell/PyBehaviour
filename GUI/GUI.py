@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'GUI.ui'
 #
-# Created: Wed Sep 16 10:53:38 2015
+# Created: Fri Sep 18 17:27:17 2015
 #      by: PyQt5 UI code generator 5.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -1201,7 +1201,7 @@ class Ui_MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "pyBehaviour"))
         self.arduino_GroupBox.setTitle(_translate("MainWindow", "Arduino"))
-        self.baudRate_ComboBox.setItemText(0, _translate("MainWindow", "115200"))
+        self.baudRate_ComboBox.setItemText(0, _translate("MainWindow", "19200"))
         self.baudRateLabel.setText(_translate("MainWindow", "Baud rate"))
         self.deviceLabel.setText(_translate("MainWindow", "Device"))
         self.arduinoConnectedText_Label.setText(_translate("MainWindow", "Not connected"))

@@ -614,13 +614,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                         parameters['respReq7'], parameters['respReq8']]
 
         rewardedChannels = [parameters['rewardedChan1'], parameters['rewardedChan2'],
-                        parameters['rewardedChan3'], parameters['rewardedChan4'],
-                        parameters['rewardedChan5'], parameters['rewardedChan6'],
-                        parameters['rewardedChan7'], parameters['rewardedChan8']]
+                            parameters['rewardedChan3'], parameters['rewardedChan4'],
+                            parameters['rewardedChan5'], parameters['rewardedChan6'],
+                            parameters['rewardedChan7'], parameters['rewardedChan8']]
 
         parameters['responseChannels'] = [idx+1 for idx, val in
                                           enumerate(responseChannels) if val]
-        parameters['rewardChannels'] = [idx+1 for idx, val in
+        parameters['rewardChannels'] = [idx+1 for idx, val in
                                         enumerate(rewardChannels) if val]
         parameters['stimChannels'] = [idx+1 for idx, val in
                                       enumerate(stimChannels) if val]
