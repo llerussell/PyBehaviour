@@ -30,7 +30,9 @@ Windows 64-bit:
 * redundant dictionaries
 * needs to be divided into subfunctions
 * 'communication' panel has been offloaded to terminal window
-* GUI window needs to be better organised
+* GUI window could be better organised
+  * Response channel and reward channel checkboxes are unnecessary
+  * ...
 * clear trial performance bars at restart session
 * pre trial licks should be cleared at start of trial
 * display plotting issue: no withold period, stil shows max withold val
