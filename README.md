@@ -18,6 +18,7 @@ v0.1
 * redundant dictionaries
 * needs to be divided into subfunctions
 * 'communication' panel has been offloaded to terminal window
+* GUI window needs to be better organised
 
 ## Features to add
 * Specific proportion of stimulus type
