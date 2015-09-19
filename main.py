@@ -139,12 +139,18 @@ class TrialRunner(QObject):
         self.comm_feed_signal.emit('Connecting Arduino...')
         arduino['device'] = serial.Serial(parameters['device'], parameters['baudRate'])  # baud should be 19200
         arduino['device'].timeout = 1
-        while arduino['connected'] is False:
+        connect_attempts = 3
+        current_attempt = 1
+        while arduino['connected'] is False and current_attempt <= connect_attempts:
             temp_read = arduino['device'].readline().strip().decode('utf-8')
             self.comm_feed_signal.emit('ARDUINO: ' + temp_read)
             if temp_read == '{READY}':
                 arduino['connected'] = True
                 self.arduino_connected_signal.emit()
+            current_attempt += 1
+            if current_attempt > connect_attempts:
+                self.comm_feed_signal.emit('******** FAILED TO CONNECT ********')
+
 
     def runTrial(self, trial_num, stim_list, trials, withold_list):
         self.setupResultsDict(trial_num)  # initialise the results for current trial
@@ -559,20 +565,22 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def testReward(self):
         if arduino['connected'] is False:
             self.trialRunner.connectArduino()
-        write_string = '@R' + str(parameters['testRewardNum'])
-        self.updateCommFeed('PC:      ' + write_string)
-        arduino['device'].write(write_string.encode('utf-8'))
-        temp_read = arduino['device'].readline().strip().decode('utf-8')
-        self.updateCommFeed('ARDUINO: ' + temp_read)
+        if arduino['connected'] is True:
+            write_string = '@R' + str(parameters['testRewardNum'])
+            self.updateCommFeed('PC:      ' + write_string)
+            arduino['device'].write(write_string.encode('utf-8'))
+            temp_read = arduino['device'].readline().strip().decode('utf-8')
+            self.updateCommFeed('ARDUINO: ' + temp_read)
 
     def testStim(self):
         if arduino['connected'] is False:
             self.trialRunner.connectArduino()
-        write_string = '@S' + str(parameters['testStimNum'])
-        self.updateCommFeed('PC:      ' + write_string)
-        arduino['device'].write(write_string.encode('utf-8'))
-        temp_read = arduino['device'].readline().strip().decode('utf-8')
-        self.updateCommFeed('ARDUINO: ' + temp_read)
+        if arduino['connected'] is True:
+            write_string = '@S' + str(parameters['testStimNum'])
+            self.updateCommFeed('PC:      ' + write_string)
+            arduino['device'].write(write_string.encode('utf-8'))
+            temp_read = arduino['device'].readline().strip().decode('utf-8')
+            self.updateCommFeed('ARDUINO: ' + temp_read)
 
     def arduinoConnected(self):
         self.arduinoConnectedText_Label.setText('Connected')
