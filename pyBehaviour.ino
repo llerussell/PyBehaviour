@@ -631,9 +631,9 @@ void resetConfig() {
 void testReward(int pinNumber) {
   Serial.print("reward ");
   Serial.println(pinNumber);
-  digitalWrite(pinNumber, LOW);
-  delay(100);
   digitalWrite(pinNumber, HIGH);
+  delay(100);
+  digitalWrite(pinNumber, LOW);
 }
 
 void testStim(int pinNumber) {
