@@ -36,12 +36,14 @@ Windows 64-bit:
 * clear trial performance bars at restart session
 * pre trial licks should be cleared at start of trial
 * display plotting issue: no withold period, stil shows max withold val
+* cues not fully implemented
 
 ## Features to add
 * Specific proportion of stimulus types
 * Specify cue channels per stimulus
 * Auto transition
 * Adpatation phase, no stimuli, all responses are rewarded 
+* post-stim, pre-response window responses to abort trial
 * ...
 
 ## Tested compatibility
