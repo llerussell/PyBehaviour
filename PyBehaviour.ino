@@ -22,7 +22,7 @@ Scheduler taskManager;
 elapsedMillis witholdTimer;
 
 // pin numbers
-const int responsePin[] = {1, 2}; // interrupt numbers 0:2 1:3 2:21
+const int responsePin[] = {0, 1}; // interrupt numbers 0:2 1:3 [2:21 do not use] 3:20
 const int stimPin[] = {22, 23};
 const int rewardPin[] = {4, 5};
 const int rewardRemovalPin[] = {8, 9};
