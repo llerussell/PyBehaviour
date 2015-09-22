@@ -44,6 +44,7 @@ Windows 64-bit:
 * Auto transition
 * Adpatation phase, no stimuli, all responses are rewarded 
 * post-stim, pre-response window responses to abort trial
+* auto-transition post stim delay duration
 * ...
 
 ## Tested compatibility
