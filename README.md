@@ -37,6 +37,7 @@ Windows 64-bit:
 * pre trial licks should be cleared at start of trial
 * display plotting issue: no withold period, stil shows max withold val
 * cues not fully implemented
+* INTERRUPT 2 (pin 21) NOT COMPATIBLE
 
 ## Features to add
 * Specific proportion of stimulus types
