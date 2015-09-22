@@ -22,8 +22,11 @@ In development
 Windows 64-bit:
 * Install [winpython](http://winpython.github.io) (includes PyQt5)
 * Append python directory (e.g. `C:\WinPython-64bit-3.4.3.5\python-3.4.3.amd64`) to PATH
-* Clone PyBehaviour into `C:/PyBehaviour`
+* Unzip PyBehaviour into `C:/PyBehaviour`
 * Make shortcut to `GUI/execute.bat`, change icon to cheese, move to Desktop or taskbar
+* Install Arduino IDE
+* Download TaskScheduler and ElapsedMillis and place in Libraries folder
+* Upload PyBehaviour.ino to arduino
 
 ## Known issues
 * globals
