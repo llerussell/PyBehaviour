@@ -15,7 +15,7 @@ In development
   * seaborn
   * PyQt5
 * Arduino (MEGA 2560 recommended)
-  * [TaskScheduler](http://playground.arduino.cc/Code/TaskScheduler)
+  * [TaskScheduler](http://playground.arduino.cc/Code/TaskScheduler) - NOTE: use bundled version
   * [ElapsedMillis](http://playground.arduino.cc/Code/ElapsedMillis)
 
 ## Install instructions
