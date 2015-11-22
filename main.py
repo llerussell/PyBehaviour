@@ -10,8 +10,7 @@ import serial
 from serial.tools import list_ports
 import matplotlib
 matplotlib.use('Qt5Agg', force=True)
-from matplotlib.backends.backend_qt5agg import (FigureCanvasQTAgg
-                                            as FigureCanvas)
+from matplotlib.backends.backend_qt5agg import (FigureCanvasQTAgg as FigureCanvas)
 from matplotlib.backends.backend_pdf import PdfPages
 from matplotlib.figure import Figure
 from matplotlib import patches
@@ -29,6 +28,9 @@ import json
 import os
 import time
 import glob
+import warnings
+
+warnings.filterwarnings('ignore')
 
 
 def serial_ports():
@@ -523,8 +525,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         # add connects for control button clicks
         self.setDefaults_Button.clicked.connect(self.GUISave)
         self.saveAsPreset_Button.clicked.connect(self.saveAsPreset)
-        self.testReward_Button.clicked.connect(self.testReward)
-        self.testStim_Button.clicked.connect(self.testStim)
+        self.testPin_Button.clicked.connect(self.testPin)
+        # self.testStim_Button.clicked.connect(self.testStim)
         self.begin_Button.clicked.connect(self.begin)
         self.sessionPause_pushButton.clicked.connect(self.pause)
         self.sessionAbort_pushButton.clicked.connect(self.quit)
@@ -562,25 +564,25 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             if isinstance(obj, QDoubleSpinBox):
                 obj.valueChanged.connect(self.updateTrialConfigPlot)
 
-    def testReward(self):
+    def testPin(self):
         if arduino['connected'] is False:
             self.trialRunner.connectArduino()
         if arduino['connected'] is True:
-            write_string = '@R' + str(parameters['testRewardNum'])
+            write_string = '@R' + str(parameters['testPinNum'])
             self.updateCommFeed('PC:      ' + write_string)
             arduino['device'].write(write_string.encode('utf-8'))
             temp_read = arduino['device'].readline().strip().decode('utf-8')
             self.updateCommFeed('ARDUINO: ' + temp_read)
 
-    def testStim(self):
-        if arduino['connected'] is False:
-            self.trialRunner.connectArduino()
-        if arduino['connected'] is True:
-            write_string = '@S' + str(parameters['testStimNum'])
-            self.updateCommFeed('PC:      ' + write_string)
-            arduino['device'].write(write_string.encode('utf-8'))
-            temp_read = arduino['device'].readline().strip().decode('utf-8')
-            self.updateCommFeed('ARDUINO: ' + temp_read)
+    # def testStim(self):
+    #     if arduino['connected'] is False:
+    #         self.trialRunner.connectArduino()
+    #     if arduino['connected'] is True:
+    #         write_string = '@S' + str(parameters['testStimNum'])
+    #         self.updateCommFeed('PC:      ' + write_string)
+    #         arduino['device'].write(write_string.encode('utf-8'))
+    #         temp_read = arduino['device'].readline().strip().decode('utf-8')
+    #         self.updateCommFeed('ARDUINO: ' + temp_read)
 
     def arduinoConnected(self):
         self.arduinoConnectedText_Label.setText('Connected')
@@ -606,10 +608,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 if isinstance(obj, QDoubleSpinBox):
                     parameters[trimmed_name] = float(obj.value())
 
-        responseChannels = [parameters['response1'], parameters['response2'],
-                            parameters['response3']]
+        # responseChannels = [parameters['response1'], parameters['response2'],
+        #                     parameters['response3']]
 
-        rewardChannels = [parameters['reward1'], parameters['reward2']]
+        # rewardChannels = [parameters['reward1'], parameters['reward2']]
 
         stimChannels = [parameters['stim1'], parameters['stim2'],
                         parameters['stim3'], parameters['stim4'],
@@ -626,10 +628,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                             parameters['rewardedChan5'], parameters['rewardedChan6'],
                             parameters['rewardedChan7'], parameters['rewardedChan8']]
 
-        parameters['responseChannels'] = [idx+1 for idx, val in
-                                          enumerate(responseChannels) if val]
-        parameters['rewardChannels'] = [idx+1 for idx, val in
-                                        enumerate(rewardChannels) if val]
+        # parameters['responseChannels'] = [idx+1 for idx, val in
+        #                                   enumerate(responseChannels) if val]
+        # parameters['rewardChannels'] = [idx+1 for idx, val in
+        #                                 enumerate(rewardChannels) if val]
         parameters['stimChannels'] = [idx+1 for idx, val in
                                       enumerate(stimChannels) if val]
         parameters['respRequired'] = [respRequired[idx-1] for idx in
@@ -713,32 +715,39 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             for group in groups:
                 for obj in group.findChildren(widgets):
                     name = str(obj.objectName())
-                    if isinstance(obj, QComboBox):
-                        value = defaults[name]
-                        if value == '':
-                            continue
-                        index = obj.findText(value)  # get idx for string in combo
-                        if index == -1:  # add to list if not found
-                            continue
-                        #    obj.insertItems(0, [value])
-                        #    index = obj.findText(value)
-                        #    obj.setCurrentIndex(index)
-                        else:
-                            obj.setCurrentIndex(index)  # preselect a combobox value
-                    if isinstance(obj, QLineEdit):
-                        if 'spinbox' not in name:
+                    try:
+                        if isinstance(obj, QComboBox):
                             value = defaults[name]
-                            obj.setText(value)  # restore lineEditFile
-                    if isinstance(obj, QCheckBox):
-                        value = defaults[name]
-                        if value is not None:
-                            obj.setChecked(value)  # restore checkbox
-                    if isinstance(obj, QSpinBox):
-                        value = defaults[name]
-                        obj.setValue(value)  # restore lineEditFile
-                    if isinstance(obj, QDoubleSpinBox):
-                        value = defaults[name]
-                        obj.setValue(value)  # restore lineEditFile
+                            if value == '':
+                                continue
+                            index = obj.findText(value)  # get idx for string in combo
+                            if index == -1:  # add to list if not found
+                                continue
+                            #    obj.insertItems(0, [value])
+                            #    index = obj.findText(value)
+                            #    obj.setCurrentIndex(index)
+                            else:
+                                obj.setCurrentIndex(index)  # preselect a combobox value
+
+                        if isinstance(obj, QLineEdit):
+                            if 'spinbox' not in name:
+                                value = defaults[name]
+                                obj.setText(value)  # restore lineEditFile
+
+                        if isinstance(obj, QCheckBox):
+                            value = defaults[name]
+                            if value is not None:
+                                obj.setChecked(value)  # restore checkbox
+
+                        if isinstance(obj, QSpinBox):
+                            value = defaults[name]
+                            obj.setValue(value)  # restore lineEditFile
+
+                        if isinstance(obj, QDoubleSpinBox):
+                            value = defaults[name]
+                            obj.setValue(value)  # restore lineEditFile
+                    except:
+                        continue
 
     def addTrialConfigFig(self):
         # trial structure Figure
@@ -749,17 +758,18 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.trialConfigAx.hold(True)
         self.duration_line = patches.Rectangle((0, 0), 0, 0.05, fc='k',
                                                ec='none')
-        self.trial_cue_rectangle = patches.Rectangle((0, 0), 0, 1, fc='r',
+        self.trial_cue_rectangle = patches.Rectangle((0, 0), 0, 1, fc=[.95, 0, .5],
                                                      ec='none')
-        self.stim_cue_rectangle = patches.Rectangle((0, 0), 0, 1, fc='r',
+        self.stim_cue_rectangle = patches.Rectangle((0, 0), 0, 1, fc=[.95, 0, .5],
                                                     ec='none')
-        self.response_cue_rectangle = patches.Rectangle((0, 0), 0, 1, fc='r',
+        self.response_cue_rectangle = patches.Rectangle((0, 0), 0, 1, fc=[.95, 0, .5],
                                                         ec='none')
         self.stim_rectangle = patches.Rectangle((0, 0), 0, 1, fc='k',
                                                 ec='none')
-        self.resp_rectangle = patches.Rectangle((0, 0), 0, 0.9, fc='grey',
+        self.resp_rectangle = patches.Rectangle((0, 0), 0, 0.9, fc=[.66, .66, .66],
                                                 ec='none')
-        self.reward_rectangle = patches.Rectangle((0, 0), 0, 1, fc='c',
+        self.reward_rectangle = patches.Rectangle((0, 0), 0, 1, fc=[0, .8, .95],
+
                                                   ec='none')
         self.trialConfigAx.add_patch(self.stim_rectangle)
         self.trialConfigAx.add_patch(self.resp_rectangle)
@@ -861,24 +871,27 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         widgets = (QComboBox, QCheckBox, QLineEdit, QSpinBox, QDoubleSpinBox)
         for obj in self.trial_GroupBox.findChildren(widgets):
             name = str(obj.objectName())
-            if isinstance(obj, QComboBox):
-                value = trialconfig[name]
-                index = obj.findText(value)  # get the corresponding index for specified string in combobox
-                obj.setCurrentIndex(index)  # preselect a combobox value by index
-            if isinstance(obj, QLineEdit):
-                if 'spinbox' not in name:
+            try:
+                if isinstance(obj, QComboBox):
                     value = trialconfig[name]
-                    obj.setText(value)  # restore lineEditFile
-            if isinstance(obj, QCheckBox):
-                value = trialconfig[name]
-                if value is not None:
-                    obj.setChecked(value)  # restore checkbox
-            if isinstance(obj, QSpinBox):
-                value = trialconfig[name]
-                obj.setValue(value)  # restore lineEditFile
-            if isinstance(obj, QDoubleSpinBox):
-                value = trialconfig[name]
-                obj.setValue(value)  # restore lineEditFile
+                    index = obj.findText(value)  # get the corresponding index for specified string in combobox
+                    obj.setCurrentIndex(index)  # preselect a combobox value by index
+                if isinstance(obj, QLineEdit):
+                    value = trialconfig[name]
+                    if 'spinbox' not in name:
+                        obj.setText(value)  # restore lineEditFile
+                if isinstance(obj, QCheckBox):
+                    value = trialconfig[name]
+                    if value is not None:
+                        obj.setChecked(value)  # restore checkbox
+                if isinstance(obj, QSpinBox):
+                    value = trialconfig[name]
+                    obj.setValue(value)  # restore lineEditFile
+                if isinstance(obj, QDoubleSpinBox):
+                    value = trialconfig[name]
+                    obj.setValue(value)  # restore lineEditFile
+            except:
+                continue
 
     def closeEvent(self, event):
         result = QMessageBox.question(self,
