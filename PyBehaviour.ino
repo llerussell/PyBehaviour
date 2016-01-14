@@ -40,16 +40,16 @@ boolean trialStringEnded = false;
 
 // control
 char INCOMING_COMMAND = '@';
-char TEST_STIM = 'S';
-char TEST_REWARD = 'R';
-char TEST_PING = 'P'; // test if ready
+char TEST_PIN = '!';
+char TEST_READY = '?'; // test if ready
 char test_command;
-char test_chan_num;
-int test_chan_int;
+int test_chan_num;
+int test_chan_dur;
 String ConfigString;
 
 // training parameters
 int stimChan;
+int stimVar;
 int respReq;
 int rewardChan;
 boolean trialCue;
@@ -175,23 +175,46 @@ void rxConfig() {
   while (Serial.available()) {
     incomingByte = Serial.read();
 
-    // TEST STIM AND OR REWARD
+    // TEST PIN
     if (incomingByte == INCOMING_COMMAND) {
       delay(1);
       test_command = Serial.read();
       delay(1);
-      test_chan_num = Serial.read();
-      test_chan_int = test_chan_num - '0' - 1;
+      if (test_command == TEST_PIN) {
+        varBufferIndex = 0;
+        varBuffer[varBufferIndex] = '\0';
+        varIndex = 0;
+        while (Serial.available()) {
+          delay(1);
+          incomingByte = Serial.read();
+          if (incomingByte == ';') {
+            // when reach seperator ; save the variable
+            varIndex++;
+            switch (varIndex) {
+              case 1:
+                test_chan_num = atoi(varBuffer);
+                break;
+              case 2:
+                test_chan_dur = atoi(varBuffer);
+                break;
+            }
+            varBufferIndex = 0;
+            varBuffer[varBufferIndex] = '\0';
+          }
+          else {
+            // store in the buffer
+            varBuffer[varBufferIndex] = incomingByte;
+            varBufferIndex++;
+            varBuffer[varBufferIndex] = '\0';
+          }
+        }
+        testPin(test_chan_num, test_chan_dur);
+      }
 
-      if (test_command == TEST_REWARD) {
-        testReward(rewardPin[test_chan_int]);
-      }
-      else if (test_command == TEST_STIM) {
-        testStim(stimPin[test_chan_int]);
-      }
-      else if (test_command == TEST_PING) {
+      else if (test_command == TEST_READY) {
         Serial.println("{!}");
       }
+
     }
 
     // TRIAL CONFIGURATION
@@ -227,78 +250,81 @@ void rxConfig() {
           //ConfigString = ConfigString + "stim_chan:" + stimChan + ";";
           break;
         case 2:
+          stimVar = atoi(varBuffer) - 1;
+          break;
+        case 3:
           respReq = atoi(varBuffer);
           //ConfigString = ConfigString + "resp_req:" + respReq + ";";
           break;
-        case 3:
+        case 4:
           rewardChan = atoi(varBuffer) - 1;
           //ConfigString = ConfigString + "reward_chan:" + rewardChan + ";";
           break;
-        case 4:
+        case 5:
           trialCue = atoi(varBuffer);
           //ConfigString = ConfigString + "trial_cue:" + trialCue + ";";
           break;
-        case 5:
+        case 6:
           stimCue = atoi(varBuffer);
           //ConfigString = ConfigString + "stim_cue:" + stimCue + ";" ;
           break;
-        case 6:
+        case 7:
           respCue = atoi(varBuffer);
           //ConfigString = ConfigString + "resp_cue:" + respCue + ";";
           break;
-        case 7:
+        case 8:
           respCueStart = atoi(varBuffer);
           //ConfigString = ConfigString + "resp_cue_start:" + respCueStart + ";";
           break;
-        case 8:
+        case 9:
           withold = atoi(varBuffer);
           //ConfigString = ConfigString + "withold:" + withold + ";";
           break;
-        case 9:
+        case 10:
           witholdReq = atoi(varBuffer);
           //ConfigString = ConfigString + "withold_req:" + witholdReq + ";";
           break;
-        case 10:
+        case 11:
           stimStart = atoi(varBuffer);
           //ConfigString = ConfigString + "stim_start:" + stimStart + ";";
           break;
-        case 11:
+        case 12:
           stimStop = atoi(varBuffer);
           //ConfigString = ConfigString + "stim_stop:" + stimStop + ";";
           break;
-        case 12:
+        case 13:
           respStart = atoi(varBuffer);
           //ConfigString = ConfigString + "resp_start:" + respStart + ";";
           break;
-        case 13:
+        case 14:
           respStop = atoi(varBuffer);
           //ConfigString = ConfigString + "resp_stop:" + respStop + ";";
           break;
-        case 14:
+        case 15:
           trialDuration = atoi(varBuffer);
           //ConfigString = ConfigString + "trial_duration:" + trialDuration + ";";
           break;
-        case 15:
+        case 16:
           autoReward = atoi(varBuffer);
           //ConfigString = ConfigString + "auto_reward:" + autoReward + ";";
           break;
-        case 16:
+        case 17:
           autoRewardStart = atoi(varBuffer);
           //ConfigString = ConfigString + "auto_reward_start:" + autoRewardStart + ";";
           break;
-        case 17:
+        case 18:
           punish = atoi(varBuffer);
           //ConfigString = ConfigString + "punish:" + punish + ";";
           break;
-        case 18:
+        case 19:
           punishLength = atoi(varBuffer);
           //ConfigString = ConfigString + "punish_length:" + punishLength + ";";
           break;
-        case 19:
+        case 20:
           rewardRemoval = atoi(varBuffer);
           //ConfigString = ConfigString + "reward_removal:" + rewardRemoval + ";";
           break;
-        case 20:
+        case 21:
           rewardRemovalDelay = atoi(varBuffer);
           //ConfigString = ConfigString + "reward_removal_delay:" + rewardRemovalDelay + ";";
           break;
@@ -316,7 +342,7 @@ void rxConfig() {
   if (configStringStarted && configStringEnded) {
     // received a whole < > packet
     configReceived = true;
-    
+
     String ConfigString = "{";
     ConfigString = ConfigString + "withold_req:" + witholdReq + "}";
     Serial.println(ConfigString);
@@ -628,18 +654,13 @@ void resetConfig() {
   fa = false;
 }
 
-void testReward(int pinNumber) {
-  Serial.print("reward ");
-  Serial.println(pinNumber);
+void testPin(int pinNumber, int pinDuration) {
+  Serial.print("Test pin: ");
+  Serial.print(pinNumber);
+  Serial.print(", Test duration: ");
+  Serial.println(pinDuration);
   digitalWrite(pinNumber, HIGH);
-  delay(100);
+  delay(pinDuration);
   digitalWrite(pinNumber, LOW);
 }
 
-void testStim(int pinNumber) {
-  Serial.print("stim ");
-  Serial.println(pinNumber);
-  digitalWrite(pinNumber, HIGH);
-  delay(100);
-  digitalWrite(pinNumber, LOW);
-}
