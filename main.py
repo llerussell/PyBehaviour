@@ -30,6 +30,7 @@ import time
 import glob
 import warnings
 from scipy import stats
+import csv
 
 warnings.filterwarnings('ignore')
 
@@ -78,6 +79,10 @@ for i in range(len(available_ports)):
 results_directory = 'Results'
 if not os.path.exists(results_directory):
     os.makedirs(results_directory)
+
+trial_sequence_directory = 'Trial sequences'
+if not os.path.exists(trial_sequence_directory):
+    os.makedirs(trial_sequence_directory)
 
 config_directory = 'Configs'
 if not os.path.exists(config_directory):
@@ -523,6 +528,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.begin_Button.clicked.connect(self.begin)
         self.sessionPause_pushButton.clicked.connect(self.pause)
         self.sessionAbort_pushButton.clicked.connect(self.quit)
+        self.loadTrialOrder_pushButton.clicked.connect(self.loadTrialOrder)
+        self.saveTrialOrder_pushButton.clicked.connect(self.saveTrialOrder)
 
         self.loadPreset_ComboBox.currentIndexChanged.connect(self.loadPreset)
 
@@ -567,76 +574,113 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.arduinoConnectedText_Label.setStyleSheet('color:rgb(0, 188, 152);')
 
     def makeTrialOrder(self):
-        if not self.trialRunner._sessionRunning and self._ready:
+        if not self.trialRunner._sessionRunning:
             num_stims = len(p['stimChannels'])
-            if p['stimOrder'] == 'Random':
+            num_trials = p['sessionDuration']
+            if num_stims > 0:
+                if p['stimOrder'] == 'Random':
 
-                # count proportions for normalisation
-                total_prop = sum(p['proportions'])
+                    # count proportions for normalisation
+                    total_prop = sum(p['proportions'])
 
-                # build blocks of trial types to allow absolute proportions
-                trial_blocks = []
-                for i, chan in enumerate(p['stimChannels']):
-                    trial_blocks.append(chan * np.ones([np.floor(p['proportions'][i] / total_prop * p['sessionDuration'])]))
+                    # build blocks of trial types to allow absolute proportions
+                    trial_blocks = []
+                    for i, chan in enumerate(p['stimChannels']):
+                        trial_blocks.append(chan * np.ones([np.floor(p['proportions'][i] / total_prop * p['sessionDuration'])]))
 
-                # stack all trial type blocks and shuffle
-                p['trialOrder'] = np.hstack(trial_blocks)
-                np.random.shuffle(p['trialOrder'])
+                    # stack all trial type blocks and shuffle
+                    p['trialOrder'] = np.hstack(trial_blocks)
+                    np.random.shuffle(p['trialOrder'])
 
-                # if needed add random trials to end to get desired number
-                if len(p['trialOrder']) < p['sessionDuration']:
-                    diff = p['sessionDuration'] - len(p['trialOrder'])
-                    xk = p['stimChannels']
-                    pk = p['proportions']
-                    custm = stats.rv_discrete(name='custm', values=(xk, pk))
-                    extra_trials = custm.rvs(size=diff)
-                    p['trialOrder'] = np.append(p['trialOrder'], extra_trials)
+                    # if needed add random trials to end to get desired number
+                    if len(p['trialOrder']) < num_trials:
+                        diff = p['sessionDuration'] - len(p['trialOrder'])
+                        xk = p['stimChannels']
+                        pk = p['proportions']
+                        custm = stats.rv_discrete(name='custm', values=(xk, pk))
+                        extra_trials = custm.rvs(size=diff)
+                        p['trialOrder'] = np.append(p['trialOrder'], extra_trials)
 
-                # trial variations
-                p['trialVariations'] = np.zeros(len(p['trialOrder']))
-                for i in range(len(p['trialOrder'])):
-                    this_trial = p['trialOrder'][i]
-                    this_idx = np.where(p['stimChannels'] == this_trial)[0]
-                    p['trialVariations'][i] = np.random.randint(p['variations'][this_idx])
+                    # trial variations
+                    p['trialVariations'] = np.zeros(len(p['trialOrder']))
+                    for i in range(len(p['trialOrder'])):
+                        this_trial = p['trialOrder'][i]
+                        this_idx = np.where(p['stimChannels'] == this_trial)[0]
+                        p['trialVariations'][i] = np.random.randint(p['variations'][this_idx])
 
-                # do the test for consecutive trials (p['stimOrderGroupSize'])
-                # passed = False
-                # while not passed:
-                #   for i in range(num_trials):
-                #         this_stim = x
-                #         prev_stim = asdf
-                #         same_as_prev =
-                #         if same_as_prev:
-                #             passed = True
+                    # test for consecutive trial limit
+                    passed = False
+                    running_count = 0
+                    attempt = 0
+                    failed_on = 0
+                    if num_trials > 1:
+                        while not passed:
+                            prev_failed_on = failed_on
+                            for i in range(num_trials):
+                                if i > 0:
+                                    this_stim = p['trialOrder'][i]
+                                    prev_stim = p['trialOrder'][i-1]
+                                    if this_stim == prev_stim:
+                                        running_count +=1
+                                    else:
+                                        running_count = 0
+                                    if running_count >= p['stimOrderGroupSize']:
+                                        np.random.shuffle(p['trialOrder'][i:])
+                                        failed_on = i
+                                        break
 
-            elif p['stimOrder'] == 'Interleaved':
-                p['trialOrder'] = np.zeros([p['sessionDuration']])
-                stim_idx = 0
-                consec_tally = 0
+                                    if i == num_trials-1:
+                                        passed = True
+                            if failed_on == prev_failed_on:  # if gets stuck (usually at end)
+                                attempt += 1
+                            else:
+                                attempt = 0
+                            if attempt >= 10:
+                                passed = True
 
-                for trial in range(p['sessionDuration']):
-                    p['trialOrder'][trial] = p['stimChannels'][stim_idx]
-                    consec_tally += 1
-                    if consec_tally >= p['stimOrderGroupSize']:
-                        consec_tally = 0
-                        stim_idx += 1
-                        if stim_idx >= len(p['stimChannels']):
-                            stim_idx = 0
 
-            elif p['stimOrder'] == 'External file':
-                p['trialOrder'] = np.zeros([p['sessionDuration']])
+                elif p['stimOrder'] == 'Interleaved':
+                    p['trialOrder'] = np.zeros([p['sessionDuration']])
+                    stim_idx = 0
+                    consec_tally = 0
 
-            # first stim control
-            if p['controlFirstStim']:
-                if p['controlFirstStimStim']:
-                    p['trialOrder'][0:p['firstXStims']] = int(p['firstStim'])
-                if p['controlFirstStimVariation']:
-                    p['trialVariations'][0:p['firstXStims']] = int(p['firstStimVariation'])
+                    for trial in range(p['sessionDuration']):
+                        p['trialOrder'][trial] = p['stimChannels'][stim_idx]
+                        consec_tally += 1
+                        if consec_tally >= p['stimOrderGroupSize']:
+                            consec_tally = 0
+                            stim_idx += 1
+                            if stim_idx >= len(p['stimChannels']):
+                                stim_idx = 0
 
-            # p['trialOrder'] = [p['trialOrder']]
-            self.trialOrderAx.imshow([p['trialOrder']], interpolation='nearest', cmap='rainbow', vmin=0, vmax=7, aspect='auto')
-            self.trialOrderAx2.imshow([p['trialVariations']], interpolation='nearest', cmap='gray', aspect='auto')
-            self.trialOrderCanvas.draw()
+                # first stim control
+                if p['controlFirstStim']:
+                    if p['controlFirstStimStim']:
+                        p['trialOrder'][0:p['firstXStims']] = int(p['firstStim'])
+                    if p['controlFirstStimVariation']:
+                        p['trialVariations'][0:p['firstXStims']] = int(p['firstStimVariation'])
+
+                # p['trialOrder'] = [p['trialOrder']]
+                self.trialOrderAx.imshow([p['trialOrder']], interpolation='nearest', cmap='rainbow', vmin=0, vmax=7, aspect='auto')
+                self.trialOrderAx2.imshow([p['trialVariations']], interpolation='nearest', cmap='gray', aspect='auto')
+                self.trialOrderCanvas.draw()
+
+    def saveTrialOrder(self):
+        filepath = str(QFileDialog.getSaveFileName(self, 'Save trial sequence', trial_sequence_directory, 'Trial sequence (*.txt)')[0])
+        arr = np.vstack((p['trialOrder'], p['trialVariations']))
+        np.savetxt(filepath, arr, fmt='%1i', delimiter=',')
+
+    def loadTrialOrder(self):
+        filepath = str(QFileDialog.getOpenFileName(self, 'Load trial sequence', trial_sequence_directory, '*.txt')[0])
+        arr = np.genfromtxt(filepath, delimiter=',')
+        p['trialOrder'] = arr[0]
+        p['trialVariations'] = arr[1]
+
+        filename = os.path.splitext(os.path.basename(filepath))[0]
+        self.stimOrder_ComboBox.setCurrentIndex(2)
+        self.loadedTrialSequence_label.setText('Loaded: ' + filename)
+
+        self.getValues()
 
     def getValues(self):
         widgets = (QComboBox, QCheckBox, QLineEdit, QSpinBox, QDoubleSpinBox)
