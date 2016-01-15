@@ -5,7 +5,8 @@ Behavioural testing software, Python, arduino
 In development
 
 ## Screenshots
-![Imgur](http://i.imgur.com/7MCgvtB.png)
+![Imgur](http://i.imgur.com/BuFc0jf.png)
+
 
 ## Prerequisites
 * Python (3.4 recommended)
