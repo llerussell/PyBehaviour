@@ -1,10 +1,4 @@
 # PyBehaviour
-Behavioural testing software, Python, arduino
-
-## Disclaimer
-In development
-
-## Screenshots
 ![Imgur](http://i.imgur.com/LeblyRe.png)
 
 ## Prerequisites
