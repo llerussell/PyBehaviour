@@ -2,78 +2,46 @@
 
 '''
 PyBehaviour
-Copyright (c) 2015 Lloyd Russell
+(c) 2015 Lloyd Russell
 '''
 
-import sys
-import serial
-# from serial.tools import list_ports
+import warnings
+warnings.filterwarnings('ignore')
 import matplotlib
 matplotlib.use('Qt5Agg', force=True)
-from matplotlib.backends.backend_qt5agg import (FigureCanvasQTAgg as FigureCanvas)
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.backends.backend_pdf import PdfPages
 from matplotlib.figure import Figure
 from matplotlib import patches
 import seaborn
+seaborn.set(rc={
+    'axes.axisbelow': True,
+    'axes.linewidth': 1,
+    'axes.facecolor': [1.0, 1.0, 1.0],
+    'axes.edgecolor': [0.9, 0.9, 0.9],
+    'grid.color': [0.9, 0.9, 0.9],
+    'image.composite_image': False
+    })
 import numpy as np
 import scipy.io as sio
-from PyQt5.QtCore import QObject, pyqtSignal, QThread, QTimer
-from PyQt5.QtWidgets import (QComboBox, QCheckBox, QLineEdit, QSpinBox,
-                             QDoubleSpinBox, QFileDialog, QApplication,
-                             QDesktopWidget, QMainWindow, QMessageBox,
-                             QStyleFactory)
-from PyQt5.QtGui import QIcon
-from GUI.GUI import Ui_MainWindow
+from scipy import stats
 import json
 import os
 import time
 import glob
-import warnings
-from scipy import stats
-import csv
-
-warnings.filterwarnings('ignore')
-
-
-def serial_ports():
-    '''
-    Lists serial ports.
-    Currently non-functional because testing connection resets arduino, which triggers things as pins go high.
-
-    :raises EnvironmentError:
-        On unsupported or unknown platforms
-    :returns:
-        A list of available serial ports
-    '''
-    if sys.platform.startswith('win'):
-        ports = ['COM' + str(i + 1) for i in range(20)]
-
-    elif sys.platform.startswith('linux') or sys.platform.startswith('cygwin'):
-        # this is to exclude your current terminal '/dev/tty'
-        ports = glob.glob('/dev/tty[A-Za-z]*')
-
-    elif sys.platform.startswith('darwin'):
-        ports = glob.glob('/dev/tty.*')
-
-    else:
-        raise EnvironmentError('Unsupported platform')
-
-    result = []
-    for port in ports:
-        # try:
-            # s = serial.Serial(port)
-            # s.close()
-        result.append(port)
-        # except (OSError, serial.SerialException):
-            # pass
-    return result
+import sys
+import serial
+from PyQt5.QtCore import QObject, pyqtSignal, QThread, QTimer
+from PyQt5.QtWidgets import (QComboBox, QCheckBox, QLineEdit, QSpinBox,
+                             QDoubleSpinBox, QFileDialog, QApplication,
+                             QDesktopWidget, QMainWindow, QMessageBox)
+from PyQt5.QtGui import QIcon
+from GUI.GUI import Ui_MainWindow
+from serial_ports import list_serial_ports
 
 
 # find available serial ports
-available_ports = serial_ports()
-available_devices = []
-for i in range(len(available_ports)):
-    available_devices.append(available_ports[i][:])
+available_devices = list_serial_ports()
 
 # setup directories/config files
 results_directory = 'Results'
@@ -103,9 +71,8 @@ p = {}
 trials = {}
 trials['results'] = []
 trials['correctTally'] = 0
-running_score = []
+trials['running_score'] = []
 trial_log = []
-performance_record = []
 
 # start random number seed
 np.random.seed()
@@ -113,7 +80,7 @@ np.random.seed()
 
 class TrialRunner(QObject):
     '''
-    The background worker. Runs the trials
+    Background worker. Runs the trials.
     '''
     def __init__(self):
         super(TrialRunner, self).__init__()
@@ -174,9 +141,7 @@ class TrialRunner(QObject):
     def setupResultsDict(self, trial_num):
         trials['results'].append({})
         # print(trial_num)
-        trials['results'][trial_num]['response1'] = []
-        trials['results'][trial_num]['response2'] = []
-        trials['results'][trial_num]['response3'] = []
+        trials['results'][trial_num]['responses'] = [[],[]]
         trials['results'][trial_num]['trialstart'] = []
         trials['results'][trial_num]['withold_req'] = []
         trials['results'][trial_num]['withold_act'] = []
@@ -191,15 +156,19 @@ class TrialRunner(QObject):
         Construct a string listing all the various configuration p.
         Send this string to the arduino.
         '''
-        # stim type to be delivered
 
-        # elif p['stimOrder'] == 'Repeating':
-        #     if trials['correctTally'] == p['stimOrderGroupSize']:
-        #         this_stim_idx = prev_stim_idx + 1 if prev_stim_idx < num_stims-1 else 0
-        #     else:
-        #         this_stim_idx = prev_stim_idx
-        # if p['repeatIfIncorrect'] and running_score[-1] == 0:
-        #     this_stim_idx = prev_stim_idx
+        if trial_num > 0:
+            if p['repeatIfIncorrect'] and trials['running_score'][-1] == 0:
+                # shift next trials back
+                p['trialOrder'][trial_num+1:-1] = p['trialOrder'][trial_num:-2]
+                p['trialVariations'][trial_num+1:-1] = p['trialVariations'][trial_num:-2]
+
+                # make this stim same as previous
+                p['trialOrder'][trial_num] = p['trialOrder'][trial_num-1]
+                p['trialVariations'][trial_num] = p['trialVariations'][trial_num-1]
+
+                # update the trial order plot(shown on config tab)
+                # self.plotTrialOrder()
 
         this_stim_idx = int(p['trialOrder'][trial_num])
         this_var = int(p['trialVariations'][trial_num])
@@ -213,9 +182,17 @@ class TrialRunner(QObject):
         resp_req = p['respRequired'][this_stim_idx]
         trials['results'][trial_num]['response_required'] = resp_req
 
+        # resonse cancels post stim delay?
+        post_stim_cancel = int(p['postStimCancel'])
+
         # reward channel
-        reward_chan = p['rewardedChannels'][this_stim_idx]
+        reward_chan = p['rewardChannels'][this_stim_idx]
         trials['results'][trial_num]['reward_channel'] = reward_chan
+        cue_chan = p['cueChannels'][this_stim_idx]
+        if p['punishTrigger']:
+            punish_chan = p['punishChannels'][this_stim_idx]
+        else:
+            punish_chan = 0
 
         # generate random withold requirement
         if p['witholdBeforeStim']:
@@ -263,34 +240,38 @@ class TrialRunner(QObject):
             str(int(p['autoReward'])) + ';' \
             'AUTO_REWARD_START:' + \
             str(int(p['autoRewardStart']*1000)) + ';' \
-            'PUNISH:' + \
-            str(int(p['punish'])) + ';' \
+            'PUNISH_CHAN:' + \
+            str(punish_chan) + ';' \
             'PUNISH_LENGTH:' + \
             str(int(p['punishLength']*1000)) + ';' \
             'REWARD_REMOVAL:' + \
             str(int(p['rewardRemoval'])) + ';' \
             'REWARD_REMOVAL_DELAY:' + \
             str(int(p['rewardRemovalDelay']*1000)) + ';' \
+            'CUE_CHAN:' + \
+            str(cue_chan) + ';' \
+            'POST_STIM_CANCEL:' + \
+            str(post_stim_cancel) + ';' \
             '>'
 
         # write config string to arduino
-        # arduino_ready = 0
-        # while ~arduino_ready:
-        write_string = '@?'
-        self.comm_feed_signal.emit(write_string, 'pc')
-        arduino['device'].write(write_string.encode('utf-8'))
-        temp_read = arduino['device'].readline().strip().decode('utf-8')
-        self.comm_feed_signal.emit(temp_read, 'arduino')
-        if temp_read == '{!}':
-            # arduino_ready = 1
-            write_string = config_string
+        arduino_ready = 0
+        while not arduino_ready:
+            write_string = '@?'
             self.comm_feed_signal.emit(write_string, 'pc')
             arduino['device'].write(write_string.encode('utf-8'))
             temp_read = arduino['device'].readline().strip().decode('utf-8')
             self.comm_feed_signal.emit(temp_read, 'arduino')
+            if temp_read == '{!}':
+                arduino_ready = 1
+                write_string = config_string
+                self.comm_feed_signal.emit(write_string, 'pc')
+                arduino['device'].write(write_string.encode('utf-8'))
+                temp_read = arduino['device'].readline().strip().decode('utf-8')
+                self.comm_feed_signal.emit(temp_read, 'arduino')
 
     # signals allow communication between the TrialRunner thread and GUI thread. i.e. send data to main GUI thread where it can be displayed and saved. I don't know why they are here outside of any function...
-    response_signal = pyqtSignal(int, int, float, str, name='responseSignal')
+    response_signal = pyqtSignal(int, float, int, str, name='responseSignal')
     trial_start_signal = pyqtSignal(int, name='trialStartSignal')
     trial_end_signal = pyqtSignal(int, name='trialEndSignal')
     session_end_signal = pyqtSignal(name='sessionEndGUISignal')
@@ -304,9 +285,7 @@ class TrialRunner(QObject):
         trials['results'][trial_num]['trialstart'] = time.strftime('%Y%m%d_%H%M%S')
         trialRunning = True
         state = 'PRETRIAL'
-        # self.response_signal.connect(self.GUI.updatePreTrialRasterPlot)
         while trialRunning:
-            # QCoreApplication.processEvents()
             temp_read = arduino['device'].readline().strip().decode('utf-8')
 
             if temp_read:
@@ -317,30 +296,23 @@ class TrialRunner(QObject):
                     for idx, val in enumerate(data):
                         if val:  # in val is not just
                             ID, val = val.split(':')
-                            val = int(val) / 1000
+                            val = float(val) / 1000
                             if ID == '*':
                                 state = 'INTRIAL'
-                                # self.response_signal.disconnect()
-                                # self.response_signal.connect(GUI.updateRasterPlotData)
-                                trials['results'][trial_num]['response1'][:] = [x - val for x in trials['results'][trial_num]['response1']]
-                                trials['results'][trial_num]['response2'][:] = [x - val for x in trials['results'][trial_num]['response2']]
-                                trials['results'][trial_num]['response3'][:] = [x - val for x in trials['results'][trial_num]['response3']]
+                                trials['results'][trial_num]['responses'][0] = [x - val for x in trials['results'][trial_num]['responses'][0]]
                                 trials['results'][trial_num]['withold_act'] = val
-                            elif ID == '1':
-                                trials['results'][trial_num]['response1'].append(val)
-                                self.response_signal.emit(int(ID)-1, trial_num, val, state)
-                            elif ID == '2':
-                                trials['results'][trial_num]['response2'].append(val)
-                                self.response_signal.emit(int(ID)-1, trial_num, val, state)
-                            elif ID == '3':
-                                trials['results'][trial_num]['response3'].append(val)
-                                self.response_signal.emit(int(ID)-1, trial_num, val, state)
+                            else:
+                                ID = int(ID)
+                                trials['results'][trial_num]['responses'][0].append(val)  # time
+                                trials['results'][trial_num]['responses'][1].append(ID)  # channel
+
+                                self.response_signal.emit(trial_num, val, ID, state)
 
                 elif temp_read[0] == '{' and temp_read[-1] == '}':  # whole trial outcome packet received
                     temp_read = temp_read[1:-1]  # only process everything between { and }
                     if temp_read == 'DONE':
                         trialRunning = False
-                        running_score.append((trials['results'][trial_num]['correct']))
+                        trials['running_score'].append((trials['results'][trial_num]['correct']))
                         if trials['results'][trial_num]['correct']:
                             trials['correctTally'] = trials['correctTally'] + 1
                         else:
@@ -352,6 +324,7 @@ class TrialRunner(QObject):
                             if val:  # in val is not just
                                 key, val = val.split(':')
                                 val = int(val)
+                                key = str(key)
                                 trials['results'][trial_num][key] = val
 
     def stop(self):
@@ -394,7 +367,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         # open the config file and populate GUI with values
         self.GUIRestore()
 
-
     def sessionTimerUpdate(self):
         elapsed_time = round(time.time() - p['sessionStartTime'])
         m, s = divmod(elapsed_time, 60)
@@ -410,27 +382,26 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         p['sessionStartTimeString'] = time.strftime('%Y%m%d_%H%M%S')
         p['sessionID'] = p['subjectID'] + '_' + p['sessionStartTimeString']
         self.setWindowTitle('PyBehaviour | ' + p['sessionID'])
-        #self.sessionFeed_textEdit.append('Started')
         self.sessionTimer.start(100)  # start the QTimer, executes every 100ms
 
         self.trialThread.start()
 
     def reset(self):
-        running_score = 0
         if self.trialRunner._sessionRunning:
             self.trialRunner.stop()
             self.trialThread.quit()
-        plots = [self.preTrialRaster_resp1, self.preTrialRaster_resp2,
-                 self.preTrialRaster_resp3, self.raster_resp1,
-                 self.raster_resp2, self.raster_resp3, self.runningScorePlot]
+        plots = [self.runningScorePlot, self.averageScorePlot]
         for plot in plots:
-            plot.set_data([[],[]])
+            plot.set_data([[], []])
+        plots = [self.preTrialRaster_responses, self.raster_responses]
+        for plot in plots:
+            plot.set_offsets(np.empty(0))
+            plot.set_array(np.empty(0))
         self.updatePlotLayouts()
-        self.preTrialRasterFigCanvas.draw()
 
         trials = {}
         trials['results'] = []
-        running_score = []
+        trials['running_score'] = []
 
     def pause(self):
         self.trialRunner._paused = not self.trialRunner._paused
@@ -445,6 +416,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.trialThread.quit()
 
     def updatePlotLayouts(self):
+        self.preTrialRasterFigAx.set_xlim(0, p['witholdBeforeStimMax'])
+
         # response raster
         pre_stim_plot = 1
         self.rasterFigAx.set_xlim(-pre_stim_plot, p['trialDuration'])
@@ -456,12 +429,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.raster_stimlength.set_x(p['stimStart'])
         self.raster_stimlength.set_width(p['stimLength'])
         self.raster_stimlength.set_height(p['sessionDuration'])
-        self.rasterFigCanvas.draw()
 
         # performance line
         self.performanceFigAx.set_ylim(0, 1)
         self.performanceFigAx.set_xlim(0, p['sessionDuration'])
-        self.performanceFigCanvas.draw()
 
         # performance blocks
         num_stims = len(p['stimChannels'])
@@ -470,40 +441,47 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.performanceFigPerfAx.set_ylim(-0.5, num_stims-0.5)
         self.performanceFigPerfAx.set_xlim(-0.5, p['sessionDuration']-0.5)
 
-    def updateRasterPlotData(self, ID, trial_num, new_data, state):
+        self.preTrialRasterFigCanvas.draw()
+        self.rasterFigCanvas.draw()
+        self.performanceFigCanvas.draw()
+
+    def updateRasterPlotData(self, trial_num, val, ID, state):
         if state == 'INTRIAL':
-            plots = [self.raster_resp1, self.raster_resp2, self.raster_resp3]
-            plot_series = plots[ID]
-            old_xdata = plot_series.get_xdata()
-            old_ydata = plot_series.get_ydata()
-            resp3_xdata = np.append(old_xdata, new_data)
-            resp3_ydata = np.append(old_ydata, trial_num)
-            plot_series.set_xdata(resp3_xdata)
-            plot_series.set_ydata(resp3_ydata)
-            # self.rasterFigAx.relim()
-            # self.rasterFigAx.autoscale_view()
-            self.rasterFigCanvas.draw()
+            plot_series = self.raster_responses
+            ax = self.rasterFigAx
+            canvas = self.rasterFigCanvas
+            x = val
+            y = trial_num
         elif state == 'PRETRIAL':
-            plots = [self.preTrialRaster_resp1, self.preTrialRaster_resp2,
-                     self.preTrialRaster_resp3]
-            plot_series = plots[ID]
-            old_xdata = plot_series.get_xdata()
-            old_ydata = plot_series.get_ydata()
-            resp3_xdata = np.append(old_xdata, new_data)
-            resp3_ydata = np.append(old_ydata, 0)
-            plot_series.set_xdata(resp3_xdata)
-            plot_series.set_ydata(resp3_ydata)
-            self.preTrialRasterFigAx.relim()
-            self.preTrialRasterFigAx.autoscale_view()
-            self.preTrialRasterFigCanvas.draw()
+            plot_series = self.preTrialRaster_responses
+            ax = self.preTrialRasterFigAx
+            canvas = self.preTrialRasterFigCanvas
+            x = val
+            y = 0
+            if x > p['witholdBeforeStimMax']:
+                ax.set_xlim([0, x])
+                canvas.draw()
+
+        old_data = plot_series.get_offsets()
+        new_data = np.append(old_data, [x, y])
+        plot_series.set_offsets(new_data)
+
+        old_colours = plot_series.get_array()
+        new_colours = np.append(old_colours, ID)
+        plot_series.set_array(new_colours)
+
+        ax.draw_artist(plot_series)
+        canvas.update()
+        canvas.flush_events()
 
     def updateResultBlockPlots(self, trial_num):
         num_stims = len(p['stimChannels'])
         num_trials = p['sessionDuration']
+
         performance_record = np.ones([num_trials, num_stims, 3])
         for t in range(trial_num+1):
             if trials['results'][t]['correct']:
-                colour = [0, .8, .95]
+                colour = [0, .8, .6]
             elif not trials['results'][t]['miss']:  # means incorrect
                 colour = [.95, 0, .05]
             else:  # means miss
@@ -516,9 +494,19 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def updatePerformancePlot(self, trial_num):
         plot_series = self.runningScorePlot
         old_ydata = plot_series.get_ydata()
-        new_ydata = np.append(old_ydata, np.mean(running_score))
+        moving_avg_size = 10
+        if trial_num >= moving_avg_size:
+            new_ydata = np.append(old_ydata, np.mean(trials['running_score'][-moving_avg_size:-1]))
+        else:
+            new_ydata = np.append(old_ydata, np.mean(trials['running_score']))
         plot_series.set_ydata(new_ydata)
         plot_series.set_xdata(range(len(new_ydata)))
+
+        plot_series = self.averageScorePlot
+        old_ydata = plot_series.get_ydata()
+        new_ydata = np.append(old_ydata, np.mean(trials['running_score']))
+        plot_series.set_ydata([np.mean(trials['running_score']), np.mean(trials['running_score'])])
+        plot_series.set_xdata([0, trial_num])
 
     def setConnects(self):
         # add connects for control button clicks
@@ -638,7 +626,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                             if attempt >= 10:
                                 passed = True
 
-
                 elif p['stimOrder'] == 'Interleaved':
                     p['trialOrder'] = np.zeros([p['sessionDuration']])
                     stim_idx = 0
@@ -660,10 +647,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     if p['controlFirstStimVariation']:
                         p['trialVariations'][0:p['firstXStims']] = int(p['firstStimVariation'])
 
-                # p['trialOrder'] = [p['trialOrder']]
-                self.trialOrderAx.imshow([p['trialOrder']], interpolation='nearest', cmap='rainbow', vmin=0, vmax=7, aspect='auto')
-                self.trialOrderAx2.imshow([p['trialVariations']], interpolation='nearest', cmap='gray', aspect='auto')
-                self.trialOrderCanvas.draw()
+                self.plotTrialOrder()
+
+    def plotTrialOrder(self):
+        self.trialOrderAx.imshow([p['trialOrder']], interpolation='nearest', cmap='rainbow', vmin=0, vmax=7, aspect='auto')
+        self.trialOrderAx2.imshow([p['trialVariations']], interpolation='nearest', cmap='gray', aspect='auto')
+        self.trialOrderCanvas.draw()
 
     def saveTrialOrder(self):
         filepath = str(QFileDialog.getSaveFileName(self, 'Save trial sequence', trial_sequence_directory, 'Trial sequence (*.txt)')[0])
@@ -702,9 +691,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 if isinstance(obj, QDoubleSpinBox):
                     p[trimmed_name] = float(obj.value())
 
-        # responseChannels = [p['response1'], p['response2'], p['response3']]
-        # rewardChannels = [p['reward1'], p['reward2']]
-
         stimChannels = [p['stim1'], p['stim2'], p['stim3'], p['stim4'],
                         p['stim5'], p['stim6'], p['stim7'], p['stim8']]
 
@@ -712,10 +698,17 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                         p['respReq4'], p['respReq5'], p['respReq6'],
                         p['respReq7'], p['respReq8']]
 
-        rewardedChannels = [p['rewardedChan1'], p['rewardedChan2'],
-                            p['rewardedChan3'], p['rewardedChan4'],
-                            p['rewardedChan5'], p['rewardedChan6'],
-                            p['rewardedChan7'], p['rewardedChan8']]
+        rewardChannels = [p['rewardedChan1'], p['rewardedChan2'],
+                          p['rewardedChan3'], p['rewardedChan4'],
+                          p['rewardedChan5'], p['rewardedChan6'],
+                          p['rewardedChan7'], p['rewardedChan8']]
+
+        cueChannels = [p['cueChan1'], p['cueChan2'], p['cueChan3'], p['cueChan4'],
+                       p['cueChan5'], p['cueChan6'], p['cueChan7'], p['cueChan8']]
+
+        punishChannels = [p['punishChan1'], p['punishChan2'], p['punishChan3'],
+                          p['punishChan4'], p['punishChan5'], p['punishChan6'],
+                          p['punishChan7'], p['punishChan8']]
 
         proportions = [p['proportion1'], p['proportion2'], p['proportion3'],
                        p['proportion4'], p['proportion5'], p['proportion6'],
@@ -725,12 +718,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                       p['variations4'], p['variations5'], p['variations6'],
                       p['variations7'], p['variations8']]
 
-        # p['responseChannels'] = [idx+1 for idx, val in enumerate(responseChannels) if val]
-        # p['rewardChannels'] = [idx+1 for idx, val in enumerate(rewardChannels) if val]
-
         p['stimChannels'] = [idx for idx, val in enumerate(stimChannels) if val]
+        p['cueChannels'] = [cueChannels[idx] for idx in p['stimChannels']]
+        p['punishChannels'] = [punishChannels[idx] for idx in p['stimChannels']]
         p['respRequired'] = [respRequired[idx] for idx in p['stimChannels']]
-        p['rewardedChannels'] = [rewardedChannels[idx] for idx in p['stimChannels']]
+        p['rewardChannels'] = [rewardChannels[idx] for idx in p['stimChannels']]
         p['proportions'] = [proportions[idx] for idx in p['stimChannels']]
         p['variations'] = [variations[idx] for idx in p['stimChannels']]
 
@@ -751,7 +743,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.makeTrialOrder()
         self.updateTrialConfigPlot()
         self.updatePlotLayouts()
-
 
     def updateTrialConfigPlot(self):
         self.duration_line.set_width(p['totalDuration'])
@@ -774,7 +765,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         self.trialConfigAx.set_xlim([0, p['totalDuration']])
         self.trialConfigCanvas.draw()
-
 
     def GUISave(self):
         widgets = (QComboBox, QCheckBox, QLineEdit, QSpinBox, QDoubleSpinBox)
@@ -844,7 +834,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.trialOrderAx2.hold(True)
         self.trialOrder_verticalLayout.addWidget(self.trialOrderCanvas)
 
-
         # trial structure config
         self.trialConfigFig = Figure()
         self.trialConfigFig.set_facecolor('white')
@@ -875,7 +864,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         # add to GUI
         self.setupTabVerticalLayout.addWidget(self.trialConfigCanvas)
 
-
         # pretrial response/withold plot
         self.preTrialRasterFig = Figure()
         self.preTrialRasterFigCanvas = FigureCanvas(self.preTrialRasterFig)  # a canvas holds a figure
@@ -885,11 +873,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.preTrialRasterFigAx.axis('on')
         self.preTrialRasterFigAx.get_yaxis().set_visible(False)
         self.preTrialRasterFigAx.set_title('Pre-trial', loc='left')
-        self.preTrialRaster_resp1, = self.preTrialRasterFigAx.plot([], [], 'ro', mec='none', aa=True, clip_on=False)  # the comma is important!
-        self.preTrialRaster_resp2, = self.preTrialRasterFigAx.plot([], [], 'bo', mec='none', aa=True, clip_on=False)
-        self.preTrialRaster_resp3, = self.preTrialRasterFigAx.plot([], [], 'go', mec='none', aa=True, clip_on=False)
+        self.preTrialRaster_responses = self.preTrialRasterFigAx.scatter(np.empty(0),np.empty(0), c=np.empty(0), edgecolor='', antialiased=True, clip_on=False, vmin=1, vmax=4, cmap='rainbow', zorder=9)
         self.preTrialRasterFigCanvas.setFixedHeight(50)
         self.preTrialRasterFig.set_facecolor('white')
+        self.preTrialRasterFigCanvas.draw()
 
         # main response raster plot
         self.rasterFig = Figure()
@@ -900,36 +887,28 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.rasterFigAx.set_title('Responses', loc='left')
         self.rasterFigAx.hold(True)
 
-        self.raster_resp1, = self.rasterFigAx.plot([], [], 'ks', markersize=3, mec='none', aa=True, clip_on=False)  # comma is important!
-        self.raster_resp2, = self.rasterFigAx.plot([], [], 'o', mec='none', aa=True, clip_on=False)
-        self.raster_resp3, = self.rasterFigAx.plot([], [], 'o', mec='none', aa=True, clip_on=False)
-        self.raster_reward, = self.rasterFigAx.plot([], [], 'o', clip_on=False)
-        self.raster_punish, = self.rasterFigAx.plot([], [], 'o', clip_on=False)
-
-        self.raster_respwin = patches.Rectangle((0,0), 0, 0, fc=(0, 0, 0, 0.1), ec='none')
-        self.raster_stimlength = patches.Rectangle((0, 0), 0, 0, fc=(0, 0, 0, 0.1), ec='none')
+        self.raster_respwin = patches.Rectangle((0,0), 0, 0, fc=(0, 0, 0, 0.1), ec='none', zorder=1)
+        self.raster_stimlength = patches.Rectangle((0, 0), 0, 0, fc=(0, 0, 0, 0.1), ec='none', zorder=3)
         self.rasterFigAx.add_patch(self.raster_respwin)
         self.rasterFigAx.add_patch(self.raster_stimlength)
-
         self.raster_stimline, = self.rasterFigAx.plot([0, 0], [0, 0], 'k-', linewidth=2)
+        self.raster_responses = self.rasterFigAx.scatter(np.empty(0),np.empty(0), c=np.empty(0), edgecolor='', antialiased=True, clip_on=False, vmin=1, vmax=4, cmap='rainbow', zorder=9)
+        # self.raster_reward, = self.rasterFigAx.plot([], [], 'o', clip_on=False)  # currently unused
+        # self.raster_punish, = self.rasterFigAx.plot([], [], 'o', clip_on=False)  # currently unused
+
         self.rasterFigAx.set_xlabel('Time (s)')
         self.rasterFigAx.set_ylabel('Trial')
 
         self.rasterFigPerfAx = self.rasterFig.add_axes([0.9, 0.15, 0.05, 0.75])
         self.rasterFigPerfAx.axis('off')
 
-        # self.rasterFigCanvas.draw()
-
-
-        # perfomance blocks
-
-
         # results plot
         self.performanceFig = Figure()
         self.performanceFigCanvas = FigureCanvas(self.performanceFig)  # a canvas holds a figure
         self.performanceFigAx = self.performanceFig.add_axes([0.2, 0.15, 0.75, 0.7])
         self.resultsFigsHorizontalLayout.addWidget(self.performanceFigCanvas)
-        self.runningScorePlot, = self.performanceFigAx.plot([], [], 'k-', linewidth=2, aa=True, clip_on=False)
+        self.averageScorePlot, = self.performanceFigAx.plot([], [], '-', c=[1,.3,.5], linewidth=3, aa=True, clip_on=False, zorder=9)
+        self.runningScorePlot, = self.performanceFigAx.plot([], [], 'k-', linewidth=2, aa=True, clip_on=False, zorder=9)
         self.performanceFigAx.set_xlabel('Trial')
         self.performanceFigAx.set_ylabel('Performance')
         self.performanceFig.set_facecolor('white')
@@ -991,17 +970,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 continue
 
     def closeEvent(self, event):
-        # result = QMessageBox.question(self, 'Confirm Exit',
-        #     'Are you sure you want to exit ?',
-        #     QMessageBox.Yes | QMessageBox.No)
-        # event.ignore()
-        result = QMessageBox.Yes
-
-        if result == QMessageBox.Yes:
-            self.trialRunner.stop()
-            time.sleep(0.1)
-            self.trialThread.quit()
-            event.accept()
+        self.trialRunner.stop()
+        time.sleep(0.1)
+        self.trialThread.quit()
+        event.accept()
 
         if arduino['connected']:
             arduino['connected'] = False
@@ -1010,23 +982,25 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def sessionEndGUI(self):
         self.sessionTimer.stop()
         end_time_string = self.sessionTimer_label.text()
-        self.sessionTimer_label.setText('<font color=''#ff0022''>' + end_time_string + '</font>')
+        self.sessionTimer_label.setText('<font color=''#ff0044''>' + end_time_string + '</font>')
         self.updateCommFeed('Finished')
 
     def trialStartGUI(self, trial_num):
         self.trialNum_label.setText(str(trial_num+1))
         self.updateCommFeed('\n')
         self.updateCommFeed('Trial ' + str(trial_num+1), 'trial')
-        plots = [self.preTrialRaster_resp1, self.preTrialRaster_resp2,
-                 self.preTrialRaster_resp3]
+        plots = [self.preTrialRaster_responses]
         for plot_series in plots:
-            plot_series.set_data([[], []])
+            plot_series.set_offsets(np.empty([0]))
+            plot_series.set_array(np.empty([0]))
+        self.preTrialRasterFigAx.set_xlim([0, p['witholdBeforeStimMax']])
+        self.preTrialRasterFigCanvas.draw()
 
     def trialStopGUI(self, trial_num):
-        self.updateResultBlockPlots(trial_num)
         self.updatePerformancePlot(trial_num)
+        self.updateResultBlockPlots(trial_num)
         self.performanceFigCanvas.draw()
-        self.rasterFigCanvas.draw()
+        # self.rasterFigCanvas.draw()
         self.saveResults()
 
     def updateCommFeed(self, input_string, device=None):
@@ -1038,13 +1012,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         elif device == 'trial':
                 input_string = '<b>' + input_string + '</b>'
         trial_log.append(input_string)
-        print input_string
 
-        # if device == 'pc':
-        #     input_string = '<font color=''#330066''>' + input_string + '</font>'
-        # elif device == 'arduino':
-        #     input_string = '<font color=''#660033''>' + input_string + '</font>'
-        # self.sessionFeed_textEdit.setText(input_string)
         self.sessionFeed_textEdit.append(input_string)
 
     def saveResults(self):

@@ -1,5 +1,9 @@
+# ignore
 *.mat
 *.pyc
 *.pde
 *.txt
 *.cfg
+*.pdf
+*.mat
+*.doc

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>721</width>
-    <height>944</height>
+    <width>675</width>
+    <height>890</height>
    </rect>
   </property>
   <property name="font">
@@ -604,9 +604,9 @@ background-color: none;
                 <property name="geometry">
                  <rect>
                   <x>0</x>
-                  <y>-143</y>
+                  <y>-802</y>
                   <width>602</width>
-                  <height>1251</height>
+                  <height>1269</height>
                  </rect>
                 </property>
                 <property name="sizePolicy">
@@ -2627,7 +2627,7 @@ background-color: none;
                              </size>
                             </property>
                             <property name="text">
-                             <string>(Loaded file)</string>
+                             <string/>
                             </property>
                            </widget>
                           </item>
@@ -2831,7 +2831,7 @@ background-color: none;
                         <item row="0" column="1">
                          <layout class="QHBoxLayout" name="horizontalLayout_23">
                           <item>
-                           <widget class="QCheckBox" name="checkBox_3">
+                           <widget class="QCheckBox" name="activeInitiation_checkBox">
                             <property name="enabled">
                              <bool>false</bool>
                             </property>
@@ -2853,7 +2853,7 @@ background-color: none;
                            </widget>
                           </item>
                           <item>
-                           <widget class="QDoubleSpinBox" name="doubleSpinBox_2">
+                           <widget class="QDoubleSpinBox" name="activeInitiationRespRe_checkBox">
                             <property name="enabled">
                              <bool>false</bool>
                             </property>
@@ -3099,7 +3099,7 @@ background-color: none;
                          </widget>
                         </item>
                         <item>
-                         <widget class="QCheckBox" name="checkBox_2">
+                         <widget class="QCheckBox" name="postStimCancel_CheckBox">
                           <property name="sizePolicy">
                            <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                             <horstretch>0</horstretch>
@@ -3613,7 +3613,7 @@ background-color: none;
                     </size>
                    </property>
                    <property name="title">
-                    <string>Punish</string>
+                    <string>Punishment</string>
                    </property>
                    <property name="alignment">
                     <set>Qt::AlignCenter</set>
@@ -3624,63 +3624,9 @@ background-color: none;
                       <item row="0" column="1">
                        <layout class="QHBoxLayout" name="horizontalLayout_12">
                         <item>
-                         <widget class="QCheckBox" name="punish_CheckBox">
-                          <property name="sizePolicy">
-                           <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                           </sizepolicy>
-                          </property>
-                          <property name="minimumSize">
-                           <size>
-                            <width>0</width>
-                            <height>0</height>
-                           </size>
-                          </property>
-                          <property name="focusPolicy">
-                           <enum>Qt::StrongFocus</enum>
-                          </property>
-                          <property name="text">
-                           <string/>
-                          </property>
-                         </widget>
-                        </item>
-                        <item>
-                         <widget class="QComboBox" name="punishType_ComboBox">
-                          <property name="enabled">
-                           <bool>false</bool>
-                          </property>
-                          <property name="sizePolicy">
-                           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                           </sizepolicy>
-                          </property>
-                          <property name="minimumSize">
-                           <size>
-                            <width>0</width>
-                            <height>0</height>
-                           </size>
-                          </property>
-                          <property name="focusPolicy">
-                           <enum>Qt::StrongFocus</enum>
-                          </property>
-                          <item>
-                           <property name="text">
-                            <string>Delay</string>
-                           </property>
-                          </item>
-                          <item>
-                           <property name="text">
-                            <string>Trigger</string>
-                           </property>
-                          </item>
-                         </widget>
-                        </item>
-                        <item>
                          <widget class="QDoubleSpinBox" name="punishLength_SpinBox">
                           <property name="enabled">
-                           <bool>false</bool>
+                           <bool>true</bool>
                           </property>
                           <property name="sizePolicy">
                            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
@@ -3725,10 +3671,27 @@ background-color: none;
                          </size>
                         </property>
                         <property name="text">
-                         <string>Punish</string>
+                         <string>Delay</string>
                         </property>
                         <property name="alignment">
                          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="1" column="0">
+                       <widget class="QLabel" name="label_27">
+                        <property name="text">
+                         <string>Trigger</string>
+                        </property>
+                        <property name="alignment">
+                         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="1" column="1">
+                       <widget class="QCheckBox" name="punishTrigger_checkBox">
+                        <property name="text">
+                         <string/>
                         </property>
                        </widget>
                       </item>
@@ -4346,7 +4309,7 @@ background-color: none;
         <item>
          <widget class="QGroupBox" name="groupBox">
           <property name="title">
-           <string>Session control</string>
+           <string/>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_4">
            <item>
@@ -4422,6 +4385,12 @@ background-color: none;
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
+          </property>
+          <property name="autoFillBackground">
+           <bool>false</bool>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(255, 255, 255)</string>
           </property>
           <property name="title">
            <string>Results</string>
@@ -4504,7 +4473,7 @@ background-color: none;
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>721</width>
+     <width>675</width>
      <height>22</height>
     </rect>
    </property>
@@ -4611,8 +4580,8 @@ background-color: none;
   <tabstop>saveTrialOrder_pushButton</tabstop>
   <tabstop>loadTrialOrder_pushButton</tabstop>
   <tabstop>repeatIfIncorrect_CheckBox</tabstop>
-  <tabstop>checkBox_3</tabstop>
-  <tabstop>doubleSpinBox_2</tabstop>
+  <tabstop>activeInitiation_checkBox</tabstop>
+  <tabstop>activeInitiationRespRe_checkBox</tabstop>
   <tabstop>witholdBeforeStim_CheckBox</tabstop>
   <tabstop>witholdBeforeStimMin_SpinBox</tabstop>
   <tabstop>witholdBeforeStimMax_SpinBox</tabstop>
@@ -4622,7 +4591,7 @@ background-color: none;
   <tabstop>respStopsStim_CheckBox</tabstop>
   <tabstop>cueStim_CheckBox</tabstop>
   <tabstop>postStimDelay_doubleSpinBox</tabstop>
-  <tabstop>checkBox_2</tabstop>
+  <tabstop>postStimCancel_CheckBox</tabstop>
   <tabstop>responseWindow_SpinBox</tabstop>
   <tabstop>cueResponse_CheckBox</tabstop>
   <tabstop>endOfTrialDelay_SpinBox</tabstop>
@@ -4630,8 +4599,6 @@ background-color: none;
   <tabstop>autoRewardDelay_SpinBox</tabstop>
   <tabstop>rewardRemoval_checkBox</tabstop>
   <tabstop>rewardRemovalDelay_SpinBox</tabstop>
-  <tabstop>punish_CheckBox</tabstop>
-  <tabstop>punishType_ComboBox</tabstop>
   <tabstop>punishLength_SpinBox</tabstop>
   <tabstop>autoTransition_CheckBox</tabstop>
   <tabstop>autoTransitionTo_ComboBox</tabstop>
@@ -4667,11 +4634,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>229</x>
-     <y>788</y>
+     <y>110</y>
     </hint>
     <hint type="destinationlabel">
      <x>422</x>
-     <y>809</y>
+     <y>106</y>
     </hint>
    </hints>
   </connection>
@@ -4683,11 +4650,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>229</x>
-     <y>788</y>
+     <y>110</y>
     </hint>
     <hint type="destinationlabel">
      <x>623</x>
-     <y>809</y>
+     <y>106</y>
     </hint>
    </hints>
   </connection>
@@ -4699,11 +4666,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>268</x>
-     <y>339</y>
+     <y>-364</y>
     </hint>
     <hint type="destinationlabel">
      <x>259</x>
-     <y>359</y>
+     <y>-344</y>
     </hint>
    </hints>
   </connection>
@@ -4715,11 +4682,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>268</x>
-     <y>339</y>
+     <y>-364</y>
     </hint>
     <hint type="destinationlabel">
      <x>259</x>
-     <y>383</y>
+     <y>-320</y>
     </hint>
    </hints>
   </connection>
@@ -4731,11 +4698,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>268</x>
-     <y>339</y>
+     <y>-364</y>
     </hint>
     <hint type="destinationlabel">
      <x>259</x>
-     <y>407</y>
+     <y>-296</y>
     </hint>
    </hints>
   </connection>
@@ -4747,11 +4714,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>268</x>
-     <y>339</y>
+     <y>-364</y>
     </hint>
     <hint type="destinationlabel">
      <x>259</x>
-     <y>431</y>
+     <y>-272</y>
     </hint>
    </hints>
   </connection>
@@ -4763,11 +4730,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>268</x>
-     <y>339</y>
+     <y>-364</y>
     </hint>
     <hint type="destinationlabel">
      <x>259</x>
-     <y>482</y>
+     <y>-221</y>
     </hint>
    </hints>
   </connection>
@@ -4779,11 +4746,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>319</x>
-     <y>339</y>
+     <y>-364</y>
     </hint>
     <hint type="destinationlabel">
      <x>310</x>
-     <y>359</y>
+     <y>-344</y>
     </hint>
    </hints>
   </connection>
@@ -4795,11 +4762,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>319</x>
-     <y>339</y>
+     <y>-364</y>
     </hint>
     <hint type="destinationlabel">
      <x>310</x>
-     <y>383</y>
+     <y>-320</y>
     </hint>
    </hints>
   </connection>
@@ -4811,11 +4778,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>319</x>
-     <y>339</y>
+     <y>-364</y>
     </hint>
     <hint type="destinationlabel">
      <x>310</x>
-     <y>407</y>
+     <y>-296</y>
     </hint>
    </hints>
   </connection>
@@ -4827,11 +4794,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>319</x>
-     <y>339</y>
+     <y>-364</y>
     </hint>
     <hint type="destinationlabel">
      <x>310</x>
-     <y>431</y>
+     <y>-272</y>
     </hint>
    </hints>
   </connection>
@@ -4843,11 +4810,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>319</x>
-     <y>339</y>
+     <y>-364</y>
     </hint>
     <hint type="destinationlabel">
      <x>310</x>
-     <y>482</y>
+     <y>-221</y>
     </hint>
    </hints>
   </connection>
@@ -4859,11 +4826,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>370</x>
-     <y>339</y>
+     <y>-364</y>
     </hint>
     <hint type="destinationlabel">
      <x>361</x>
-     <y>359</y>
+     <y>-344</y>
     </hint>
    </hints>
   </connection>
@@ -4875,11 +4842,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>370</x>
-     <y>339</y>
+     <y>-364</y>
     </hint>
     <hint type="destinationlabel">
      <x>361</x>
-     <y>383</y>
+     <y>-320</y>
     </hint>
    </hints>
   </connection>
@@ -4891,11 +4858,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>370</x>
-     <y>339</y>
+     <y>-364</y>
     </hint>
     <hint type="destinationlabel">
      <x>361</x>
-     <y>407</y>
+     <y>-296</y>
     </hint>
    </hints>
   </connection>
@@ -4907,11 +4874,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>370</x>
-     <y>339</y>
+     <y>-364</y>
     </hint>
     <hint type="destinationlabel">
      <x>361</x>
-     <y>431</y>
+     <y>-272</y>
     </hint>
    </hints>
   </connection>
@@ -4923,11 +4890,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>370</x>
-     <y>339</y>
+     <y>-364</y>
     </hint>
     <hint type="destinationlabel">
      <x>361</x>
-     <y>482</y>
+     <y>-221</y>
     </hint>
    </hints>
   </connection>
@@ -4939,11 +4906,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>228</x>
-     <y>1129</y>
+     <y>451</y>
     </hint>
     <hint type="destinationlabel">
-     <x>442</x>
-     <y>1132</y>
+     <x>624</x>
+     <y>447</y>
     </hint>
    </hints>
   </connection>
@@ -4955,43 +4922,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>228</x>
-     <y>1165</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>479</x>
-     <y>1168</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>punish_CheckBox</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>punishType_ComboBox</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>228</x>
-     <y>1256</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>312</x>
-     <y>1257</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>punish_CheckBox</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>punishLength_SpinBox</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>228</x>
-     <y>1256</y>
+     <y>487</y>
     </hint>
     <hint type="destinationlabel">
      <x>624</x>
-     <y>1278</y>
+     <y>483</y>
     </hint>
    </hints>
   </connection>
@@ -5003,11 +4938,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>510</x>
-     <y>608</y>
+     <y>-95</y>
     </hint>
     <hint type="destinationlabel">
-     <x>595</x>
-     <y>606</y>
+     <x>623</x>
+     <y>-93</y>
     </hint>
    </hints>
   </connection>
@@ -5019,11 +4954,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>369</x>
-     <y>608</y>
+     <y>-95</y>
     </hint>
     <hint type="destinationlabel">
-     <x>430</x>
-     <y>600</y>
+     <x>483</x>
+     <y>-93</y>
     </hint>
    </hints>
   </connection>
@@ -5034,12 +4969,12 @@ background-color: none;
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>219</x>
-     <y>604</y>
+     <x>229</x>
+     <y>-95</y>
     </hint>
     <hint type="destinationlabel">
-     <x>271</x>
-     <y>606</y>
+     <x>342</x>
+     <y>-93</y>
     </hint>
    </hints>
   </connection>
@@ -5050,12 +4985,12 @@ background-color: none;
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>221</x>
-     <y>595</y>
+     <x>229</x>
+     <y>-95</y>
     </hint>
     <hint type="destinationlabel">
      <x>369</x>
-     <y>608</y>
+     <y>-95</y>
     </hint>
    </hints>
   </connection>
@@ -5066,12 +5001,12 @@ background-color: none;
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>228</x>
-     <y>605</y>
+     <x>229</x>
+     <y>-95</y>
     </hint>
     <hint type="destinationlabel">
      <x>510</x>
-     <y>608</y>
+     <y>-95</y>
     </hint>
    </hints>
   </connection>
@@ -5082,12 +5017,12 @@ background-color: none;
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>228</x>
-     <y>337</y>
+     <x>268</x>
+     <y>-364</y>
     </hint>
     <hint type="destinationlabel">
-     <x>237</x>
-     <y>445</y>
+     <x>259</x>
+     <y>-245</y>
     </hint>
    </hints>
   </connection>
@@ -5098,12 +5033,12 @@ background-color: none;
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>287</x>
-     <y>331</y>
+     <x>319</x>
+     <y>-364</y>
     </hint>
     <hint type="destinationlabel">
-     <x>289</x>
-     <y>445</y>
+     <x>310</x>
+     <y>-245</y>
     </hint>
    </hints>
   </connection>
@@ -5114,12 +5049,12 @@ background-color: none;
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>334</x>
-     <y>331</y>
+     <x>370</x>
+     <y>-364</y>
     </hint>
     <hint type="destinationlabel">
-     <x>332</x>
-     <y>449</y>
+     <x>361</x>
+     <y>-245</y>
     </hint>
    </hints>
   </connection>
@@ -5130,12 +5065,12 @@ background-color: none;
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>394</x>
-     <y>336</y>
+     <x>421</x>
+     <y>-364</y>
     </hint>
     <hint type="destinationlabel">
-     <x>396</x>
-     <y>471</y>
+     <x>412</x>
+     <y>-221</y>
     </hint>
    </hints>
   </connection>
@@ -5146,12 +5081,12 @@ background-color: none;
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>388</x>
-     <y>330</y>
+     <x>421</x>
+     <y>-364</y>
     </hint>
     <hint type="destinationlabel">
-     <x>402</x>
-     <y>441</y>
+     <x>412</x>
+     <y>-245</y>
     </hint>
    </hints>
   </connection>
@@ -5162,12 +5097,12 @@ background-color: none;
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>386</x>
-     <y>338</y>
+     <x>421</x>
+     <y>-364</y>
     </hint>
     <hint type="destinationlabel">
-     <x>386</x>
-     <y>417</y>
+     <x>412</x>
+     <y>-272</y>
     </hint>
    </hints>
   </connection>
@@ -5178,12 +5113,12 @@ background-color: none;
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>399</x>
-     <y>333</y>
+     <x>421</x>
+     <y>-364</y>
     </hint>
     <hint type="destinationlabel">
-     <x>395</x>
-     <y>397</y>
+     <x>412</x>
+     <y>-296</y>
     </hint>
    </hints>
   </connection>
@@ -5194,12 +5129,12 @@ background-color: none;
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>406</x>
-     <y>333</y>
+     <x>421</x>
+     <y>-364</y>
     </hint>
     <hint type="destinationlabel">
-     <x>398</x>
-     <y>372</y>
+     <x>412</x>
+     <y>-320</y>
     </hint>
    </hints>
   </connection>
@@ -5210,12 +5145,12 @@ background-color: none;
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>397</x>
-     <y>328</y>
+     <x>421</x>
+     <y>-364</y>
     </hint>
     <hint type="destinationlabel">
-     <x>389</x>
-     <y>351</y>
+     <x>412</x>
+     <y>-344</y>
     </hint>
    </hints>
   </connection>
@@ -5226,12 +5161,12 @@ background-color: none;
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>431</x>
-     <y>337</y>
+     <x>472</x>
+     <y>-364</y>
     </hint>
     <hint type="destinationlabel">
-     <x>437</x>
-     <y>478</y>
+     <x>463</x>
+     <y>-221</y>
     </hint>
    </hints>
   </connection>
@@ -5242,12 +5177,12 @@ background-color: none;
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>455</x>
-     <y>330</y>
+     <x>472</x>
+     <y>-364</y>
     </hint>
     <hint type="destinationlabel">
-     <x>452</x>
-     <y>444</y>
+     <x>463</x>
+     <y>-245</y>
     </hint>
    </hints>
   </connection>
@@ -5258,12 +5193,12 @@ background-color: none;
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>466</x>
-     <y>335</y>
+     <x>472</x>
+     <y>-364</y>
     </hint>
     <hint type="destinationlabel">
-     <x>436</x>
-     <y>420</y>
+     <x>463</x>
+     <y>-272</y>
     </hint>
    </hints>
   </connection>
@@ -5274,12 +5209,12 @@ background-color: none;
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>440</x>
-     <y>335</y>
+     <x>472</x>
+     <y>-364</y>
     </hint>
     <hint type="destinationlabel">
-     <x>434</x>
-     <y>396</y>
+     <x>463</x>
+     <y>-296</y>
     </hint>
    </hints>
   </connection>
@@ -5290,12 +5225,12 @@ background-color: none;
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>438</x>
-     <y>339</y>
+     <x>472</x>
+     <y>-364</y>
     </hint>
     <hint type="destinationlabel">
-     <x>438</x>
-     <y>380</y>
+     <x>463</x>
+     <y>-320</y>
     </hint>
    </hints>
   </connection>
@@ -5306,12 +5241,12 @@ background-color: none;
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>445</x>
-     <y>334</y>
+     <x>472</x>
+     <y>-364</y>
     </hint>
     <hint type="destinationlabel">
-     <x>447</x>
-     <y>349</y>
+     <x>463</x>
+     <y>-344</y>
     </hint>
    </hints>
   </connection>
@@ -5322,12 +5257,12 @@ background-color: none;
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>489</x>
-     <y>328</y>
+     <x>523</x>
+     <y>-364</y>
     </hint>
     <hint type="destinationlabel">
-     <x>491</x>
-     <y>466</y>
+     <x>514</x>
+     <y>-221</y>
     </hint>
    </hints>
   </connection>
@@ -5338,12 +5273,12 @@ background-color: none;
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>497</x>
-     <y>332</y>
+     <x>523</x>
+     <y>-364</y>
     </hint>
     <hint type="destinationlabel">
-     <x>493</x>
-     <y>452</y>
+     <x>514</x>
+     <y>-245</y>
     </hint>
    </hints>
   </connection>
@@ -5354,12 +5289,12 @@ background-color: none;
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>502</x>
-     <y>331</y>
+     <x>523</x>
+     <y>-364</y>
     </hint>
     <hint type="destinationlabel">
-     <x>503</x>
-     <y>418</y>
+     <x>514</x>
+     <y>-272</y>
     </hint>
    </hints>
   </connection>
@@ -5370,12 +5305,12 @@ background-color: none;
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>510</x>
-     <y>335</y>
+     <x>523</x>
+     <y>-364</y>
     </hint>
     <hint type="destinationlabel">
-     <x>505</x>
-     <y>397</y>
+     <x>514</x>
+     <y>-296</y>
     </hint>
    </hints>
   </connection>
@@ -5386,12 +5321,12 @@ background-color: none;
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>486</x>
-     <y>336</y>
+     <x>523</x>
+     <y>-364</y>
     </hint>
     <hint type="destinationlabel">
-     <x>486</x>
-     <y>375</y>
+     <x>514</x>
+     <y>-320</y>
     </hint>
    </hints>
   </connection>
@@ -5402,12 +5337,12 @@ background-color: none;
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>488</x>
-     <y>331</y>
+     <x>523</x>
+     <y>-364</y>
     </hint>
     <hint type="destinationlabel">
-     <x>489</x>
-     <y>348</y>
+     <x>514</x>
+     <y>-344</y>
     </hint>
    </hints>
   </connection>
@@ -5418,12 +5353,12 @@ background-color: none;
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>558</x>
-     <y>335</y>
+     <x>574</x>
+     <y>-364</y>
     </hint>
     <hint type="destinationlabel">
-     <x>556</x>
-     <y>470</y>
+     <x>565</x>
+     <y>-221</y>
     </hint>
    </hints>
   </connection>
@@ -5434,12 +5369,12 @@ background-color: none;
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>546</x>
-     <y>334</y>
+     <x>574</x>
+     <y>-364</y>
     </hint>
     <hint type="destinationlabel">
-     <x>548</x>
-     <y>444</y>
+     <x>565</x>
+     <y>-245</y>
     </hint>
    </hints>
   </connection>
@@ -5450,12 +5385,12 @@ background-color: none;
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>532</x>
-     <y>333</y>
+     <x>574</x>
+     <y>-364</y>
     </hint>
     <hint type="destinationlabel">
-     <x>560</x>
-     <y>425</y>
+     <x>565</x>
+     <y>-272</y>
     </hint>
    </hints>
   </connection>
@@ -5466,12 +5401,12 @@ background-color: none;
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>535</x>
-     <y>339</y>
+     <x>574</x>
+     <y>-364</y>
     </hint>
     <hint type="destinationlabel">
-     <x>550</x>
-     <y>395</y>
+     <x>565</x>
+     <y>-296</y>
     </hint>
    </hints>
   </connection>
@@ -5482,12 +5417,12 @@ background-color: none;
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>536</x>
-     <y>335</y>
+     <x>574</x>
+     <y>-364</y>
     </hint>
     <hint type="destinationlabel">
-     <x>542</x>
-     <y>368</y>
+     <x>565</x>
+     <y>-320</y>
     </hint>
    </hints>
   </connection>
@@ -5498,12 +5433,12 @@ background-color: none;
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>529</x>
-     <y>332</y>
+     <x>574</x>
+     <y>-364</y>
     </hint>
     <hint type="destinationlabel">
-     <x>529</x>
-     <y>351</y>
+     <x>565</x>
+     <y>-344</y>
     </hint>
    </hints>
   </connection>
@@ -5514,12 +5449,12 @@ background-color: none;
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>597</x>
-     <y>330</y>
+     <x>625</x>
+     <y>-364</y>
     </hint>
     <hint type="destinationlabel">
-     <x>607</x>
-     <y>465</y>
+     <x>616</x>
+     <y>-221</y>
     </hint>
    </hints>
   </connection>
@@ -5530,12 +5465,12 @@ background-color: none;
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>597</x>
-     <y>338</y>
+     <x>625</x>
+     <y>-364</y>
     </hint>
     <hint type="destinationlabel">
-     <x>605</x>
-     <y>456</y>
+     <x>616</x>
+     <y>-245</y>
     </hint>
    </hints>
   </connection>
@@ -5546,12 +5481,12 @@ background-color: none;
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>596</x>
-     <y>330</y>
+     <x>625</x>
+     <y>-364</y>
     </hint>
     <hint type="destinationlabel">
-     <x>587</x>
-     <y>418</y>
+     <x>616</x>
+     <y>-272</y>
     </hint>
    </hints>
   </connection>
@@ -5562,12 +5497,12 @@ background-color: none;
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>619</x>
-     <y>337</y>
+     <x>625</x>
+     <y>-364</y>
     </hint>
     <hint type="destinationlabel">
-     <x>600</x>
-     <y>399</y>
+     <x>616</x>
+     <y>-296</y>
     </hint>
    </hints>
   </connection>
@@ -5578,12 +5513,12 @@ background-color: none;
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>591</x>
-     <y>332</y>
+     <x>625</x>
+     <y>-364</y>
     </hint>
     <hint type="destinationlabel">
-     <x>594</x>
-     <y>358</y>
+     <x>616</x>
+     <y>-344</y>
     </hint>
    </hints>
   </connection>
@@ -5594,12 +5529,12 @@ background-color: none;
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>612</x>
-     <y>332</y>
+     <x>625</x>
+     <y>-364</y>
     </hint>
     <hint type="destinationlabel">
-     <x>602</x>
-     <y>371</y>
+     <x>616</x>
+     <y>-320</y>
     </hint>
    </hints>
   </connection>

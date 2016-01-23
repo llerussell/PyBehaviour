@@ -1,3 +1,6 @@
+// PyBehaviour
+// (c) 2015 Lloyd Russell
+
 #include <elapsedMillis.h>
 #include <TaskScheduler.h>
 
@@ -6,6 +9,8 @@
 //---------------------------------------------------------
 
 Task tTransmit;
+Task tCueOn;
+Task tCueOff;
 Task tStimStart;
 Task tStimStop;
 Task tRespWinOpen;
@@ -15,6 +20,8 @@ Task tRewardOn;
 Task tRewardOff;
 Task tRewardRemovalOn;
 Task tRewardRemovalOff;
+Task tPunishOn;
+Task tPunishOff;
 Task tEndTrial;
 
 Scheduler taskManager;
@@ -27,6 +34,10 @@ const int stimPin[] = {22, 23};
 const int rewardPin[] = {4, 5};
 const int rewardRemovalPin[] = {8, 9};
 const int punishPin[] = {6, 7};
+const int cuePin[] = {10};
+const int stimVarPin[] = {14, 15, 16, 17};
+const int respWinPin = 99;
+const int trialRunningPin = 13;
 
 // serial communication
 char incomingByte;
@@ -55,21 +66,22 @@ int rewardChan;
 boolean trialCue;
 boolean stimCue;
 boolean respCue;
-int respCueStart;
+int respCueStartTime;
 boolean withold;
 int witholdReq;
-int stimStart;
-int stimStop;
-int respStart;
-int respStop;
+int stimStartTime;
+int stimStopTime;
+int respWinStartTime;
+int respWinStopTime;
 int trialDuration;
 boolean autoReward;
-int autoRewardStart;
-boolean punish;
+int autoRewardStartTime;
+int punishChan;
 int punishLength;
-boolean punishTimeout;
 boolean rewardRemoval;
 int rewardRemovalDelay;
+int cueChan;
+boolean postStimCancel;
 
 // session/trial states
 boolean configReceived = false;
@@ -132,9 +144,17 @@ void setup() {
     pinMode(rewardPin[i], OUTPUT);
     digitalWrite(rewardPin[i], LOW);
   }
+  for ( int i = 0; i < sizeof(cuePin); ++i ) {
+    pinMode(cuePin[i], OUTPUT);
+    digitalWrite(cuePin[i], LOW);
+  }
   for ( int i = 0; i < sizeof(stimPin); ++i ) {
     pinMode(stimPin[i], OUTPUT);
     digitalWrite(stimPin[i], LOW);
+  }
+  for ( int i = 0; i < sizeof(stimVarPin); ++i ) {
+    pinMode(stimVarPin[i], OUTPUT);
+    digitalWrite(stimVarPin[i], LOW);
   }
   for ( int i = 0; i < sizeof(punishPin); ++i ) {
     pinMode(punishPin[i], OUTPUT);
@@ -247,86 +267,72 @@ void rxConfig() {
       switch (varIndex) {
         case 1:
           stimChan = atoi(varBuffer) - 1;
-          //ConfigString = ConfigString + "stim_chan:" + stimChan + ";";
           break;
         case 2:
           stimVar = atoi(varBuffer) - 1;
           break;
         case 3:
           respReq = atoi(varBuffer);
-          //ConfigString = ConfigString + "resp_req:" + respReq + ";";
           break;
         case 4:
           rewardChan = atoi(varBuffer) - 1;
-          //ConfigString = ConfigString + "reward_chan:" + rewardChan + ";";
           break;
         case 5:
           trialCue = atoi(varBuffer);
-          //ConfigString = ConfigString + "trial_cue:" + trialCue + ";";
           break;
         case 6:
           stimCue = atoi(varBuffer);
-          //ConfigString = ConfigString + "stim_cue:" + stimCue + ";" ;
           break;
         case 7:
           respCue = atoi(varBuffer);
-          //ConfigString = ConfigString + "resp_cue:" + respCue + ";";
           break;
         case 8:
-          respCueStart = atoi(varBuffer);
-          //ConfigString = ConfigString + "resp_cue_start:" + respCueStart + ";";
+          respCueStartTime = atoi(varBuffer);
           break;
         case 9:
           withold = atoi(varBuffer);
-          //ConfigString = ConfigString + "withold:" + withold + ";";
           break;
         case 10:
           witholdReq = atoi(varBuffer);
-          //ConfigString = ConfigString + "withold_req:" + witholdReq + ";";
           break;
         case 11:
-          stimStart = atoi(varBuffer);
-          //ConfigString = ConfigString + "stim_start:" + stimStart + ";";
+          stimStartTime = atoi(varBuffer);
           break;
         case 12:
-          stimStop = atoi(varBuffer);
-          //ConfigString = ConfigString + "stim_stop:" + stimStop + ";";
+          stimStopTime = atoi(varBuffer);
           break;
         case 13:
-          respStart = atoi(varBuffer);
-          //ConfigString = ConfigString + "resp_start:" + respStart + ";";
+          respWinStartTime = atoi(varBuffer);
           break;
         case 14:
-          respStop = atoi(varBuffer);
-          //ConfigString = ConfigString + "resp_stop:" + respStop + ";";
+          respWinStopTime = atoi(varBuffer);
           break;
         case 15:
           trialDuration = atoi(varBuffer);
-          //ConfigString = ConfigString + "trial_duration:" + trialDuration + ";";
           break;
         case 16:
           autoReward = atoi(varBuffer);
-          //ConfigString = ConfigString + "auto_reward:" + autoReward + ";";
           break;
         case 17:
-          autoRewardStart = atoi(varBuffer);
-          //ConfigString = ConfigString + "auto_reward_start:" + autoRewardStart + ";";
+          autoRewardStartTime = atoi(varBuffer);
           break;
         case 18:
-          punish = atoi(varBuffer);
-          //ConfigString = ConfigString + "punish:" + punish + ";";
+          punishChan = atoi(varBuffer);
           break;
         case 19:
           punishLength = atoi(varBuffer);
-          //ConfigString = ConfigString + "punish_length:" + punishLength + ";";
           break;
         case 20:
           rewardRemoval = atoi(varBuffer);
-          //ConfigString = ConfigString + "reward_removal:" + rewardRemoval + ";";
           break;
         case 21:
           rewardRemovalDelay = atoi(varBuffer);
-          //ConfigString = ConfigString + "reward_removal_delay:" + rewardRemovalDelay + ";";
+          break;
+        case 22:
+          cueChan = atoi(varBuffer);
+          break;
+        case 23:
+          postStimCancel = atoi(varBuffer);
           break;
       }
       varBufferIndex = 0;
@@ -355,18 +361,24 @@ void configTrial() {
   taskManager.init();
 
   tTransmit.set(100, -1, &txData);
-  tStimStart.set(stimStart, 1, &stimOn);
-  tStimStop.set(stimStop, 1, &stimOff);
-  tRespWinOpen.set(respStart, 1, &respWinOpen);
-  tRespWinClose.set(respStop, 1, &respWinClose);
+  tCueOn.set(0, 0, &cueOn);
+  tCueOff.set(50, 0, &cueOff);
+  tStimStart.set(stimStartTime, 1, &stimOn);
+  tStimStop.set(stimStopTime, 1, &stimOff);
+  tRespWinOpen.set(respWinStartTime, 1, &respWinOpen);
+  tRespWinClose.set(respWinStopTime, 1, &respWinClose);
   tRewardOn.set(0, 1, &rewardOn);
-  tRewardOff.set(100, 1, &rewardOff);
-  tAutoReward.set(autoRewardStart, 1, &autoRewardOn);
+  tRewardOff.set(50, 1, &rewardOff);
+  tAutoReward.set(autoRewardStartTime, 1, &autoRewardOn);
   tRewardRemovalOn.set(rewardRemovalDelay, 1, &rewardRemovalOn);
-  tRewardRemovalOff.set(100, 1, &rewardRemovalOff);
+  tRewardRemovalOff.set(50, 1, &rewardRemovalOff);
+  tPunishOn.set(0, 1, &punishOn);
+  tPunishOff.set(50, 1, &punishOff);
   tEndTrial.set(trialDuration, 1, &stopTasks);
 
   tTransmit.disableOnLastIteration(true);
+  tCueOn.disableOnLastIteration(false);
+  tCueOff.disableOnLastIteration(false);
   tStimStart.disableOnLastIteration(true);
   tStimStop.disableOnLastIteration(true);
   tRespWinOpen.disableOnLastIteration(true);
@@ -376,6 +388,8 @@ void configTrial() {
   tAutoReward.disableOnLastIteration(true);
   tRewardRemovalOn.disableOnLastIteration(true);
   tRewardRemovalOff.disableOnLastIteration(true);
+  tPunishOn.disableOnLastIteration(true);
+  tPunishOff.disableOnLastIteration(true);
   tEndTrial.disableOnLastIteration(true);
 
   taskManager.addTask(tRewardOn); // pseudo priority
@@ -388,7 +402,11 @@ void configTrial() {
   taskManager.addTask(tAutoReward);
   taskManager.addTask(tRewardRemovalOn);
   taskManager.addTask(tRewardRemovalOff);
+  taskManager.addTask(tPunishOn);
+  taskManager.addTask(tPunishOff);
   taskManager.addTask(tEndTrial);
+  taskManager.addTask(tCueOn);
+  taskManager.addTask(tCueOff);
   taskManager.disableAll();
 
   dataString = "";
@@ -403,11 +421,12 @@ void runTrial() {
   attachInterrupt(responsePin[1], response2, RISING);
   //attachInterrupt(responsePin[2], response3, RISING);
   trialRunning = true;
-  digitalWrite(13, HIGH);
+  digitalWrite(trialRunningPin, HIGH);
 
   // deliver trial cue
   if (trialCue) {
     Serial.println("trial cue");
+    tCueOn.enable();
   }
 
   tTransmit.enableDelayed();
@@ -428,7 +447,6 @@ void runTrial() {
       SREG = SaveSREG; // restore the interrupt flag
     }
   }
-
 
   // start trial
   now = millis() - startTime;
@@ -480,21 +498,24 @@ void processResponse(int responseNum) {
   if (inWithold) { // or initate trial if response is required
     witholdTimer = 0;
   }
+  else if ((timeResponded < respWinStartTime) && (postStimCancel)) {  // if post stim delay, cancel trial
+    tEndTrial.enable();
+  }
   else if ((inRespWin) && (respWinRespIdx == 0)) {
     if (responseNum == respReq) {
       tRewardOn.enable();
     }
     else {
-      if (punish) {
+      if (punishChan > 0) {
       currentTime = millis() - startTime;
+      }
+      if (punishLength > 0) {
       tEndTrial.setInterval(trialDuration - currentTime + punishLength);
       }
     }
     respWinResponses[respWinRespIdx] = responseNum;
     respWinRespIdx = respWinRespIdx + 1;
   }
-
-  // if post stim delay, cancel trial?
 
   SREG = SaveSREG; // restore the interrupt flag
 }
@@ -519,6 +540,16 @@ void txData() {
 void stimOn() {
   Serial.println("stim on");
   digitalWrite(stimPin[stimChan], HIGH);
+
+  // stim variation, binary 'barcode' (1:16)
+  int bits[] = {0,0,0,0};
+    for (int i = 3; i >= 0; i--) {
+        bits[i] = (stimVar & (1 << i)) != 0;
+        digitalWrite(stimVarPin[i], bits[i]);
+    }
+  if (stimCue) {
+    tCueOn.enable();
+  }
 }
 
 void stimOff() {
@@ -545,9 +576,36 @@ void rewardOff() {
   digitalWrite(rewardPin[rewardChan], LOW);
 }
 
+void cueOn() {
+  Serial.println("cue on");
+  digitalWrite(cuePin[cueChan], HIGH);
+  tCueOn.setIterations(1);  // reset iterations to allow repeat
+  tCueOff.setIterations(1);  // reset iterations to allow repeat
+  tCueOff.enableDelayed();
+}
+
+void cueOff() {
+  Serial.println("cue off");
+  digitalWrite(cuePin[cueChan], LOW);
+}
+
+void punishOn() {
+  Serial.println("punish on");
+  digitalWrite(punishPin[punishChan], HIGH);
+  tPunishOff.enableDelayed();
+}
+
+void punishOff() {
+  Serial.println("punish off");
+  digitalWrite(punishPin[punishChan], LOW);
+}
+
 void respWinOpen() {
   inRespWin = true;
   Serial.println("resp win on");
+  if (stimCue) {
+    tCueOn.enable();
+  }
 }
 
 void respWinClose() {
@@ -575,12 +633,18 @@ void endTrial() {
   detachInterrupt(responsePin[0]);
   detachInterrupt(responsePin[1]);
   //detachInterrupt(responsePin[2]);
-  digitalWrite(13, LOW);
+  digitalWrite(trialRunningPin, LOW);
+  for ( int i = 0; i < sizeof(cuePin); ++i ) {
+    digitalWrite(cuePin[i], LOW);
+  }
   for ( int i = 0; i < sizeof(rewardPin); ++i ) {
     digitalWrite(rewardPin[i], LOW);
   }
   for ( int i = 0; i < sizeof(stimPin); ++i ) {
     digitalWrite(stimPin[i], LOW);
+  }
+  for ( int i = 0; i < sizeof(stimVarPin); ++i ) {
+    digitalWrite(stimVarPin[i], LOW);
   }
   for ( int i = 0; i < sizeof(punishPin); ++i ) {
     digitalWrite(punishPin[i], LOW);

@@ -5,7 +5,7 @@ Behavioural testing software, Python, arduino
 In development
 
 ## Screenshots
-![Imgur](http://i.imgur.com/7MCgvtB.png)
+![Imgur](http://i.imgur.com/LeblyRe.png)
 
 ## Prerequisites
 * Python (3.4 recommended)
@@ -29,26 +29,11 @@ Windows 64-bit:
 * Upload PyBehaviour.ino to arduino
 
 ## Known issues
-* globals
-* redundant dictionaries
-* needs to be divided into subfunctions
-* 'communication' panel has been offloaded to terminal window
-* GUI window could be better organised
-  * Response channel and reward channel checkboxes are unnecessary
-  * ...
-* clear trial performance bars at restart session
-* pre trial licks should be cleared at start of trial
-* display plotting issue: no withold period, stil shows max withold val
-* cues not fully implemented
 * INTERRUPT 2 (pin 21) NOT COMPATIBLE
 
 ## Features to add
-* Specific proportion of stimulus types
-* Specify cue channels per stimulus
 * Auto transition
-* Adpatation phase, no stimuli, all responses are rewarded 
-* post-stim, pre-response window responses to abort trial
-* auto-transition post stim delay duration
+* Adpatation phase, no stimuli, all responses are rewarded
 * ...
 
 ## Tested compatibility
