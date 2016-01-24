@@ -70,8 +70,8 @@ p = {}
 arduino = {}
 arduino['connected'] = False
 
-# start random number seed
-np.random.seed()
+# # start random number seed
+# np.random.seed()
 
 
 class TrialRunner(QObject):
@@ -122,6 +122,13 @@ class TrialRunner(QObject):
             if current_attempt > connect_attempts:
                 self.comm_feed_signal.emit('*** Failed to connect ***', '')
 
+    def disconnectArduino(self):
+        if arduino['connected']:
+            self.comm_feed_signal.emit('Disconnecting Arduino...', '')
+            arduino['device'].close()
+            arduino['connected'] = False
+            self.arduino_disconnected_signal.emit()
+
     def runTrial(self, trial_num, trials):
         self.setupResultsDict(trial_num)  # initialise the results for current trial
         self.trial_start_signal.emit(trial_num)  # let GUI know trial number etc
@@ -136,19 +143,24 @@ class TrialRunner(QObject):
         trials['results'][trial_num]['withold_req'] = []
         trials['results'][trial_num]['withold_act'] = []
         trials['results'][trial_num]['stim_type'] = []
+        trials['results'][trial_num]['stim_var'] = []
         trials['results'][trial_num]['response_required'] = []
         trials['results'][trial_num]['reward_channel'] = []
-        trials['results'][trial_num]['p'] = p
+        trials['results'][trial_num]['parameters'] = p
 
     def transmitConfig(self, trial_num):
         '''
-        Configure the current trial p.
-        Construct a string listing all the various configuration p.
+        Configure the current trial parameters.
+        Construct a string listing all the various configuration parameters.
         Send this string to the arduino.
         '''
 
+        # adjust trial order if repeat-if-incorrect
         if trial_num > 0:
-            if p['repeatIfIncorrect'] and trials['running_score'][-1] == 0:
+            max_repeats = int(p['maximumRepeatsIfIncorrect'])
+            if trial_num > max_repeats and np.sum(trials['running_score'][-max_repeats:]) == 0:
+                print('here')  # do not repeat any more if max_repeats has been exceeded
+            elif p['repeatIfIncorrect'] and trials['running_score'][-1] == 0:
                 # shift next trials back
                 p['trialOrder'][trial_num+1:-1] = p['trialOrder'][trial_num:-2]
                 p['trialVariations'][trial_num+1:-1] = p['trialVariations'][trial_num:-2]
@@ -160,20 +172,21 @@ class TrialRunner(QObject):
                 # update the trial order plot(shown on config tab)
                 # self.plotTrialOrder()
 
+        # get the current stim type
         this_stim_idx = int(p['trialOrder'][trial_num])
-        this_var = int(p['trialVariations'][trial_num])
-
         this_stim = p['stimChannels'][this_stim_idx]
+        this_var = int(p['trialVariations'][trial_num])
         trials['results'][trial_num]['stim_type'] = this_stim
+        trials['results'][trial_num]['stim_var'] = this_var
 
-        # response required
+        # get response required
         resp_req = p['respRequired'][this_stim_idx]
         trials['results'][trial_num]['response_required'] = resp_req
 
-        # resonse cancels post stim delay?
+        # resonse-cancels-trial (post stim delay)
         post_stim_cancel = int(p['postStimCancel'])
 
-        # reward channel
+        # get reward, cue and punish channels
         reward_chan = p['rewardChannels'][this_stim_idx]
         trials['results'][trial_num]['reward_channel'] = reward_chan
         cue_chan = p['cueChannels'][this_stim_idx]
@@ -182,7 +195,7 @@ class TrialRunner(QObject):
         else:
             punish_chan = 0
 
-        # generate random withold requirement
+        # generate random withold requirement (if enabled)
         if p['witholdBeforeStim']:
             withold_min = p['witholdBeforeStimMin']
             withold_max = p['witholdBeforeStimMax']
@@ -191,8 +204,7 @@ class TrialRunner(QObject):
             withold_req = 0
         trials['results'][trial_num]['withold_req'] = withold_req
 
-        # construct arduino config string
-        # format = <KEY:value;KEY:value;>
+        # construct arduino config string. Format = <KEY:value;KEY:value;>
         config_string = '<' + \
             'STIM_CHAN:' + \
             str(this_stim) + ';' \
@@ -264,6 +276,7 @@ class TrialRunner(QObject):
     trial_end_signal = pyqtSignal(int, name='trialEndSignal')
     session_end_signal = pyqtSignal(name='sessionEndGUISignal')
     arduino_connected_signal = pyqtSignal(name='arduinoConnectedSignal')
+    arduino_disconnected_signal = pyqtSignal(name='arduinoDisconnectedSignal')
     comm_feed_signal = pyqtSignal(str, str, name='commFeedSignal')
 
     def receiveData(self, trial_num):
@@ -317,6 +330,7 @@ class TrialRunner(QObject):
     def stop(self):
         self._session_running = False
         self.session_end_signal.emit()
+        self.disconnectArduino()
 
 
 class MainWindow(QMainWindow, Ui_MainWindow):
@@ -325,7 +339,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     '''
     def __init__(self):
         QMainWindow.__init__(self)
-
         self._ready = False
         self.setupUi(self)
 
@@ -353,6 +366,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.defaults = {}
         self.trial_config = {}
         self.trial_log = []
+
+        # ready
         self._ready = True
 
         # open the config file and populate GUI with values
@@ -374,6 +389,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         p['sessionID'] = p['subjectID'] + '_' + p['sessionStartTimeString']
         self.setWindowTitle('PyBehaviour - ' + p['sessionID'])
         self.sessionTimer.start(100)  # start the QTimer, executes every 100ms
+        self.sessionTimer_label.setStyleSheet('font-size: 18pt; font-weight: bold; color:''black'';')
+
 
         self.trialThread.start()
 
@@ -472,9 +489,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         performance_record = np.ones([num_trials, num_stims, 3])
         for t in range(trial_num+1):
             if trials['results'][t]['correct']:
-                colour = [0, .8, .6]
+                colour = [0.05, 0.9, 0.4]
             elif not trials['results'][t]['miss']:  # means incorrect
-                colour = [.95, 0, .05]
+                colour = [1, 0, 0.4]
             else:  # means miss
                 colour = [.66, .66, .66]
             performance_record[t, p['trialOrder'][t]] = colour
@@ -515,6 +532,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.sessionTimer = QTimer(self)
         self.sessionTimer.timeout.connect(self.sessionTimerUpdate)
         self.trialRunner.arduino_connected_signal.connect(self.arduinoConnected)
+        self.trialRunner.arduino_disconnected_signal.connect(self.arduinoDisconnected)
         self.trialRunner.response_signal.connect(self.updateRasterPlotData)
         self.trialRunner.trial_start_signal.connect(self.trialStartGUI)
         self.trialRunner.trial_end_signal.connect(self.trialStopGUI)
@@ -551,6 +569,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def arduinoConnected(self):
         self.arduinoConnectedText_Label.setText('Connected')
         self.arduinoConnectedText_Label.setStyleSheet('color:rgb(0, 188, 152);')
+
+    def arduinoDisconnected(self):
+        self.arduinoConnectedText_Label.setText('Not connected')
+        self.arduinoConnectedText_Label.setStyleSheet('color:rgb(188, 0, 30);')
 
     def makeTrialOrder(self):
         if not self.trialRunner._session_running:
@@ -898,10 +920,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.performanceFigCanvas = FigureCanvas(self.performanceFig)  # a canvas holds a figure
         self.performanceFigAx = self.performanceFig.add_axes([0.2, 0.15, 0.75, 0.7])
         self.resultsFigsHorizontalLayout.addWidget(self.performanceFigCanvas)
-        self.averageScorePlot, = self.performanceFigAx.plot([], [], '-', c=[1,.3,.5], linewidth=3, aa=True, clip_on=False, zorder=9)
+        self.averageScorePlot, = self.performanceFigAx.plot([], [], '-', c=[0.7, 0.7, 0.7], linewidth=3, aa=True, clip_on=False, zorder=9)
         self.runningScorePlot, = self.performanceFigAx.plot([], [], 'k-', linewidth=2, aa=True, clip_on=False, zorder=9)
         self.performanceFigAx.set_xlabel('Trial')
-        self.performanceFigAx.set_ylabel('Performance')
+        self.performanceFigAx.set_ylabel('Performance (%)')
+        self.performanceFigAx.set_yticks(np.arange(0, 1.01, 0.25))
+        self.performanceFigAx.set_yticklabels(np.arange(0, 101, 25))
         self.performanceFig.set_facecolor('white')
 
         self.performanceFigPerfAx = self.performanceFig.add_axes([0.2, 0.86, 0.75, 0.04])
@@ -966,14 +990,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.trialThread.quit()
         event.accept()
 
-        if arduino['connected']:
-            arduino['connected'] = False
-            arduino['device'].close()
-
     def sessionEndGUI(self):
         self.sessionTimer.stop()
         end_time_string = self.sessionTimer_label.text()
-        self.sessionTimer_label.setText('<font color=''#ff0044''>' + end_time_string + '</font>')
+        1, 0, 0.4
+        self.sessionTimer_label.setText('<font color=''#ff0066''>' + end_time_string + '</font>')
         self.updateCommFeed('Finished')
 
     def trialStartGUI(self, trial_num):
@@ -995,22 +1016,21 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.saveResults()
 
     def updateCommFeed(self, input_string, device=None):
-        input_string = input_string.replace('<', '{').replace('>', '}')
+        # input_string = input_string.replace('<', '{').replace('>', '}')
         if device == 'pc':
-            input_string = '<font color=''#6600ff''>PC:</font>' + '...... ' + input_string
+            input_string = 'PC:      ' + input_string
         elif device == 'arduino':
-            input_string = '<font color=''#ff0066''>ARDUINO: </font>' + input_string
+            input_string = 'ARDUINO: ' + input_string
         elif device == 'trial':
-                input_string = '<b>' + input_string + '</b>'
-        self.trial_log.append(input_string)
-
+                input_string = input_string
+                self.sessionFeed_textEdit.setText('')
         self.sessionFeed_textEdit.append(input_string)
+        self.trial_log.append(input_string)
 
     def saveResults(self):
         save_directory = os.path.join(results_directory, p['subjectID'])
         if not os.path.exists(save_directory):
             os.makedirs(save_directory)
-
         save_name = os.path.join(save_directory, p['sessionID'])
 
         sio.savemat(save_name + '.mat', trials)

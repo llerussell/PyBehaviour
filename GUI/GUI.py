@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'GUI.ui'
 #
-# Created: Sat Jan 23 15:59:43 2016
+# Created: Sun Jan 24 11:41:07 2016
 #      by: PyQt5 UI code generator 5.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -280,7 +280,7 @@ class Ui_MainWindow(object):
         self.scrollArea.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 602, 1269))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, -109, 602, 1280))
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -1122,7 +1122,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_16 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_16.setObjectName("horizontalLayout_16")
         self.repeatIfIncorrect_CheckBox = QtWidgets.QCheckBox(self.trialOrder_groupBox)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Maximum)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Maximum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.repeatIfIncorrect_CheckBox.sizePolicy().hasHeightForWidth())
@@ -1132,6 +1132,11 @@ class Ui_MainWindow(object):
         self.repeatIfIncorrect_CheckBox.setText("")
         self.repeatIfIncorrect_CheckBox.setObjectName("repeatIfIncorrect_CheckBox")
         self.horizontalLayout_16.addWidget(self.repeatIfIncorrect_CheckBox)
+        self.maximumRepeatsIfIncorrect_DoubleSpinBox = QtWidgets.QDoubleSpinBox(self.trialOrder_groupBox)
+        self.maximumRepeatsIfIncorrect_DoubleSpinBox.setEnabled(False)
+        self.maximumRepeatsIfIncorrect_DoubleSpinBox.setDecimals(0)
+        self.maximumRepeatsIfIncorrect_DoubleSpinBox.setObjectName("maximumRepeatsIfIncorrect_DoubleSpinBox")
+        self.horizontalLayout_16.addWidget(self.maximumRepeatsIfIncorrect_DoubleSpinBox)
         self.gridLayout_8.addLayout(self.horizontalLayout_16, 3, 1, 1, 1)
         self.stimOrderLabel = QtWidgets.QLabel(self.trialOrder_groupBox)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Maximum)
@@ -1962,7 +1967,7 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         self.sessionTimer_label.setFont(font)
-        self.sessionTimer_label.setStyleSheet("font-size: 18pt; font-weight: bold;")
+        self.sessionTimer_label.setStyleSheet("font-size: 18pt; font-weight: bold; color:\'lightgray\';")
         self.sessionTimer_label.setAlignment(QtCore.Qt.AlignCenter)
         self.sessionTimer_label.setObjectName("sessionTimer_label")
         self.liveTabVerticalLayout.addWidget(self.sessionTimer_label)
@@ -2024,10 +2029,11 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.sessionFeed_textEdit.sizePolicy().hasHeightForWidth())
         self.sessionFeed_textEdit.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
-        font.setFamily("Courier New")
+        font.setFamily("Liberation Mono")
         font.setPointSize(9)
         self.sessionFeed_textEdit.setFont(font)
-        self.sessionFeed_textEdit.setStyleSheet("font-family: \"Courier New\";")
+        self.sessionFeed_textEdit.setStyleSheet("font-family: \'Liberation Mono\';\n"
+"color: \'gray\';")
         self.sessionFeed_textEdit.setAutoFormatting(QtWidgets.QTextEdit.AutoBulletList)
         self.sessionFeed_textEdit.setReadOnly(True)
         self.sessionFeed_textEdit.setObjectName("sessionFeed_textEdit")
@@ -2118,6 +2124,7 @@ class Ui_MainWindow(object):
         self.stim8_CheckBox.toggled['bool'].connect(self.punishChan8_spinBox.setEnabled)
         self.stim8_CheckBox.toggled['bool'].connect(self.respReq8_SpinBox.setEnabled)
         self.stim8_CheckBox.toggled['bool'].connect(self.rewardedChan8_SpinBox.setEnabled)
+        self.repeatIfIncorrect_CheckBox.toggled['bool'].connect(self.maximumRepeatsIfIncorrect_DoubleSpinBox.setEnabled)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         MainWindow.setTabOrder(self.subjectID_LineEdit, self.notes_lineEdit)
         MainWindow.setTabOrder(self.notes_lineEdit, self.sessionDuration_SpinBox)
@@ -2193,8 +2200,7 @@ class Ui_MainWindow(object):
         MainWindow.setTabOrder(self.controlFirstStimVariation_checkbox, self.firstStimVariation_spinBox)
         MainWindow.setTabOrder(self.firstStimVariation_spinBox, self.saveTrialOrder_pushButton)
         MainWindow.setTabOrder(self.saveTrialOrder_pushButton, self.loadTrialOrder_pushButton)
-        MainWindow.setTabOrder(self.loadTrialOrder_pushButton, self.repeatIfIncorrect_CheckBox)
-        MainWindow.setTabOrder(self.repeatIfIncorrect_CheckBox, self.activeInitiation_checkBox)
+        MainWindow.setTabOrder(self.loadTrialOrder_pushButton, self.activeInitiation_checkBox)
         MainWindow.setTabOrder(self.activeInitiation_checkBox, self.activeInitiationRespRe_checkBox)
         MainWindow.setTabOrder(self.activeInitiationRespRe_checkBox, self.witholdBeforeStim_CheckBox)
         MainWindow.setTabOrder(self.witholdBeforeStim_CheckBox, self.witholdBeforeStimMin_SpinBox)
@@ -2277,7 +2283,8 @@ class Ui_MainWindow(object):
         self.stim2_CheckBox.setText(_translate("MainWindow", "2"))
         self.trialOrder_groupBox.setTitle(_translate("MainWindow", "Trial order"))
         self.label_9.setText(_translate("MainWindow", "Repeat if incorrect"))
-        self.label_24.setText(_translate("MainWindow", "First stim"))
+        self.label_24.setText(_translate("MainWindow", "Manual control"))
+        self.maximumRepeatsIfIncorrect_DoubleSpinBox.setPrefix(_translate("MainWindow", "Maximum repeats: "))
         self.stimOrderLabel.setText(_translate("MainWindow", "Stim order"))
         self.stimOrder_ComboBox.setItemText(0, _translate("MainWindow", "Random"))
         self.stimOrder_ComboBox.setItemText(1, _translate("MainWindow", "Interleaved"))

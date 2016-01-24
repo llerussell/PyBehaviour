@@ -568,9 +568,9 @@ background-color: none;
                 <property name="geometry">
                  <rect>
                   <x>0</x>
-                  <y>0</y>
+                  <y>-109</y>
                   <width>602</width>
-                  <height>1269</height>
+                  <height>1280</height>
                  </rect>
                 </property>
                 <property name="sizePolicy">
@@ -2393,7 +2393,7 @@ background-color: none;
                            </size>
                           </property>
                           <property name="text">
-                           <string>First stim</string>
+                           <string>Manual control</string>
                           </property>
                           <property name="alignment">
                            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -2405,7 +2405,7 @@ background-color: none;
                           <item>
                            <widget class="QCheckBox" name="repeatIfIncorrect_CheckBox">
                             <property name="sizePolicy">
-                             <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
+                             <sizepolicy hsizetype="Fixed" vsizetype="Maximum">
                               <horstretch>0</horstretch>
                               <verstretch>0</verstretch>
                              </sizepolicy>
@@ -2421,6 +2421,19 @@ background-color: none;
                             </property>
                             <property name="text">
                              <string/>
+                            </property>
+                           </widget>
+                          </item>
+                          <item>
+                           <widget class="QDoubleSpinBox" name="maximumRepeatsIfIncorrect_DoubleSpinBox">
+                            <property name="enabled">
+                             <bool>false</bool>
+                            </property>
+                            <property name="prefix">
+                             <string>Maximum repeats: </string>
+                            </property>
+                            <property name="decimals">
+                             <number>0</number>
                             </property>
                            </widget>
                           </item>
@@ -4285,7 +4298,7 @@ background-color: none;
                 </font>
                </property>
                <property name="styleSheet">
-                <string notr="true">font-size: 18pt; font-weight: bold;</string>
+                <string notr="true">font-size: 18pt; font-weight: bold; color:'lightgray';</string>
                </property>
                <property name="text">
                 <string>0:00:00</string>
@@ -4405,12 +4418,13 @@ background-color: none;
              </property>
              <property name="font">
               <font>
-               <family>Courier New</family>
+               <family>Liberation Mono</family>
                <pointsize>9</pointsize>
               </font>
              </property>
              <property name="styleSheet">
-              <string notr="true">font-family: &quot;Courier New&quot;;</string>
+              <string notr="true">font-family: 'Liberation Mono';
+color: 'gray';</string>
              </property>
              <property name="autoFormatting">
               <set>QTextEdit::AutoBulletList</set>
@@ -4553,7 +4567,6 @@ background-color: none;
   <tabstop>firstStimVariation_spinBox</tabstop>
   <tabstop>saveTrialOrder_pushButton</tabstop>
   <tabstop>loadTrialOrder_pushButton</tabstop>
-  <tabstop>repeatIfIncorrect_CheckBox</tabstop>
   <tabstop>activeInitiation_checkBox</tabstop>
   <tabstop>activeInitiationRespRe_checkBox</tabstop>
   <tabstop>witholdBeforeStim_CheckBox</tabstop>
@@ -4610,11 +4623,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>229</x>
-     <y>110</y>
+     <y>687</y>
     </hint>
     <hint type="destinationlabel">
      <x>422</x>
-     <y>106</y>
+     <y>690</y>
     </hint>
    </hints>
   </connection>
@@ -4626,11 +4639,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>229</x>
-     <y>110</y>
+     <y>687</y>
     </hint>
     <hint type="destinationlabel">
      <x>623</x>
-     <y>106</y>
+     <y>690</y>
     </hint>
    </hints>
   </connection>
@@ -4642,11 +4655,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>268</x>
-     <y>-364</y>
+     <y>210</y>
     </hint>
     <hint type="destinationlabel">
      <x>259</x>
-     <y>-344</y>
+     <y>229</y>
     </hint>
    </hints>
   </connection>
@@ -4658,11 +4671,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>268</x>
-     <y>-364</y>
+     <y>210</y>
     </hint>
     <hint type="destinationlabel">
      <x>259</x>
-     <y>-320</y>
+     <y>253</y>
     </hint>
    </hints>
   </connection>
@@ -4674,11 +4687,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>268</x>
-     <y>-364</y>
+     <y>210</y>
     </hint>
     <hint type="destinationlabel">
      <x>259</x>
-     <y>-296</y>
+     <y>277</y>
     </hint>
    </hints>
   </connection>
@@ -4690,11 +4703,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>268</x>
-     <y>-364</y>
+     <y>210</y>
     </hint>
     <hint type="destinationlabel">
      <x>259</x>
-     <y>-272</y>
+     <y>301</y>
     </hint>
    </hints>
   </connection>
@@ -4706,11 +4719,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>268</x>
-     <y>-364</y>
+     <y>210</y>
     </hint>
     <hint type="destinationlabel">
      <x>259</x>
-     <y>-221</y>
+     <y>352</y>
     </hint>
    </hints>
   </connection>
@@ -4722,11 +4735,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>319</x>
-     <y>-364</y>
+     <y>210</y>
     </hint>
     <hint type="destinationlabel">
      <x>310</x>
-     <y>-344</y>
+     <y>229</y>
     </hint>
    </hints>
   </connection>
@@ -4738,11 +4751,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>319</x>
-     <y>-364</y>
+     <y>210</y>
     </hint>
     <hint type="destinationlabel">
      <x>310</x>
-     <y>-320</y>
+     <y>253</y>
     </hint>
    </hints>
   </connection>
@@ -4754,11 +4767,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>319</x>
-     <y>-364</y>
+     <y>210</y>
     </hint>
     <hint type="destinationlabel">
      <x>310</x>
-     <y>-296</y>
+     <y>277</y>
     </hint>
    </hints>
   </connection>
@@ -4770,11 +4783,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>319</x>
-     <y>-364</y>
+     <y>210</y>
     </hint>
     <hint type="destinationlabel">
      <x>310</x>
-     <y>-272</y>
+     <y>301</y>
     </hint>
    </hints>
   </connection>
@@ -4786,11 +4799,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>319</x>
-     <y>-364</y>
+     <y>210</y>
     </hint>
     <hint type="destinationlabel">
      <x>310</x>
-     <y>-221</y>
+     <y>352</y>
     </hint>
    </hints>
   </connection>
@@ -4802,11 +4815,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>370</x>
-     <y>-364</y>
+     <y>210</y>
     </hint>
     <hint type="destinationlabel">
      <x>361</x>
-     <y>-344</y>
+     <y>229</y>
     </hint>
    </hints>
   </connection>
@@ -4818,11 +4831,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>370</x>
-     <y>-364</y>
+     <y>210</y>
     </hint>
     <hint type="destinationlabel">
      <x>361</x>
-     <y>-320</y>
+     <y>253</y>
     </hint>
    </hints>
   </connection>
@@ -4834,11 +4847,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>370</x>
-     <y>-364</y>
+     <y>210</y>
     </hint>
     <hint type="destinationlabel">
      <x>361</x>
-     <y>-296</y>
+     <y>277</y>
     </hint>
    </hints>
   </connection>
@@ -4850,11 +4863,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>370</x>
-     <y>-364</y>
+     <y>210</y>
     </hint>
     <hint type="destinationlabel">
      <x>361</x>
-     <y>-272</y>
+     <y>301</y>
     </hint>
    </hints>
   </connection>
@@ -4866,11 +4879,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>370</x>
-     <y>-364</y>
+     <y>210</y>
     </hint>
     <hint type="destinationlabel">
      <x>361</x>
-     <y>-221</y>
+     <y>352</y>
     </hint>
    </hints>
   </connection>
@@ -4882,11 +4895,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>228</x>
-     <y>451</y>
+     <y>1028</y>
     </hint>
     <hint type="destinationlabel">
      <x>624</x>
-     <y>447</y>
+     <y>1031</y>
     </hint>
    </hints>
   </connection>
@@ -4898,11 +4911,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>228</x>
-     <y>487</y>
+     <y>1064</y>
     </hint>
     <hint type="destinationlabel">
      <x>624</x>
-     <y>483</y>
+     <y>1067</y>
     </hint>
    </hints>
   </connection>
@@ -4914,11 +4927,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>510</x>
-     <y>-95</y>
+     <y>479</y>
     </hint>
     <hint type="destinationlabel">
      <x>623</x>
-     <y>-93</y>
+     <y>477</y>
     </hint>
    </hints>
   </connection>
@@ -4930,11 +4943,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>369</x>
-     <y>-95</y>
+     <y>479</y>
     </hint>
     <hint type="destinationlabel">
      <x>483</x>
-     <y>-93</y>
+     <y>477</y>
     </hint>
    </hints>
   </connection>
@@ -4946,11 +4959,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>229</x>
-     <y>-95</y>
+     <y>479</y>
     </hint>
     <hint type="destinationlabel">
      <x>342</x>
-     <y>-93</y>
+     <y>477</y>
     </hint>
    </hints>
   </connection>
@@ -4962,11 +4975,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>229</x>
-     <y>-95</y>
+     <y>479</y>
     </hint>
     <hint type="destinationlabel">
      <x>369</x>
-     <y>-95</y>
+     <y>479</y>
     </hint>
    </hints>
   </connection>
@@ -4978,11 +4991,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>229</x>
-     <y>-95</y>
+     <y>479</y>
     </hint>
     <hint type="destinationlabel">
      <x>510</x>
-     <y>-95</y>
+     <y>479</y>
     </hint>
    </hints>
   </connection>
@@ -4994,11 +5007,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>268</x>
-     <y>-364</y>
+     <y>210</y>
     </hint>
     <hint type="destinationlabel">
      <x>259</x>
-     <y>-245</y>
+     <y>325</y>
     </hint>
    </hints>
   </connection>
@@ -5010,11 +5023,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>319</x>
-     <y>-364</y>
+     <y>210</y>
     </hint>
     <hint type="destinationlabel">
      <x>310</x>
-     <y>-245</y>
+     <y>325</y>
     </hint>
    </hints>
   </connection>
@@ -5026,11 +5039,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>370</x>
-     <y>-364</y>
+     <y>210</y>
     </hint>
     <hint type="destinationlabel">
      <x>361</x>
-     <y>-245</y>
+     <y>325</y>
     </hint>
    </hints>
   </connection>
@@ -5042,11 +5055,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>421</x>
-     <y>-364</y>
+     <y>210</y>
     </hint>
     <hint type="destinationlabel">
      <x>412</x>
-     <y>-221</y>
+     <y>352</y>
     </hint>
    </hints>
   </connection>
@@ -5058,11 +5071,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>421</x>
-     <y>-364</y>
+     <y>210</y>
     </hint>
     <hint type="destinationlabel">
      <x>412</x>
-     <y>-245</y>
+     <y>325</y>
     </hint>
    </hints>
   </connection>
@@ -5074,11 +5087,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>421</x>
-     <y>-364</y>
+     <y>210</y>
     </hint>
     <hint type="destinationlabel">
      <x>412</x>
-     <y>-272</y>
+     <y>301</y>
     </hint>
    </hints>
   </connection>
@@ -5090,11 +5103,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>421</x>
-     <y>-364</y>
+     <y>210</y>
     </hint>
     <hint type="destinationlabel">
      <x>412</x>
-     <y>-296</y>
+     <y>277</y>
     </hint>
    </hints>
   </connection>
@@ -5106,11 +5119,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>421</x>
-     <y>-364</y>
+     <y>210</y>
     </hint>
     <hint type="destinationlabel">
      <x>412</x>
-     <y>-320</y>
+     <y>253</y>
     </hint>
    </hints>
   </connection>
@@ -5122,11 +5135,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>421</x>
-     <y>-364</y>
+     <y>210</y>
     </hint>
     <hint type="destinationlabel">
      <x>412</x>
-     <y>-344</y>
+     <y>229</y>
     </hint>
    </hints>
   </connection>
@@ -5138,11 +5151,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>472</x>
-     <y>-364</y>
+     <y>210</y>
     </hint>
     <hint type="destinationlabel">
      <x>463</x>
-     <y>-221</y>
+     <y>352</y>
     </hint>
    </hints>
   </connection>
@@ -5154,11 +5167,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>472</x>
-     <y>-364</y>
+     <y>210</y>
     </hint>
     <hint type="destinationlabel">
      <x>463</x>
-     <y>-245</y>
+     <y>325</y>
     </hint>
    </hints>
   </connection>
@@ -5170,11 +5183,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>472</x>
-     <y>-364</y>
+     <y>210</y>
     </hint>
     <hint type="destinationlabel">
      <x>463</x>
-     <y>-272</y>
+     <y>301</y>
     </hint>
    </hints>
   </connection>
@@ -5186,11 +5199,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>472</x>
-     <y>-364</y>
+     <y>210</y>
     </hint>
     <hint type="destinationlabel">
      <x>463</x>
-     <y>-296</y>
+     <y>277</y>
     </hint>
    </hints>
   </connection>
@@ -5202,11 +5215,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>472</x>
-     <y>-364</y>
+     <y>210</y>
     </hint>
     <hint type="destinationlabel">
      <x>463</x>
-     <y>-320</y>
+     <y>253</y>
     </hint>
    </hints>
   </connection>
@@ -5218,11 +5231,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>472</x>
-     <y>-364</y>
+     <y>210</y>
     </hint>
     <hint type="destinationlabel">
      <x>463</x>
-     <y>-344</y>
+     <y>229</y>
     </hint>
    </hints>
   </connection>
@@ -5234,11 +5247,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>523</x>
-     <y>-364</y>
+     <y>210</y>
     </hint>
     <hint type="destinationlabel">
      <x>514</x>
-     <y>-221</y>
+     <y>352</y>
     </hint>
    </hints>
   </connection>
@@ -5250,11 +5263,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>523</x>
-     <y>-364</y>
+     <y>210</y>
     </hint>
     <hint type="destinationlabel">
      <x>514</x>
-     <y>-245</y>
+     <y>325</y>
     </hint>
    </hints>
   </connection>
@@ -5266,11 +5279,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>523</x>
-     <y>-364</y>
+     <y>210</y>
     </hint>
     <hint type="destinationlabel">
      <x>514</x>
-     <y>-272</y>
+     <y>301</y>
     </hint>
    </hints>
   </connection>
@@ -5282,11 +5295,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>523</x>
-     <y>-364</y>
+     <y>210</y>
     </hint>
     <hint type="destinationlabel">
      <x>514</x>
-     <y>-296</y>
+     <y>277</y>
     </hint>
    </hints>
   </connection>
@@ -5298,11 +5311,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>523</x>
-     <y>-364</y>
+     <y>210</y>
     </hint>
     <hint type="destinationlabel">
      <x>514</x>
-     <y>-320</y>
+     <y>253</y>
     </hint>
    </hints>
   </connection>
@@ -5314,11 +5327,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>523</x>
-     <y>-364</y>
+     <y>210</y>
     </hint>
     <hint type="destinationlabel">
      <x>514</x>
-     <y>-344</y>
+     <y>229</y>
     </hint>
    </hints>
   </connection>
@@ -5330,11 +5343,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>574</x>
-     <y>-364</y>
+     <y>210</y>
     </hint>
     <hint type="destinationlabel">
      <x>565</x>
-     <y>-221</y>
+     <y>352</y>
     </hint>
    </hints>
   </connection>
@@ -5346,11 +5359,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>574</x>
-     <y>-364</y>
+     <y>210</y>
     </hint>
     <hint type="destinationlabel">
      <x>565</x>
-     <y>-245</y>
+     <y>325</y>
     </hint>
    </hints>
   </connection>
@@ -5362,11 +5375,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>574</x>
-     <y>-364</y>
+     <y>210</y>
     </hint>
     <hint type="destinationlabel">
      <x>565</x>
-     <y>-272</y>
+     <y>301</y>
     </hint>
    </hints>
   </connection>
@@ -5378,11 +5391,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>574</x>
-     <y>-364</y>
+     <y>210</y>
     </hint>
     <hint type="destinationlabel">
      <x>565</x>
-     <y>-296</y>
+     <y>277</y>
     </hint>
    </hints>
   </connection>
@@ -5394,11 +5407,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>574</x>
-     <y>-364</y>
+     <y>210</y>
     </hint>
     <hint type="destinationlabel">
      <x>565</x>
-     <y>-320</y>
+     <y>253</y>
     </hint>
    </hints>
   </connection>
@@ -5410,11 +5423,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>574</x>
-     <y>-364</y>
+     <y>210</y>
     </hint>
     <hint type="destinationlabel">
      <x>565</x>
-     <y>-344</y>
+     <y>229</y>
     </hint>
    </hints>
   </connection>
@@ -5426,11 +5439,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>625</x>
-     <y>-364</y>
+     <y>210</y>
     </hint>
     <hint type="destinationlabel">
      <x>616</x>
-     <y>-221</y>
+     <y>352</y>
     </hint>
    </hints>
   </connection>
@@ -5442,11 +5455,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>625</x>
-     <y>-364</y>
+     <y>210</y>
     </hint>
     <hint type="destinationlabel">
      <x>616</x>
-     <y>-245</y>
+     <y>325</y>
     </hint>
    </hints>
   </connection>
@@ -5458,11 +5471,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>625</x>
-     <y>-364</y>
+     <y>210</y>
     </hint>
     <hint type="destinationlabel">
      <x>616</x>
-     <y>-272</y>
+     <y>301</y>
     </hint>
    </hints>
   </connection>
@@ -5474,11 +5487,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>625</x>
-     <y>-364</y>
+     <y>210</y>
     </hint>
     <hint type="destinationlabel">
      <x>616</x>
-     <y>-296</y>
+     <y>277</y>
     </hint>
    </hints>
   </connection>
@@ -5490,11 +5503,11 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>625</x>
-     <y>-364</y>
+     <y>210</y>
     </hint>
     <hint type="destinationlabel">
      <x>616</x>
-     <y>-344</y>
+     <y>229</y>
     </hint>
    </hints>
   </connection>
@@ -5506,11 +5519,27 @@ background-color: none;
    <hints>
     <hint type="sourcelabel">
      <x>625</x>
-     <y>-364</y>
+     <y>210</y>
     </hint>
     <hint type="destinationlabel">
      <x>616</x>
-     <y>-320</y>
+     <y>253</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>repeatIfIncorrect_CheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>maximumRepeatsIfIncorrect_DoubleSpinBox</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>222</x>
+     <y>571</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>264</x>
+     <y>574</y>
     </hint>
    </hints>
   </connection>
