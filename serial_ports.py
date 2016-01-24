@@ -6,7 +6,7 @@ import serial
 import glob
 
 
-def list_serial_ports():
+def list_ports():
     '''
     Lists serial ports.
 

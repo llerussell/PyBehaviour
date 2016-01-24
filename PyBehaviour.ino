@@ -1,5 +1,7 @@
-// PyBehaviour
-// (c) 2015 Lloyd Russell
+////////////////////////////
+// PyBehaviour            //
+// (c) 2015 Lloyd Russell //
+////////////////////////////
 
 #include <elapsedMillis.h>
 #include <TaskScheduler.h>
@@ -54,8 +56,8 @@ char INCOMING_COMMAND = '@';
 char TEST_PIN = '!';
 char TEST_READY = '?'; // test if ready
 char test_command;
-int test_chan_num;
-int test_chan_dur;
+int testChanNum;
+int testChanDur;
 String ConfigString;
 
 // training parameters
@@ -212,10 +214,10 @@ void rxConfig() {
             varIndex++;
             switch (varIndex) {
               case 1:
-                test_chan_num = atoi(varBuffer);
+                testChanNum = atoi(varBuffer);
                 break;
               case 2:
-                test_chan_dur = atoi(varBuffer);
+                testChanDur = atoi(varBuffer);
                 break;
             }
             varBufferIndex = 0;
@@ -228,7 +230,7 @@ void rxConfig() {
             varBuffer[varBufferIndex] = '\0';
           }
         }
-        testPin(test_chan_num, test_chan_dur);
+        testPin(testChanNum, testChanDur);
       }
 
       else if (test_command == TEST_READY) {
@@ -630,10 +632,11 @@ void stopTasks() {
 }
 
 void endTrial() {
-  detachInterrupt(responsePin[0]);
-  detachInterrupt(responsePin[1]);
-  //detachInterrupt(responsePin[2]);
   digitalWrite(trialRunningPin, LOW);
+
+  for ( int i = 0; i < sizeof(responsePin); ++i ) {
+    detachInterrupt(responsePin[i]);
+  }
   for ( int i = 0; i < sizeof(cuePin); ++i ) {
     digitalWrite(cuePin[i], LOW);
   }

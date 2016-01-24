@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>675</width>
-    <height>890</height>
+    <width>689</width>
+    <height>892</height>
    </rect>
   </property>
   <property name="font">
@@ -306,7 +306,7 @@
               <property name="flat">
                <bool>false</bool>
               </property>
-              <layout class="QVBoxLayout" name="verticalLayout_3" stretch="0,0,0">
+              <layout class="QVBoxLayout" name="verticalLayout_3" stretch="0,0">
                <property name="spacing">
                 <number>-1</number>
                </property>
@@ -325,6 +325,110 @@
                </item>
                <item>
                 <layout class="QGridLayout" name="gridLayout_5">
+                 <item row="1" column="1">
+                  <layout class="QGridLayout" name="gridLayout_6">
+                   <item row="1" column="1">
+                    <widget class="QSpinBox" name="testPinNum_SpinBox">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="minimumSize">
+                      <size>
+                       <width>0</width>
+                       <height>0</height>
+                      </size>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignCenter</set>
+                     </property>
+                     <property name="buttonSymbols">
+                      <enum>QAbstractSpinBox::NoButtons</enum>
+                     </property>
+                     <property name="minimum">
+                      <number>1</number>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="1" column="2">
+                    <widget class="QDoubleSpinBox" name="testPinDuration_doubleSpinBox">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="minimumSize">
+                      <size>
+                       <width>0</width>
+                       <height>0</height>
+                      </size>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignCenter</set>
+                     </property>
+                     <property name="buttonSymbols">
+                      <enum>QAbstractSpinBox::NoButtons</enum>
+                     </property>
+                     <property name="decimals">
+                      <number>0</number>
+                     </property>
+                     <property name="maximum">
+                      <double>99999.000000000000000</double>
+                     </property>
+                     <property name="singleStep">
+                      <double>0.001000000000000</double>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="0" column="1">
+                    <widget class="QLabel" name="label">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="minimumSize">
+                      <size>
+                       <width>0</width>
+                       <height>0</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>Pin number</string>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignCenter</set>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="0" column="2">
+                    <widget class="QLabel" name="label_23">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="minimumSize">
+                      <size>
+                       <width>0</width>
+                       <height>0</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>Duration (ms)</string>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignCenter</set>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
                  <item row="0" column="1">
                   <widget class="QComboBox" name="device_ComboBox">
                    <property name="sizePolicy">
@@ -341,52 +445,6 @@
                    </property>
                    <property name="focusPolicy">
                     <enum>Qt::StrongFocus</enum>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="1">
-                  <widget class="QComboBox" name="baudRate_ComboBox">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>0</width>
-                     <height>0</height>
-                    </size>
-                   </property>
-                   <property name="focusPolicy">
-                    <enum>Qt::StrongFocus</enum>
-                   </property>
-                   <item>
-                    <property name="text">
-                     <string>19200</string>
-                    </property>
-                   </item>
-                  </widget>
-                 </item>
-                 <item row="1" column="0">
-                  <widget class="QLabel" name="baudRateLabel">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>120</width>
-                     <height>0</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>Baud rate</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                    </property>
                   </widget>
                  </item>
@@ -412,42 +470,13 @@
                    </property>
                   </widget>
                  </item>
-                </layout>
-               </item>
-               <item>
-                <layout class="QGridLayout" name="gridLayout_6">
-                 <item row="1" column="1">
-                  <widget class="QSpinBox" name="testPinNum_SpinBox">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>0</width>
-                     <height>0</height>
-                    </size>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignCenter</set>
-                   </property>
-                   <property name="buttonSymbols">
-                    <enum>QAbstractSpinBox::NoButtons</enum>
-                   </property>
-                   <property name="minimum">
-                    <number>1</number>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="0">
+                 <item row="2" column="1">
                   <widget class="QPushButton" name="testPin_Button">
                    <property name="enabled">
                     <bool>true</bool>
                    </property>
                    <property name="sizePolicy">
-                    <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                    <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
@@ -466,78 +495,13 @@
                    </property>
                   </widget>
                  </item>
-                 <item row="1" column="2">
-                  <widget class="QDoubleSpinBox" name="testPinDuration_doubleSpinBox">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>0</width>
-                     <height>0</height>
-                    </size>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignCenter</set>
-                   </property>
-                   <property name="buttonSymbols">
-                    <enum>QAbstractSpinBox::NoButtons</enum>
-                   </property>
-                   <property name="decimals">
-                    <number>0</number>
-                   </property>
-                   <property name="maximum">
-                    <double>99999.000000000000000</double>
-                   </property>
-                   <property name="singleStep">
-                    <double>0.001000000000000</double>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="1">
-                  <widget class="QLabel" name="label">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>0</width>
-                     <height>0</height>
-                    </size>
-                   </property>
+                 <item row="1" column="0">
+                  <widget class="QLabel" name="label_29">
                    <property name="text">
-                    <string>Pin number</string>
+                    <string>Manual pin control</string>
                    </property>
                    <property name="alignment">
-                    <set>Qt::AlignCenter</set>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="2">
-                  <widget class="QLabel" name="label_23">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>0</width>
-                     <height>0</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>Duration (ms)</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignCenter</set>
+                    <set>Qt::AlignRight|Qt::AlignTop|Qt::AlignTrailing</set>
                    </property>
                   </widget>
                  </item>
@@ -604,7 +568,7 @@ background-color: none;
                 <property name="geometry">
                  <rect>
                   <x>0</x>
-                  <y>-802</y>
+                  <y>0</y>
                   <width>602</width>
                   <height>1269</height>
                  </rect>
@@ -4308,9 +4272,6 @@ background-color: none;
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
          <widget class="QGroupBox" name="groupBox">
-          <property name="title">
-           <string/>
-          </property>
           <layout class="QVBoxLayout" name="verticalLayout_4">
            <item>
             <layout class="QVBoxLayout" name="liveTabVerticalLayout">
@@ -4428,7 +4389,7 @@ background-color: none;
            </sizepolicy>
           </property>
           <property name="title">
-           <string>Communication</string>
+           <string>Arduino monitor</string>
           </property>
           <layout class="QHBoxLayout" name="horizontalLayout_15">
            <item>
@@ -4473,7 +4434,7 @@ background-color: none;
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>675</width>
+     <width>689</width>
      <height>22</height>
     </rect>
    </property>
@@ -4523,60 +4484,73 @@ background-color: none;
   <tabstop>sessionDurationMode_ComboBox</tabstop>
   <tabstop>loadPreset_ComboBox</tabstop>
   <tabstop>device_ComboBox</tabstop>
-  <tabstop>baudRate_ComboBox</tabstop>
-  <tabstop>testPin_Button</tabstop>
   <tabstop>testPinNum_SpinBox</tabstop>
   <tabstop>testPinDuration_doubleSpinBox</tabstop>
+  <tabstop>testPin_Button</tabstop>
   <tabstop>stim1_CheckBox</tabstop>
   <tabstop>respReq1_SpinBox</tabstop>
   <tabstop>rewardedChan1_SpinBox</tabstop>
   <tabstop>punishChan1_spinBox</tabstop>
   <tabstop>cueChan1_spinBox</tabstop>
+  <tabstop>variations1_spinBox</tabstop>
   <tabstop>proportion1_doubleSpinBox</tabstop>
   <tabstop>stim2_CheckBox</tabstop>
   <tabstop>respReq2_SpinBox</tabstop>
   <tabstop>rewardedChan2_SpinBox</tabstop>
   <tabstop>punishChan2_spinBox</tabstop>
   <tabstop>cueChan2_spinBox</tabstop>
+  <tabstop>variations2_spinBox</tabstop>
   <tabstop>proportion2_doubleSpinBox</tabstop>
   <tabstop>stim3_CheckBox</tabstop>
   <tabstop>respReq3_SpinBox</tabstop>
   <tabstop>rewardedChan3_SpinBox</tabstop>
   <tabstop>punishChan3_spinBox</tabstop>
   <tabstop>cueChan3_spinBox</tabstop>
+  <tabstop>variations3_spinBox</tabstop>
   <tabstop>proportion3_doubleSpinBox</tabstop>
   <tabstop>stim4_CheckBox</tabstop>
   <tabstop>respReq4_SpinBox</tabstop>
   <tabstop>rewardedChan4_SpinBox</tabstop>
   <tabstop>punishChan4_spinBox</tabstop>
   <tabstop>cueChan4_spinBox</tabstop>
+  <tabstop>variations4_spinBox</tabstop>
   <tabstop>proportion4_doubleSpinBox</tabstop>
   <tabstop>stim5_CheckBox</tabstop>
   <tabstop>respReq5_SpinBox</tabstop>
   <tabstop>rewardedChan5_SpinBox</tabstop>
   <tabstop>punishChan5_spinBox</tabstop>
   <tabstop>cueChan5_spinBox</tabstop>
+  <tabstop>variations5_spinBox</tabstop>
   <tabstop>proportion5_doubleSpinBox</tabstop>
   <tabstop>stim6_CheckBox</tabstop>
   <tabstop>respReq6_SpinBox</tabstop>
   <tabstop>rewardedChan6_SpinBox</tabstop>
   <tabstop>punishChan6_spinBox</tabstop>
   <tabstop>cueChan6_spinBox</tabstop>
+  <tabstop>variations6_spinBox</tabstop>
   <tabstop>proportion6_doubleSpinBox</tabstop>
   <tabstop>stim7_CheckBox</tabstop>
   <tabstop>respReq7_SpinBox</tabstop>
   <tabstop>rewardedChan7_SpinBox</tabstop>
   <tabstop>punishChan7_spinBox</tabstop>
   <tabstop>cueChan7_spinBox</tabstop>
+  <tabstop>variations7_spinBox</tabstop>
   <tabstop>proportion7_doubleSpinBox</tabstop>
   <tabstop>stim8_CheckBox</tabstop>
   <tabstop>respReq8_SpinBox</tabstop>
   <tabstop>rewardedChan8_SpinBox</tabstop>
   <tabstop>punishChan8_spinBox</tabstop>
   <tabstop>cueChan8_spinBox</tabstop>
+  <tabstop>variations8_spinBox</tabstop>
   <tabstop>proportion8_doubleSpinBox</tabstop>
   <tabstop>stimOrder_ComboBox</tabstop>
   <tabstop>stimOrderGroupSize_SpinBox</tabstop>
+  <tabstop>controlFirstStim_checkBox</tabstop>
+  <tabstop>firstXStims_SpinBox</tabstop>
+  <tabstop>controlFirstStimStim_checkbox</tabstop>
+  <tabstop>firstStim_spinBox</tabstop>
+  <tabstop>controlFirstStimVariation_checkbox</tabstop>
+  <tabstop>firstStimVariation_spinBox</tabstop>
   <tabstop>saveTrialOrder_pushButton</tabstop>
   <tabstop>loadTrialOrder_pushButton</tabstop>
   <tabstop>repeatIfIncorrect_CheckBox</tabstop>
@@ -4594,35 +4568,37 @@ background-color: none;
   <tabstop>postStimCancel_CheckBox</tabstop>
   <tabstop>responseWindow_SpinBox</tabstop>
   <tabstop>cueResponse_CheckBox</tabstop>
-  <tabstop>endOfTrialDelay_SpinBox</tabstop>
-  <tabstop>autoReward_CheckBox</tabstop>
-  <tabstop>autoRewardDelay_SpinBox</tabstop>
-  <tabstop>rewardRemoval_checkBox</tabstop>
-  <tabstop>rewardRemovalDelay_SpinBox</tabstop>
-  <tabstop>punishLength_SpinBox</tabstop>
-  <tabstop>autoTransition_CheckBox</tabstop>
-  <tabstop>autoTransitionTo_ComboBox</tabstop>
-  <tabstop>autoTransitionAfterNum_SpinBox</tabstop>
-  <tabstop>autoTransitionAfterCriteria_ComboBox</tabstop>
-  <tabstop>autoTransitionFor_SpinBox</tabstop>
-  <tabstop>checkBox</tabstop>
-  <tabstop>doubleSpinBox</tabstop>
-  <tabstop>spinBox_2</tabstop>
-  <tabstop>comboBox</tabstop>
   <tabstop>spinBox</tabstop>
   <tabstop>checkBox_5</tabstop>
-  <tabstop>proportion2_doubleSpinBox</tabstop>
+  <tabstop>spinBox_2</tabstop>
   <tabstop>spinBox_29</tabstop>
   <tabstop>comboBox_3</tabstop>
   <tabstop>spinBox_30</tabstop>
   <tabstop>saveAsPreset_Button</tabstop>
   <tabstop>begin_Button</tabstop>
   <tabstop>setDefaults_Button</tabstop>
-  <tabstop>tabWidget</tabstop>
+  <tabstop>rewardRemovalDelay_SpinBox</tabstop>
   <tabstop>scrollArea</tabstop>
   <tabstop>sessionPause_pushButton</tabstop>
   <tabstop>sessionAbort_pushButton</tabstop>
   <tabstop>sessionFeed_textEdit</tabstop>
+  <tabstop>autoReward_CheckBox</tabstop>
+  <tabstop>proportion2_doubleSpinBox</tabstop>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>punishLength_SpinBox</tabstop>
+  <tabstop>doubleSpinBox</tabstop>
+  <tabstop>autoRewardDelay_SpinBox</tabstop>
+  <tabstop>comboBox</tabstop>
+  <tabstop>endOfTrialDelay_SpinBox</tabstop>
+  <tabstop>rewardRemoval_checkBox</tabstop>
+  <tabstop>autoTransition_CheckBox</tabstop>
+  <tabstop>autoTransitionTo_ComboBox</tabstop>
+  <tabstop>autoTransitionAfterNum_SpinBox</tabstop>
+  <tabstop>autoTransitionAfterCriteria_ComboBox</tabstop>
+  <tabstop>autoTransitionFor_SpinBox</tabstop>
+  <tabstop>checkBox</tabstop>
+  <tabstop>punishTrigger_checkBox</tabstop>
+  <tabstop>doubleSpinBox_6</tabstop>
  </tabstops>
  <resources/>
  <connections>

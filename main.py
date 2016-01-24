@@ -28,7 +28,6 @@ from scipy import stats
 import json
 import os
 import time
-import glob
 import sys
 import serial
 from PyQt5.QtCore import QObject, pyqtSignal, QThread, QTimer
@@ -37,13 +36,13 @@ from PyQt5.QtWidgets import (QComboBox, QCheckBox, QLineEdit, QSpinBox,
                              QDesktopWidget, QMainWindow, QMessageBox)
 from PyQt5.QtGui import QIcon
 from GUI.GUI import Ui_MainWindow
-from serial_ports import list_serial_ports
+import serial_ports
 
 
 # find available serial ports
-available_devices = list_serial_ports()
+available_devices = serial_ports.list_ports()
 
-# setup directories/config files
+# setup directories
 results_directory = 'Results'
 if not os.path.exists(results_directory):
     os.makedirs(results_directory)
@@ -61,18 +60,15 @@ for file in os.listdir(config_directory):
         available_configs.append(os.path.splitext(file)[0])
 
 # initialise results and other directories
-arduino = {}
-arduino['connected'] = False
-
-defaults = {}
-trialconfig = {}
-p = {}
-
 trials = {}
 trials['results'] = []
-trials['correctTally'] = 0
+trials['correct_tally'] = 0
 trials['running_score'] = []
-trial_log = []
+
+p = {}
+
+arduino = {}
+arduino['connected'] = False
 
 # start random number seed
 np.random.seed()
@@ -84,27 +80,23 @@ class TrialRunner(QObject):
     '''
     def __init__(self):
         super(TrialRunner, self).__init__()
-        self._sessionRunning = False
+        self._session_running = False
         self._paused = False
 
     def startSession(self):
-        self._sessionRunning = True
+        self._session_running = True
         trial_num = 0
-        stim_list = []
-
-        withold_list = []
 
         if arduino['connected'] is False:
             self.connectArduino()
-            #arduino['connected'] = True  # 20150328
 
         if arduino['connected']:
-            # the main seesion loop
-            while self._sessionRunning:
+            # the main session loop
+            while self._session_running:
                 while self._paused:
                     time.sleep(0.1)
 
-                self.runTrial(trial_num, stim_list, trials, withold_list)
+                self.runTrial(trial_num, trials)
                 time.sleep(0.1)
 
                 trial_num += 1
@@ -116,7 +108,7 @@ class TrialRunner(QObject):
 
     def connectArduino(self):
         self.comm_feed_signal.emit('Connecting Arduino...', '')
-        arduino['device'] = serial.Serial(p['device'], p['baudRate'])  # baud should be 19200
+        arduino['device'] = serial.Serial(p['device'], 19200)
         arduino['device'].timeout = 1
         connect_attempts = 3
         current_attempt = 1
@@ -128,20 +120,18 @@ class TrialRunner(QObject):
                 self.arduino_connected_signal.emit()
             current_attempt += 1
             if current_attempt > connect_attempts:
-                self.comm_feed_signal.emit('******** FAILED TO CONNECT ********', '')
+                self.comm_feed_signal.emit('*** Failed to connect ***', '')
 
-
-    def runTrial(self, trial_num, stim_list, trials, withold_list):
+    def runTrial(self, trial_num, trials):
         self.setupResultsDict(trial_num)  # initialise the results for current trial
         self.trial_start_signal.emit(trial_num)  # let GUI know trial number etc
-        self.transmitConfig(trial_num, stim_list, withold_list)  # construct and transmit trial instruction to arduino
+        self.transmitConfig(trial_num)  # construct and transmit trial instruction to arduino
         self.receiveData(trial_num)  # will sit in this function until it receives the {DONE} command
         self.trial_end_signal.emit(trial_num)  # updates plots, save results
 
     def setupResultsDict(self, trial_num):
         trials['results'].append({})
-        # print(trial_num)
-        trials['results'][trial_num]['responses'] = [[],[]]
+        trials['results'][trial_num]['responses'] = [[], []]
         trials['results'][trial_num]['trialstart'] = []
         trials['results'][trial_num]['withold_req'] = []
         trials['results'][trial_num]['withold_act'] = []
@@ -150,7 +140,7 @@ class TrialRunner(QObject):
         trials['results'][trial_num]['reward_channel'] = []
         trials['results'][trial_num]['p'] = p
 
-    def transmitConfig(self, trial_num, stim_list, withold_list):
+    def transmitConfig(self, trial_num):
         '''
         Configure the current trial p.
         Construct a string listing all the various configuration p.
@@ -174,8 +164,6 @@ class TrialRunner(QObject):
         this_var = int(p['trialVariations'][trial_num])
 
         this_stim = p['stimChannels'][this_stim_idx]
-
-        stim_list.append(this_stim)
         trials['results'][trial_num]['stim_type'] = this_stim
 
         # response required
@@ -305,7 +293,6 @@ class TrialRunner(QObject):
                                 ID = int(ID)
                                 trials['results'][trial_num]['responses'][0].append(val)  # time
                                 trials['results'][trial_num]['responses'][1].append(ID)  # channel
-
                                 self.response_signal.emit(trial_num, val, ID, state)
 
                 elif temp_read[0] == '{' and temp_read[-1] == '}':  # whole trial outcome packet received
@@ -314,9 +301,9 @@ class TrialRunner(QObject):
                         trialRunning = False
                         trials['running_score'].append((trials['results'][trial_num]['correct']))
                         if trials['results'][trial_num]['correct']:
-                            trials['correctTally'] = trials['correctTally'] + 1
+                            trials['correct_tally'] = trials['correct_tally'] + 1
                         else:
-                            trials['correctTally'] = 0
+                            trials['correct_tally'] = 0
 
                     else:
                         data = temp_read.split('|')
@@ -328,7 +315,7 @@ class TrialRunner(QObject):
                                 trials['results'][trial_num][key] = val
 
     def stop(self):
-        self._sessionRunning = False
+        self._session_running = False
         self.session_end_signal.emit()
 
 
@@ -362,6 +349,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.autoTransitionTo_ComboBox.addItems(available_configs)
             self.autoTransitionTo_ComboBox.removeItem(0)
 
+        # set up dictionaries
+        self.defaults = {}
+        self.trial_config = {}
+        self.trial_log = []
         self._ready = True
 
         # open the config file and populate GUI with values
@@ -381,13 +372,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         p['sessionStartTime'] = time.time()
         p['sessionStartTimeString'] = time.strftime('%Y%m%d_%H%M%S')
         p['sessionID'] = p['subjectID'] + '_' + p['sessionStartTimeString']
-        self.setWindowTitle('PyBehaviour | ' + p['sessionID'])
+        self.setWindowTitle('PyBehaviour - ' + p['sessionID'])
         self.sessionTimer.start(100)  # start the QTimer, executes every 100ms
 
         self.trialThread.start()
 
     def reset(self):
-        if self.trialRunner._sessionRunning:
+        if self.trialRunner._session_running:
             self.trialRunner.stop()
             self.trialThread.quit()
         plots = [self.runningScorePlot, self.averageScorePlot]
@@ -411,7 +402,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.sessionPause_pushButton.setText('Pause')
 
     def quit(self):
-        if self.trialRunner._sessionRunning:
+        if self.trialRunner._session_running:
             self.trialRunner.stop()
             self.trialThread.quit()
 
@@ -562,7 +553,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.arduinoConnectedText_Label.setStyleSheet('color:rgb(0, 188, 152);')
 
     def makeTrialOrder(self):
-        if not self.trialRunner._sessionRunning:
+        if not self.trialRunner._session_running:
             num_stims = len(p['stimChannels'])
             num_trials = p['sessionDuration']
             if num_stims > 0:
@@ -773,21 +764,21 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             for obj in group.findChildren(widgets):
                 name = str(obj.objectName())
                 if isinstance(obj, QComboBox):
-                    defaults[name] = str(obj.currentText())
+                    self.defaults[name] = str(obj.currentText())
                 if isinstance(obj, QCheckBox):
-                    defaults[name] = bool(obj.isChecked())
+                    self.defaults[name] = bool(obj.isChecked())
                 if isinstance(obj, QLineEdit):
                     if 'spinbox' not in name:
-                        defaults[name] = str(obj.text())
+                        self.defaults[name] = str(obj.text())
                 if isinstance(obj, QSpinBox):
-                    defaults[name] = int(obj.value())
+                    self.defaults[name] = int(obj.value())
                 if isinstance(obj, QDoubleSpinBox):
-                    defaults[name] = float(obj.value())
-        json.dump(defaults, open(os.path.join('GUI', 'GUIdefaults.cfg'), 'w'), sort_keys=True, indent=4)
+                    self.defaults[name] = float(obj.value())
+        json.dump(self.defaults, open(os.path.join('GUI', 'GUIdefaults.cfg'), 'w'), sort_keys=True, indent=4)
 
     def GUIRestore(self):
         if os.path.isfile(os.path.join('GUI', 'GUIdefaults.cfg')):
-            defaults = json.load(open(os.path.join('GUI', 'GUIdefaults.cfg'), 'r'))
+            self.defaults = json.load(open(os.path.join('GUI', 'GUIdefaults.cfg'), 'r'))
             widgets = (QComboBox, QCheckBox, QLineEdit, QSpinBox, QDoubleSpinBox)
             groups = (self.session_GroupBox, self.arduino_GroupBox)
             for group in groups:
@@ -795,7 +786,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     name = str(obj.objectName())
                     try:
                         if isinstance(obj, QComboBox):
-                            value = defaults[name]
+                            value = self.defaults[name]
                             if value == '':
                                 continue
                             index = obj.findText(value)  # get idx for string in combo
@@ -805,17 +796,17 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                                 obj.setCurrentIndex(index)  # preselect a combobox value
                         if isinstance(obj, QLineEdit):
                             if 'spinbox' not in name:
-                                value = defaults[name]
+                                value = self.defaults[name]
                                 obj.setText(value)  # restore lineEditFile
                         if isinstance(obj, QCheckBox):
-                            value = defaults[name]
+                            value = self.defaults[name]
                             if value is not None:
                                 obj.setChecked(value)  # restore checkbox
                         if isinstance(obj, QSpinBox):
-                            value = defaults[name]
+                            value = self.defaults[name]
                             obj.setValue(value)  # restore lineEditFile
                         if isinstance(obj, QDoubleSpinBox):
-                            value = defaults[name]
+                            value = self.defaults[name]
                             obj.setValue(value)  # restore lineEditFile
                     except:
                         continue
@@ -844,13 +835,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.trialConfigAx.hold(True)
 
         # make the shapes
-        self.duration_line = patches.Rectangle((0, 0), 0, 0.05, fc='k', ec='none')
-        self.trial_cue_rectangle = patches.Rectangle((0, 0), 0, 1, fc=[.95, 0, .5], ec='none')
-        self.stim_cue_rectangle = patches.Rectangle((0, 0), 0, 1, fc=[.95, 0, .5], ec='none')
-        self.response_cue_rectangle = patches.Rectangle((0, 0), 0, 1, fc=[.95, 0, .5], ec='none')
-        self.stim_rectangle = patches.Rectangle((0, 0), 0, 1, fc='k', ec='none')
-        self.resp_rectangle = patches.Rectangle((0, 0), 0, 0.9, fc=[.66, .66, .66], ec='none')
-        self.reward_rectangle = patches.Rectangle((0, 0), 0, 1, fc=[0, .8, .95], ec='none')
+        self.duration_line = patches.Rectangle([0, 0], 0, 0.05, fc='k', ec='none')
+        self.trial_cue_rectangle = patches.Rectangle([0, 0], 0, 1, fc=[.95, 0, .5], ec='none')
+        self.stim_cue_rectangle = patches.Rectangle([0, 0], 0, 1, fc=[.95, 0, .5], ec='none')
+        self.response_cue_rectangle = patches.Rectangle([0, 0], 0, 1, fc=[.95, 0, .5], ec='none')
+        self.stim_rectangle = patches.Rectangle([0, 0], 0, 1, fc='k', ec='none')
+        self.resp_rectangle = patches.Rectangle([0, 0], 0, 0.9, fc=[.66, .66, .66], ec='none')
+        self.reward_rectangle = patches.Rectangle([0, 0], 0, 1, fc=[0, .8, .95], ec='none')
 
         # add the shapes to the figure
         self.trialConfigAx.add_patch(self.stim_rectangle)
@@ -873,7 +864,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.preTrialRasterFigAx.axis('on')
         self.preTrialRasterFigAx.get_yaxis().set_visible(False)
         self.preTrialRasterFigAx.set_title('Pre-trial', loc='left')
-        self.preTrialRaster_responses = self.preTrialRasterFigAx.scatter(np.empty(0),np.empty(0), c=np.empty(0), edgecolor='', antialiased=True, clip_on=False, vmin=1, vmax=4, cmap='rainbow', zorder=9)
+        self.preTrialRaster_responses = self.preTrialRasterFigAx.scatter(np.empty(0), np.empty(0), c=np.empty(0), edgecolor='', antialiased=True, clip_on=False, vmin=1, vmax=4, cmap='rainbow', zorder=9)
         self.preTrialRasterFigCanvas.setFixedHeight(50)
         self.preTrialRasterFig.set_facecolor('white')
         self.preTrialRasterFigCanvas.draw()
@@ -887,12 +878,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.rasterFigAx.set_title('Responses', loc='left')
         self.rasterFigAx.hold(True)
 
-        self.raster_respwin = patches.Rectangle((0,0), 0, 0, fc=(0, 0, 0, 0.1), ec='none', zorder=1)
-        self.raster_stimlength = patches.Rectangle((0, 0), 0, 0, fc=(0, 0, 0, 0.1), ec='none', zorder=3)
+        self.raster_respwin = patches.Rectangle([0, 0], 0, 0, fc=[0, 0, 0, 0.1], ec='none', zorder=1)
+        self.raster_stimlength = patches.Rectangle([0, 0], 0, 0, fc=[0, 0, 0, 0.1], ec='none', zorder=3)
         self.rasterFigAx.add_patch(self.raster_respwin)
         self.rasterFigAx.add_patch(self.raster_stimlength)
         self.raster_stimline, = self.rasterFigAx.plot([0, 0], [0, 0], 'k-', linewidth=2)
-        self.raster_responses = self.rasterFigAx.scatter(np.empty(0),np.empty(0), c=np.empty(0), edgecolor='', antialiased=True, clip_on=False, vmin=1, vmax=4, cmap='rainbow', zorder=9)
+        self.raster_responses = self.rasterFigAx.scatter(np.empty(0), np.empty(0), c=np.empty(0), edgecolor='', antialiased=True, clip_on=False, vmin=1, vmax=4, cmap='rainbow', zorder=9)
         # self.raster_reward, = self.rasterFigAx.plot([], [], 'o', clip_on=False)  # currently unused
         # self.raster_punish, = self.rasterFigAx.plot([], [], 'o', clip_on=False)  # currently unused
 
@@ -922,18 +913,18 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         for obj in self.trial_GroupBox.findChildren(widgets):
             name = str(obj.objectName())
             if isinstance(obj, QComboBox):
-                trialconfig[name] = str(obj.currentText())
+                self.trial_config[name] = str(obj.currentText())
             if isinstance(obj, QCheckBox):
-                trialconfig[name] = bool(obj.isChecked())
+                self.trial_config[name] = bool(obj.isChecked())
             if isinstance(obj, QLineEdit):
                 if 'spinbox' not in name:
-                    trialconfig[name] = str(obj.text())
+                    self.trial_config[name] = str(obj.text())
             if isinstance(obj, QSpinBox):
-                trialconfig[name] = int(obj.value())
+                self.trial_config[name] = int(obj.value())
             if isinstance(obj, QDoubleSpinBox):
-                trialconfig[name] = float(obj.value())
+                self.trial_config[name] = float(obj.value())
         filepath = str(QFileDialog.getSaveFileName(self, 'Save as preset...', 'Configs', 'Config file (*.cfg)')[0])
-        json.dump(trialconfig, open(filepath, 'w'), sort_keys=True, indent=4)
+        json.dump(self.trial_config, open(filepath, 'w'), sort_keys=True, indent=4)
         filename = os.path.basename(filepath)
         filename = os.path.splitext(filename)[0]
         self.loadPreset_ComboBox.addItems([filename])
@@ -943,28 +934,28 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def loadPreset(self):
         filename = str(self.loadPreset_ComboBox.currentText())
         filepath = os.path.join(config_directory, filename + '.cfg')
-        trialconfig = json.load(open(filepath, 'r'))
+        self.trial_config = json.load(open(filepath, 'r'))
         widgets = (QComboBox, QCheckBox, QLineEdit, QSpinBox, QDoubleSpinBox)
         for obj in self.trial_GroupBox.findChildren(widgets):
             name = str(obj.objectName())
             try:
                 if isinstance(obj, QComboBox):
-                    value = trialconfig[name]
+                    value = self.trial_config[name]
                     index = obj.findText(value)  # get the corresponding index for specified string in combobox
                     obj.setCurrentIndex(index)  # preselect a combobox value by index
                 if isinstance(obj, QLineEdit):
-                    value = trialconfig[name]
+                    value = self.trial_config[name]
                     if 'spinbox' not in name:
                         obj.setText(value)  # restore lineEditFile
                 if isinstance(obj, QCheckBox):
-                    value = trialconfig[name]
+                    value = self.trial_config[name]
                     if value is not None:
                         obj.setChecked(value)  # restore checkbox
                 if isinstance(obj, QSpinBox):
-                    value = trialconfig[name]
+                    value = self.trial_config[name]
                     obj.setValue(value)  # restore lineEditFile
                 if isinstance(obj, QDoubleSpinBox):
-                    value = trialconfig[name]
+                    value = self.trial_config[name]
                     obj.setValue(value)  # restore lineEditFile
             except:
                 continue
@@ -1011,7 +1002,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             input_string = '<font color=''#ff0066''>ARDUINO: </font>' + input_string
         elif device == 'trial':
                 input_string = '<b>' + input_string + '</b>'
-        trial_log.append(input_string)
+        self.trial_log.append(input_string)
 
         self.sessionFeed_textEdit.append(input_string)
 
@@ -1032,7 +1023,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         # save terminal outputs to text file
         with open(save_name + '.txt', 'w') as log:
-            log.write('\n'.join(trial_log))
+            log.write('\n'.join(self.trial_log))
 
 
 # Main entry to program.  Sets up the main app and create a new window.
