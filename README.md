@@ -1,5 +1,5 @@
 # PyBehaviour
-![Imgur](http://i.imgur.com/LeblyRe.png)
+![Imgur](http://i.imgur.com/FoJIX5g.png)
 
 ## Prerequisites
 * Python (3.4 recommended)

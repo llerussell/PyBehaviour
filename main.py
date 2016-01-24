@@ -62,16 +62,14 @@ for file in os.listdir(config_directory):
 # initialise results and other directories
 trials = {}
 trials['results'] = []
-trials['correct_tally'] = 0
-trials['running_score'] = []
-
-p = {}
-
+trials['correct_tally'] = 0  # not currently used, but will be used for auto incrementing
+trials['running_score'] = np.zeros(0)
 arduino = {}
 arduino['connected'] = False
+p = {}
 
-# # start random number seed
-# np.random.seed()
+# start random number seed
+np.random.seed()
 
 
 class TrialRunner(QObject):
@@ -158,16 +156,20 @@ class TrialRunner(QObject):
         # adjust trial order if repeat-if-incorrect
         if trial_num > 0:
             max_repeats = int(p['maximumRepeatsIfIncorrect'])
-            if trial_num > max_repeats and np.sum(trials['running_score'][-max_repeats:]) == 0:
-                print('here')  # do not repeat any more if max_repeats has been exceeded
-            elif p['repeatIfIncorrect'] and trials['running_score'][-1] == 0:
+            if trial_num >= max_repeats:
+                prev_trials = p['trialOrder'][trial_num-max_repeats:trial_num]
+            else:
+                prev_trials = p['trialOrder'][:trial_num]
+            if trial_num >= max_repeats and np.sum(trials['running_score'][-max_repeats:]) == -max_repeats and prev_trials.min() == prev_trials.max():
+                    pass  # do not repeat any more if max_repeats of a stim has been exceeded
+            elif p['repeatIfIncorrect'] and trials['running_score'][trial_num-1] <= 0:
+                 # make this stim same as previous
+                p['trialOrder'][trial_num] = p['trialOrder'][trial_num-1]
+                p['trialVariations'][trial_num] = p['trialVariations'][trial_num-1]
+
                 # shift next trials back
                 p['trialOrder'][trial_num+1:-1] = p['trialOrder'][trial_num:-2]
                 p['trialVariations'][trial_num+1:-1] = p['trialVariations'][trial_num:-2]
-
-                # make this stim same as previous
-                p['trialOrder'][trial_num] = p['trialOrder'][trial_num-1]
-                p['trialVariations'][trial_num] = p['trialVariations'][trial_num-1]
 
                 # update the trial order plot(shown on config tab)
                 # self.plotTrialOrder()
@@ -271,7 +273,7 @@ class TrialRunner(QObject):
                 self.comm_feed_signal.emit(temp_read, 'arduino')
 
     # signals allow communication between the TrialRunner thread and GUI thread. i.e. send data to main GUI thread where it can be displayed and saved. I don't know why they are here outside of any function...
-    response_signal = pyqtSignal(int, float, int, str, name='responseSignal')
+    response_signal = pyqtSignal(int, float, int, str, bool, name='responseSignal')
     trial_start_signal = pyqtSignal(int, name='trialStartSignal')
     trial_end_signal = pyqtSignal(int, name='trialEndSignal')
     session_end_signal = pyqtSignal(name='sessionEndGUISignal')
@@ -281,51 +283,65 @@ class TrialRunner(QObject):
 
     def receiveData(self, trial_num):
         '''
-        The worker thread will sit in a while loop processing incoming communication from the arduino, appending data to the results, unitl the arduino says it has finished the trial.
+        The worker thread will sit in a while loop processing incoming
+        communication from the arduino, appending data to the results,
+        unitl the arduino says it has finished the trial.
         '''
         trials['results'][trial_num]['trialstart'] = time.strftime('%Y%m%d_%H%M%S')
         trialRunning = True
         state = 'PRETRIAL'
+        is_first_response = True
         while trialRunning:
-            temp_read = arduino['device'].readline().strip().decode('utf-8')
-
-            if temp_read:
-                self.comm_feed_signal.emit(temp_read, 'arduino')
-                if temp_read[0] == '<' and temp_read[-1] == '>':  # whole data packet received
-                    temp_read = temp_read[1:-1]  # only process everything between < and >
-                    data = temp_read.split('|')
-                    for idx, val in enumerate(data):
-                        if val:  # in val is not just
-                            ID, val = val.split(':')
-                            val = float(val) / 1000
-                            if ID == '*':
-                                state = 'INTRIAL'
-                                trials['results'][trial_num]['responses'][0] = [x - val for x in trials['results'][trial_num]['responses'][0]]
-                                trials['results'][trial_num]['withold_act'] = val
-                            else:
-                                ID = int(ID)
-                                trials['results'][trial_num]['responses'][0].append(val)  # time
-                                trials['results'][trial_num]['responses'][1].append(ID)  # channel
-                                self.response_signal.emit(trial_num, val, ID, state)
-
-                elif temp_read[0] == '{' and temp_read[-1] == '}':  # whole trial outcome packet received
-                    temp_read = temp_read[1:-1]  # only process everything between { and }
-                    if temp_read == 'DONE':
-                        trialRunning = False
-                        trials['running_score'].append((trials['results'][trial_num]['correct']))
-                        if trials['results'][trial_num]['correct']:
-                            trials['correct_tally'] = trials['correct_tally'] + 1
-                        else:
-                            trials['correct_tally'] = 0
-
-                    else:
+            try:
+                temp_read = arduino['device'].readline().strip().decode('utf-8')
+                if temp_read:
+                    self.comm_feed_signal.emit(temp_read, 'arduino')
+                    if temp_read[0] == '<' and temp_read[-1] == '>':  # whole data packet received
+                        temp_read = temp_read[1:-1]  # only process everything between < and >
                         data = temp_read.split('|')
                         for idx, val in enumerate(data):
                             if val:  # in val is not just
-                                key, val = val.split(':')
-                                val = int(val)
-                                key = str(key)
-                                trials['results'][trial_num][key] = val
+                                ID, val = val.split(':')
+                                val = float(val) / 1000
+                                if ID == '*':
+                                    state = 'INTRIAL'
+                                    trials['results'][trial_num]['responses'][0] = [x - val for x in trials['results'][trial_num]['responses'][0]]
+                                    trials['results'][trial_num]['withold_act'] = val
+                                else:
+                                    ID = int(ID)
+                                    trials['results'][trial_num]['responses'][0].append(val)  # time
+                                    trials['results'][trial_num]['responses'][1].append(ID)  # channel
+                                    self.response_signal.emit(trial_num, val, ID, state, is_first_response)
+                                    if state == 'INTRIAL':
+                                        is_first_response = False  # first response has now happened
+
+                    elif temp_read[0] == '{' and temp_read[-1] == '}':  # whole trial outcome packet received
+                        temp_read = temp_read[1:-1]  # only process everything between { and }
+                        if temp_read == 'DONE':
+                            trialRunning = False
+                            if trials['results'][trial_num]['correct']:
+                                score = 1
+                                trials['correct_tally'] += 1
+                            elif trials['results'][trial_num]['incorrect']:
+                                score = -1
+                                trials['correct_tally'] = 0
+                            else:  # miss
+                                score = 0
+                            trials['running_score'] = np.append(trials['running_score'], score)
+
+                        else:
+                            data = temp_read.split('|')
+                            for idx, val in enumerate(data):
+                                if val:  # in val is not just
+                                    key, val = val.split(':')
+                                    val = int(val)
+                                    key = str(key)
+                                    trials['results'][trial_num][key] = val
+            except:
+                if self._session_running:
+                    self.comm_feed_signal.emit('Something went wrong', 'pc')
+                else:
+                    self.stop()
 
     def stop(self):
         self._session_running = False
@@ -391,7 +407,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.sessionTimer.start(100)  # start the QTimer, executes every 100ms
         self.sessionTimer_label.setStyleSheet('font-size: 18pt; font-weight: bold; color:''black'';')
 
-
         self.trialThread.start()
 
     def reset(self):
@@ -401,15 +416,19 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         plots = [self.runningScorePlot, self.averageScorePlot]
         for plot in plots:
             plot.set_data([[], []])
+        for plot in self.subScorePlots:
+            plot.set_data([[], []])
         plots = [self.preTrialRaster_responses, self.raster_responses]
         for plot in plots:
             plot.set_offsets(np.empty(0))
             plot.set_array(np.empty(0))
+        self.rasterFigPerfAx.imshow(np.ones([1,1,3]))
+        self.performanceFigPerfAx.imshow(np.ones([1,1,3]))
         self.updatePlotLayouts()
 
         trials = {}
         trials['results'] = []
-        trials['running_score'] = []
+        trials['running_score'] = np.empty(0)
 
     def pause(self):
         self.trialRunner._paused = not self.trialRunner._paused
@@ -418,7 +437,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         else:
             self.sessionPause_pushButton.setText('Pause')
 
-    def quit(self):
+    def abort(self):
         if self.trialRunner._session_running:
             self.trialRunner.stop()
             self.trialThread.quit()
@@ -439,8 +458,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.raster_stimlength.set_height(p['sessionDuration'])
 
         # performance line
-        self.performanceFigAx.set_ylim(0, 1)
+        self.performanceFigAx.set_ylim(-1, 1)
         self.performanceFigAx.set_xlim(0, p['sessionDuration'])
+        self.perf_0_line.set_xdata([0, p['sessionDuration']])
 
         # performance blocks
         num_stims = len(p['stimChannels'])
@@ -453,7 +473,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.rasterFigCanvas.draw()
         self.performanceFigCanvas.draw()
 
-    def updateRasterPlotData(self, trial_num, val, ID, state):
+    def updateRasterPlotData(self, trial_num, val, ID, state, is_first_response):
         if state == 'INTRIAL':
             plot_series = self.raster_responses
             ax = self.rasterFigAx
@@ -478,6 +498,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         new_colours = np.append(old_colours, ID)
         plot_series.set_array(new_colours)
 
+        if is_first_response:
+            new_size = 26
+        else:
+            new_size = 2
+        old_sizes = plot_series.get_sizes()
+        new_sizes = np.append(old_sizes, new_size)
+        plot_series.set_sizes(new_sizes)
+
         ax.draw_artist(plot_series)
         canvas.update()
         canvas.flush_events()
@@ -489,11 +517,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         performance_record = np.ones([num_trials, num_stims, 3])
         for t in range(trial_num+1):
             if trials['results'][t]['correct']:
-                colour = [0.05, 0.9, 0.4]
+                colour = [0, 0.85, 0.45]
             elif not trials['results'][t]['miss']:  # means incorrect
-                colour = [1, 0, 0.4]
+                colour = [1, 0.1, 0.4]
             else:  # means miss
-                colour = [.66, .66, .66]
+                colour = [.7, .7, .7]
             performance_record[t, p['trialOrder'][t]] = colour
 
         self.rasterFigPerfAx.imshow(performance_record, interpolation='nearest', aspect='auto')
@@ -504,17 +532,22 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         old_ydata = plot_series.get_ydata()
         moving_avg_size = 10
         if trial_num >= moving_avg_size:
-            new_ydata = np.append(old_ydata, np.mean(trials['running_score'][-moving_avg_size:-1]))
+            new_ydata = np.append(old_ydata, np.mean(trials['running_score'][-moving_avg_size:]))
         else:
             new_ydata = np.append(old_ydata, np.mean(trials['running_score']))
         plot_series.set_ydata(new_ydata)
         plot_series.set_xdata(range(len(new_ydata)))
 
         plot_series = self.averageScorePlot
-        old_ydata = plot_series.get_ydata()
-        new_ydata = np.append(old_ydata, np.mean(trials['running_score']))
         plot_series.set_ydata([np.mean(trials['running_score']), np.mean(trials['running_score'])])
-        plot_series.set_xdata([0, trial_num])
+        plot_series.set_xdata([0, p['sessionDuration']])
+
+        for stim_type in p['stimChannels']:
+            plot_series = self.subScorePlots[stim_type]
+            mask = p['trialOrder'][:trial_num+1] == stim_type
+            if mask.any():
+                plot_series.set_ydata([np.mean(trials['running_score'][mask]), np.mean(trials['running_score'][mask])])
+                plot_series.set_xdata([0, p['sessionDuration']])
 
     def setConnects(self):
         # add connects for control button clicks
@@ -523,7 +556,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.testPin_Button.clicked.connect(self.testPin)
         self.begin_Button.clicked.connect(self.begin)
         self.sessionPause_pushButton.clicked.connect(self.pause)
-        self.sessionAbort_pushButton.clicked.connect(self.quit)
+        self.sessionAbort_pushButton.clicked.connect(self.abort)
         self.loadTrialOrder_pushButton.clicked.connect(self.loadTrialOrder)
         self.saveTrialOrder_pushButton.clicked.connect(self.saveTrialOrder)
 
@@ -572,7 +605,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def arduinoDisconnected(self):
         self.arduinoConnectedText_Label.setText('Not connected')
-        self.arduinoConnectedText_Label.setStyleSheet('color:rgb(188, 0, 30);')
+        self.arduinoConnectedText_Label.setStyleSheet('color:rgb(255, 0, 100);')
 
     def makeTrialOrder(self):
         if not self.trialRunner._session_running:
@@ -601,13 +634,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                         custm = stats.rv_discrete(name='custm', values=(xk, pk))
                         extra_trials = custm.rvs(size=diff)
                         p['trialOrder'] = np.append(p['trialOrder'], extra_trials)
-
-                    # trial variations
-                    p['trialVariations'] = np.zeros(len(p['trialOrder']))
-                    for i in range(len(p['trialOrder'])):
-                        this_trial = p['trialOrder'][i]
-                        this_idx = np.where(p['stimChannels'] == this_trial)[0]
-                        p['trialVariations'][i] = np.random.randint(p['variations'][this_idx])
 
                     # test for consecutive trial limit
                     passed = False
@@ -652,6 +678,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                             stim_idx += 1
                             if stim_idx >= len(p['stimChannels']):
                                 stim_idx = 0
+
+                # trial variations
+                p['trialVariations'] = np.zeros(len(p['trialOrder']))
+                for i in range(len(p['trialOrder'])):
+                    this_trial = p['trialOrder'][i]
+                    this_idx = np.where(p['stimChannels'] == this_trial)[0]
+                    p['trialVariations'][i] = np.random.randint(p['variations'][this_idx])
 
                 # first stim control
                 if p['controlFirstStim']:
@@ -707,29 +740,23 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         stimChannels = [p['stim1'], p['stim2'], p['stim3'], p['stim4'],
                         p['stim5'], p['stim6'], p['stim7'], p['stim8']]
 
-        respRequired = [p['respReq1'], p['respReq2'], p['respReq3'],
-                        p['respReq4'], p['respReq5'], p['respReq6'],
-                        p['respReq7'], p['respReq8']]
+        respRequired = [p['respReq1'], p['respReq2'], p['respReq3'], p['respReq4'],
+                        p['respReq5'], p['respReq6'], p['respReq7'], p['respReq8']]
 
-        rewardChannels = [p['rewardedChan1'], p['rewardedChan2'],
-                          p['rewardedChan3'], p['rewardedChan4'],
-                          p['rewardedChan5'], p['rewardedChan6'],
-                          p['rewardedChan7'], p['rewardedChan8']]
+        rewardChannels = [p['rewardChan1'], p['rewardChan2'], p['rewardChan3'], p['rewardChan4'],
+                          p['rewardChan5'], p['rewardChan6'], p['rewardChan7'], p['rewardChan8']]
 
         cueChannels = [p['cueChan1'], p['cueChan2'], p['cueChan3'], p['cueChan4'],
                        p['cueChan5'], p['cueChan6'], p['cueChan7'], p['cueChan8']]
 
-        punishChannels = [p['punishChan1'], p['punishChan2'], p['punishChan3'],
-                          p['punishChan4'], p['punishChan5'], p['punishChan6'],
-                          p['punishChan7'], p['punishChan8']]
+        punishChannels = [p['punishChan1'], p['punishChan2'], p['punishChan3'], p['punishChan4'],
+                          p['punishChan5'], p['punishChan6'], p['punishChan7'], p['punishChan8']]
 
-        proportions = [p['proportion1'], p['proportion2'], p['proportion3'],
-                       p['proportion4'], p['proportion5'], p['proportion6'],
-                       p['proportion7'], p['proportion8']]
+        proportions = [p['proportion1'], p['proportion2'], p['proportion3'], p['proportion4'],
+                       p['proportion5'], p['proportion6'], p['proportion7'], p['proportion8']]
 
-        variations = [p['variations1'], p['variations2'], p['variations3'],
-                      p['variations4'], p['variations5'], p['variations6'],
-                      p['variations7'], p['variations8']]
+        variations = [p['variations1'], p['variations2'], p['variations3'], p['variations4'],
+                      p['variations5'], p['variations6'], p['variations7'], p['variations8']]
 
         p['stimChannels'] = [idx for idx, val in enumerate(stimChannels) if val]
         p['cueChannels'] = [cueChannels[idx] for idx in p['stimChannels']]
@@ -857,13 +884,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.trialConfigAx.hold(True)
 
         # make the shapes
-        self.duration_line = patches.Rectangle([0, 0], 0, 0.05, fc='k', ec='none')
-        self.trial_cue_rectangle = patches.Rectangle([0, 0], 0, 1, fc=[.95, 0, .5], ec='none')
-        self.stim_cue_rectangle = patches.Rectangle([0, 0], 0, 1, fc=[.95, 0, .5], ec='none')
-        self.response_cue_rectangle = patches.Rectangle([0, 0], 0, 1, fc=[.95, 0, .5], ec='none')
-        self.stim_rectangle = patches.Rectangle([0, 0], 0, 1, fc='k', ec='none')
-        self.resp_rectangle = patches.Rectangle([0, 0], 0, 0.9, fc=[.66, .66, .66], ec='none')
-        self.reward_rectangle = patches.Rectangle([0, 0], 0, 1, fc=[0, .8, .95], ec='none')
+        self.duration_line = patches.Rectangle([0, 0], 0, 0.05, fc=[.8, .8, .8], ec='none', zorder=0)
+        self.trial_cue_rectangle = patches.Rectangle([0, 0], 0, 0.9, fc=[1, .7, 0], ec='none')
+        self.stim_cue_rectangle = patches.Rectangle([0, 0], 0, 0.9, fc=[1, .7, 0], ec='none')
+        self.response_cue_rectangle = patches.Rectangle([0, 0], 0, 0.9, fc=[1, .7, 0], ec='none')
+        self.stim_rectangle = patches.Rectangle([0, 0], 0, 1, fc=[.3, .3, .3], ec='none')
+        self.resp_rectangle = patches.Rectangle([0, 0], 0, 0.9, fc=[.8, .8, .8], ec='none')
+        self.reward_rectangle = patches.Rectangle([0, 0], 0, 0.9, fc=[0, .75, .95], ec='none')
 
         # add the shapes to the figure
         self.trialConfigAx.add_patch(self.stim_rectangle)
@@ -875,7 +902,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.trialConfigAx.add_patch(self.duration_line)
 
         # add to GUI
-        self.setupTabVerticalLayout.addWidget(self.trialConfigCanvas)
+        self.advancedGroupBox_layout.addWidget(self.trialConfigCanvas)
 
         # pretrial response/withold plot
         self.preTrialRasterFig = Figure()
@@ -900,11 +927,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.rasterFigAx.set_title('Responses', loc='left')
         self.rasterFigAx.hold(True)
 
-        self.raster_respwin = patches.Rectangle([0, 0], 0, 0, fc=[0, 0, 0, 0.1], ec='none', zorder=1)
-        self.raster_stimlength = patches.Rectangle([0, 0], 0, 0, fc=[0, 0, 0, 0.1], ec='none', zorder=3)
+        self.raster_respwin = patches.Rectangle([0, 0], 0, 0, fc=[0, 0, 0, 0.05], ec='none', zorder=1)
+        self.raster_stimlength = patches.Rectangle([0, 0], 0, 0, fc=[0, 0, 0, 0.05], ec='none', zorder=3)
         self.rasterFigAx.add_patch(self.raster_respwin)
         self.rasterFigAx.add_patch(self.raster_stimlength)
-        self.raster_stimline, = self.rasterFigAx.plot([0, 0], [0, 0], 'k-', linewidth=2)
+        self.raster_stimline, = self.rasterFigAx.plot([0, 0], [0, 0], '-', c=[0.3, 0.3, 0.3], linewidth=2, clip_on=False, zorder=8)
         self.raster_responses = self.rasterFigAx.scatter(np.empty(0), np.empty(0), c=np.empty(0), edgecolor='', antialiased=True, clip_on=False, vmin=1, vmax=4, cmap='rainbow', zorder=9)
         # self.raster_reward, = self.rasterFigAx.plot([], [], 'o', clip_on=False)  # currently unused
         # self.raster_punish, = self.rasterFigAx.plot([], [], 'o', clip_on=False)  # currently unused
@@ -920,12 +947,21 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.performanceFigCanvas = FigureCanvas(self.performanceFig)  # a canvas holds a figure
         self.performanceFigAx = self.performanceFig.add_axes([0.2, 0.15, 0.75, 0.7])
         self.resultsFigsHorizontalLayout.addWidget(self.performanceFigCanvas)
-        self.averageScorePlot, = self.performanceFigAx.plot([], [], '-', c=[0.7, 0.7, 0.7], linewidth=3, aa=True, clip_on=False, zorder=9)
+        self.perf_0_line, = self.performanceFigAx.plot([0, 0], [0, 0], '-', c=[0.3, 0.3, 0.3], linewidth=1, zorder=6, clip_on=False)
+        self.averageScorePlot, = self.performanceFigAx.plot([], [], '-', c=[0.7, 0.7, 0.7], linewidth=2, aa=True, clip_on=False, zorder=8)
+        NUM_STIMS = 8
+        cmap = matplotlib.cm.get_cmap(name='rainbow', lut=NUM_STIMS-1)
+        self.subScorePlots = []
+        for sub_plot in range(NUM_STIMS):
+            temp, = self.performanceFigAx.plot([], [], '-', c=cmap(sub_plot), linewidth=1, aa=True, clip_on=False, zorder=7)
+            self.subScorePlots.append(temp)
         self.runningScorePlot, = self.performanceFigAx.plot([], [], 'k-', linewidth=2, aa=True, clip_on=False, zorder=9)
         self.performanceFigAx.set_xlabel('Trial')
         self.performanceFigAx.set_ylabel('Performance (%)')
-        self.performanceFigAx.set_yticks(np.arange(0, 1.01, 0.25))
-        self.performanceFigAx.set_yticklabels(np.arange(0, 101, 25))
+        self.performanceFigAx.set_yticks(np.linspace(-1,1,9))
+        # self.performanceFigAx.get_yaxis().set_minor_locator(matplotlib.ticker.AutoMinorLocator())
+        # self.performanceFigAx.grid(b=True, which='minor', alpha=0.5)
+        self.performanceFigAx.set_yticklabels([-100,-75,-50,-25,0,25,50,75,100])
         self.performanceFig.set_facecolor('white')
 
         self.performanceFigPerfAx = self.performanceFig.add_axes([0.2, 0.86, 0.75, 0.04])
@@ -993,7 +1029,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def sessionEndGUI(self):
         self.sessionTimer.stop()
         end_time_string = self.sessionTimer_label.text()
-        1, 0, 0.4
         self.sessionTimer_label.setText('<font color=''#ff0066''>' + end_time_string + '</font>')
         self.updateCommFeed('Finished')
 
@@ -1003,8 +1038,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.updateCommFeed('Trial ' + str(trial_num+1), 'trial')
         plots = [self.preTrialRaster_responses]
         for plot_series in plots:
-            plot_series.set_offsets(np.empty([0]))
-            plot_series.set_array(np.empty([0]))
+            plot_series.set_offsets(np.empty(0))
+            plot_series.set_array(np.empty(0))
         self.preTrialRasterFigAx.set_xlim([0, p['witholdBeforeStimMax']])
         self.preTrialRasterFigCanvas.draw()
 
@@ -1018,13 +1053,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def updateCommFeed(self, input_string, device=None):
         # input_string = input_string.replace('<', '{').replace('>', '}')
         if device == 'pc':
+            self.toSessionFeed_textEdit.append(input_string)
             input_string = 'PC:      ' + input_string
         elif device == 'arduino':
+            self.fromSessionFeed_textEdit.append(input_string)
             input_string = 'ARDUINO: ' + input_string
         elif device == 'trial':
-                input_string = input_string
-                self.sessionFeed_textEdit.setText('')
-        self.sessionFeed_textEdit.append(input_string)
+            self.toSessionFeed_textEdit.setText(input_string)
+            self.fromSessionFeed_textEdit.setText('')
         self.trial_log.append(input_string)
 
     def saveResults(self):
