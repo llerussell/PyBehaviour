@@ -663,29 +663,14 @@ void endTrial() {
 void txResults() {
   // generate results
   long firstResponse = respWinResponses[0];
-  if (respReq == 0) { // if no response rquired
-    if (firstResponse) { // responded when not supposed to
-      incorrect = true;
-      fa = true;
-    }
-    else {
-      correct = true;
-      cr = true;
-    }
+  if (firstResponse == respReq) {
+    correct = true;
   }
-  else { // if response is required
-    if (firstResponse == respReq) {
-      correct = true;
-      hit = true;
-    }
-    else if (firstResponse == 0) {
-      incorrect = true;
-      miss = true;
-    }
-    else {
-      incorrect = true;
-      fa = true;
-    }
+  else if (firstResponse == 0) {
+    incorrect = true;
+  }
+  else {
+    incorrect = true;
   }
 
   // transmit results
@@ -693,10 +678,7 @@ void txResults() {
   resultsString = "{firstresponse:" + String(firstResponse) + "|";
   resultsString = resultsString + "correct:" + String(correct) + "|";
   resultsString = resultsString + "incorrect:" + String(incorrect) + "|";
-  resultsString = resultsString + "hit:" + String(hit) + "|";
-  resultsString = resultsString + "miss:" + String(miss) + "|";
-  resultsString = resultsString + "fa:" + String(fa) + "|";
-  resultsString = resultsString + "cr:" + String(cr) + "}";
+  resultsString = resultsString + "miss:" + String(miss) + "}";
   delay(100);
   Serial.println(resultsString);
   delay(250);
