@@ -39,3 +39,4 @@ Windows 64-bit:
 * Oliver
 * Christina
 * Carmen
+* Adam
