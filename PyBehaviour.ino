@@ -667,7 +667,7 @@ void txResults() {
     correct = true;
   }
   else if (firstResponse == 0) {
-    incorrect = true;
+    miss = true;
   }
   else {
     incorrect = true;

@@ -20,7 +20,7 @@ seaborn.set(rc={
     'axes.facecolor': [1.0, 1.0, 1.0],
     'axes.edgecolor': [0.9, 0.9, 0.9],
     'grid.color': [0.9, 0.9, 0.9],
-    'image.composite_image': False
+    # 'image.composite_image': False
     })
 import numpy as np
 import scipy.io as sio
@@ -34,7 +34,7 @@ from PyQt5.QtCore import QObject, pyqtSignal, QThread, QTimer
 from PyQt5.QtWidgets import (QComboBox, QCheckBox, QLineEdit, QSpinBox,
                              QDoubleSpinBox, QFileDialog, QApplication,
                              QDesktopWidget, QMainWindow, QMessageBox)
-from PyQt5.QtGui import QIcon
+from PyQt5.QtGui import QIcon, QPalette, QColor
 from GUI.GUI import Ui_MainWindow
 import serial_ports
 
@@ -160,7 +160,9 @@ class TrialRunner(QObject):
                 prev_trials = p['trialOrder'][trial_num-max_repeats:trial_num]
             else:
                 prev_trials = p['trialOrder'][:trial_num]
-            if trial_num >= max_repeats and np.sum(trials['running_score'][-max_repeats:]) == -max_repeats and prev_trials.min() == prev_trials.max():
+            if (trial_num >= max_repeats) and \
+                (np.sum(trials['running_score'][-max_repeats:]) == -max_repeats) and \
+                (prev_trials.min() == prev_trials.max()):
                     pass  # do not repeat any more if max_repeats of a stim has been exceeded
             elif p['repeatIfIncorrect'] and trials['running_score'][trial_num-1] <= 0:
                  # make this stim same as previous
@@ -175,8 +177,8 @@ class TrialRunner(QObject):
                 # self.plotTrialOrder()
 
         # get the current stim type
-        this_stim_idx = int(p['trialOrder'][trial_num])
-        this_stim = p['stimChannels'][this_stim_idx]
+        this_stim = int(p['trialOrder'][trial_num])
+        this_stim_idx = p['stimChannels'].index(this_stim)
         this_var = int(p['trialVariations'][trial_num])
         trials['results'][trial_num]['stim_type'] = this_stim
         trials['results'][trial_num]['stim_var'] = this_var
@@ -429,6 +431,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         trials = {}
         trials['results'] = []
         trials['running_score'] = np.empty(0)
+        trials = {}
 
     def pause(self):
         self.trialRunner._paused = not self.trialRunner._paused
@@ -522,7 +525,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 colour = [1, 0.1, 0.4]
             else:  # means miss
                 colour = [.7, .7, .7]
-            performance_record[t, p['trialOrder'][t]] = colour
+            stim_idx = p['stimChannels'].index(p['trialOrder'][t])
+            performance_record[t, stim_idx] = colour
 
         self.rasterFigPerfAx.imshow(performance_record, interpolation='nearest', aspect='auto')
         self.performanceFigPerfAx.imshow(np.rot90(performance_record), interpolation='nearest', aspect='auto')
@@ -543,7 +547,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         plot_series.set_xdata([0, p['sessionDuration']])
 
         for stim_type in p['stimChannels']:
-            plot_series = self.subScorePlots[stim_type]
+            plot_series = self.subScorePlots[stim_type-1]
             mask = p['trialOrder'][:trial_num+1] == stim_type
             if mask.any():
                 plot_series.set_ydata([np.mean(trials['running_score'][mask]), np.mean(trials['running_score'][mask])])
@@ -683,7 +687,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 p['trialVariations'] = np.zeros(len(p['trialOrder']))
                 for i in range(len(p['trialOrder'])):
                     this_trial = p['trialOrder'][i]
-                    this_idx = np.where(p['stimChannels'] == this_trial)[0]
+                    this_idx = p['stimChannels'].index(this_trial)
                     p['trialVariations'][i] = np.random.randint(p['variations'][this_idx])
 
                 # first stim control
@@ -696,7 +700,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.plotTrialOrder()
 
     def plotTrialOrder(self):
-        self.trialOrderAx.imshow([p['trialOrder']], interpolation='nearest', cmap='rainbow', vmin=0, vmax=7, aspect='auto')
+        self.trialOrderAx.imshow([p['trialOrder']], interpolation='nearest', cmap='rainbow', vmin=1, vmax=8, aspect='auto')
         self.trialOrderAx2.imshow([p['trialVariations']], interpolation='nearest', cmap='gray', aspect='auto')
         self.trialOrderCanvas.draw()
 
@@ -718,6 +722,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.getValues()
 
     def getValues(self):
+        # extract gui values
         widgets = (QComboBox, QCheckBox, QLineEdit, QSpinBox, QDoubleSpinBox)
         groups = (self.session_GroupBox, self.arduino_GroupBox,
                   self.trial_GroupBox)
@@ -737,6 +742,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 if isinstance(obj, QDoubleSpinBox):
                     p[trimmed_name] = float(obj.value())
 
+        # process gui values
         stimChannels = [p['stim1'], p['stim2'], p['stim3'], p['stim4'],
                         p['stim5'], p['stim6'], p['stim7'], p['stim8']]
 
@@ -758,13 +764,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         variations = [p['variations1'], p['variations2'], p['variations3'], p['variations4'],
                       p['variations5'], p['variations6'], p['variations7'], p['variations8']]
 
-        p['stimChannels'] = [idx for idx, val in enumerate(stimChannels) if val]
-        p['cueChannels'] = [cueChannels[idx] for idx in p['stimChannels']]
-        p['punishChannels'] = [punishChannels[idx] for idx in p['stimChannels']]
-        p['respRequired'] = [respRequired[idx] for idx in p['stimChannels']]
-        p['rewardChannels'] = [rewardChannels[idx] for idx in p['stimChannels']]
-        p['proportions'] = [proportions[idx] for idx in p['stimChannels']]
-        p['variations'] = [variations[idx] for idx in p['stimChannels']]
+        p['stimChannels'] = [int(idx+1) for idx, val in enumerate(stimChannels) if val]
+        p['cueChannels'] = [cueChannels[idx-1] for idx in p['stimChannels']]
+        p['punishChannels'] = [punishChannels[idx-1] for idx in p['stimChannels']]
+        p['respRequired'] = [respRequired[idx-1] for idx in p['stimChannels']]
+        p['rewardChannels'] = [rewardChannels[idx-1] for idx in p['stimChannels']]
+        p['proportions'] = [proportions[idx-1] for idx in p['stimChannels']]
+        p['variations'] = [variations[idx-1] for idx in p['stimChannels']]
 
         p['totalDuration'] = p['witholdBeforeStimMax'] + p['cueToStimDelay'] + \
                              p['postStimDelay'] + p['responseWindow'] + p['endOfTrialDelay']
@@ -780,9 +786,21 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         p['responseStop'] = p['responseStart'] + p['responseWindow']
         p['autoRewardStart'] = p['cueToStimDelay'] + p['autoRewardDelay']
 
-        self.makeTrialOrder()
-        self.updateTrialConfigPlot()
-        self.updatePlotLayouts()
+        # update gui
+        if self._ready:
+            self.makeTrialOrder()
+            self.updateTrialConfigPlot()
+            self.updatePlotLayouts()
+
+            # colour stim names if selected
+            stimCheckBoxes = [self.stim1_CheckBox, self.stim2_CheckBox, self.stim3_CheckBox, self.stim4_CheckBox,
+                              self.stim5_CheckBox, self.stim6_CheckBox, self.stim7_CheckBox, self.stim8_CheckBox]
+            cmap = matplotlib.cm.get_cmap(name='rainbow', lut=len(stimCheckBoxes))
+            for idx, stimCheckBox in enumerate(stimCheckBoxes):
+                colour = list(cmap(idx))
+                colour_string = 'rgb(' + str(int(colour[0]*255)) + ',' + str(int(colour[1]*255)) + ',' + str(int(colour[2]*255)) + ')'
+                stimCheckBox.setStyleSheet('QCheckBox::indicator:checked { background-color:' + colour_string +
+                    '; border: 1px solid #b1b1b1;}')
 
     def updateTrialConfigPlot(self):
         self.duration_line.set_width(p['totalDuration'])
@@ -948,14 +966,17 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.performanceFigAx = self.performanceFig.add_axes([0.2, 0.15, 0.75, 0.7])
         self.resultsFigsHorizontalLayout.addWidget(self.performanceFigCanvas)
         self.perf_0_line, = self.performanceFigAx.plot([0, 0], [0, 0], '-', c=[0.3, 0.3, 0.3], linewidth=1, zorder=6, clip_on=False)
+
+        self.runningScorePlot, = self.performanceFigAx.plot([], [], 'k-', linewidth=2, aa=True, clip_on=False, zorder=9)
         self.averageScorePlot, = self.performanceFigAx.plot([], [], '-', c=[0.7, 0.7, 0.7], linewidth=2, aa=True, clip_on=False, zorder=8)
+
         NUM_STIMS = 8
         cmap = matplotlib.cm.get_cmap(name='rainbow', lut=NUM_STIMS-1)
         self.subScorePlots = []
         for sub_plot in range(NUM_STIMS):
             temp, = self.performanceFigAx.plot([], [], '-', c=cmap(sub_plot), linewidth=1, aa=True, clip_on=False, zorder=7)
             self.subScorePlots.append(temp)
-        self.runningScorePlot, = self.performanceFigAx.plot([], [], 'k-', linewidth=2, aa=True, clip_on=False, zorder=9)
+
         self.performanceFigAx.set_xlabel('Trial')
         self.performanceFigAx.set_ylabel('Performance (%)')
         self.performanceFigAx.set_yticks(np.linspace(-1,1,9))

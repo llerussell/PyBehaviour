@@ -1,9 +1,10 @@
 # ignore
+*.cfg
 *.mat
 *.pyc
 *.pde
 *.txt
-*.cfg
 *.pdf
 *.mat
 *.doc
+*GUI/GUIdefaults.cfg
