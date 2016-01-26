@@ -20,7 +20,6 @@ seaborn.set(rc={
     'axes.facecolor': [1.0, 1.0, 1.0],
     'axes.edgecolor': [0.9, 0.9, 0.9],
     'grid.color': [0.9, 0.9, 0.9],
-    # 'image.composite_image': False
     })
 import numpy as np
 import scipy.io as sio
@@ -35,8 +34,8 @@ from PyQt5.QtWidgets import (QComboBox, QCheckBox, QLineEdit, QSpinBox,
                              QDoubleSpinBox, QFileDialog, QApplication,
                              QDesktopWidget, QMainWindow, QMessageBox)
 from PyQt5.QtGui import QIcon
-from GUI.GUI import Ui_MainWindow
-import serial_ports
+from GUI import GUI
+from GUI import serial_ports
 
 
 # find available serial ports
@@ -347,7 +346,7 @@ class TrialRunner(QObject):
             self.session_end_signal.emit()  # will update gui
 
 
-class MainWindow(QMainWindow, Ui_MainWindow):
+class MainWindow(QMainWindow, GUI.Ui_MainWindow):
     '''
     The GUI window
     '''
