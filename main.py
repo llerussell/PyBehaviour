@@ -1110,14 +1110,15 @@ def main(argv):
     GUI = MainWindow()
 
     # resize if larger than desktop
-    screen_res = QDesktopWidget().availableGeometry()
-    if GUI.frameSize().height() > screen_res.height():
-        GUI.resize(GUI.frameSize().width(), screen_res.height())
+    screen_res = QDesktopWidget().screenGeometry()
+    available_res = QDesktopWidget().availableGeometry()
+    if GUI.frameSize().height() > available_res.height():
+        GUI.resize(GUI.frameSize().width(), available_res.height())
 
     # centre the window
-    screen_res = QDesktopWidget().availableGeometry()
+    height = screen_res.bottom() - screen_res.top()
     GUI.move((screen_res.width() / 2) - (GUI.frameSize().width() / 2),
-             (screen_res.height() / 2) - (GUI.frameSize().height() / 2))
+             (height / 2) - (GUI.frameSize().height() / 2))
 
     # show it and bring to front
     GUI.show()
