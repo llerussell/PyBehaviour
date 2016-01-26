@@ -122,10 +122,7 @@ int respWinRespIdx;
 // results
 boolean correct;
 boolean incorrect;
-boolean hit;
 boolean miss;
-boolean fa;
-boolean cr;
 
 
 //---------------------------------------------------------
@@ -322,18 +319,24 @@ void rxConfig() {
           punishChan = atoi(varBuffer);
           break;
         case 19:
-          punishLength = atoi(varBuffer);
+          punishChan = atoi(varBuffer);
           break;
         case 20:
-          rewardRemoval = atoi(varBuffer);
+          punishLength = atoi(varBuffer);
           break;
         case 21:
-          rewardRemovalDelay = atoi(varBuffer);
+          punishLength = atoi(varBuffer);
+          break;
+        case 21:
+          rewardRemoval = atoi(varBuffer);
           break;
         case 22:
-          cueChan = atoi(varBuffer);
+          rewardRemovalDelay = atoi(varBuffer);
           break;
         case 23:
+          cueChan = atoi(varBuffer);
+          break;
+        case 24:
           postStimCancel = atoi(varBuffer);
           break;
       }
@@ -503,16 +506,17 @@ void processResponse(int responseNum) {
   else if ((timeResponded < respWinStartTime) && (postStimCancel)) {  // if post stim delay, cancel trial
     tEndTrial.enable();
   }
-  else if ((inRespWin) && (respWinRespIdx == 0)) {
-    if (responseNum == respReq) {
+  else if ((inRespWin) && (respWinRespIdx == 0)) {  // first response in response window
+    if (responseNum == respReq) {  // if correct
       tRewardOn.enable();
     }
-    else {
-      if (punishChan > 0) {
-      currentTime = millis() - startTime;
+    else {  // else must be incorrect
+      if (punishTrigger) {
+        tPunishOn.enable();
       }
-      if (punishLength > 0) {
-      tEndTrial.setInterval(trialDuration - currentTime + punishLength);
+      if (punishDelay) {
+        currentTime = millis() - startTime;
+        tEndTrial.setInterval(trialDuration - currentTime + punishLength);
       }
     }
     respWinResponses[respWinRespIdx] = responseNum;
@@ -697,10 +701,7 @@ void resetConfig() {
   }
   correct = false;
   incorrect = false;
-  hit = false;
   miss = false;
-  cr = false;
-  fa = false;
 }
 
 void testPin(int pinNumber, int pinDuration) {

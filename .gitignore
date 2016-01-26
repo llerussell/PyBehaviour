@@ -7,4 +7,5 @@
 *.pdf
 *.mat
 *.doc
-*GUI/GUIdefaults.cfg
+*.sublime-project
+*.sublime-workspace

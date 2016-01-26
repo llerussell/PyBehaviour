@@ -151,18 +151,16 @@ class TrialRunner(QObject):
         '''
 
         # adjust trial order if repeat-if-incorrect
-        if trial_num > 0:
+        if trial_num > 0 and p['repeatIfIncorrect']:
             max_repeats = int(p['maximumRepeatsIfIncorrect'])
             if trial_num >= max_repeats:
                 prev_trials = p['trialOrder'][trial_num-max_repeats:trial_num]
             else:
                 prev_trials = p['trialOrder'][:trial_num]
-            if (trial_num >= max_repeats) and \
-                (np.sum(trials['running_score'][-max_repeats:]) == -max_repeats) and \
-                (prev_trials.min() == prev_trials.max()):
+            if (trial_num >= max_repeats) and (np.sum(trials['running_score'][-max_repeats:]) == -max_repeats) and (prev_trials.min() == prev_trials.max()):
                     pass  # do not repeat any more if max_repeats of a stim has been exceeded
-            elif p['repeatIfIncorrect'] and trials['running_score'][trial_num-1] <= 0:
-                 # make this stim same as previous
+            elif trials['running_score'][trial_num-1] <= 0:
+                # make this stim same as previous
                 p['trialOrder'][trial_num] = p['trialOrder'][trial_num-1]
                 p['trialVariations'][trial_num] = p['trialVariations'][trial_num-1]
 
@@ -170,8 +168,6 @@ class TrialRunner(QObject):
                 p['trialOrder'][trial_num+1:-1] = p['trialOrder'][trial_num:-2]
                 p['trialVariations'][trial_num+1:-1] = p['trialVariations'][trial_num:-2]
 
-                # update the trial order plot(shown on config tab)
-                # self.plotTrialOrder()
 
         # get the current stim type
         this_stim = int(p['trialOrder'][trial_num])
@@ -191,10 +187,7 @@ class TrialRunner(QObject):
         reward_chan = p['rewardChannels'][this_stim_idx]
         trials['results'][trial_num]['reward_channel'] = reward_chan
         cue_chan = p['cueChannels'][this_stim_idx]
-        if p['punishTrigger']:
-            punish_chan = p['punishChannels'][this_stim_idx]
-        else:
-            punish_chan = 0
+        punish_chan = p['punishChannels'][this_stim_idx]
 
         # generate random withold requirement (if enabled)
         if p['witholdBeforeStim']:
@@ -241,8 +234,12 @@ class TrialRunner(QObject):
             str(int(p['autoReward'])) + ';' \
             'AUTO_REWARD_START:' + \
             str(int(p['autoRewardStart']*1000)) + ';' \
+            'PUNISH_TRIGGER:' + \
+            str(p['punishTrigger']) + ';' \
             'PUNISH_CHAN:' + \
             str(punish_chan) + ';' \
+            'PUNISH_DELAY:' + \
+            str(p['punishDelay']) + ';' \
             'PUNISH_LENGTH:' + \
             str(int(p['punishLength']*1000)) + ';' \
             'REWARD_REMOVAL:' + \
@@ -1111,8 +1108,13 @@ def main(argv):
     # create main window
     GUI = MainWindow()
 
+    # resize if larger than desktop
+    screen_res = QDesktopWidget().availableGeometry()
+    if GUI.frameSize().height() > screen_res.height():
+        GUI.resize(GUI.frameSize().width(), screen_res.height())
+
     # centre the window
-    screen_res = QDesktopWidget().screenGeometry()
+    screen_res = QDesktopWidget().availableGeometry()
     GUI.move((screen_res.width() / 2) - (GUI.frameSize().width() / 2),
              (screen_res.height() / 2) - (GUI.frameSize().height() / 2))
 
