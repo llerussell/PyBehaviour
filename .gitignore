@@ -1,0 +1,14 @@
+
+*.cfg
+
+*.pyc
+
+*.mat
+
+*.pdf
+
+*.txt
+
+*.sublime-workspace
+
+*.sublime-project
