@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'GUI.ui'
 #
-# Created: Tue Jan 26 17:04:39 2016
+# Created: Tue Jan 26 17:23:07 2016
 #      by: PyQt5 UI code generator 5.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -2004,14 +2004,6 @@ class Ui_MainWindow(object):
         self.tabWidget.addTab(self.liveTab, "")
         self.verticalLayout_8.addWidget(self.tabWidget)
         MainWindow.setCentralWidget(self.centralwidget)
-        self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 730, 22))
-        self.menubar.setObjectName("menubar")
-        self.menuFile = QtWidgets.QMenu(self.menubar)
-        self.menuFile.setObjectName("menuFile")
-        self.menuAbout = QtWidgets.QMenu(self.menubar)
-        self.menuAbout.setObjectName("menuAbout")
-        MainWindow.setMenuBar(self.menubar)
         self.actionFile = QtWidgets.QAction(MainWindow)
         self.actionFile.setObjectName("actionFile")
         self.actionOpen = QtWidgets.QAction(MainWindow)
@@ -2020,12 +2012,6 @@ class Ui_MainWindow(object):
         self.actionSave.setObjectName("actionSave")
         self.actionUs = QtWidgets.QAction(MainWindow)
         self.actionUs.setObjectName("actionUs")
-        self.menuFile.addAction(self.actionFile)
-        self.menuFile.addAction(self.actionOpen)
-        self.menuFile.addAction(self.actionSave)
-        self.menuAbout.addAction(self.actionUs)
-        self.menubar.addAction(self.menuFile.menuAction())
-        self.menubar.addAction(self.menuAbout.menuAction())
 
         self.retranslateUi(MainWindow)
         self.tabWidget.setCurrentIndex(0)
@@ -2340,8 +2326,6 @@ class Ui_MainWindow(object):
         self.label_30.setText(_translate("MainWindow", ">"))
         self.label_31.setText(_translate("MainWindow", "<"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.liveTab), _translate("MainWindow", "Live"))
-        self.menuFile.setTitle(_translate("MainWindow", "File"))
-        self.menuAbout.setTitle(_translate("MainWindow", "About"))
         self.actionFile.setText(_translate("MainWindow", "New"))
         self.actionOpen.setText(_translate("MainWindow", "Open"))
         self.actionSave.setText(_translate("MainWindow", "Save"))
