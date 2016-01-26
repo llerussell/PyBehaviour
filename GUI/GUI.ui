@@ -6,20 +6,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>655</width>
-    <height>795</height>
+    <width>720</width>
+    <height>820</height>
    </rect>
   </property>
-  <property name="font">
-   <font>
-    <pointsize>9</pointsize>
-   </font>
+  <property name="minimumSize">
+   <size>
+    <width>720</width>
+    <height>0</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>PyBehaviour</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">font-size: 9pt;</string>
+   <string notr="true">font-size: 8pt;</string>
   </property>
   <property name="animated">
    <bool>true</bool>
@@ -36,7 +37,7 @@
      <widget class="QTabWidget" name="tabWidget">
       <property name="font">
        <font>
-        <pointsize>9</pointsize>
+        <pointsize>8</pointsize>
        </font>
       </property>
       <property name="styleSheet">
@@ -58,7 +59,7 @@
              <widget class="QGroupBox" name="session_GroupBox">
               <property name="font">
                <font>
-                <pointsize>9</pointsize>
+                <pointsize>8</pointsize>
                </font>
               </property>
               <property name="title">
@@ -217,6 +218,9 @@
                      <property name="maximum">
                       <number>1000</number>
                      </property>
+                     <property name="value">
+                      <number>10</number>
+                     </property>
                     </widget>
                    </item>
                    <item row="0" column="1">
@@ -321,6 +325,9 @@
                      <property name="minimum">
                       <number>1</number>
                      </property>
+                     <property name="value">
+                      <number>13</number>
+                     </property>
                     </widget>
                    </item>
                    <item row="1" column="2">
@@ -351,6 +358,9 @@
                      </property>
                      <property name="singleStep">
                       <double>0.001000000000000</double>
+                     </property>
+                     <property name="value">
+                      <double>100.000000000000000</double>
                      </property>
                     </widget>
                    </item>
@@ -479,6 +489,11 @@
           </item>
           <item>
            <widget class="QGroupBox" name="trial_GroupBox">
+            <property name="font">
+             <font>
+              <pointsize>8</pointsize>
+             </font>
+            </property>
             <property name="styleSheet">
              <string notr="true">background-color: none;</string>
             </property>
@@ -513,7 +528,7 @@
                  </property>
                  <property name="font">
                   <font>
-                   <pointsize>9</pointsize>
+                   <pointsize>8</pointsize>
                   </font>
                  </property>
                  <property name="styleSheet">
@@ -542,8 +557,8 @@ background-color: none;
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>594</width>
-                    <height>1302</height>
+                    <width>599</width>
+                    <height>1289</height>
                    </rect>
                   </property>
                   <property name="sizePolicy">
@@ -1092,7 +1107,7 @@ background-color: none;
                             </property>
                             <property name="font">
                              <font>
-                              <pointsize>9</pointsize>
+                              <pointsize>8</pointsize>
                              </font>
                             </property>
                             <property name="toolTip">
@@ -1449,7 +1464,7 @@ background-color: none;
                             </property>
                             <property name="font">
                              <font>
-                              <pointsize>9</pointsize>
+                              <pointsize>8</pointsize>
                              </font>
                             </property>
                             <property name="toolTip">
@@ -1529,7 +1544,7 @@ background-color: none;
                             </property>
                             <property name="font">
                              <font>
-                              <pointsize>9</pointsize>
+                              <pointsize>8</pointsize>
                              </font>
                             </property>
                             <property name="toolTip">
@@ -1584,7 +1599,7 @@ background-color: none;
                             </property>
                             <property name="font">
                              <font>
-                              <pointsize>9</pointsize>
+                              <pointsize>8</pointsize>
                              </font>
                             </property>
                             <property name="toolTip">
@@ -1686,7 +1701,7 @@ background-color: none;
                             </property>
                             <property name="font">
                              <font>
-                              <pointsize>9</pointsize>
+                              <pointsize>8</pointsize>
                              </font>
                             </property>
                             <property name="toolTip">
@@ -1900,7 +1915,7 @@ background-color: none;
                             </property>
                             <property name="font">
                              <font>
-                              <pointsize>9</pointsize>
+                              <pointsize>8</pointsize>
                              </font>
                             </property>
                             <property name="toolTip">
@@ -1955,7 +1970,7 @@ background-color: none;
                             </property>
                             <property name="font">
                              <font>
-                              <pointsize>9</pointsize>
+                              <pointsize>8</pointsize>
                              </font>
                             </property>
                             <property name="toolTip">
@@ -1988,7 +2003,7 @@ background-color: none;
                             </property>
                             <property name="font">
                              <font>
-                              <pointsize>9</pointsize>
+                              <pointsize>8</pointsize>
                              </font>
                             </property>
                             <property name="toolTip">
@@ -3171,12 +3186,15 @@ background-color: none;
                              <double>0.500000000000000</double>
                             </property>
                             <property name="value">
-                             <double>1.000000000000000</double>
+                             <double>0.500000000000000</double>
                             </property>
                            </widget>
                           </item>
                           <item>
                            <widget class="QCheckBox" name="respStopsStim_CheckBox">
+                            <property name="enabled">
+                             <bool>false</bool>
+                            </property>
                             <property name="sizePolicy">
                              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                               <horstretch>0</horstretch>
@@ -4434,7 +4452,7 @@ background-color: none;
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>655</width>
+     <width>720</width>
      <height>22</height>
     </rect>
    </property>
@@ -4501,6 +4519,7 @@ background-color: none;
   <tabstop>cueChan2_spinBox</tabstop>
   <tabstop>variations2_spinBox</tabstop>
   <tabstop>proportion2_doubleSpinBox</tabstop>
+  <tabstop>proportion2_doubleSpinBox</tabstop>
   <tabstop>stim3_CheckBox</tabstop>
   <tabstop>respReq3_SpinBox</tabstop>
   <tabstop>rewardChan3_SpinBox</tabstop>
@@ -4553,6 +4572,8 @@ background-color: none;
   <tabstop>firstStimVariation_spinBox</tabstop>
   <tabstop>saveTrialOrder_pushButton</tabstop>
   <tabstop>loadTrialOrder_pushButton</tabstop>
+  <tabstop>repeatIfIncorrect_CheckBox</tabstop>
+  <tabstop>maximumRepeatsIfIncorrect_DoubleSpinBox</tabstop>
   <tabstop>activeInitiation_checkBox</tabstop>
   <tabstop>activeInitiationRespRe_checkBox</tabstop>
   <tabstop>witholdBeforeStim_CheckBox</tabstop>
@@ -4567,40 +4588,37 @@ background-color: none;
   <tabstop>postStimCancel_CheckBox</tabstop>
   <tabstop>responseWindow_SpinBox</tabstop>
   <tabstop>cueResponse_CheckBox</tabstop>
-  <tabstop>spinBox</tabstop>
-  <tabstop>tabWidget</tabstop>
-  <tabstop>sessionPause_pushButton</tabstop>
-  <tabstop>sessionAbort_pushButton</tabstop>
-  <tabstop>toSessionFeed_textEdit</tabstop>
-  <tabstop>fromSessionFeed_textEdit</tabstop>
-  <tabstop>saveAsPreset_Button</tabstop>
-  <tabstop>rewardRemovalDelay_SpinBox</tabstop>
-  <tabstop>spinBox_2</tabstop>
-  <tabstop>spinBox_29</tabstop>
-  <tabstop>autoReward_CheckBox</tabstop>
-  <tabstop>proportion2_doubleSpinBox</tabstop>
-  <tabstop>checkBox_5</tabstop>
-  <tabstop>punishLength_SpinBox</tabstop>
-  <tabstop>doubleSpinBox</tabstop>
-  <tabstop>autoRewardDelay_SpinBox</tabstop>
-  <tabstop>comboBox</tabstop>
   <tabstop>endOfTrialDelay_SpinBox</tabstop>
+  <tabstop>autoReward_CheckBox</tabstop>
+  <tabstop>autoRewardDelay_SpinBox</tabstop>
   <tabstop>rewardRemoval_checkBox</tabstop>
+  <tabstop>rewardRemovalDelay_SpinBox</tabstop>
+  <tabstop>punishLength_SpinBox</tabstop>
+  <tabstop>punishTrigger_checkBox</tabstop>
   <tabstop>autoTransition_CheckBox</tabstop>
   <tabstop>autoTransitionTo_ComboBox</tabstop>
   <tabstop>autoTransitionAfterNum_SpinBox</tabstop>
   <tabstop>autoTransitionAfterCriteria_ComboBox</tabstop>
   <tabstop>autoTransitionFor_SpinBox</tabstop>
   <tabstop>checkBox</tabstop>
-  <tabstop>punishTrigger_checkBox</tabstop>
+  <tabstop>doubleSpinBox</tabstop>
+  <tabstop>spinBox_2</tabstop>
+  <tabstop>comboBox</tabstop>
+  <tabstop>spinBox</tabstop>
+  <tabstop>checkBox_5</tabstop>
   <tabstop>doubleSpinBox_6</tabstop>
-  <tabstop>scrollArea</tabstop>
-  <tabstop>repeatIfIncorrect_CheckBox</tabstop>
-  <tabstop>begin_Button</tabstop>
-  <tabstop>setDefaults_Button</tabstop>
-  <tabstop>maximumRepeatsIfIncorrect_DoubleSpinBox</tabstop>
+  <tabstop>spinBox_29</tabstop>
   <tabstop>comboBox_3</tabstop>
   <tabstop>spinBox_30</tabstop>
+  <tabstop>saveAsPreset_Button</tabstop>
+  <tabstop>begin_Button</tabstop>
+  <tabstop>setDefaults_Button</tabstop>
+  <tabstop>sessionPause_pushButton</tabstop>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>scrollArea</tabstop>
+  <tabstop>toSessionFeed_textEdit</tabstop>
+  <tabstop>sessionAbort_pushButton</tabstop>
+  <tabstop>fromSessionFeed_textEdit</tabstop>
  </tabstops>
  <resources/>
  <connections>

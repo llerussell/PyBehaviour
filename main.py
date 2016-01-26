@@ -34,7 +34,7 @@ from PyQt5.QtCore import QObject, pyqtSignal, QThread, QTimer
 from PyQt5.QtWidgets import (QComboBox, QCheckBox, QLineEdit, QSpinBox,
                              QDoubleSpinBox, QFileDialog, QApplication,
                              QDesktopWidget, QMainWindow, QMessageBox)
-from PyQt5.QtGui import QIcon, QPalette, QColor
+from PyQt5.QtGui import QIcon
 from GUI.GUI import Ui_MainWindow
 import serial_ports
 
@@ -61,9 +61,6 @@ for file in os.listdir(config_directory):
 
 # initialise results and other directories
 trials = {}
-trials['results'] = []
-trials['correct_tally'] = 0  # not currently used, but will be used for auto incrementing
-trials['running_score'] = np.zeros(0)
 arduino = {}
 arduino['connected'] = False
 p = {}
@@ -105,7 +102,7 @@ class TrialRunner(QObject):
             self.stop()
 
     def connectArduino(self):
-        self.comm_feed_signal.emit('Connecting Arduino...', '')
+        self.comm_feed_signal.emit('Connecting Arduino on port ' + p['device'], 'pc')
         arduino['device'] = serial.Serial(p['device'], 19200)
         arduino['device'].timeout = 1
         connect_attempts = 3
@@ -118,13 +115,13 @@ class TrialRunner(QObject):
                 self.arduino_connected_signal.emit()
             current_attempt += 1
             if current_attempt > connect_attempts:
-                self.comm_feed_signal.emit('*** Failed to connect ***', '')
+                self.comm_feed_signal.emit('*** Failed to connect ***', 'pc')
 
     def disconnectArduino(self):
         if arduino['connected']:
+            arduino['connected'] = False
             self.comm_feed_signal.emit('Disconnecting Arduino...', '')
             arduino['device'].close()
-            arduino['connected'] = False
             self.arduino_disconnected_signal.emit()
 
     def runTrial(self, trial_num, trials):
@@ -346,9 +343,10 @@ class TrialRunner(QObject):
                     self.stop()
 
     def stop(self):
-        self._session_running = False
-        self.session_end_signal.emit()
-        self.disconnectArduino()
+        if self._session_running:
+            self._session_running = False  # will stop while loop
+            self.disconnectArduino()
+            self.session_end_signal.emit()  # will update gui
 
 
 class MainWindow(QMainWindow, Ui_MainWindow):
@@ -412,9 +410,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.trialThread.start()
 
     def reset(self):
-        if self.trialRunner._session_running:
-            self.trialRunner.stop()
-            self.trialThread.quit()
+        # if self.trialRunner._session_running:
+            # self.trialRunner.stop()
+            # self.trialThread.quit()
         plots = [self.runningScorePlot, self.averageScorePlot]
         for plot in plots:
             plot.set_data([[], []])
@@ -428,10 +426,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.performanceFigPerfAx.imshow(np.ones([1,1,3]))
         self.updatePlotLayouts()
 
+        global trials
         trials = {}
         trials['results'] = []
         trials['running_score'] = np.empty(0)
-        trials = {}
+        trials['correct_tally'] = 0  # not currently used, but will be used for auto incrementing
 
     def pause(self):
         self.trialRunner._paused = not self.trialRunner._paused
