@@ -46,10 +46,10 @@ char incomingByte;
 char varBuffer[20];
 int varIndex = 0;
 int varBufferIndex = 0;
-boolean configStringStarted = false;
-boolean configStringEnded = false;
-boolean trialStringStarted = false;
-boolean trialStringEnded = false;
+bool configStringStarted = false;
+bool configStringEnded = false;
+bool trialStringStarted = false;
+bool trialStringEnded = false;
 
 // control
 char INCOMING_COMMAND = '@';
@@ -65,38 +65,40 @@ int stimChan;
 int stimVar;
 int respReq;
 int rewardChan;
-boolean trialCue;
-boolean stimCue;
-boolean respCue;
+bool trialCue;
+bool stimCue;
+bool respCue;
 int respCueStartTime;
-boolean withold;
+bool withold;
 int witholdReq;
 int stimStartTime;
 int stimStopTime;
 int respWinStartTime;
 int respWinStopTime;
 int trialDuration;
-boolean autoReward;
+bool autoReward;
 int autoRewardStartTime;
+bool punishTrigger;
 int punishChan;
+bool punishDelay;
 int punishLength;
-boolean rewardRemoval;
+bool rewardRemoval;
 int rewardRemovalDelay;
 int cueChan;
-boolean postStimCancel;
+bool postStimCancel;
 
 // session/trial states
-boolean configReceived = false;
-boolean trialConfigured = false;
-boolean trialRunning;
-boolean inRespWin;
-boolean inWithold;
+bool configReceived = false;
+bool trialConfigured = false;
+bool trialRunning;
+bool inRespWin;
+bool inWithold;
 
 // response states
-boolean responded = false;
-boolean respondedInResp = false;
-boolean rewarded = false;
-boolean punished = false;
+bool responded = false;
+bool respondedInResp = false;
+bool rewarded = false;
+bool punished = false;
 
 // record times
 int preTrialDelayStart;
@@ -120,9 +122,9 @@ int respWinResponses[200];
 int respWinRespIdx;
 
 // results
-boolean correct;
-boolean incorrect;
-boolean miss;
+bool correct;
+bool incorrect;
+bool miss;
 
 
 //---------------------------------------------------------
@@ -316,27 +318,27 @@ void rxConfig() {
           autoRewardStartTime = atoi(varBuffer);
           break;
         case 18:
-          punishChan = atoi(varBuffer);
+          punishTrigger = atoi(varBuffer);
           break;
         case 19:
           punishChan = atoi(varBuffer);
           break;
         case 20:
-          punishLength = atoi(varBuffer);
+          punishDelay = atoi(varBuffer);
           break;
         case 21:
           punishLength = atoi(varBuffer);
-          break;
-        case 21:
-          rewardRemoval = atoi(varBuffer);
           break;
         case 22:
-          rewardRemovalDelay = atoi(varBuffer);
+          rewardRemoval = atoi(varBuffer);
           break;
         case 23:
-          cueChan = atoi(varBuffer);
+          rewardRemovalDelay = atoi(varBuffer);
           break;
         case 24:
+          cueChan = atoi(varBuffer);
+          break;
+        case 25:
           postStimCancel = atoi(varBuffer);
           break;
       }

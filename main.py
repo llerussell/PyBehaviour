@@ -236,13 +236,13 @@ class TrialRunner(QObject):
             'AUTO_REWARD_START:' + \
             str(int(p['autoRewardStart']*1000)) + ';' \
             'PUNISH_TRIGGER:' + \
-            str(p['punishTrigger']) + ';' \
+            str(int(p['punishTrigger'])) + ';' \
             'PUNISH_CHAN:' + \
             str(punish_chan) + ';' \
             'PUNISH_DELAY:' + \
-            str(p['punishDelay']) + ';' \
+            str(int(p['punishDelay'])) + ';' \
             'PUNISH_LENGTH:' + \
-            str(int(p['punishLength']*1000)) + ';' \
+            str(int(p['punishDelayLength']*1000)) + ';' \
             'REWARD_REMOVAL:' + \
             str(int(p['rewardRemoval'])) + ';' \
             'REWARD_REMOVAL_DELAY:' + \

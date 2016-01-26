@@ -20,7 +20,7 @@
    <string>PyBehaviour</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">font-size: 8pt;</string>
+   <string notr="true">font-size: 9pt;</string>
   </property>
   <property name="animated">
    <bool>true</bool>
@@ -37,7 +37,7 @@
      <widget class="QTabWidget" name="tabWidget">
       <property name="font">
        <font>
-        <pointsize>8</pointsize>
+        <pointsize>9</pointsize>
        </font>
       </property>
       <property name="styleSheet">
@@ -59,7 +59,7 @@
              <widget class="QGroupBox" name="session_GroupBox">
               <property name="font">
                <font>
-                <pointsize>8</pointsize>
+                <pointsize>9</pointsize>
                </font>
               </property>
               <property name="title">
@@ -491,7 +491,7 @@
            <widget class="QGroupBox" name="trial_GroupBox">
             <property name="font">
              <font>
-              <pointsize>8</pointsize>
+              <pointsize>9</pointsize>
              </font>
             </property>
             <property name="styleSheet">
@@ -528,7 +528,7 @@
                  </property>
                  <property name="font">
                   <font>
-                   <pointsize>8</pointsize>
+                   <pointsize>9</pointsize>
                   </font>
                  </property>
                  <property name="styleSheet">
@@ -558,7 +558,7 @@ background-color: none;
                     <x>0</x>
                     <y>-837</y>
                     <width>599</width>
-                    <height>1294</height>
+                    <height>1307</height>
                    </rect>
                   </property>
                   <property name="sizePolicy">
@@ -1107,7 +1107,7 @@ background-color: none;
                             </property>
                             <property name="font">
                              <font>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="toolTip">
@@ -1464,7 +1464,7 @@ background-color: none;
                             </property>
                             <property name="font">
                              <font>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="toolTip">
@@ -1544,7 +1544,7 @@ background-color: none;
                             </property>
                             <property name="font">
                              <font>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="toolTip">
@@ -1599,7 +1599,7 @@ background-color: none;
                             </property>
                             <property name="font">
                              <font>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="toolTip">
@@ -1701,7 +1701,7 @@ background-color: none;
                             </property>
                             <property name="font">
                              <font>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="toolTip">
@@ -1915,7 +1915,7 @@ background-color: none;
                             </property>
                             <property name="font">
                              <font>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="toolTip">
@@ -1970,7 +1970,7 @@ background-color: none;
                             </property>
                             <property name="font">
                              <font>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="toolTip">
@@ -2003,7 +2003,7 @@ background-color: none;
                             </property>
                             <property name="font">
                              <font>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="toolTip">
