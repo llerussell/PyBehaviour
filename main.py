@@ -1118,7 +1118,7 @@ def main(argv):
     # centre the window
     height = screen_res.bottom() - screen_res.top()
     GUI.move((screen_res.width() / 2) - (GUI.frameSize().width() / 2),
-             (height / 2) - (GUI.frameSize().height() / 2))
+             (height / 2) - ((GUI.frameSize().height()+80) / 2))  # +80 for window border
 
     # show it and bring to front
     GUI.show()

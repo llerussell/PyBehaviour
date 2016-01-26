@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'GUI.ui'
 #
-# Created: Tue Jan 26 17:31:47 2016
+# Created: Tue Jan 26 17:36:05 2016
 #      by: PyQt5 UI code generator 5.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -12,7 +12,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(720, 820)
+        MainWindow.resize(720, 815)
         MainWindow.setMinimumSize(QtCore.QSize(720, 0))
         MainWindow.setStyleSheet("font-size: 8pt;")
         MainWindow.setAnimated(True)
