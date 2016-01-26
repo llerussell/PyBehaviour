@@ -20,7 +20,7 @@ Windows 64-bit:
 * Make shortcut to `GUI/execute.bat`, change icon to cheese, move to Desktop or taskbar
 * Install [Arduino IDE](https://www.arduino.cc/en/Main/Software)
 * place TaskScheduler and ElapsedMillis folders in `Arduino/libraries`
-* Upload PyBehaviour.ino to arduino
+* Upload Sketch.ino to arduino
 
 ## Known issues
 * INTERRUPT 2 (pin 21) NOT COMPATIBLE
