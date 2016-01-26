@@ -104,7 +104,7 @@ class TrialRunner(QObject):
     def connectArduino(self):
         self.comm_feed_signal.emit('Connecting Arduino on port ' + p['device'], 'pc')
         arduino['device'] = serial.Serial(p['device'], 19200)
-        arduino['device'].timeout = 1
+        arduino['device'].timeout = 0
         connect_attempts = 3
         current_attempt = 1
         while arduino['connected'] is False and current_attempt <= connect_attempts:
@@ -116,6 +116,7 @@ class TrialRunner(QObject):
             current_attempt += 1
             if current_attempt > connect_attempts:
                 self.comm_feed_signal.emit('*** Failed to connect ***', 'pc')
+                arduino['device'].close()
 
     def disconnectArduino(self):
         if arduino['connected']:
