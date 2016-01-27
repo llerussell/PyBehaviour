@@ -55,6 +55,7 @@ bool trialStringEnded = false;
 char INCOMING_COMMAND = '@';
 char TEST_PIN = '!';
 char TEST_READY = '?'; // test if ready
+char FORCE_REWARD = 'R';
 char test_command;
 int testChanNum;
 int testChanDur;
@@ -464,10 +465,25 @@ void runTrial() {
   enableTasks();
   while (trialRunning) {
     taskManager.execute();
+    serialListen();
   }
 
   // end
   endTrial();
+}
+
+void serialListen() {
+  if (Serial.available()) {
+    incomingByte = Serial.read();
+    if (incomingByte == INCOMING_COMMAND) {
+      delay(1);
+      test_command = Serial.read();
+      delay(1);
+      if (test_command == FORCE_REWARD) {
+        tRewardOn.enable();
+      }
+    }
+  }
 }
 
 void enableTasks() {
@@ -508,6 +524,7 @@ void processResponse(int responseNum) {
   else if ((timeResponded < respWinStartTime) && (postStimCancel)) {  // if post stim delay, cancel trial
     tEndTrial.enable();
   }
+  // include here the possibility of not punishing, and then reward subsequent correct choice
   else if ((inRespWin) && (respWinRespIdx == 0)) {  // first response in response window
     if (responseNum == respReq) {  // if correct
       tRewardOn.enable();

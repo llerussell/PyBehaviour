@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'GUI.ui'
 #
-# Created: Tue Jan 26 21:47:02 2016
+# Created: Wed Jan 27 13:19:58 2016
 #      by: PyQt5 UI code generator 5.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -262,7 +262,7 @@ class Ui_MainWindow(object):
         self.scrollArea.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, -837, 599, 1307))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 599, 1307))
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -1936,6 +1936,9 @@ class Ui_MainWindow(object):
         self.sessionAbort_pushButton = QtWidgets.QPushButton(self.groupBox)
         self.sessionAbort_pushButton.setObjectName("sessionAbort_pushButton")
         self.horizontalLayout_20.addWidget(self.sessionAbort_pushButton)
+        self.forceReward_pushButton = QtWidgets.QPushButton(self.groupBox)
+        self.forceReward_pushButton.setObjectName("forceReward_pushButton")
+        self.horizontalLayout_20.addWidget(self.forceReward_pushButton)
         self.liveTabVerticalLayout.addLayout(self.horizontalLayout_20)
         self.verticalLayout_4.addLayout(self.liveTabVerticalLayout)
         self.verticalLayout_2.addWidget(self.groupBox)
@@ -2321,6 +2324,7 @@ class Ui_MainWindow(object):
         self.trialNum_label.setText(_translate("MainWindow", "0"))
         self.sessionPause_pushButton.setText(_translate("MainWindow", "Pause"))
         self.sessionAbort_pushButton.setText(_translate("MainWindow", "Abort"))
+        self.forceReward_pushButton.setText(_translate("MainWindow", "Force current reward"))
         self.groupBox_4.setTitle(_translate("MainWindow", "Results"))
         self.groupBox_2.setTitle(_translate("MainWindow", "Arduino monitor"))
         self.label_30.setText(_translate("MainWindow", ">"))

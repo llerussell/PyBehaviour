@@ -556,7 +556,7 @@ background-color: none;
                   <property name="geometry">
                    <rect>
                     <x>0</x>
-                    <y>-837</y>
+                    <y>0</y>
                     <width>599</width>
                     <height>1307</height>
                    </rect>
@@ -4311,6 +4311,13 @@ background-color: none;
                 <widget class="QPushButton" name="sessionAbort_pushButton">
                  <property name="text">
                   <string>Abort</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="forceReward_pushButton">
+                 <property name="text">
+                  <string>Force current reward</string>
                  </property>
                 </widget>
                </item>

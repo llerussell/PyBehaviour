@@ -402,6 +402,14 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
             self.trialRunner.stop()
             self.trialThread.quit()
 
+    def forceReward(self):
+        if arduino['connected'] is False:
+            self.updateCommFeed('Only works whilst session is running', 'pc')
+        if arduino['connected'] is True:
+            write_string = '@R'  # arduind knows this means deliver reward
+            self.updateCommFeed(write_string, 'pc')
+            arduino['device'].write(write_string.encode('utf-8'))
+
     def updatePlotLayouts(self):
         self.preTrialRasterFigAx.set_xlim(0, p['witholdBeforeStimMax'])
 
@@ -518,6 +526,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         self.begin_Button.clicked.connect(self.begin)
         self.sessionPause_pushButton.clicked.connect(self.pause)
         self.sessionAbort_pushButton.clicked.connect(self.abort)
+        self.forceReward_pushButton.clicked.connect(self.forceReward)
         self.loadTrialOrder_pushButton.clicked.connect(self.loadTrialOrder)
         self.saveTrialOrder_pushButton.clicked.connect(self.saveTrialOrder)
 
