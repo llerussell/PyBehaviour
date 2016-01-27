@@ -6,21 +6,12 @@ PyBehaviour
 '''
 
 import warnings
-warnings.filterwarnings('ignore')
 import matplotlib
-matplotlib.use('Qt5Agg', force=True)
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.backends.backend_pdf import PdfPages
 from matplotlib.figure import Figure
 from matplotlib import patches
 import seaborn
-seaborn.set(rc={
-    'axes.axisbelow': True,
-    'axes.linewidth': 1,
-    'axes.facecolor': [1.0, 1.0, 1.0],
-    'axes.edgecolor': [0.9, 0.9, 0.9],
-    'grid.color': [0.9, 0.9, 0.9],
-    })
 import numpy as np
 import scipy.io as sio
 from scipy import stats
@@ -36,36 +27,6 @@ from PyQt5.QtWidgets import (QComboBox, QCheckBox, QLineEdit, QSpinBox,
 from PyQt5.QtGui import QIcon
 from GUI import GUI
 from GUI import serial_ports
-
-
-# find available serial ports
-available_devices = serial_ports.list_ports()
-
-# setup directories
-results_directory = 'Results'
-if not os.path.exists(results_directory):
-    os.makedirs(results_directory)
-
-trial_sequence_directory = 'Trial sequences'
-if not os.path.exists(trial_sequence_directory):
-    os.makedirs(trial_sequence_directory)
-
-config_directory = 'Configs'
-if not os.path.exists(config_directory):
-    os.makedirs(config_directory)
-available_configs = []
-for file in os.listdir(config_directory):
-    if file.endswith('.cfg'):
-        available_configs.append(os.path.splitext(file)[0])
-
-# initialise results and other directories
-trials = {}
-arduino = {}
-arduino['connected'] = False
-p = {}
-
-# start random number seed
-np.random.seed()
 
 
 class TrialRunner(QObject):
@@ -536,7 +497,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         else:
             new_ydata = np.append(old_ydata, np.mean(trials['running_score']))
         plot_series.set_ydata(new_ydata)
-        plot_series.set_xdata(range(len(new_ydata)))
+        plot_series.set_xdata(range(1, len(new_ydata)+1))
 
         plot_series = self.averageScorePlot
         plot_series.set_ydata([np.mean(trials['running_score']), np.mean(trials['running_score'])])
@@ -1109,15 +1070,14 @@ def main(argv):
     GUI = MainWindow()
 
     # resize if larger than desktop
-    screen_res = QDesktopWidget().screenGeometry()
-    available_res = QDesktopWidget().availableGeometry()
-    if GUI.frameSize().height() > available_res.height():
-        GUI.resize(GUI.frameSize().width(), available_res.height())
+    screen_res = QDesktopWidget().availableGeometry()
+    if GUI.frameSize().height() > screen_res.height():
+        GUI.resize(GUI.frameSize().width(), screen_res.height())
 
     # centre the window
     height = screen_res.bottom() - screen_res.top()
-    GUI.move((screen_res.width() / 2) - (GUI.frameSize().width() / 2),
-             (height / 2) - ((GUI.frameSize().height()+80) / 2))  # +80 for window border
+    GUI.move((screen_res.width()/2) - (GUI.frameSize().width()/2),
+             (height/2) - ((GUI.frameSize().height()+40)/2))  # +40, fudge for window borders
 
     # show it and bring to front
     GUI.show()
@@ -1131,4 +1091,45 @@ def main(argv):
     sys.exit(app.exec_())
 
 if __name__ == '__main__':
+    # configure imports
+    warnings.filterwarnings('ignore')
+    matplotlib.use('Qt5Agg', force=True)
+    seaborn.set(rc={
+        'axes.axisbelow': True,
+        'axes.linewidth': 1,
+        'axes.facecolor': [1.0, 1.0, 1.0],
+        'axes.edgecolor': [0.9, 0.9, 0.9],
+        'grid.color': [0.9, 0.9, 0.9],
+        })
+
+    # find available serial ports
+    available_devices = serial_ports.list_ports()
+
+    # setup directories
+    results_directory = 'Results'
+    if not os.path.exists(results_directory):
+        os.makedirs(results_directory)
+
+    trial_sequence_directory = 'Trial sequences'
+    if not os.path.exists(trial_sequence_directory):
+        os.makedirs(trial_sequence_directory)
+
+    config_directory = 'Configs'
+    if not os.path.exists(config_directory):
+        os.makedirs(config_directory)
+    available_configs = []
+    for file in os.listdir(config_directory):
+        if file.endswith('.cfg'):
+            available_configs.append(os.path.splitext(file)[0])
+
+    # initialise results and other directories
+    trials = {}
+    arduino = {}
+    arduino['connected'] = False
+    p = {}
+
+    # start random number seed
+    np.random.seed()
+
+    # launch program
     main(sys.argv)

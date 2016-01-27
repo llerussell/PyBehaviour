@@ -23,12 +23,16 @@ Windows 64-bit:
 * Upload Sketch.ino to arduino
 
 ## Known issues
-* INTERRUPT 2 (pin 21) NOT COMPATIBLE
+* Interrupt 2 (pin 21) not compatible? Might be device specific.
 
-## Features to add
-* Auto transition
-* Adpatation phase, no stimuli, all responses are rewarded
-* ...
+## To do
+* Implement auto transition
+* Implement adpatation phase, no stimuli, all responses are rewarded
+* Major overhaul: increase flexibility, extensibility:
+    * define arduino pin numbers in python GUI (sub window?), not hardcoded in arduino sketch
+    * rework arduino functions to be more generic e.g. PinOn rather than StimOn + RewardOn + PunishOn, etc
+    * move toward generic timed events that are completely adjustable, including giving names to, rather than defined Stim, Response, Reward, Punish etc events
+    * implement control over number of possible stim types in GUI (currently static, 8)
 
 ## Tested compatibility
 * Windows 7, 8.1 (64-bit)
