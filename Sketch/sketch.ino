@@ -15,8 +15,8 @@ Task tCueOn;
 Task tCueOff;
 Task tStimStart;
 Task tStimStop;
-Task tRespWinOpen;
-Task tRespWinClose;
+Task tResponseWindowOpen;
+Task tResponseWindowClose;
 Task tAutoReward;
 Task tRewardOn;
 Task tRewardOff;
@@ -37,13 +37,13 @@ const int rewardPin[] = {4, 5};
 const int rewardRemovalPin[] = {8, 9};
 const int punishPin[] = {6, 7};
 const int cuePin[] = {10};
-const int stimVarPin[] = {14, 15, 16, 17};
-const int respWinPin = 99;
-const int trialRunningPin = 13;
+const int stimVariationPin[] = {14, 15, 16, 17};
+const int responseWindowPin = 99;
+const int trialRunningPin = 13;  // LED
 
 // serial communication
 char incomingByte;
-char varBuffer[20];
+char varBuffer[30];
 int varIndex = 0;
 int varBufferIndex = 0;
 bool configStringStarted = false;
@@ -63,8 +63,8 @@ String ConfigString;
 
 // training parameters
 int stimChan;
-int stimVar;
-int respReq;
+int stimVariation;
+int responseRequired;
 int rewardChan;
 bool trialCue;
 bool stimCue;
@@ -74,8 +74,8 @@ bool withold;
 int witholdReq;
 int stimStartTime;
 int stimStopTime;
-int respWinStartTime;
-int respWinStopTime;
+int responseWindowStartTime;
+int responseWindowStopTime;
 int trialDuration;
 bool autoReward;
 int autoRewardStartTime;
@@ -87,29 +87,27 @@ bool rewardRemoval;
 int rewardRemovalDelay;
 int cueChan;
 bool postStimCancel;
+bool secondChance;
 
 // session/trial states
 bool configReceived = false;
 bool trialConfigured = false;
 bool trialRunning;
-bool inRespWin;
+bool inResponseWindow;
 bool inWithold;
 
 // response states
 bool responded = false;
-bool respondedInResp = false;
 bool rewarded = false;
 bool punished = false;
+volatile int firstResponse = 0;
 
 // record times
 int preTrialDelayStart;
 long startTime;
 long now;
-int timePressed;
-String button1Times = "<";
-String button2Times = "<";
-int timeReward;
-int timePunish;
+int timeRewarded;
+int timePunished;
 String dataString;
 int lengthDataString;
 String newDataString;
@@ -117,15 +115,13 @@ String txString;
 String comString;
 int responseNum;
 volatile long timeResponded;
-// volatile long witholdTimer;
 long currentTime;
-int respWinResponses[200];
-int respWinRespIdx;
 
 // results
 bool correct;
 bool incorrect;
 bool miss;
+volatile bool resultsTransmitted;
 
 
 //---------------------------------------------------------
@@ -139,9 +135,6 @@ void setup() {
   pinMode(13, OUTPUT);
   digitalWrite(13, LOW);
 
-  for ( int i = 0; i < sizeof(responsePin); ++i ) {
-    pinMode(responsePin[i], INPUT);
-  }
   for ( int i = 0; i < sizeof(rewardPin); ++i ) {
     pinMode(rewardPin[i], OUTPUT);
     digitalWrite(rewardPin[i], LOW);
@@ -154,9 +147,9 @@ void setup() {
     pinMode(stimPin[i], OUTPUT);
     digitalWrite(stimPin[i], LOW);
   }
-  for ( int i = 0; i < sizeof(stimVarPin); ++i ) {
-    pinMode(stimVarPin[i], OUTPUT);
-    digitalWrite(stimVarPin[i], LOW);
+  for ( int i = 0; i < sizeof(stimVariationPin); ++i ) {
+    pinMode(stimVariationPin[i], OUTPUT);
+    digitalWrite(stimVariationPin[i], LOW);
   }
   for ( int i = 0; i < sizeof(punishPin); ++i ) {
     pinMode(punishPin[i], OUTPUT);
@@ -271,10 +264,10 @@ void rxConfig() {
           stimChan = atoi(varBuffer) - 1;
           break;
         case 2:
-          stimVar = atoi(varBuffer) - 1;
+          stimVariation = atoi(varBuffer) - 1;
           break;
         case 3:
-          respReq = atoi(varBuffer);
+          responseRequired = atoi(varBuffer);
           break;
         case 4:
           rewardChan = atoi(varBuffer) - 1;
@@ -304,10 +297,10 @@ void rxConfig() {
           stimStopTime = atoi(varBuffer);
           break;
         case 13:
-          respWinStartTime = atoi(varBuffer);
+          responseWindowStartTime = atoi(varBuffer);
           break;
         case 14:
-          respWinStopTime = atoi(varBuffer);
+          responseWindowStopTime = atoi(varBuffer);
           break;
         case 15:
           trialDuration = atoi(varBuffer);
@@ -342,6 +335,9 @@ void rxConfig() {
         case 25:
           postStimCancel = atoi(varBuffer);
           break;
+        case 26:
+          secondChance = atoi(varBuffer);
+          break;
       }
       varBufferIndex = 0;
       varBuffer[varBufferIndex] = '\0';
@@ -360,7 +356,6 @@ void rxConfig() {
     String ConfigString = "{";
     ConfigString = ConfigString + "withold_req:" + witholdReq + "}";
     Serial.println(ConfigString);
-
   }
 }
 
@@ -373,8 +368,8 @@ void configTrial() {
   tCueOff.set(50, 0, &cueOff);
   tStimStart.set(stimStartTime, 1, &stimOn);
   tStimStop.set(stimStopTime, 1, &stimOff);
-  tRespWinOpen.set(respWinStartTime, 1, &respWinOpen);
-  tRespWinClose.set(respWinStopTime, 1, &respWinClose);
+  tResponseWindowOpen.set(responseWindowStartTime, 1, &responseWindowOpen);
+  tResponseWindowClose.set(responseWindowStopTime, 1, &responseWindowClose);
   tRewardOn.set(0, 1, &rewardOn);
   tRewardOff.set(50, 1, &rewardOff);
   tAutoReward.set(autoRewardStartTime, 1, &autoRewardOn);
@@ -389,8 +384,8 @@ void configTrial() {
   tCueOff.disableOnLastIteration(false);
   tStimStart.disableOnLastIteration(true);
   tStimStop.disableOnLastIteration(true);
-  tRespWinOpen.disableOnLastIteration(true);
-  tRespWinClose.disableOnLastIteration(true);
+  tResponseWindowOpen.disableOnLastIteration(true);
+  tResponseWindowClose.disableOnLastIteration(true);
   tRewardOn.disableOnLastIteration(true);
   tRewardOff.disableOnLastIteration(true);
   tAutoReward.disableOnLastIteration(true);
@@ -404,8 +399,8 @@ void configTrial() {
   taskManager.addTask(tTransmit);
   taskManager.addTask(tStimStart);
   taskManager.addTask(tStimStop);
-  taskManager.addTask(tRespWinOpen);
-  taskManager.addTask(tRespWinClose);
+  taskManager.addTask(tResponseWindowOpen);
+  taskManager.addTask(tResponseWindowClose);
   taskManager.addTask(tRewardOff);
   taskManager.addTask(tAutoReward);
   taskManager.addTask(tRewardRemovalOn);
@@ -478,7 +473,6 @@ void serialListen() {
     if (incomingByte == INCOMING_COMMAND) {
       delay(1);
       test_command = Serial.read();
-      delay(1);
       if (test_command == FORCE_REWARD) {
         tRewardOn.enable();
       }
@@ -489,8 +483,8 @@ void serialListen() {
 void enableTasks() {
   tStimStart.enableDelayed();
   tStimStop.enableDelayed();
-  tRespWinOpen.enableDelayed();
-  tRespWinClose.enableDelayed();
+  tResponseWindowOpen.enableDelayed();
+  tResponseWindowClose.enableDelayed();
   tEndTrial.enableDelayed(trialDuration);
   if (autoReward) {
     tAutoReward.enableDelayed();
@@ -505,9 +499,9 @@ void response2() {
   processResponse(2);
 }
 
-void response3() {
-  processResponse(3);
-}
+// void response3() {
+//   processResponse(3);
+// }
 
 void processResponse(int responseNum) {
   uint8_t SaveSREG = SREG; // save interrupt flag
@@ -518,30 +512,36 @@ void processResponse(int responseNum) {
   newDataString = newDataString + responseNum + ":" + timeResponded + "|";
   dataString = dataString + newDataString;
 
-  if (inWithold) { // or initate trial if response is required
+  if (inWithold) { // include here active initiation trial if response is required
     witholdTimer = 0;
   }
-  else if ((timeResponded < respWinStartTime) && (postStimCancel)) {  // if post stim delay, cancel trial
+  else if ((timeResponded < responseWindowStartTime) && (postStimCancel)) {  // if post stim delay, cancel trial
     tEndTrial.enable();
   }
-  // include here the possibility of not punishing, and then reward subsequent correct choice
-  else if ((inRespWin) && (respWinRespIdx == 0)) {  // first response in response window
-    if (responseNum == respReq) {  // if correct
-      tRewardOn.enable();
+  else if (inResponseWindow) {
+    if (~responded) {
+      firstResponse = responseNum;
+      responded = true;
+    }
+    if (responseNum == responseRequired) {  // correct choice
+      if ((~rewarded) && ~(punished && ~secondChance)) {
+        tRewardOn.enable();
+        txResults();
+      }
     }
     else {  // else must be incorrect
-      if (punishTrigger) {
-        tPunishOn.enable();
-      }
-      if (punishDelay) {
-        currentTime = millis() - startTime;
-        tEndTrial.setInterval(trialDuration - currentTime + punishLength);
+      if ((~punished) && (~rewarded)) {
+        if (punishTrigger) {
+          tPunishOn.enable();
+        }
+        if (punishDelay) {
+          currentTime = millis() - startTime;
+          tEndTrial.setInterval(trialDuration - currentTime + punishLength);
+        }
+      txResults();
       }
     }
-    respWinResponses[respWinRespIdx] = responseNum;
-    respWinRespIdx = respWinRespIdx + 1;
   }
-
   SREG = SaveSREG; // restore the interrupt flag
 }
 
@@ -563,29 +563,29 @@ void txData() {
 }
 
 void stimOn() {
-  Serial.println("stim on");
-  digitalWrite(stimPin[stimChan], HIGH);
-
   // stim variation, binary 'barcode' (1:16)
   int bits[] = {0,0,0,0};
     for (int i = 3; i >= 0; i--) {
-        bits[i] = (stimVar & (1 << i)) != 0;
-        digitalWrite(stimVarPin[i], bits[i]);
+        bits[i] = (stimVariation & (1 << i)) != 0;
+        digitalWrite(stimVariationPin[i], bits[i]);
     }
+  digitalWrite(stimPin[stimChan], HIGH);
   if (stimCue) {
     tCueOn.enable();
   }
+  Serial.println("stim on");
 }
 
 void stimOff() {
-  Serial.println("stim off");
   digitalWrite(stimPin[stimChan], LOW);
+  Serial.println("stim off");
 }
 
 void rewardOn() {
-  Serial.print("reward on ");
-  Serial.println(rewardPin[rewardChan]);
   digitalWrite(rewardPin[rewardChan], HIGH);
+  rewarded = true;
+  timeRewarded = millis() - startTime;
+  Serial.println("reward on");
   if (rewardRemoval) {
     tRewardRemovalOn.enableDelayed();
   }
@@ -597,55 +597,55 @@ void autoRewardOn() {
 }
 
 void rewardOff() {
-  Serial.println("reward off");
   digitalWrite(rewardPin[rewardChan], LOW);
 }
 
 void cueOn() {
-  Serial.println("cue on");
   digitalWrite(cuePin[cueChan], HIGH);
+  Serial.println("cue on");
   tCueOn.setIterations(1);  // reset iterations to allow repeat
   tCueOff.setIterations(1);  // reset iterations to allow repeat
   tCueOff.enableDelayed();
 }
 
 void cueOff() {
-  Serial.println("cue off");
   digitalWrite(cuePin[cueChan], LOW);
 }
 
 void punishOn() {
-  Serial.println("punish on");
   digitalWrite(punishPin[punishChan], HIGH);
+  punished = true;
+  timePunished = millis() - startTime;
+  Serial.println("punish on");
   tPunishOff.enableDelayed();
 }
 
 void punishOff() {
-  Serial.println("punish off");
   digitalWrite(punishPin[punishChan], LOW);
 }
 
-void respWinOpen() {
-  inRespWin = true;
-  Serial.println("resp win on");
+void responseWindowOpen() {
+  inResponseWindow = true;
+  digitalWrite(responseWindowPin, HIGH);
+  Serial.println("response window open");
   if (stimCue) {
     tCueOn.enable();
   }
 }
 
-void respWinClose() {
-  inRespWin = false;
-  Serial.println("resp win off");
+void responseWindowClose() {
+  inResponseWindow = false;
+  digitalWrite(responseWindowPin, LOW);
+  Serial.println("response window closed");
 }
 
 void rewardRemovalOn() {
-  Serial.println("reward removal on");
   digitalWrite(rewardRemovalPin[rewardChan], HIGH);
+  Serial.println("reward removal on");
   tRewardRemovalOff.enableDelayed();
 }
 
 void rewardRemovalOff() {
-  Serial.println("reward removal off");
   digitalWrite(rewardRemovalPin[rewardChan], LOW);
 }
 
@@ -669,8 +669,8 @@ void endTrial() {
   for ( int i = 0; i < sizeof(stimPin); ++i ) {
     digitalWrite(stimPin[i], LOW);
   }
-  for ( int i = 0; i < sizeof(stimVarPin); ++i ) {
-    digitalWrite(stimVarPin[i], LOW);
+  for ( int i = 0; i < sizeof(stimVariationPin); ++i ) {
+    digitalWrite(stimVariationPin[i], LOW);
   }
   for ( int i = 0; i < sizeof(punishPin); ++i ) {
     digitalWrite(punishPin[i], LOW);
@@ -681,31 +681,35 @@ void endTrial() {
   txData();
   txResults();
   resetConfig();
+  // delay(250);
+  Serial.println("{DONE}");  // tells python gui trial has finished
 }
 
 void txResults() {
-  // generate results
-  long firstResponse = respWinResponses[0];
-  if (firstResponse == respReq) {
-    correct = true;
-  }
-  else if (firstResponse == 0) {
-    miss = true;
-  }
-  else {
-    incorrect = true;
-  }
+  if (resultsTransmitted == false) {
+    resultsTransmitted = true;
 
-  // transmit results
-  String resultsString;
-  resultsString = "{firstresponse:" + String(firstResponse) + "|";
-  resultsString = resultsString + "correct:" + String(correct) + "|";
-  resultsString = resultsString + "incorrect:" + String(incorrect) + "|";
-  resultsString = resultsString + "miss:" + String(miss) + "}";
-  delay(100);
-  Serial.println(resultsString);
-  delay(250);
-  Serial.println("{DONE}");
+    // generate results
+    if (firstResponse == responseRequired) {
+      correct = true;
+    }
+    else if (firstResponse == 0) {
+      miss = true;
+    }
+    else {
+      incorrect = true;
+    }
+
+    // transmit results
+    String resultsString;
+    resultsString = "{firstresponse:" + String(firstResponse) + "|";
+    resultsString = resultsString + "correct:" + String(correct) + "|";
+    resultsString = resultsString + "incorrect:" + String(incorrect) + "|";
+    resultsString = resultsString + "miss:" + String(miss) + "}";
+    delay(100);
+    Serial.println(resultsString);
+
+  }
 }
 
 void resetConfig() {
@@ -714,13 +718,14 @@ void resetConfig() {
   configReceived = false;
   configStringStarted = false;
   configStringEnded = false;
-  respWinRespIdx = 0;
-  for ( int i = 0; i < sizeof(respWinResponses); ++i ) {
-    respWinResponses[i] = (char)0;
-  }
+  firstResponse = 0;
+  rewarded = false;
+  punished = false;
+  responded = false;
   correct = false;
   incorrect = false;
   miss = false;
+  resultsTransmitted = false;
 }
 
 void testPin(int pinNumber, int pinDuration) {

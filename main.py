@@ -65,7 +65,7 @@ class TrialRunner(QObject):
         self.comm_feed_signal.emit('Connecting Arduino on port ' + p['device'], 'pc')
         arduino['device'] = serial.Serial(p['device'], 19200)
         arduino['device'].timeout = 1
-        connect_attempts = 3
+        connect_attempts = 2
         current_attempt = 1
         while arduino['connected'] is False and current_attempt <= connect_attempts:
             temp_read = arduino['device'].readline().strip().decode('utf-8')
@@ -142,13 +142,20 @@ class TrialRunner(QObject):
         trials['results'][trial_num]['response_required'] = resp_req
 
         # resonse-cancels-trial (post stim delay)
-        post_stim_cancel = int(p['postStimCancel'])
+        post_stim_cancel = p['postStimCancel']
+
+        # allow second chance if correc choice made after incorrect choice?
+        second_chance = p['secondChance']
 
         # get reward, cue and punish channels
         reward_chan = p['rewardChannels'][this_stim_idx]
         trials['results'][trial_num]['reward_channel'] = reward_chan
         cue_chan = p['cueChannels'][this_stim_idx]
         punish_chan = p['punishChannels'][this_stim_idx]
+
+        # auto reward?
+        auto_reward = p['autoRewards'][this_stim_idx]
+        trials['results'][trial_num]['auto_reward'] = auto_reward
 
         # generate random withold requirement (if enabled)
         if p['witholdBeforeStim']:
@@ -192,7 +199,7 @@ class TrialRunner(QObject):
             'TRIAL_DURATION:' + \
             str(int(p['trialDuration']*1000)) + ';' \
             'AUTO_REWARD:' + \
-            str(int(p['autoReward'])) + ';' \
+            str(int(auto_reward)) + ';' \
             'AUTO_REWARD_START:' + \
             str(int(p['autoRewardStart']*1000)) + ';' \
             'PUNISH_TRIGGER:' + \
@@ -210,7 +217,9 @@ class TrialRunner(QObject):
             'CUE_CHAN:' + \
             str(cue_chan) + ';' \
             'POST_STIM_CANCEL:' + \
-            str(post_stim_cancel) + ';' \
+            str(int(post_stim_cancel)) + ';' \
+            'SECOND_CHANCE:' + \
+            str(int(second_chance)) + ';' \
             '>'
 
         # write config string to arduino
@@ -231,6 +240,7 @@ class TrialRunner(QObject):
 
     # signals allow communication between the TrialRunner thread and GUI thread. i.e. send data to main GUI thread where it can be displayed and saved. I don't know why they are here outside of any function...
     response_signal = pyqtSignal(int, float, int, str, bool, name='responseSignal')
+    results_signal = pyqtSignal(int, name='resultsSignal')
     trial_start_signal = pyqtSignal(int, name='trialStartSignal')
     trial_end_signal = pyqtSignal(int, name='trialEndSignal')
     session_end_signal = pyqtSignal(name='sessionEndGUISignal')
@@ -276,6 +286,14 @@ class TrialRunner(QObject):
                         temp_read = temp_read[1:-1]  # only process everything between { and }
                         if temp_read == 'DONE':
                             trialRunning = False
+                        else:
+                            data = temp_read.split('|')
+                            for idx, val in enumerate(data):
+                                if val:  # in val is not just
+                                    key, val = val.split(':')
+                                    val = int(val)
+                                    key = str(key)
+                                    trials['results'][trial_num][key] = val
                             if trials['results'][trial_num]['correct']:
                                 score = 1
                                 trials['correct_tally'] += 1
@@ -285,15 +303,7 @@ class TrialRunner(QObject):
                             else:  # miss
                                 score = 0
                             trials['running_score'] = np.append(trials['running_score'], score)
-
-                        else:
-                            data = temp_read.split('|')
-                            for idx, val in enumerate(data):
-                                if val:  # in val is not just
-                                    key, val = val.split(':')
-                                    val = int(val)
-                                    key = str(key)
-                                    trials['results'][trial_num][key] = val
+                            self.results_signal.emit(trial_num)
             except:
                 if self._session_running:
                     self.comm_feed_signal.emit('Something went wrong', 'pc')
@@ -380,8 +390,11 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         for plot in plots:
             plot.set_offsets(np.empty(0))
             plot.set_array(np.empty(0))
-        self.rasterFigPerfAx.imshow(np.ones([1,1,3]))
-        self.performanceFigPerfAx.imshow(np.ones([1,1,3]))
+
+        num_stims = len(p['stimChannels'])
+        num_trials = p['sessionDuration']
+        self.rasterFigPerfAx.imshow(np.ones([num_stims,num_trials,3]), interpolation='nearest', aspect='auto', origin='lower', extent=[0, num_stims, 0.5, num_trials+0.5])
+        self.performanceFigPerfAx.imshow(np.ones([num_trials,num_stims,3]), interpolation='nearest', aspect='auto', origin='lower', extent=[0.5, num_trials+0.5, 0, num_stims])
         self.updatePlotLayouts()
 
         global trials
@@ -403,39 +416,42 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
             self.trialThread.quit()
 
     def forceReward(self):
-        if arduino['connected'] is False:
-            self.updateCommFeed('Only works whilst session is running', 'pc')
-        if arduino['connected'] is True:
-            write_string = '@R'  # arduind knows this means deliver reward
+        if self.trialRunner._session_running is False:
+            self.updateCommFeed('Force current reward only works while session is running', 'pc')
+        if self.trialRunner._session_running is True:
+            self.updateCommFeed('Forcing current reward', 'pc')
+            write_string = '@R'  # arduino knows this means deliver reward
             self.updateCommFeed(write_string, 'pc')
             arduino['device'].write(write_string.encode('utf-8'))
 
     def updatePlotLayouts(self):
-        self.preTrialRasterFigAx.set_xlim(0, p['witholdBeforeStimMax'])
+        self.preTrialRasterFigAx.set_xlim(0, p['witholdBeforeStimPlotVal'])
+
+        trials_ax_lim = [0, p['sessionDuration']]
 
         # response raster
         pre_stim_plot = 1
         self.rasterFigAx.set_xlim(-pre_stim_plot, p['trialDuration'])
-        self.rasterFigAx.set_ylim(0, p['sessionDuration'])
+        self.rasterFigAx.set_ylim(trials_ax_lim)
         self.raster_respwin.set_x(p['responseStart'])
         self.raster_respwin.set_width(p['responseWindow'])
-        self.raster_respwin.set_height(p['sessionDuration'])
-        self.raster_stimline.set_ydata([0, p['sessionDuration']])
+        self.raster_respwin.set_height(p['sessionDuration']+1)
+        self.raster_stimline.set_ydata(trials_ax_lim)
         self.raster_stimlength.set_x(p['stimStart'])
         self.raster_stimlength.set_width(p['stimLength'])
-        self.raster_stimlength.set_height(p['sessionDuration'])
+        self.raster_stimlength.set_height(p['sessionDuration']+1)
 
         # performance line
         self.performanceFigAx.set_ylim(-1, 1)
-        self.performanceFigAx.set_xlim(0, p['sessionDuration'])
-        self.perf_0_line.set_xdata([0, p['sessionDuration']])
+        self.performanceFigAx.set_xlim(trials_ax_lim)
+        self.perf_0_line.set_xdata(trials_ax_lim)
 
         # performance blocks
         num_stims = len(p['stimChannels'])
-        self.rasterFigPerfAx.set_ylim(-0.5, p['sessionDuration']-0.5)
-        self.rasterFigPerfAx.set_xlim(-0.5, num_stims-0.5)
-        self.performanceFigPerfAx.set_ylim(-0.5, num_stims-0.5)
-        self.performanceFigPerfAx.set_xlim(-0.5, p['sessionDuration']-0.5)
+        self.rasterFigPerfAx.set_ylim(trials_ax_lim)
+        self.rasterFigPerfAx.set_xlim(0, num_stims)
+        self.performanceFigPerfAx.set_ylim(0, num_stims)
+        self.performanceFigPerfAx.set_xlim(trials_ax_lim)
 
         self.preTrialRasterFigCanvas.draw()
         self.rasterFigCanvas.draw()
@@ -447,14 +463,14 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
             ax = self.rasterFigAx
             canvas = self.rasterFigCanvas
             x = val
-            y = trial_num
+            y = trial_num + 1
         elif state == 'PRETRIAL':
             plot_series = self.preTrialRaster_responses
             ax = self.preTrialRasterFigAx
             canvas = self.preTrialRasterFigCanvas
             x = val
             y = 0
-            if x > p['witholdBeforeStimMax']:
+            if x > trials['results'][trial_num]['withold_req']:
                 ax.set_xlim([0, x])
                 canvas.draw()
 
@@ -493,10 +509,11 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
             stim_idx = p['stimChannels'].index(p['trialOrder'][t])
             performance_record[t, stim_idx] = colour
 
-        self.rasterFigPerfAx.imshow(performance_record, interpolation='nearest', aspect='auto')
-        self.performanceFigPerfAx.imshow(np.rot90(performance_record), interpolation='nearest', aspect='auto')
+        self.rasterFigPerfAx.imshow(performance_record, interpolation='nearest', aspect='auto', origin='lower', extent=[0, num_stims, 0.5, num_trials+0.5])
+        self.performanceFigPerfAx.imshow(np.rot90(performance_record), interpolation='nearest', aspect='auto', origin='lower', extent=[0.5, num_trials+0.5, 0, num_stims])
 
-    def updatePerformancePlot(self, trial_num):
+    def updateRunningPerformancePlot(self, trial_num):
+        print('plotting')
         plot_series = self.runningScorePlot
         old_ydata = plot_series.get_ydata()
         moving_avg_size = 10
@@ -537,6 +554,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         self.trialRunner.arduino_connected_signal.connect(self.arduinoConnected)
         self.trialRunner.arduino_disconnected_signal.connect(self.arduinoDisconnected)
         self.trialRunner.response_signal.connect(self.updateRasterPlotData)
+        self.trialRunner.results_signal.connect(self.updatePerformancePlots)
         self.trialRunner.trial_start_signal.connect(self.trialStartGUI)
         self.trialRunner.trial_end_signal.connect(self.trialStopGUI)
         self.trialRunner.session_end_signal.connect(self.sessionEndGUI)
@@ -718,6 +736,9 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         rewardChannels = [p['rewardChan1'], p['rewardChan2'], p['rewardChan3'], p['rewardChan4'],
                           p['rewardChan5'], p['rewardChan6'], p['rewardChan7'], p['rewardChan8']]
 
+        autoRewards = [p['autoReward1'], p['autoReward2'], p['autoReward3'], p['autoReward4'],
+                       p['autoReward5'], p['autoReward6'], p['autoReward7'], p['autoReward8']]
+
         cueChannels = [p['cueChan1'], p['cueChan2'], p['cueChan3'], p['cueChan4'],
                        p['cueChan5'], p['cueChan6'], p['cueChan7'], p['cueChan8']]
 
@@ -735,13 +756,19 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         p['punishChannels'] = [punishChannels[idx-1] for idx in p['stimChannels']]
         p['respRequired'] = [respRequired[idx-1] for idx in p['stimChannels']]
         p['rewardChannels'] = [rewardChannels[idx-1] for idx in p['stimChannels']]
+        p['autoRewards'] = [autoRewards[idx-1] for idx in p['stimChannels']]
         p['proportions'] = [proportions[idx-1] for idx in p['stimChannels']]
         p['variations'] = [variations[idx-1] for idx in p['stimChannels']]
 
-        p['totalDuration'] = p['witholdBeforeStimMax'] + p['cueToStimDelay'] + \
+        if p['witholdBeforeStim']:
+            p['witholdBeforeStimPlotVal'] = np.mean([p['witholdBeforeStimMin'], p['witholdBeforeStimMax']])
+        else:
+            p['witholdBeforeStimPlotVal'] = 0
+
+        p['totalDuration'] = p['witholdBeforeStimPlotVal'] + p['cueToStimDelay'] + \
                              p['postStimDelay'] + p['responseWindow'] + p['endOfTrialDelay']
 
-        p['trialDuration'] = p['totalDuration'] - p['witholdBeforeStimMax']
+        p['trialDuration'] = p['totalDuration'] - p['witholdBeforeStimPlotVal']
 
         p['trialCueStart'] = 0
         p['stimCueStart'] = 0  # time resets to zero after withold
@@ -773,19 +800,19 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         self.trial_cue_rectangle.set_width(p['cueTrial'] * 0.1)
 
         self.stim_cue_rectangle.set_width(p['cueStim'] * 0.1)
-        self.stim_cue_rectangle.set_x(p['witholdBeforeStimMax'])
+        self.stim_cue_rectangle.set_x(p['witholdBeforeStimPlotVal'])
 
         self.response_cue_rectangle.set_width(p['cueResponse'] * 0.1)
-        self.response_cue_rectangle.set_x(p['witholdBeforeStimMax'] + p['responseCueStart'])
+        self.response_cue_rectangle.set_x(p['witholdBeforeStimPlotVal'] + p['responseCueStart'])
 
-        self.stim_rectangle.set_x(p['witholdBeforeStimMax'] + p['stimStart'])
+        self.stim_rectangle.set_x(p['witholdBeforeStimPlotVal'] + p['stimStart'])
         self.stim_rectangle.set_width(p['stimLength'])
 
-        self.resp_rectangle.set_x(p['witholdBeforeStimMax'] + p['responseStart'])
+        self.resp_rectangle.set_x(p['witholdBeforeStimPlotVal'] + p['responseStart'])
         self.resp_rectangle.set_width(p['responseWindow'])
 
-        self.reward_rectangle.set_width(p['autoReward'] * 0.1)
-        self.reward_rectangle.set_x(p['witholdBeforeStimMax'] + p['autoRewardStart'])
+        self.reward_rectangle.set_width(np.any(p['autoRewards']) * 0.1)
+        self.reward_rectangle.set_x(p['witholdBeforeStimPlotVal'] + p['autoRewardStart'])
 
         self.trialConfigAx.set_xlim([0, p['totalDuration']])
         self.trialConfigCanvas.draw()
@@ -1027,15 +1054,18 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         for plot_series in plots:
             plot_series.set_offsets(np.empty(0))
             plot_series.set_array(np.empty(0))
-        self.preTrialRasterFigAx.set_xlim([0, p['witholdBeforeStimMax']])
+        self.preTrialRasterFigAx.set_xlim([0, trials['results'][trial_num]['withold_req']])
         self.preTrialRasterFigCanvas.draw()
 
     def trialStopGUI(self, trial_num):
-        self.updatePerformancePlot(trial_num)
-        self.updateResultBlockPlots(trial_num)
-        self.performanceFigCanvas.draw()
-        # self.rasterFigCanvas.draw()
         self.saveResults()
+
+    def updatePerformancePlots(self, trial_num):
+        self.updateRunningPerformancePlot(trial_num)
+        self.updateResultBlockPlots(trial_num)
+
+        self.rasterFigCanvas.draw()
+        self.performanceFigCanvas.draw()
 
     def updateCommFeed(self, input_string, device=None):
         # input_string = input_string.replace('<', '{').replace('>', '}')
@@ -1049,6 +1079,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
             self.toSessionFeed_textEdit.setText(input_string)
             self.fromSessionFeed_textEdit.setText('')
         self.trial_log.append(input_string)
+        print(input_string)
 
     def saveResults(self):
         save_directory = os.path.join(results_directory, p['subjectID'])
