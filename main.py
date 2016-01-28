@@ -513,7 +513,6 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         self.performanceFigPerfAx.imshow(np.rot90(performance_record), interpolation='nearest', aspect='auto', origin='lower', extent=[0.5, num_trials+0.5, 0, num_stims])
 
     def updateRunningPerformancePlot(self, trial_num):
-        print('plotting')
         plot_series = self.runningScorePlot
         old_ydata = plot_series.get_ydata()
         moving_avg_size = 10

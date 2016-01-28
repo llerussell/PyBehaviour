@@ -429,6 +429,8 @@ void runTrial() {
   // deliver trial cue
   if (trialCue) {
     Serial.println("trial cue");
+    tCueOn.setIterations(1);  // reset iterations to allow repeat
+    tCueOff.setIterations(1);  // reset iterations to allow repeat
     tCueOn.enable();
   }
 
@@ -571,6 +573,8 @@ void stimOn() {
     }
   digitalWrite(stimPin[stimChan], HIGH);
   if (stimCue) {
+    tCueOn.setIterations(1);  // reset iterations to allow repeat
+    tCueOff.setIterations(1);  // reset iterations to allow repeat
     tCueOn.enable();
   }
   Serial.println("stim on");
@@ -601,10 +605,8 @@ void rewardOff() {
 }
 
 void cueOn() {
-  digitalWrite(cuePin[cueChan], HIGH);
   Serial.println("cue on");
-  tCueOn.setIterations(1);  // reset iterations to allow repeat
-  tCueOff.setIterations(1);  // reset iterations to allow repeat
+  digitalWrite(cuePin[cueChan], HIGH);
   tCueOff.enableDelayed();
 }
 
@@ -628,7 +630,9 @@ void responseWindowOpen() {
   inResponseWindow = true;
   digitalWrite(responseWindowPin, HIGH);
   Serial.println("response window open");
-  if (stimCue) {
+  if (respCue) {
+    tCueOn.setIterations(1);  // reset iterations to allow repeat
+    tCueOff.setIterations(1);  // reset iterations to allow repeat
     tCueOn.enable();
   }
 }
