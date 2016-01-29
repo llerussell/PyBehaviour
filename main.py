@@ -6,12 +6,21 @@ PyBehaviour
 '''
 
 import warnings
+warnings.filterwarnings('ignore')
 import matplotlib
+matplotlib.use('Qt5Agg', force=True)
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.backends.backend_pdf import PdfPages
 from matplotlib.figure import Figure
 from matplotlib import patches
 import seaborn
+seaborn.set(rc={
+    'axes.axisbelow': True,
+    'axes.linewidth': 1,
+    'axes.facecolor': [1.0, 1.0, 1.0],
+    'axes.edgecolor': [0.9, 0.9, 0.9],
+    'grid.color': [0.9, 0.9, 0.9],
+    })
 import numpy as np
 import scipy.io as sio
 from scipy import stats
@@ -308,7 +317,7 @@ class TrialRunner(QObject):
             except:
                 if self._session_running:
                     self.comm_feed_signal.emit('Something went wrong', 'pc')
-                
+
     def stop(self):
         if self._session_running:
             self._session_running = False  # will stop while loop
@@ -377,7 +386,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
 
         self.trialRunner.trial_num = 0
         self.trialRunner._session_running = True
-        
+
 
     def reset(self):
         # if self.trialRunner._session_running:
@@ -1134,17 +1143,6 @@ def main(argv):
     sys.exit(app.exec_())
 
 if __name__ == '__main__':
-    # configure imports
-    warnings.filterwarnings('ignore')
-    matplotlib.use('Qt5Agg', force=True)
-    seaborn.set(rc={
-        'axes.axisbelow': True,
-        'axes.linewidth': 1,
-        'axes.facecolor': [1.0, 1.0, 1.0],
-        'axes.edgecolor': [0.9, 0.9, 0.9],
-        'grid.color': [0.9, 0.9, 0.9],
-        })
-
     # find available serial ports
     available_devices = serial_ports.list_ports()
 
