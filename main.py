@@ -57,12 +57,15 @@ class TrialRunner(QObject):
                         if self.trial_num == p['sessionDuration']:
                             self._session_running = False
                             self.session_end_signal.emit()
+                else:
+                    self._session_running = False
+                    self.session_end_signal.emit()
 
     def connectArduino(self):
         self.comm_feed_signal.emit('Connecting Arduino on port ' + p['device'], 'pc')
         arduino['device'] = serial.Serial(p['device'], 19200)
         arduino['device'].timeout = 1
-        connect_attempts = 2
+        connect_attempts = 1
         current_attempt = 1
         while arduino['connected'] is False and current_attempt <= connect_attempts:
             temp_read = arduino['device'].readline().strip().decode('utf-8')
@@ -70,9 +73,10 @@ class TrialRunner(QObject):
             if temp_read == '{READY}':
                 arduino['connected'] = True
                 self.arduino_connected_signal.emit()
-            current_attempt += 1
+            else:
+                current_attempt += 1
             if current_attempt > connect_attempts:
-                self.comm_feed_signal.emit('*** Failed to connect ***', 'pc')
+                self.comm_feed_signal.emit('Failed to connect', 'pc')
                 arduino['device'].close()
 
     def disconnectArduino(self):
@@ -381,7 +385,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
             # self.trialThread.quit()
         plots = [self.runningScorePlot, self.averageScorePlot]
         for plot in plots:
-            plot.set_data([[], []])
+            plot.set_data([0, 0])
         for plot in self.subScorePlots:
             plot.set_data([[], []])
         plots = [self.preTrialRaster_responses, self.raster_responses]
@@ -391,8 +395,8 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
 
         num_stims = len(p['stimChannels'])
         num_trials = p['sessionDuration']
-        self.rasterFigPerfAx.imshow(np.ones([num_stims,num_trials,3]), interpolation='nearest', aspect='auto', origin='lower', extent=[0, num_stims, 0.5, num_trials+0.5])
-        self.performanceFigPerfAx.imshow(np.ones([num_trials,num_stims,3]), interpolation='nearest', aspect='auto', origin='lower', extent=[0.5, num_trials+0.5, 0, num_stims])
+        self.rasterFigPerfAx.imshow(np.ones([num_stims,num_trials,3]), interpolation='nearest', aspect='auto', origin='lower', extent=[0, num_stims, 0, num_trials])
+        self.performanceFigPerfAx.imshow(np.ones([num_trials,num_stims,3]), interpolation='nearest', aspect='auto', origin='lower', extent=[0, num_trials, 0, num_stims])
         self.updatePlotLayouts()
 
         global trials
@@ -412,6 +416,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         if self.trialRunner._session_running:
             self.trialRunner._session_running = False
             self.sessionEndGUI()
+            self.updateCommFeed('Aborted', 'pc')
 
     def forceReward(self):
         if self.trialRunner._session_running is False:
@@ -507,8 +512,8 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
             stim_idx = p['stimChannels'].index(p['trialOrder'][t])
             performance_record[t, stim_idx] = colour
 
-        self.rasterFigPerfAx.imshow(performance_record, interpolation='nearest', aspect='auto', origin='lower', extent=[0, num_stims, 0.5, num_trials+0.5])
-        self.performanceFigPerfAx.imshow(np.rot90(performance_record), interpolation='nearest', aspect='auto', origin='lower', extent=[0.5, num_trials+0.5, 0, num_stims])
+        self.rasterFigPerfAx.imshow(performance_record, interpolation='nearest', aspect='auto', origin='lower', extent=[0, num_stims, 0, num_trials])
+        self.performanceFigPerfAx.imshow(np.rot90(performance_record), interpolation='nearest', aspect='auto', origin='lower', extent=[0, num_trials, 0, num_stims])
 
     def updateRunningPerformancePlot(self, trial_num):
         plot_series = self.runningScorePlot
@@ -519,7 +524,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         else:
             new_ydata = np.append(old_ydata, np.mean(trials['running_score']))
         plot_series.set_ydata(new_ydata)
-        plot_series.set_xdata(range(1, len(new_ydata)+1))
+        plot_series.set_xdata(range(len(new_ydata)))
 
         plot_series = self.averageScorePlot
         plot_series.set_ydata([np.mean(trials['running_score']), np.mean(trials['running_score'])])
@@ -957,8 +962,8 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         self.resultsFigsHorizontalLayout.addWidget(self.performanceFigCanvas)
         self.perf_0_line, = self.performanceFigAx.plot([0, 0], [0, 0], '-', c=[0.3, 0.3, 0.3], linewidth=1, zorder=6, clip_on=False)
 
-        self.runningScorePlot, = self.performanceFigAx.plot([], [], 'k-', linewidth=2, aa=True, clip_on=False, zorder=9)
-        self.averageScorePlot, = self.performanceFigAx.plot([], [], '-', c=[0.7, 0.7, 0.7], linewidth=2, aa=True, clip_on=False, zorder=8)
+        self.runningScorePlot, = self.performanceFigAx.plot(0, 0, 'k-', linewidth=2, aa=True, clip_on=False, zorder=9)
+        self.averageScorePlot, = self.performanceFigAx.plot(0, 0, '-', c=[0.7, 0.7, 0.7], linewidth=2, aa=True, clip_on=False, zorder=8)
 
         NUM_STIMS = 8
         cmap = matplotlib.cm.get_cmap(name='rainbow', lut=NUM_STIMS-1)
@@ -1042,7 +1047,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         self.sessionTimer.stop()
         end_time_string = self.sessionTimer_label.text()
         self.sessionTimer_label.setText('<font color=''#ff0066''>' + end_time_string + '</font>')
-        self.updateCommFeed('Finished')
+        self.updateCommFeed('Finished', 'pc')
 
     def trialStartGUI(self, trial_num):
         self.trialNum_label.setText(str(trial_num+1))
