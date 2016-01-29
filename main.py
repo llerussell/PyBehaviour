@@ -37,29 +37,26 @@ class TrialRunner(QObject):
         super(TrialRunner, self).__init__()
         self._session_running = False
         self._paused = False
+        self._exiting = False
 
     def startSession(self):
-        self._session_running = True
-        trial_num = 0
-
-        if arduino['connected'] is False:
-            self.connectArduino()
-
-        if arduino['connected']:
+        while not self._exiting:
+            time.sleep(0.01)
             # the main session loop
             while self._session_running:
-                while self._paused:
-                    time.sleep(0.1)
+                if arduino['connected'] is False:
+                    self.connectArduino()
+                if arduino['connected']:
+                    while self._paused:
+                        time.sleep(0.01)
 
-                self.runTrial(trial_num, trials)
-                time.sleep(0.1)
+                    self.runTrial(self.trial_num, trials)
 
-                trial_num += 1
-                if p['sessionDurationMode'] == 'Trials':
-                    if trial_num == p['sessionDuration']:
-                        self.stop()
-        else:
-            self.stop()
+                    self.trial_num += 1
+                    if p['sessionDurationMode'] == 'Trials':
+                        if self.trial_num == p['sessionDuration']:
+                            self._session_running = False
+                            self.session_end_signal.emit()
 
     def connectArduino(self):
         self.comm_feed_signal.emit('Connecting Arduino on port ' + p['device'], 'pc')
@@ -307,9 +304,7 @@ class TrialRunner(QObject):
             except:
                 if self._session_running:
                     self.comm_feed_signal.emit('Something went wrong', 'pc')
-                else:
-                    self.stop()
-
+                
     def stop(self):
         if self._session_running:
             self._session_running = False  # will stop while loop
@@ -323,7 +318,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
     '''
     def __init__(self):
         QMainWindow.__init__(self)
-        self._ready = False
+        self._gui_ready = False
         self.setupUi(self)
 
         # create the worker thread (run trials in the background)
@@ -331,6 +326,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         self.trialRunner = TrialRunner()
         self.trialRunner.moveToThread(self.trialThread)
         self.trialThread.started.connect(self.trialRunner.startSession)
+        self.trialThread.start()
 
         # place figure widgets
         self.addFigures()
@@ -352,7 +348,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         self.trial_log = []
 
         # ready
-        self._ready = True
+        self._gui_ready = True
 
         # open the config file and populate GUI with values
         self.GUIRestore()
@@ -375,7 +371,9 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         self.sessionTimer.start(100)  # start the QTimer, executes every 100ms
         self.sessionTimer_label.setStyleSheet('font-size: 18pt; font-weight: bold; color:''black'';')
 
-        self.trialThread.start()
+        self.trialRunner.trial_num = 0
+        self.trialRunner._session_running = True
+        
 
     def reset(self):
         # if self.trialRunner._session_running:
@@ -412,8 +410,8 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
 
     def abort(self):
         if self.trialRunner._session_running:
-            self.trialRunner.stop()
-            self.trialThread.quit()
+            self.trialRunner._session_running = False
+            self.sessionEndGUI()
 
     def forceReward(self):
         if self.trialRunner._session_running is False:
@@ -779,7 +777,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         p['autoRewardStart'] = p['cueToStimDelay'] + p['autoRewardDelay']
 
         # update gui
-        if self._ready:
+        if self._gui_ready:
             self.makeTrialOrder()
             self.updateTrialConfigPlot()
             self.updatePlotLayouts()
@@ -1034,8 +1032,9 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
                 continue
 
     def closeEvent(self, event):
+        self._exiting = True
+        time.sleep(0.25)
         self.trialRunner.stop()
-        time.sleep(0.1)
         self.trialThread.quit()
         event.accept()
 
