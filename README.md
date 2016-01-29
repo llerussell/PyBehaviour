@@ -32,6 +32,7 @@ Windows 64-bit:
     * rework arduino functions to be more generic e.g. PinOn rather than StimOn + RewardOn + PunishOn, etc
     * move toward generic timed events that are completely adjustable, including giving names to, rather than defined Stim, Response, Reward, Punish etc events
     * implement control over number of possible stim types in GUI (currently static, 8)
+    * dynamically define 'trial types' composed of multiple 'states' wherein actions are associated with triggering 'events'
 
 ## Tested compatibility
 * Windows 7, 8.1 (64-bit)
