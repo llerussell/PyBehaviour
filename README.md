@@ -16,7 +16,7 @@
 Windows 64-bit:
 * Install [winpython](http://winpython.github.io) (includes PyQt5)
  * Append python directory (e.g. `C:\WinPython-64bit-3.4.3.5\python-3.4.3.amd64`) to system PATH
-* Unzip the PyBehaviour download
+* Unzip the PyBehaviour [download](https://github.com/llerussell/PyBehaviour/archive/master.zip)
 * Install [Arduino IDE](https://www.arduino.cc/en/Main/Software)
  * Upload `Sketch/sketch.ino` to the arduino
 * Double click on `PyBehaviour.exe` (you can also make a shorcut and place it on your Desktop)
