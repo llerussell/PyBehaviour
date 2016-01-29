@@ -154,6 +154,9 @@
                    <property name="text">
                     <string/>
                    </property>
+                   <property name="placeholderText">
+                    <string/>
+                   </property>
                   </widget>
                  </item>
                  <item row="3" column="1">
@@ -558,7 +561,7 @@ background-color: none;
                     <x>0</x>
                     <y>0</y>
                     <width>599</width>
-                    <height>1355</height>
+                    <height>1360</height>
                    </rect>
                   </property>
                   <property name="sizePolicy">
@@ -3039,7 +3042,7 @@ background-color: none;
                              </widget>
                             </item>
                             <item>
-                             <widget class="QDoubleSpinBox" name="witholdBeforeStimMin_SpinBox">
+                             <widget class="QDoubleSpinBox" name="witholdBeforeStimDuration_SpinBox">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -3059,15 +3062,18 @@ background-color: none;
                                <enum>Qt::StrongFocus</enum>
                               </property>
                               <property name="prefix">
-                               <string>Min: </string>
+                               <string>Duration: </string>
                               </property>
                               <property name="suffix">
                                <string> s</string>
+                              </property>
+                              <property name="singleStep">
+                               <double>0.500000000000000</double>
                               </property>
                              </widget>
                             </item>
                             <item>
-                             <widget class="QDoubleSpinBox" name="witholdBeforeStimMax_SpinBox">
+                             <widget class="QDoubleSpinBox" name="witholdBeforeStimRandomise_SpinBox">
                               <property name="enabled">
                                <bool>false</bool>
                               </property>
@@ -3087,10 +3093,13 @@ background-color: none;
                                <enum>Qt::StrongFocus</enum>
                               </property>
                               <property name="prefix">
-                               <string>Max: </string>
+                               <string>Randomise: ±</string>
                               </property>
                               <property name="suffix">
                                <string> s</string>
+                              </property>
+                              <property name="singleStep">
+                               <double>0.500000000000000</double>
                               </property>
                              </widget>
                             </item>
@@ -3193,67 +3202,6 @@ background-color: none;
                       </property>
                       <item>
                        <layout class="QGridLayout" name="gridLayout_9">
-                        <item row="3" column="0">
-                         <widget class="QLabel" name="label_6">
-                          <property name="sizePolicy">
-                           <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                           </sizepolicy>
-                          </property>
-                          <property name="minimumSize">
-                           <size>
-                            <width>120</width>
-                            <height>0</height>
-                           </size>
-                          </property>
-                          <property name="text">
-                           <string>Response window</string>
-                          </property>
-                          <property name="alignment">
-                           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                          </property>
-                         </widget>
-                        </item>
-                        <item row="2" column="1">
-                         <layout class="QHBoxLayout" name="horizontalLayout_21">
-                          <item>
-                           <widget class="QDoubleSpinBox" name="postStimDelay_doubleSpinBox">
-                            <property name="sizePolicy">
-                             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-                              <horstretch>0</horstretch>
-                              <verstretch>0</verstretch>
-                             </sizepolicy>
-                            </property>
-                            <property name="minimumSize">
-                             <size>
-                              <width>0</width>
-                              <height>0</height>
-                             </size>
-                            </property>
-                           </widget>
-                          </item>
-                          <item>
-                           <widget class="QCheckBox" name="postStimCancel_CheckBox">
-                            <property name="sizePolicy">
-                             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-                              <horstretch>0</horstretch>
-                              <verstretch>0</verstretch>
-                             </sizepolicy>
-                            </property>
-                            <property name="minimumSize">
-                             <size>
-                              <width>0</width>
-                              <height>0</height>
-                             </size>
-                            </property>
-                            <property name="text">
-                             <string>Response cancels trial</string>
-                            </property>
-                           </widget>
-                          </item>
-                         </layout>
-                        </item>
                         <item row="4" column="0">
                          <widget class="QLabel" name="label_14">
                           <property name="sizePolicy">
@@ -3276,8 +3224,81 @@ background-color: none;
                           </property>
                          </widget>
                         </item>
-                        <item row="0" column="0">
-                         <widget class="QLabel" name="label_3">
+                        <item row="3" column="1">
+                         <layout class="QHBoxLayout" name="horizontalLayout_2">
+                          <item>
+                           <widget class="QDoubleSpinBox" name="responseWindow_SpinBox">
+                            <property name="sizePolicy">
+                             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                              <horstretch>0</horstretch>
+                              <verstretch>0</verstretch>
+                             </sizepolicy>
+                            </property>
+                            <property name="minimumSize">
+                             <size>
+                              <width>0</width>
+                              <height>0</height>
+                             </size>
+                            </property>
+                            <property name="focusPolicy">
+                             <enum>Qt::StrongFocus</enum>
+                            </property>
+                            <property name="suffix">
+                             <string> s</string>
+                            </property>
+                            <property name="singleStep">
+                             <double>0.500000000000000</double>
+                            </property>
+                            <property name="value">
+                             <double>1.000000000000000</double>
+                            </property>
+                           </widget>
+                          </item>
+                          <item>
+                           <widget class="QCheckBox" name="cueResponse_CheckBox">
+                            <property name="sizePolicy">
+                             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                              <horstretch>0</horstretch>
+                              <verstretch>0</verstretch>
+                             </sizepolicy>
+                            </property>
+                            <property name="minimumSize">
+                             <size>
+                              <width>0</width>
+                              <height>0</height>
+                             </size>
+                            </property>
+                            <property name="focusPolicy">
+                             <enum>Qt::StrongFocus</enum>
+                            </property>
+                            <property name="text">
+                             <string>Cue</string>
+                            </property>
+                           </widget>
+                          </item>
+                         </layout>
+                        </item>
+                        <item row="4" column="1">
+                         <widget class="QDoubleSpinBox" name="endOfTrialDelay_SpinBox">
+                          <property name="minimumSize">
+                           <size>
+                            <width>0</width>
+                            <height>0</height>
+                           </size>
+                          </property>
+                          <property name="suffix">
+                           <string> s</string>
+                          </property>
+                          <property name="singleStep">
+                           <double>0.500000000000000</double>
+                          </property>
+                          <property name="value">
+                           <double>1.000000000000000</double>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="2" column="0">
+                         <widget class="QLabel" name="label_5">
                           <property name="sizePolicy">
                            <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                             <horstretch>0</horstretch>
@@ -3291,7 +3312,7 @@ background-color: none;
                            </size>
                           </property>
                           <property name="text">
-                           <string>Start to stim delay</string>
+                           <string>Post stim delay</string>
                           </property>
                           <property name="alignment">
                            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -3380,28 +3401,6 @@ background-color: none;
                           </item>
                          </layout>
                         </item>
-                        <item row="2" column="0">
-                         <widget class="QLabel" name="label_5">
-                          <property name="sizePolicy">
-                           <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                           </sizepolicy>
-                          </property>
-                          <property name="minimumSize">
-                           <size>
-                            <width>120</width>
-                            <height>0</height>
-                           </size>
-                          </property>
-                          <property name="text">
-                           <string>Post stim delay</string>
-                          </property>
-                          <property name="alignment">
-                           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                          </property>
-                         </widget>
-                        </item>
                         <item row="1" column="0">
                          <widget class="QLabel" name="label_4">
                           <property name="sizePolicy">
@@ -3424,54 +3423,112 @@ background-color: none;
                           </property>
                          </widget>
                         </item>
-                        <item row="4" column="1">
-                         <widget class="QDoubleSpinBox" name="endOfTrialDelay_SpinBox">
-                          <property name="minimumSize">
-                           <size>
-                            <width>0</width>
-                            <height>0</height>
-                           </size>
-                          </property>
-                          <property name="suffix">
-                           <string> s</string>
-                          </property>
-                          <property name="singleStep">
-                           <double>0.500000000000000</double>
-                          </property>
-                          <property name="value">
-                           <double>1.000000000000000</double>
-                          </property>
-                         </widget>
-                        </item>
-                        <item row="0" column="1">
-                         <widget class="QDoubleSpinBox" name="cueToStimDelay_SpinBox">
-                          <property name="minimumSize">
-                           <size>
-                            <width>0</width>
-                            <height>0</height>
-                           </size>
-                          </property>
-                          <property name="focusPolicy">
-                           <enum>Qt::StrongFocus</enum>
-                          </property>
-                          <property name="suffix">
-                           <string> s</string>
-                          </property>
-                          <property name="singleStep">
-                           <double>0.500000000000000</double>
-                          </property>
-                         </widget>
-                        </item>
-                        <item row="3" column="1">
-                         <layout class="QHBoxLayout" name="horizontalLayout_2">
+                        <item row="2" column="1">
+                         <layout class="QHBoxLayout" name="horizontalLayout_21">
                           <item>
-                           <widget class="QDoubleSpinBox" name="responseWindow_SpinBox">
+                           <widget class="QDoubleSpinBox" name="postStimDelay_doubleSpinBox">
                             <property name="sizePolicy">
                              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                               <horstretch>0</horstretch>
                               <verstretch>0</verstretch>
                              </sizepolicy>
                             </property>
+                            <property name="minimumSize">
+                             <size>
+                              <width>0</width>
+                              <height>0</height>
+                             </size>
+                            </property>
+                            <property name="suffix">
+                             <string> s</string>
+                            </property>
+                            <property name="singleStep">
+                             <double>0.500000000000000</double>
+                            </property>
+                           </widget>
+                          </item>
+                          <item>
+                           <widget class="QDoubleSpinBox" name="doubleSpinBox_2">
+                            <property name="prefix">
+                             <string>Randomise: ±</string>
+                            </property>
+                            <property name="suffix">
+                             <string> s</string>
+                            </property>
+                            <property name="singleStep">
+                             <double>0.500000000000000</double>
+                            </property>
+                           </widget>
+                          </item>
+                          <item>
+                           <widget class="QCheckBox" name="postStimCancel_CheckBox">
+                            <property name="sizePolicy">
+                             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                              <horstretch>0</horstretch>
+                              <verstretch>0</verstretch>
+                             </sizepolicy>
+                            </property>
+                            <property name="minimumSize">
+                             <size>
+                              <width>0</width>
+                              <height>0</height>
+                             </size>
+                            </property>
+                            <property name="text">
+                             <string>Response cancels trial</string>
+                            </property>
+                           </widget>
+                          </item>
+                         </layout>
+                        </item>
+                        <item row="0" column="0">
+                         <widget class="QLabel" name="label_3">
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
+                          </property>
+                          <property name="minimumSize">
+                           <size>
+                            <width>120</width>
+                            <height>0</height>
+                           </size>
+                          </property>
+                          <property name="text">
+                           <string>Start to stim delay</string>
+                          </property>
+                          <property name="alignment">
+                           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="3" column="0">
+                         <widget class="QLabel" name="label_6">
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
+                          </property>
+                          <property name="minimumSize">
+                           <size>
+                            <width>120</width>
+                            <height>0</height>
+                           </size>
+                          </property>
+                          <property name="text">
+                           <string>Response window</string>
+                          </property>
+                          <property name="alignment">
+                           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="0" column="1">
+                         <layout class="QHBoxLayout" name="horizontalLayout_25">
+                          <item>
+                           <widget class="QDoubleSpinBox" name="startToStimDelay_SpinBox">
                             <property name="minimumSize">
                              <size>
                               <width>0</width>
@@ -3487,30 +3544,18 @@ background-color: none;
                             <property name="singleStep">
                              <double>0.500000000000000</double>
                             </property>
-                            <property name="value">
-                             <double>1.000000000000000</double>
-                            </property>
                            </widget>
                           </item>
                           <item>
-                           <widget class="QCheckBox" name="cueResponse_CheckBox">
-                            <property name="sizePolicy">
-                             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-                              <horstretch>0</horstretch>
-                              <verstretch>0</verstretch>
-                             </sizepolicy>
+                           <widget class="QDoubleSpinBox" name="startToStimDelayRandomise_doubleSpinBox">
+                            <property name="prefix">
+                             <string>Randomise: ±</string>
                             </property>
-                            <property name="minimumSize">
-                             <size>
-                              <width>0</width>
-                              <height>0</height>
-                             </size>
+                            <property name="suffix">
+                             <string> s</string>
                             </property>
-                            <property name="focusPolicy">
-                             <enum>Qt::StrongFocus</enum>
-                            </property>
-                            <property name="text">
-                             <string>Cue</string>
+                            <property name="singleStep">
+                             <double>0.500000000000000</double>
                             </property>
                            </widget>
                           </item>
@@ -3618,6 +3663,9 @@ background-color: none;
                               <height>0</height>
                              </size>
                             </property>
+                            <property name="toolTip">
+                             <string>After reward delivery</string>
+                            </property>
                             <property name="prefix">
                              <string>After: </string>
                             </property>
@@ -3706,6 +3754,9 @@ background-color: none;
                           </property>
                           <property name="prefix">
                            <string>Delay: </string>
+                          </property>
+                          <property name="suffix">
+                           <string> s</string>
                           </property>
                           <property name="singleStep">
                            <double>0.100000000000000</double>
@@ -3916,10 +3967,13 @@ background-color: none;
                             <property name="suffix">
                              <string> s</string>
                             </property>
+                            <property name="minimum">
+                             <double>-99.000000000000000</double>
+                            </property>
                            </widget>
                           </item>
                           <item>
-                           <widget class="QSpinBox" name="spinBox_2">
+                           <widget class="QDoubleSpinBox" name="doubleSpinBox_2">
                             <property name="enabled">
                              <bool>false</bool>
                             </property>
@@ -3928,9 +3982,6 @@ background-color: none;
                               <width>0</width>
                               <height>0</height>
                              </size>
-                            </property>
-                            <property name="suffix">
-                             <string/>
                             </property>
                             <property name="prefix">
                              <string>After: </string>
@@ -4050,7 +4101,7 @@ background-color: none;
                            </size>
                           </property>
                           <property name="text">
-                           <string>Auto reward</string>
+                           <string>Auto reward delay</string>
                           </property>
                           <property name="alignment">
                            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -4222,10 +4273,13 @@ background-color: none;
                             <property name="suffix">
                              <string> s</string>
                             </property>
+                            <property name="minimum">
+                             <double>-99.000000000000000</double>
+                            </property>
                            </widget>
                           </item>
                           <item>
-                           <widget class="QSpinBox" name="spinBox_29">
+                           <widget class="QDoubleSpinBox" name="doubleSpinBox_29">
                             <property name="enabled">
                              <bool>false</bool>
                             </property>
@@ -4234,9 +4288,6 @@ background-color: none;
                               <width>0</width>
                               <height>0</height>
                              </size>
-                            </property>
-                            <property name="suffix">
-                             <string/>
                             </property>
                             <property name="prefix">
                              <string>After: </string>
@@ -4715,10 +4766,9 @@ background-color: none;
   <tabstop>activeInitiation_checkBox</tabstop>
   <tabstop>activeInitiationRespRe_checkBox</tabstop>
   <tabstop>witholdBeforeStim_CheckBox</tabstop>
-  <tabstop>witholdBeforeStimMin_SpinBox</tabstop>
-  <tabstop>witholdBeforeStimMax_SpinBox</tabstop>
+  <tabstop>witholdBeforeStimDuration_SpinBox</tabstop>
+  <tabstop>witholdBeforeStimRandomise_SpinBox</tabstop>
   <tabstop>cueTrial_CheckBox</tabstop>
-  <tabstop>cueToStimDelay_SpinBox</tabstop>
   <tabstop>stimLength_SpinBox</tabstop>
   <tabstop>respStopsStim_CheckBox</tabstop>
   <tabstop>cueStim_CheckBox</tabstop>
@@ -4738,12 +4788,12 @@ background-color: none;
   <tabstop>autoTransitionFor_SpinBox</tabstop>
   <tabstop>checkBox</tabstop>
   <tabstop>doubleSpinBox</tabstop>
-  <tabstop>spinBox_2</tabstop>
+  <tabstop>doubleSpinBox_2</tabstop>
   <tabstop>comboBox</tabstop>
   <tabstop>spinBox</tabstop>
   <tabstop>checkBox_5</tabstop>
   <tabstop>doubleSpinBox_6</tabstop>
-  <tabstop>spinBox_29</tabstop>
+  <tabstop>doubleSpinBox_29</tabstop>
   <tabstop>comboBox_3</tabstop>
   <tabstop>spinBox_30</tabstop>
   <tabstop>saveAsPreset_Button</tabstop>
@@ -4761,7 +4811,7 @@ background-color: none;
   <connection>
    <sender>witholdBeforeStim_CheckBox</sender>
    <signal>toggled(bool)</signal>
-   <receiver>witholdBeforeStimMin_SpinBox</receiver>
+   <receiver>witholdBeforeStimDuration_SpinBox</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -4777,7 +4827,7 @@ background-color: none;
   <connection>
    <sender>witholdBeforeStim_CheckBox</sender>
    <signal>toggled(bool)</signal>
-   <receiver>witholdBeforeStimMax_SpinBox</receiver>
+   <receiver>witholdBeforeStimRandomise_SpinBox</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">

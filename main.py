@@ -160,8 +160,8 @@ class TrialRunner(QObject):
 
         # generate random withold requirement (if enabled)
         if p['witholdBeforeStim']:
-            withold_min = p['witholdBeforeStimMin']
-            withold_max = p['witholdBeforeStimMax']
+            withold_min = p['witholdBeforeStimDuration'] - p['witholdBeforeStimRandomise']
+            withold_max = p['witholdBeforeStimDuration'] + p['witholdBeforeStimRandomise']
             withold_req = np.random.uniform(withold_min, withold_max)
         else:
             withold_req = 0
@@ -763,23 +763,23 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         p['variations'] = [variations[idx-1] for idx in p['stimChannels']]
 
         if p['witholdBeforeStim']:
-            p['witholdBeforeStimPlotVal'] = np.mean([p['witholdBeforeStimMin'], p['witholdBeforeStimMax']])
+            p['witholdBeforeStimPlotVal'] = p['witholdBeforeStimDuration']
         else:
             p['witholdBeforeStimPlotVal'] = 0
 
-        p['totalDuration'] = p['witholdBeforeStimPlotVal'] + p['cueToStimDelay'] + \
+        p['totalDuration'] = p['witholdBeforeStimPlotVal'] + p['startToStimDelay'] + \
                              p['postStimDelay'] + p['responseWindow'] + p['endOfTrialDelay']
 
         p['trialDuration'] = p['totalDuration'] - p['witholdBeforeStimPlotVal']
 
         p['trialCueStart'] = 0
         p['stimCueStart'] = 0  # time resets to zero after withold
-        p['stimStart'] = p['cueToStimDelay']
+        p['stimStart'] = p['startToStimDelay']
         p['stimStop'] = p['stimStart'] + p['stimLength']
-        p['responseCueStart'] = p['cueToStimDelay'] + p['postStimDelay']
-        p['responseStart'] = p['cueToStimDelay'] + p['postStimDelay']
+        p['responseCueStart'] = p['startToStimDelay'] + p['postStimDelay']
+        p['responseStart'] = p['startToStimDelay'] + p['postStimDelay']
         p['responseStop'] = p['responseStart'] + p['responseWindow']
-        p['autoRewardStart'] = p['cueToStimDelay'] + p['autoRewardDelay']
+        p['autoRewardStart'] = p['startToStimDelay'] + p['autoRewardDelay']
 
         # update gui
         if self._gui_ready:

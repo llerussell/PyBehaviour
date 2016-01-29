@@ -66,10 +66,10 @@ int stimChan;
 int stimVariation;
 int responseRequired;
 int rewardChan;
-bool trialCue;
-bool stimCue;
-bool respCue;
-int respCueStartTime;
+bool trialStartCue;
+bool stimStartCue;
+bool responseWindowCue;
+int responseWindowCueStartTime;
 bool withold;
 int witholdReq;
 int stimStartTime;
@@ -100,6 +100,7 @@ bool inWithold;
 bool responded = false;
 bool rewarded = false;
 bool punished = false;
+bool cancelled = false;
 volatile int firstResponse = 0;
 
 // record times
@@ -273,16 +274,16 @@ void rxConfig() {
           rewardChan = atoi(varBuffer) - 1;
           break;
         case 5:
-          trialCue = atoi(varBuffer);
+          trialStartCue = atoi(varBuffer);
           break;
         case 6:
-          stimCue = atoi(varBuffer);
+          stimStartCue = atoi(varBuffer);
           break;
         case 7:
-          respCue = atoi(varBuffer);
+          responseWindowCue = atoi(varBuffer);
           break;
         case 8:
-          respCueStartTime = atoi(varBuffer);
+          responseWindowCueStartTime = atoi(varBuffer);
           break;
         case 9:
           withold = atoi(varBuffer);
@@ -427,7 +428,7 @@ void runTrial() {
   digitalWrite(trialRunningPin, HIGH);
 
   // deliver trial cue
-  if (trialCue) {
+  if (trialStartCue) {
     Serial.println("trial cue");
     tCueOn.setIterations(1);  // reset iterations to allow repeat
     tCueOff.setIterations(1);  // reset iterations to allow repeat
@@ -475,6 +476,7 @@ void serialListen() {
     if (incomingByte == INCOMING_COMMAND) {
       delay(1);
       test_command = Serial.read();
+      // delay(1);
       if (test_command == FORCE_REWARD) {
         tRewardOn.enable();
       }
@@ -518,6 +520,7 @@ void processResponse(int responseNum) {
     witholdTimer = 0;
   }
   else if ((timeResponded < responseWindowStartTime) && (postStimCancel)) {  // if post stim delay, cancel trial
+    cancelled = true;
     tEndTrial.enable();
   }
   else if (inResponseWindow) {
@@ -572,7 +575,7 @@ void stimOn() {
         digitalWrite(stimVariationPin[i], bits[i]);
     }
   digitalWrite(stimPin[stimChan], HIGH);
-  if (stimCue) {
+  if (stimStartCue) {
     tCueOn.setIterations(1);  // reset iterations to allow repeat
     tCueOff.setIterations(1);  // reset iterations to allow repeat
     tCueOn.enable();
@@ -630,7 +633,7 @@ void responseWindowOpen() {
   inResponseWindow = true;
   digitalWrite(responseWindowPin, HIGH);
   Serial.println("response window open");
-  if (respCue) {
+  if (responseWindowCue) {
     tCueOn.setIterations(1);  // reset iterations to allow repeat
     tCueOff.setIterations(1);  // reset iterations to allow repeat
     tCueOn.enable();
@@ -729,6 +732,7 @@ void resetConfig() {
   correct = false;
   incorrect = false;
   miss = false;
+  cancelled = false;
   resultsTransmitted = false;
 }
 
