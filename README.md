@@ -19,7 +19,7 @@ Windows 64-bit:
 * Unzip the PyBehaviour [download](https://github.com/llerussell/PyBehaviour/archive/master.zip)
 * Install [Arduino IDE](https://www.arduino.cc/en/Main/Software)
  * Upload `Sketch/sketch.ino` to the arduino
-* Double click on `PyBehaviour.exe` (you can also make a shorcut and place it on your Desktop)
+* Double click on `execute.bat` (you can also make a shorcut and place it on your Desktop)
 
 ## Known issues
 * Interrupt 2 (pin 21) not compatible? Might be device specific.
