@@ -19,7 +19,7 @@ seaborn.set(rc={
     'axes.linewidth': 1,
     'axes.facecolor': [1.0, 1.0, 1.0],
     'axes.edgecolor': [0.9, 0.9, 0.9],
-    'grid.color': [0.9, 0.9, 0.9],
+    'grid.color': [0.9, 0.9, 0.9]
     })
 import numpy as np
 import scipy.io as sio
@@ -527,7 +527,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
     def updateRunningPerformancePlot(self, trial_num):
         plot_series = self.runningScorePlot
         old_ydata = plot_series.get_ydata()
-        moving_avg_size = 10
+        moving_avg_size = 20
         if trial_num >= moving_avg_size:
             new_ydata = np.append(old_ydata, np.mean(trials['running_score'][-moving_avg_size:]))
         else:
