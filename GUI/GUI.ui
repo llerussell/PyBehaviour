@@ -687,6 +687,9 @@ background-color: none;
                             <property name="buttonSymbols">
                              <enum>QAbstractSpinBox::NoButtons</enum>
                             </property>
+                            <property name="minimum">
+                             <number>1</number>
+                            </property>
                            </widget>
                           </item>
                           <item row="3" column="6">
@@ -711,6 +714,9 @@ background-color: none;
                             </property>
                             <property name="buttonSymbols">
                              <enum>QAbstractSpinBox::NoButtons</enum>
+                            </property>
+                            <property name="minimum">
+                             <number>1</number>
                             </property>
                            </widget>
                           </item>
@@ -739,6 +745,9 @@ background-color: none;
                             </property>
                             <property name="buttonSymbols">
                              <enum>QAbstractSpinBox::NoButtons</enum>
+                            </property>
+                            <property name="minimum">
+                             <number>1</number>
                             </property>
                            </widget>
                           </item>
@@ -823,6 +832,9 @@ background-color: none;
                             <property name="buttonSymbols">
                              <enum>QAbstractSpinBox::NoButtons</enum>
                             </property>
+                            <property name="minimum">
+                             <number>1</number>
+                            </property>
                            </widget>
                           </item>
                           <item row="0" column="5">
@@ -873,6 +885,9 @@ background-color: none;
                             <property name="buttonSymbols">
                              <enum>QAbstractSpinBox::NoButtons</enum>
                             </property>
+                            <property name="minimum">
+                             <number>1</number>
+                            </property>
                            </widget>
                           </item>
                           <item row="6" column="5">
@@ -900,6 +915,9 @@ background-color: none;
                             </property>
                             <property name="buttonSymbols">
                              <enum>QAbstractSpinBox::NoButtons</enum>
+                            </property>
+                            <property name="minimum">
+                             <number>1</number>
                             </property>
                            </widget>
                           </item>
@@ -929,6 +947,9 @@ background-color: none;
                             <property name="buttonSymbols">
                              <enum>QAbstractSpinBox::NoButtons</enum>
                             </property>
+                            <property name="minimum">
+                             <number>1</number>
+                            </property>
                            </widget>
                           </item>
                           <item row="3" column="5">
@@ -953,6 +974,9 @@ background-color: none;
                             </property>
                             <property name="buttonSymbols">
                              <enum>QAbstractSpinBox::NoButtons</enum>
+                            </property>
+                            <property name="minimum">
+                             <number>1</number>
                             </property>
                            </widget>
                           </item>
@@ -1019,6 +1043,9 @@ background-color: none;
                             <property name="buttonSymbols">
                              <enum>QAbstractSpinBox::NoButtons</enum>
                             </property>
+                            <property name="minimum">
+                             <number>1</number>
+                            </property>
                            </widget>
                           </item>
                           <item row="8" column="3">
@@ -1083,6 +1110,9 @@ background-color: none;
                             </property>
                             <property name="buttonSymbols">
                              <enum>QAbstractSpinBox::NoButtons</enum>
+                            </property>
+                            <property name="minimum">
+                             <number>1</number>
                             </property>
                            </widget>
                           </item>
@@ -1200,6 +1230,9 @@ background-color: none;
                             <property name="buttonSymbols">
                              <enum>QAbstractSpinBox::NoButtons</enum>
                             </property>
+                            <property name="minimum">
+                             <number>1</number>
+                            </property>
                            </widget>
                           </item>
                           <item row="5" column="1">
@@ -1227,6 +1260,9 @@ background-color: none;
                             </property>
                             <property name="buttonSymbols">
                              <enum>QAbstractSpinBox::NoButtons</enum>
+                            </property>
+                            <property name="minimum">
+                             <number>1</number>
                             </property>
                            </widget>
                           </item>
@@ -1275,6 +1311,9 @@ background-color: none;
                             <property name="buttonSymbols">
                              <enum>QAbstractSpinBox::NoButtons</enum>
                             </property>
+                            <property name="minimum">
+                             <number>1</number>
+                            </property>
                            </widget>
                           </item>
                           <item row="3" column="3">
@@ -1300,6 +1339,9 @@ background-color: none;
                             <property name="buttonSymbols">
                              <enum>QAbstractSpinBox::NoButtons</enum>
                             </property>
+                            <property name="minimum">
+                             <number>1</number>
+                            </property>
                            </widget>
                           </item>
                           <item row="3" column="7">
@@ -1324,6 +1366,9 @@ background-color: none;
                             </property>
                             <property name="buttonSymbols">
                              <enum>QAbstractSpinBox::NoButtons</enum>
+                            </property>
+                            <property name="minimum">
+                             <number>1</number>
                             </property>
                            </widget>
                           </item>
@@ -1352,6 +1397,9 @@ background-color: none;
                             </property>
                             <property name="buttonSymbols">
                              <enum>QAbstractSpinBox::NoButtons</enum>
+                            </property>
+                            <property name="minimum">
+                             <number>1</number>
                             </property>
                            </widget>
                           </item>
@@ -1417,6 +1465,9 @@ background-color: none;
                             </property>
                             <property name="buttonSymbols">
                              <enum>QAbstractSpinBox::NoButtons</enum>
+                            </property>
+                            <property name="minimum">
+                             <number>1</number>
                             </property>
                            </widget>
                           </item>
@@ -1539,6 +1590,9 @@ background-color: none;
                             <property name="buttonSymbols">
                              <enum>QAbstractSpinBox::NoButtons</enum>
                             </property>
+                            <property name="minimum">
+                             <number>1</number>
+                            </property>
                            </widget>
                           </item>
                           <item row="0" column="1">
@@ -1588,6 +1642,9 @@ background-color: none;
                             </property>
                             <property name="buttonSymbols">
                              <enum>QAbstractSpinBox::NoButtons</enum>
+                            </property>
+                            <property name="minimum">
+                             <number>1</number>
                             </property>
                            </widget>
                           </item>
@@ -1650,6 +1707,9 @@ background-color: none;
                             <property name="buttonSymbols">
                              <enum>QAbstractSpinBox::NoButtons</enum>
                             </property>
+                            <property name="minimum">
+                             <number>1</number>
+                            </property>
                            </widget>
                           </item>
                           <item row="0" column="7">
@@ -1696,6 +1756,9 @@ background-color: none;
                             </property>
                             <property name="buttonSymbols">
                              <enum>QAbstractSpinBox::NoButtons</enum>
+                            </property>
+                            <property name="minimum">
+                             <number>1</number>
                             </property>
                            </widget>
                           </item>
@@ -1783,6 +1846,9 @@ background-color: none;
                             <property name="buttonSymbols">
                              <enum>QAbstractSpinBox::NoButtons</enum>
                             </property>
+                            <property name="minimum">
+                             <number>1</number>
+                            </property>
                            </widget>
                           </item>
                           <item row="8" column="7">
@@ -1848,6 +1914,9 @@ background-color: none;
                             <property name="buttonSymbols">
                              <enum>QAbstractSpinBox::NoButtons</enum>
                             </property>
+                            <property name="minimum">
+                             <number>1</number>
+                            </property>
                            </widget>
                           </item>
                           <item row="8" column="1">
@@ -1912,6 +1981,9 @@ background-color: none;
                             </property>
                             <property name="buttonSymbols">
                              <enum>QAbstractSpinBox::NoButtons</enum>
+                            </property>
+                            <property name="minimum">
+                             <number>1</number>
                             </property>
                            </widget>
                           </item>
