@@ -2,6 +2,7 @@
 // PyBehaviour            //
 // (c) 2015 Lloyd Russell //
 ////////////////////////////
+// 2016.02.06.1
 
 #include <elapsedMillis.h>
 #include <TaskScheduler.h>
@@ -38,7 +39,7 @@ const int rewardRemovalPin[] = {8, 9};
 const int punishPin[] = {6, 7};
 const int cuePin[] = {10};
 const int stimVariationPin[] = {14, 15, 16, 17};
-const int responseWindowPin = 99;
+const int responseWindowPin = 12;
 const int trialRunningPin = 13;  // LED
 
 // serial communication
@@ -135,6 +136,9 @@ void setup() {
   delay(10);
   pinMode(13, OUTPUT);
   digitalWrite(13, LOW);
+
+  pinMode(responseWindowPin, OUTPUT);
+  digitalWrite(responseWindowPin, LOW);
 
   for ( int i = 0; i < sizeof(rewardPin); ++i ) {
     pinMode(rewardPin[i], OUTPUT);
@@ -316,7 +320,7 @@ void rxConfig() {
           punishTrigger = atoi(varBuffer);
           break;
         case 19:
-          punishChan = atoi(varBuffer);
+          punishChan = atoi(varBuffer) - 1;
           break;
         case 20:
           punishDelay = atoi(varBuffer);
@@ -331,7 +335,7 @@ void rxConfig() {
           rewardRemovalDelay = atoi(varBuffer);
           break;
         case 24:
-          cueChan = atoi(varBuffer);
+          cueChan = atoi(varBuffer) - 1;
           break;
         case 25:
           postStimCancel = atoi(varBuffer);
@@ -524,18 +528,18 @@ void processResponse(int responseNum) {
     tEndTrial.enable();
   }
   else if (inResponseWindow) {
-    if (~responded) {
+    if (!responded) {
       firstResponse = responseNum;
       responded = true;
     }
     if (responseNum == responseRequired) {  // correct choice
-      if ((~rewarded) && ~(punished && ~secondChance)) {
+      if ((!rewarded) && !(punished && !secondChance)) {
         tRewardOn.enable();
         txResults();
       }
     }
     else {  // else must be incorrect
-      if ((~punished) && (~rewarded)) {
+      if ((!punished) && (!rewarded)) {
         if (punishTrigger) {
           tPunishOn.enable();
         }

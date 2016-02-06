@@ -1,5 +1,4 @@
-# From:
-# http://stackoverflow.com/questions/12090503/listing-available-com-ports-with-python
+# From: http://stackoverflow.com/questions/12090503/listing-available-com-ports-with-python
 
 import sys
 import serial

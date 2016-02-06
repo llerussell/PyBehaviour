@@ -3520,7 +3520,7 @@ background-color: none;
                            </widget>
                           </item>
                           <item>
-                           <widget class="QDoubleSpinBox" name="doubleSpinBox_2">
+                           <widget class="QDoubleSpinBox" name="postStimDelayRandomise_doubleSpinBox">
                             <property name="prefix">
                              <string>Randomise: ±</string>
                             </property>
@@ -4860,7 +4860,7 @@ background-color: none;
   <tabstop>autoTransitionFor_SpinBox</tabstop>
   <tabstop>checkBox</tabstop>
   <tabstop>doubleSpinBox</tabstop>
-  <tabstop>doubleSpinBox_2</tabstop>
+  <tabstop>postStimDelayRandomise_doubleSpinBox</tabstop>
   <tabstop>comboBox</tabstop>
   <tabstop>spinBox</tabstop>
   <tabstop>checkBox_5</tabstop>

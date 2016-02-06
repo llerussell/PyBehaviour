@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'GUI.ui'
 #
-# Created: Mon Feb  1 14:42:34 2016
+# Created: Sat Feb  6 15:37:47 2016
 #      by: PyQt5 UI code generator 5.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -1634,10 +1634,10 @@ class Ui_MainWindow(object):
         self.postStimDelay_doubleSpinBox.setSingleStep(0.5)
         self.postStimDelay_doubleSpinBox.setObjectName("postStimDelay_doubleSpinBox")
         self.horizontalLayout_21.addWidget(self.postStimDelay_doubleSpinBox)
-        self.doubleSpinBox_2 = QtWidgets.QDoubleSpinBox(self.groupBox_5)
-        self.doubleSpinBox_2.setSingleStep(0.5)
-        self.doubleSpinBox_2.setObjectName("doubleSpinBox_2")
-        self.horizontalLayout_21.addWidget(self.doubleSpinBox_2)
+        self.postStimDelayRandomise_doubleSpinBox = QtWidgets.QDoubleSpinBox(self.groupBox_5)
+        self.postStimDelayRandomise_doubleSpinBox.setSingleStep(0.5)
+        self.postStimDelayRandomise_doubleSpinBox.setObjectName("postStimDelayRandomise_doubleSpinBox")
+        self.horizontalLayout_21.addWidget(self.postStimDelayRandomise_doubleSpinBox)
         self.postStimCancel_CheckBox = QtWidgets.QCheckBox(self.groupBox_5)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
@@ -1851,11 +1851,11 @@ class Ui_MainWindow(object):
         self.doubleSpinBox.setMinimum(-99.0)
         self.doubleSpinBox.setObjectName("doubleSpinBox")
         self.horizontalLayout_6.addWidget(self.doubleSpinBox)
-        self.doubleSpinBox_21 = QtWidgets.QDoubleSpinBox(self.groupBox_10)
-        self.doubleSpinBox_21.setEnabled(False)
-        self.doubleSpinBox_21.setMinimumSize(QtCore.QSize(0, 0))
-        self.doubleSpinBox_21.setObjectName("doubleSpinBox_21")
-        self.horizontalLayout_6.addWidget(self.doubleSpinBox_21)
+        self.doubleSpinBox_2 = QtWidgets.QDoubleSpinBox(self.groupBox_10)
+        self.doubleSpinBox_2.setEnabled(False)
+        self.doubleSpinBox_2.setMinimumSize(QtCore.QSize(0, 0))
+        self.doubleSpinBox_2.setObjectName("doubleSpinBox_2")
+        self.horizontalLayout_6.addWidget(self.doubleSpinBox_2)
         self.comboBox = QtWidgets.QComboBox(self.groupBox_10)
         self.comboBox.setEnabled(False)
         self.comboBox.setMinimumSize(QtCore.QSize(0, 0))
@@ -2308,8 +2308,8 @@ class Ui_MainWindow(object):
         MainWindow.setTabOrder(self.autoTransitionAfterCriteria_ComboBox, self.autoTransitionFor_SpinBox)
         MainWindow.setTabOrder(self.autoTransitionFor_SpinBox, self.checkBox)
         MainWindow.setTabOrder(self.checkBox, self.doubleSpinBox)
-        MainWindow.setTabOrder(self.doubleSpinBox, self.doubleSpinBox_2)
-        MainWindow.setTabOrder(self.doubleSpinBox_2, self.comboBox)
+        MainWindow.setTabOrder(self.doubleSpinBox, self.postStimDelayRandomise_doubleSpinBox)
+        MainWindow.setTabOrder(self.postStimDelayRandomise_doubleSpinBox, self.comboBox)
         MainWindow.setTabOrder(self.comboBox, self.spinBox)
         MainWindow.setTabOrder(self.spinBox, self.checkBox_5)
         MainWindow.setTabOrder(self.checkBox_5, self.doubleSpinBox_6)
@@ -2397,8 +2397,8 @@ class Ui_MainWindow(object):
         self.cueStim_CheckBox.setText(_translate("MainWindow", "Cue"))
         self.label_4.setText(_translate("MainWindow", "Stim length"))
         self.postStimDelay_doubleSpinBox.setSuffix(_translate("MainWindow", " s"))
-        self.doubleSpinBox_2.setPrefix(_translate("MainWindow", "Randomise: ±"))
-        self.doubleSpinBox_2.setSuffix(_translate("MainWindow", " s"))
+        self.postStimDelayRandomise_doubleSpinBox.setPrefix(_translate("MainWindow", "Randomise: ±"))
+        self.postStimDelayRandomise_doubleSpinBox.setSuffix(_translate("MainWindow", " s"))
         self.postStimCancel_CheckBox.setText(_translate("MainWindow", "Response cancels trial"))
         self.label_3.setText(_translate("MainWindow", "Start to stim delay"))
         self.label_6.setText(_translate("MainWindow", "Response window"))
@@ -2424,7 +2424,7 @@ class Ui_MainWindow(object):
         self.groupBox_10.setTitle(_translate("MainWindow", "Automatic transitions"))
         self.doubleSpinBox.setPrefix(_translate("MainWindow", "By: "))
         self.doubleSpinBox.setSuffix(_translate("MainWindow", " s"))
-        self.doubleSpinBox_21.setPrefix(_translate("MainWindow", "After: "))
+        self.doubleSpinBox_2.setPrefix(_translate("MainWindow", "After: "))
         self.comboBox.setItemText(0, _translate("MainWindow", "Performance"))
         self.comboBox.setItemText(1, _translate("MainWindow", "Trials"))
         self.comboBox.setItemText(2, _translate("MainWindow", "Correct trials"))

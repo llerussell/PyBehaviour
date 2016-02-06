@@ -4,6 +4,8 @@
 PyBehaviour
 (c) 2015 Lloyd Russell
 '''
+__version__ = '2016.02.06.1'
+
 
 import warnings
 warnings.filterwarnings('ignore')
@@ -167,7 +169,7 @@ class TrialRunner(QObject):
         auto_reward = p['autoRewards'][this_stim_idx]
         trials['results'][trial_num]['auto_reward'] = auto_reward
 
-        # generate random withold requirement (if enabled)
+        # generate withold requirement (if enabled)
         if p['witholdBeforeStim']:
             withold_min = p['witholdBeforeStimDuration'] - p['witholdBeforeStimRandomise']
             withold_max = p['witholdBeforeStimDuration'] + p['witholdBeforeStimRandomise']
@@ -175,6 +177,18 @@ class TrialRunner(QObject):
         else:
             withold_req = 0
         trials['results'][trial_num]['withold_req'] = withold_req
+
+        # get random pre stim delay (if enabled)
+        pre_stim_delay_min = p['startToStimDelay'] - p['startToStimDelayRandomise']
+        pre_stim_delay_max = p['startToStimDelay'] + p['startToStimDelayRandomise']
+        pre_stim_delay = np.random.uniform(pre_stim_delay_min, pre_stim_delay_max)
+        trials['results'][trial_num]['pre_stim_delay'] = pre_stim_delay
+
+        # get random post stim delay (if enabled)
+        post_stim_delay_min = p['postStimDelay'] - p['postStimDelayRandomise']
+        post_stim_delay_max = p['postStimDelay'] + p['postStimDelayRandomise']
+        post_stim_delay = np.random.uniform(post_stim_delay_min, post_stim_delay_max)
+        trials['results'][trial_num]['post_stim_delay'] = post_stim_delay
 
         # construct arduino config string. Format = <KEY:value;KEY:value;>
         config_string = '<' + \
@@ -354,6 +368,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
             self.loadPreset_ComboBox.removeItem(0)
             self.autoTransitionTo_ComboBox.addItems(available_configs)
             self.autoTransitionTo_ComboBox.removeItem(0)
+        self.stimOrder_ComboBox.model().item(2).setEnabled(False)
 
         # set up dictionaries
         self.defaults = {}
@@ -611,88 +626,88 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
             num_stims = len(p['stimChannels'])
             num_trials = p['sessionDuration']
             if num_stims > 0:
-                if p['stimOrder'] == 'Random':
+                if not p['stimOrder'] == 'External file':
+                    if p['stimOrder'] == 'Random':
+                        # count proportions for normalisation
+                        total_prop = sum(p['proportions'])
 
-                    # count proportions for normalisation
-                    total_prop = sum(p['proportions'])
+                        # build blocks of trial types to allow absolute proportions
+                        trial_blocks = []
+                        for i, chan in enumerate(p['stimChannels']):
+                            trial_blocks.append(chan * np.ones([np.floor(p['proportions'][i] / total_prop * p['sessionDuration'])]))
 
-                    # build blocks of trial types to allow absolute proportions
-                    trial_blocks = []
-                    for i, chan in enumerate(p['stimChannels']):
-                        trial_blocks.append(chan * np.ones([np.floor(p['proportions'][i] / total_prop * p['sessionDuration'])]))
+                        # stack all trial type blocks and shuffle
+                        p['trialOrder'] = np.hstack(trial_blocks)
+                        np.random.shuffle(p['trialOrder'])
 
-                    # stack all trial type blocks and shuffle
-                    p['trialOrder'] = np.hstack(trial_blocks)
-                    np.random.shuffle(p['trialOrder'])
+                        # if needed add random trials to end to get desired number
+                        if len(p['trialOrder']) < num_trials:
+                            diff = p['sessionDuration'] - len(p['trialOrder'])
+                            xk = p['stimChannels']
+                            pk = p['proportions']
+                            custm = stats.rv_discrete(name='custm', values=(xk, pk))
+                            extra_trials = custm.rvs(size=diff)
+                            p['trialOrder'] = np.append(p['trialOrder'], extra_trials)
 
-                    # if needed add random trials to end to get desired number
-                    if len(p['trialOrder']) < num_trials:
-                        diff = p['sessionDuration'] - len(p['trialOrder'])
-                        xk = p['stimChannels']
-                        pk = p['proportions']
-                        custm = stats.rv_discrete(name='custm', values=(xk, pk))
-                        extra_trials = custm.rvs(size=diff)
-                        p['trialOrder'] = np.append(p['trialOrder'], extra_trials)
+                        # test for consecutive trial limit
+                        passed = False
+                        running_count = 0
+                        attempt = 0
+                        failed_on = 0
+                        if num_trials > 1:
+                            while not passed:
+                                prev_failed_on = failed_on
+                                for i in range(num_trials):
+                                    if i > 0:
+                                        this_stim = p['trialOrder'][i]
+                                        prev_stim = p['trialOrder'][i-1]
+                                        if this_stim == prev_stim:
+                                            running_count +=1
+                                        else:
+                                            running_count = 0
+                                        if running_count >= p['stimOrderGroupSize']:
+                                            np.random.shuffle(p['trialOrder'][i:])
+                                            failed_on = i
+                                            break
 
-                    # test for consecutive trial limit
-                    passed = False
-                    running_count = 0
-                    attempt = 0
-                    failed_on = 0
-                    if num_trials > 1:
-                        while not passed:
-                            prev_failed_on = failed_on
-                            for i in range(num_trials):
-                                if i > 0:
-                                    this_stim = p['trialOrder'][i]
-                                    prev_stim = p['trialOrder'][i-1]
-                                    if this_stim == prev_stim:
-                                        running_count +=1
-                                    else:
-                                        running_count = 0
-                                    if running_count >= p['stimOrderGroupSize']:
-                                        np.random.shuffle(p['trialOrder'][i:])
-                                        failed_on = i
-                                        break
+                                        if i == num_trials-1:
+                                            passed = True
+                                if failed_on == prev_failed_on:  # if gets stuck (usually at end)
+                                    attempt += 1
+                                else:
+                                    attempt = 0
+                                if attempt >= 10:
+                                    passed = True
 
-                                    if i == num_trials-1:
-                                        passed = True
-                            if failed_on == prev_failed_on:  # if gets stuck (usually at end)
-                                attempt += 1
-                            else:
-                                attempt = 0
-                            if attempt >= 10:
-                                passed = True
+                    elif p['stimOrder'] == 'Interleaved':
+                        p['trialOrder'] = np.zeros([p['sessionDuration']])
+                        stim_idx = 0
+                        consec_tally = 0
 
-                elif p['stimOrder'] == 'Interleaved':
-                    p['trialOrder'] = np.zeros([p['sessionDuration']])
-                    stim_idx = 0
-                    consec_tally = 0
+                        for trial in range(p['sessionDuration']):
+                            p['trialOrder'][trial] = p['stimChannels'][stim_idx]
+                            consec_tally += 1
+                            if consec_tally >= p['stimOrderGroupSize']:
+                                consec_tally = 0
+                                stim_idx += 1
+                                if stim_idx >= len(p['stimChannels']):
+                                    stim_idx = 0
 
-                    for trial in range(p['sessionDuration']):
-                        p['trialOrder'][trial] = p['stimChannels'][stim_idx]
-                        consec_tally += 1
-                        if consec_tally >= p['stimOrderGroupSize']:
-                            consec_tally = 0
-                            stim_idx += 1
-                            if stim_idx >= len(p['stimChannels']):
-                                stim_idx = 0
+                    # trial variations
+                    p['trialVariations'] = np.zeros(len(p['trialOrder']))
+                    for i in range(len(p['trialOrder'])):
+                        this_trial = p['trialOrder'][i]
+                        this_idx = p['stimChannels'].index(this_trial)
+                        p['trialVariations'][i] = np.random.randint(p['variations'][this_idx])
 
-                # trial variations
-                p['trialVariations'] = np.zeros(len(p['trialOrder']))
-                for i in range(len(p['trialOrder'])):
-                    this_trial = p['trialOrder'][i]
-                    this_idx = p['stimChannels'].index(this_trial)
-                    p['trialVariations'][i] = np.random.randint(p['variations'][this_idx])
+                    # first stim control
+                    if p['controlFirstStim']:
+                        if p['controlFirstStimStim']:
+                            p['trialOrder'][0:p['firstXStims']] = int(p['firstStim'])
+                        if p['controlFirstStimVariation']:
+                            p['trialVariations'][0:p['firstXStims']] = int(p['firstStimVariation'])
 
-                # first stim control
-                if p['controlFirstStim']:
-                    if p['controlFirstStimStim']:
-                        p['trialOrder'][0:p['firstXStims']] = int(p['firstStim'])
-                    if p['controlFirstStimVariation']:
-                        p['trialVariations'][0:p['firstXStims']] = int(p['firstStimVariation'])
-
-                self.plotTrialOrder()
+                    self.plotTrialOrder()
 
     def plotTrialOrder(self):
         self.trialOrderAx.imshow([p['trialOrder']], interpolation='nearest', cmap='rainbow', vmin=1, vmax=8, aspect='auto')
@@ -776,19 +791,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         else:
             p['witholdBeforeStimPlotVal'] = 0
 
-        p['totalDuration'] = p['witholdBeforeStimPlotVal'] + p['startToStimDelay'] + \
-                             p['postStimDelay'] + p['responseWindow'] + p['endOfTrialDelay']
-
-        p['trialDuration'] = p['totalDuration'] - p['witholdBeforeStimPlotVal']
-
-        p['trialCueStart'] = 0
-        p['stimCueStart'] = 0  # time resets to zero after withold
-        p['stimStart'] = p['startToStimDelay']
-        p['stimStop'] = p['stimStart'] + p['stimLength']
-        p['responseCueStart'] = p['startToStimDelay'] + p['postStimDelay']
-        p['responseStart'] = p['startToStimDelay'] + p['postStimDelay']
-        p['responseStop'] = p['responseStart'] + p['responseWindow']
-        p['autoRewardStart'] = p['startToStimDelay'] + p['autoRewardDelay']
+        self.updateTrialTimings()
 
         # update gui
         if self._gui_ready:
@@ -805,6 +808,19 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
                 colour_string = 'rgb(' + str(int(colour[0]*255)) + ',' + str(int(colour[1]*255)) + ',' + str(int(colour[2]*255)) + ')'
                 stimCheckBox.setStyleSheet('QCheckBox::indicator:checked { background-color:' + colour_string +
                     '; border: 1px solid #b1b1b1;}')
+
+    def updateTrialTimings(self, for_plot=False):
+        p['totalDuration'] = p['witholdBeforeStimPlotVal'] + p['startToStimDelay'] + \
+                             p['postStimDelay'] + p['responseWindow'] + p['endOfTrialDelay']
+        p['trialDuration'] = p['totalDuration'] - p['witholdBeforeStimPlotVal']
+        p['trialCueStart'] = 0
+        p['stimCueStart'] = 0  # time resets to zero after withold
+        p['stimStart'] = p['startToStimDelay']
+        p['stimStop'] = p['stimStart'] + p['stimLength']
+        p['responseCueStart'] = p['startToStimDelay'] + p['postStimDelay']
+        p['responseStart'] = p['startToStimDelay'] + p['postStimDelay']
+        p['responseStop'] = p['responseStart'] + p['responseWindow']
+        p['autoRewardStart'] = p['startToStimDelay'] + p['autoRewardDelay']
 
     def updateTrialConfigPlot(self):
         self.duration_line.set_width(p['totalDuration'])
@@ -954,7 +970,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         self.rasterFigAx.add_patch(self.raster_respwin)
         self.rasterFigAx.add_patch(self.raster_stimlength)
         self.raster_stimline, = self.rasterFigAx.plot([0, 0], [0, 0], '-', c=[0.3, 0.3, 0.3], linewidth=2, clip_on=False, zorder=8)
-        self.raster_responses = self.rasterFigAx.scatter(np.empty(0), np.empty(0), c=np.empty(0), edgecolor='', antialiased=True, clip_on=False, vmin=1, vmax=4, cmap='rainbow', zorder=9)
+        self.raster_responses = self.rasterFigAx.scatter(np.empty(0), np.empty(0), c=np.empty(0), edgecolor='', antialiased=True, clip_on=True, vmin=1, vmax=4, cmap='rainbow', zorder=9)
         # self.raster_reward, = self.rasterFigAx.plot([], [], 'o', clip_on=False)  # currently unused
         # self.raster_punish, = self.rasterFigAx.plot([], [], 'o', clip_on=False)  # currently unused
 
@@ -983,10 +999,10 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
 
         self.performanceFigAx.set_xlabel('Trial')
         self.performanceFigAx.set_ylabel('Performance (%)')
-        self.performanceFigAx.set_yticks(np.linspace(-1,1,9))
+        self.performanceFigAx.set_yticks(np.linspace(-1, 1, 9))
         # self.performanceFigAx.get_yaxis().set_minor_locator(matplotlib.ticker.AutoMinorLocator())
         # self.performanceFigAx.grid(b=True, which='minor', alpha=0.5)
-        self.performanceFigAx.set_yticklabels([-100,-75,-50,-25,0,25,50,75,100])
+        self.performanceFigAx.set_yticklabels([-100, -75, -50, -25, 0, 25, 50, 75, 100])
         self.performanceFig.set_facecolor('white')
 
         self.performanceFigPerfAx = self.performanceFig.add_axes([0.2, 0.86, 0.75, 0.04])
