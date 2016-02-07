@@ -4,7 +4,7 @@
 PyBehaviour
 (c) 2015 Lloyd Russell
 '''
-__version__ = '2016.02.07.1'
+__version__ = '2016.02.07.2'
 
 
 import warnings
@@ -391,6 +391,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         # reset everything
         self.tabWidget.setCurrentIndex(1)
         self.sessionAbort_pushButton.setEnabled(True)
+        self.forceReward_pushButton.setEnabled(True)
         self.reset()
 
         p['sessionStartTime'] = time.time()
@@ -445,6 +446,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
             self.sessionEndGUI()
             self.updateCommFeed('Aborted', 'pc')
             self.sessionAbort_pushButton.setEnabled(False)
+            self.forceReward_pushButton.setEnabled(False)
 
     def forceReward(self):
         if self.trialRunner._session_running is False:
@@ -514,9 +516,10 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         plot_series.set_array(new_colours)
 
         if is_first_response:
-            new_size = 26
+            print('first response!!!!!!!!!!!')
+            new_size = 28
         else:
-            new_size = 2
+            new_size = 8
         old_sizes = plot_series.get_sizes()
         new_sizes = np.append(old_sizes, new_size)
         plot_series.set_sizes(new_sizes)
@@ -931,7 +934,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         self.stim_cue_rectangle = patches.Rectangle([0, 0], 0, 0.9, fc=[1, .7, 0], ec='none')
         self.response_cue_rectangle = patches.Rectangle([0, 0], 0, 0.9, fc=[1, .7, 0], ec='none')
         self.stim_rectangle = patches.Rectangle([0, 0], 0, 1, fc=[.3, .3, .3], ec='none')
-        self.resp_rectangle = patches.Rectangle([0, 0], 0, 0.9, fc=[.8, .8, .8], ec='none')
+        self.resp_rectangle = patches.Rectangle([0, 0], 0, 0.9, fc=[.8, .8, .8], ec=[.6, .6, .6])
         self.reward_rectangle = patches.Rectangle([0, 0], 0, 0.9, fc=[0, .75, .95], ec='none')
 
         # add the shapes to the figure
@@ -955,7 +958,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         self.preTrialRasterFigAx.axis('on')
         self.preTrialRasterFigAx.get_yaxis().set_visible(False)
         self.preTrialRasterFigAx.set_title('Pre-trial', loc='left')
-        self.preTrialRaster_responses = self.preTrialRasterFigAx.scatter(np.empty(0), np.empty(0), c=np.empty(0), edgecolor='', antialiased=True, clip_on=False, vmin=1, vmax=4, cmap='rainbow', zorder=9)
+        self.preTrialRaster_responses = self.preTrialRasterFigAx.scatter(np.empty(0), np.empty(0), c=np.empty(0), s=np.empty(0), edgecolor='', antialiased=True, clip_on=False, vmin=1, vmax=4, cmap='rainbow', zorder=9)
         self.preTrialRasterFigCanvas.setFixedHeight(50)
         self.preTrialRasterFig.set_facecolor('white')
         self.preTrialRasterFigCanvas.draw()
@@ -974,7 +977,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         self.rasterFigAx.add_patch(self.raster_respwin)
         self.rasterFigAx.add_patch(self.raster_stimlength)
         self.raster_stimline, = self.rasterFigAx.plot([0, 0], [0, 0], '-', c=[0.3, 0.3, 0.3], linewidth=2, clip_on=False, zorder=8)
-        self.raster_responses = self.rasterFigAx.scatter(np.empty(0), np.empty(0), c=np.empty(0), edgecolor='', antialiased=True, clip_on=True, vmin=1, vmax=4, cmap='rainbow', zorder=9)
+        self.raster_responses = self.rasterFigAx.scatter(np.empty(0), np.empty(0), c=np.empty(0), s=np.empty(0), edgecolor='', antialiased=True, clip_on=True, vmin=1, vmax=4, cmap='rainbow', zorder=9)
         # self.raster_reward, = self.rasterFigAx.plot([], [], 'o', clip_on=False)  # currently unused
         # self.raster_punish, = self.rasterFigAx.plot([], [], 'o', clip_on=False)  # currently unused
 
@@ -1077,6 +1080,8 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         end_time_string = self.sessionTimer_label.text()
         self.sessionTimer_label.setText('<font color=''#ff0066''>' + end_time_string + '</font>')
         self.updateCommFeed('Finished', 'pc')
+        self.sessionAbort_pushButton.setEnabled(False)
+        self.forceReward_pushButton.setEnabled(False)
 
     def trialStartGUI(self, trial_num):
         self.trialNum_label.setText(str(trial_num+1))

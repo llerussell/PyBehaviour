@@ -303,6 +303,76 @@
                </item>
                <item>
                 <layout class="QGridLayout" name="gridLayout_5">
+                 <item row="1" column="0">
+                  <widget class="QLabel" name="label_29">
+                   <property name="text">
+                    <string>Manual pin control</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignRight|Qt::AlignTop|Qt::AlignTrailing</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="1">
+                  <widget class="QPushButton" name="testPin_Button">
+                   <property name="enabled">
+                    <bool>true</bool>
+                   </property>
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>120</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="focusPolicy">
+                    <enum>Qt::StrongFocus</enum>
+                   </property>
+                   <property name="text">
+                    <string>Test arduino pin</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="deviceLabel">
+                   <property name="minimumSize">
+                    <size>
+                     <width>50</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>Device</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="1">
+                  <widget class="QComboBox" name="device_ComboBox">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="focusPolicy">
+                    <enum>Qt::StrongFocus</enum>
+                   </property>
+                  </widget>
+                 </item>
                  <item row="1" column="1">
                   <layout class="QGridLayout" name="gridLayout_6">
                    <item row="1" column="1">
@@ -413,76 +483,6 @@
                    </item>
                   </layout>
                  </item>
-                 <item row="0" column="1">
-                  <widget class="QComboBox" name="device_ComboBox">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>0</width>
-                     <height>0</height>
-                    </size>
-                   </property>
-                   <property name="focusPolicy">
-                    <enum>Qt::StrongFocus</enum>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="0">
-                  <widget class="QLabel" name="deviceLabel">
-                   <property name="minimumSize">
-                    <size>
-                     <width>50</width>
-                     <height>0</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>Device</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="2" column="1">
-                  <widget class="QPushButton" name="testPin_Button">
-                   <property name="enabled">
-                    <bool>true</bool>
-                   </property>
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>120</width>
-                     <height>0</height>
-                    </size>
-                   </property>
-                   <property name="focusPolicy">
-                    <enum>Qt::StrongFocus</enum>
-                   </property>
-                   <property name="text">
-                    <string>Test arduino pin</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="0">
-                  <widget class="QLabel" name="label_29">
-                   <property name="text">
-                    <string>Manual pin control</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignRight|Qt::AlignTop|Qt::AlignTrailing</set>
-                   </property>
-                  </widget>
-                 </item>
                 </layout>
                </item>
               </layout>
@@ -561,7 +561,7 @@ background-color: none;
                     <x>0</x>
                     <y>0</y>
                     <width>599</width>
-                    <height>1360</height>
+                    <height>1365</height>
                    </rect>
                   </property>
                   <property name="sizePolicy">
@@ -3327,7 +3327,7 @@ background-color: none;
                            </widget>
                           </item>
                           <item>
-                           <widget class="QCheckBox" name="cueResponse_CheckBox">
+                           <widget class="QCheckBox" name="postStimCancel_CheckBox">
                             <property name="sizePolicy">
                              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                               <horstretch>0</horstretch>
@@ -3340,11 +3340,8 @@ background-color: none;
                               <height>0</height>
                              </size>
                             </property>
-                            <property name="focusPolicy">
-                             <enum>Qt::StrongFocus</enum>
-                            </property>
                             <property name="text">
-                             <string>Cue</string>
+                             <string>Response cancels trial</string>
                             </property>
                            </widget>
                           </item>
@@ -3384,7 +3381,7 @@ background-color: none;
                            </size>
                           </property>
                           <property name="text">
-                           <string>Post stim delay</string>
+                           <string>Response window start</string>
                           </property>
                           <property name="alignment">
                            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -3449,28 +3446,6 @@ background-color: none;
                             </property>
                            </widget>
                           </item>
-                          <item>
-                           <widget class="QCheckBox" name="cueStim_CheckBox">
-                            <property name="sizePolicy">
-                             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-                              <horstretch>0</horstretch>
-                              <verstretch>0</verstretch>
-                             </sizepolicy>
-                            </property>
-                            <property name="minimumSize">
-                             <size>
-                              <width>0</width>
-                              <height>0</height>
-                             </size>
-                            </property>
-                            <property name="focusPolicy">
-                             <enum>Qt::StrongFocus</enum>
-                            </property>
-                            <property name="text">
-                             <string>Cue</string>
-                            </property>
-                           </widget>
-                          </item>
                          </layout>
                         </item>
                         <item row="1" column="0">
@@ -3488,7 +3463,7 @@ background-color: none;
                            </size>
                           </property>
                           <property name="text">
-                           <string>Stim length</string>
+                           <string>Stimulus duration</string>
                           </property>
                           <property name="alignment">
                            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -3533,7 +3508,7 @@ background-color: none;
                            </widget>
                           </item>
                           <item>
-                           <widget class="QCheckBox" name="postStimCancel_CheckBox">
+                           <widget class="QCheckBox" name="cueResponse_CheckBox">
                             <property name="sizePolicy">
                              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                               <horstretch>0</horstretch>
@@ -3546,8 +3521,11 @@ background-color: none;
                               <height>0</height>
                              </size>
                             </property>
+                            <property name="focusPolicy">
+                             <enum>Qt::StrongFocus</enum>
+                            </property>
                             <property name="text">
-                             <string>Response cancels trial</string>
+                             <string>Cue</string>
                             </property>
                            </widget>
                           </item>
@@ -3568,7 +3546,7 @@ background-color: none;
                            </size>
                           </property>
                           <property name="text">
-                           <string>Start to stim delay</string>
+                           <string>Stimulus start</string>
                           </property>
                           <property name="alignment">
                            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -3590,7 +3568,7 @@ background-color: none;
                            </size>
                           </property>
                           <property name="text">
-                           <string>Response window</string>
+                           <string>Response window duration</string>
                           </property>
                           <property name="alignment">
                            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -3628,6 +3606,28 @@ background-color: none;
                             </property>
                             <property name="singleStep">
                              <double>0.500000000000000</double>
+                            </property>
+                           </widget>
+                          </item>
+                          <item>
+                           <widget class="QCheckBox" name="cueStim_CheckBox">
+                            <property name="sizePolicy">
+                             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                              <horstretch>0</horstretch>
+                              <verstretch>0</verstretch>
+                             </sizepolicy>
+                            </property>
+                            <property name="minimumSize">
+                             <size>
+                              <width>0</width>
+                              <height>0</height>
+                             </size>
+                            </property>
+                            <property name="focusPolicy">
+                             <enum>Qt::StrongFocus</enum>
+                            </property>
+                            <property name="text">
+                             <string>Cue</string>
                             </property>
                            </widget>
                           </item>
@@ -4586,6 +4586,9 @@ background-color: none;
                </item>
                <item>
                 <widget class="QPushButton" name="forceReward_pushButton">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
                  <property name="text">
                   <string>Force current reward</string>
                  </property>
@@ -4709,7 +4712,7 @@ background-color: none;
              <item row="0" column="0">
               <widget class="QLabel" name="label_30">
                <property name="text">
-                <string>&gt;</string>
+                <string>To</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignRight|Qt::AlignTop|Qt::AlignTrailing</set>
@@ -4719,7 +4722,7 @@ background-color: none;
              <item row="1" column="0">
               <widget class="QLabel" name="label_31">
                <property name="text">
-                <string>&lt;</string>
+                <string>From</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignRight|Qt::AlignTop|Qt::AlignTrailing</set>
@@ -4846,11 +4849,8 @@ background-color: none;
   <tabstop>cueTrial_CheckBox</tabstop>
   <tabstop>stimLength_SpinBox</tabstop>
   <tabstop>respStopsStim_CheckBox</tabstop>
-  <tabstop>cueStim_CheckBox</tabstop>
   <tabstop>postStimDelay_doubleSpinBox</tabstop>
-  <tabstop>postStimCancel_CheckBox</tabstop>
   <tabstop>responseWindow_SpinBox</tabstop>
-  <tabstop>cueResponse_CheckBox</tabstop>
   <tabstop>endOfTrialDelay_SpinBox</tabstop>
   <tabstop>rewardRemoval_checkBox</tabstop>
   <tabstop>rewardRemovalDelay_SpinBox</tabstop>
