@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'GUI.ui'
 #
-# Created: Sat Feb  6 15:37:47 2016
+# Created: Sun Feb  7 11:12:01 2016
 #      by: PyQt5 UI code generator 5.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -2055,6 +2055,7 @@ class Ui_MainWindow(object):
         self.sessionPause_pushButton.setObjectName("sessionPause_pushButton")
         self.horizontalLayout_20.addWidget(self.sessionPause_pushButton)
         self.sessionAbort_pushButton = QtWidgets.QPushButton(self.groupBox)
+        self.sessionAbort_pushButton.setEnabled(False)
         self.sessionAbort_pushButton.setObjectName("sessionAbort_pushButton")
         self.horizontalLayout_20.addWidget(self.sessionAbort_pushButton)
         self.forceReward_pushButton = QtWidgets.QPushButton(self.groupBox)

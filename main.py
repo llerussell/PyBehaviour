@@ -390,6 +390,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
     def begin(self):
         # reset everything
         self.tabWidget.setCurrentIndex(1)
+        self.sessionAbort_pushButton.setEnabled(True)
         self.reset()
 
         p['sessionStartTime'] = time.time()
@@ -443,6 +444,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
             self.trialRunner._session_running = False
             self.sessionEndGUI()
             self.updateCommFeed('Aborted', 'pc')
+            self.sessionAbort_pushButton.setEnabled(False)
 
     def forceReward(self):
         if self.trialRunner._session_running is False:
