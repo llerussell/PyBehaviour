@@ -4,7 +4,7 @@
 PyBehaviour
 (c) 2015 Lloyd Russell
 '''
-__version__ = '2016.02.06.1'
+__version__ = '2016.02.07.1'
 
 
 import warnings
@@ -432,8 +432,10 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
     def pause(self):
         self.trialRunner._paused = not self.trialRunner._paused
         if self.trialRunner._paused:
+            self.updateCommFeed('Paused', 'pc')
             self.sessionPause_pushButton.setText('Resume')
         else:
+            self.updateCommFeed('Resumed', 'pc')
             self.sessionPause_pushButton.setText('Pause')
 
     def abort(self):
