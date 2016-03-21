@@ -56,7 +56,7 @@ class TrialRunner(QObject):
             # the main session loop
             while self._session_running:
                 if arduino['connected'] is False:
-                    self.connectArduino()
+                   self.connectArduino()
                 if arduino['connected']:
                     while self._paused:
                         time.sleep(0.01)

@@ -33,7 +33,7 @@ elapsedMillis witholdTimer;
 
 // pin numbers
 const int responsePin[] = {0, 1}; // interrupt numbers 0:2 1:3 [2:21 do not use] 3:20
-const int stimPin[] = {22, 23};
+const int stimPin[] = {30,31,32,33,34,35,36,37};
 const int rewardPin[] = {4, 5};
 const int rewardRemovalPin[] = {8, 9};
 const int punishPin[] = {6, 7};
@@ -376,7 +376,7 @@ void configTrial() {
   tResponseWindowOpen.set(responseWindowStartTime, 1, &responseWindowOpen);
   tResponseWindowClose.set(responseWindowStopTime, 1, &responseWindowClose);
   tRewardOn.set(0, 1, &rewardOn);
-  tRewardOff.set(50, 1, &rewardOff);
+  tRewardOff.set(10, 1, &rewardOff);
   tAutoReward.set(autoRewardStartTime, 1, &autoRewardOn);
   tRewardRemovalOn.set(rewardRemovalDelay, 1, &rewardRemovalOn);
   tRewardRemovalOff.set(50, 1, &rewardRemovalOff);
@@ -531,23 +531,23 @@ void processResponse(int responseNum) {
     if (!responded) {
       firstResponse = responseNum;
       responded = true;
-    }
-    if (responseNum == responseRequired) {  // correct choice
-      if ((!rewarded) && !(punished && !secondChance)) {
-        tRewardOn.enable();
-        txResults();
+      if (responseNum == responseRequired) {  // correct choice
+        if ((!rewarded) && !(punished && !secondChance)) {
+          tRewardOn.enable();
+          txResults();
+        }
       }
-    }
-    else {  // else must be incorrect
-      if ((!punished) && (!rewarded)) {
-        if (punishTrigger) {
-          tPunishOn.enable();
+      else {  // else must be incorrect
+        if ((!punished) && (!rewarded)) {
+          if (punishTrigger) {
+            tPunishOn.enable();
+          }
+          if (punishDelay) {
+            currentTime = millis() - startTime;
+            tEndTrial.setInterval(trialDuration - currentTime + punishLength);
+          }
+        txResults();
         }
-        if (punishDelay) {
-          currentTime = millis() - startTime;
-          tEndTrial.setInterval(trialDuration - currentTime + punishLength);
-        }
-      txResults();
       }
     }
   }
@@ -575,7 +575,7 @@ void stimOn() {
   // stim variation, binary 'barcode' (1:16)
   int bits[] = {0,0,0,0};
     for (int i = 3; i >= 0; i--) {
-        bits[i] = (stimVariation & (1 << i)) != 0;
+        bits[i] = (stimVariation & (1 << i)) == 0;
         digitalWrite(stimVariationPin[i], bits[i]);
     }
   digitalWrite(stimPin[stimChan], HIGH);
