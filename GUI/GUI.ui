@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>720</width>
-    <height>815</height>
+    <width>750</width>
+    <height>870</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -286,7 +286,7 @@
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_3" stretch="0,0">
                <property name="spacing">
-                <number>-1</number>
+                <number>6</number>
                </property>
                <item>
                 <widget class="QLabel" name="arduinoConnectedText_Label">
@@ -560,8 +560,8 @@ background-color: none;
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>599</width>
-                    <height>1365</height>
+                    <width>665</width>
+                    <height>1117</height>
                    </rect>
                   </property>
                   <property name="sizePolicy">
@@ -688,7 +688,10 @@ background-color: none;
                              <enum>QAbstractSpinBox::NoButtons</enum>
                             </property>
                             <property name="minimum">
-                             <number>1</number>
+                             <number>0</number>
+                            </property>
+                            <property name="value">
+                             <number>0</number>
                             </property>
                            </widget>
                           </item>
@@ -716,7 +719,10 @@ background-color: none;
                              <enum>QAbstractSpinBox::NoButtons</enum>
                             </property>
                             <property name="minimum">
-                             <number>1</number>
+                             <number>0</number>
+                            </property>
+                            <property name="value">
+                             <number>0</number>
                             </property>
                            </widget>
                           </item>
@@ -976,7 +982,10 @@ background-color: none;
                              <enum>QAbstractSpinBox::NoButtons</enum>
                             </property>
                             <property name="minimum">
-                             <number>1</number>
+                             <number>0</number>
+                            </property>
+                            <property name="value">
+                             <number>0</number>
                             </property>
                            </widget>
                           </item>
@@ -1312,7 +1321,10 @@ background-color: none;
                              <enum>QAbstractSpinBox::NoButtons</enum>
                             </property>
                             <property name="minimum">
-                             <number>1</number>
+                             <number>0</number>
+                            </property>
+                            <property name="value">
+                             <number>0</number>
                             </property>
                            </widget>
                           </item>
@@ -1340,7 +1352,10 @@ background-color: none;
                              <enum>QAbstractSpinBox::NoButtons</enum>
                             </property>
                             <property name="minimum">
-                             <number>1</number>
+                             <number>0</number>
+                            </property>
+                            <property name="value">
+                             <number>0</number>
                             </property>
                            </widget>
                           </item>
@@ -1368,7 +1383,10 @@ background-color: none;
                              <enum>QAbstractSpinBox::NoButtons</enum>
                             </property>
                             <property name="minimum">
-                             <number>1</number>
+                             <number>0</number>
+                            </property>
+                            <property name="value">
+                             <number>0</number>
                             </property>
                            </widget>
                           </item>
@@ -1591,7 +1609,10 @@ background-color: none;
                              <enum>QAbstractSpinBox::NoButtons</enum>
                             </property>
                             <property name="minimum">
-                             <number>1</number>
+                             <number>0</number>
+                            </property>
+                            <property name="value">
+                             <number>0</number>
                             </property>
                            </widget>
                           </item>
@@ -1758,7 +1779,10 @@ background-color: none;
                              <enum>QAbstractSpinBox::NoButtons</enum>
                             </property>
                             <property name="minimum">
-                             <number>1</number>
+                             <number>0</number>
+                            </property>
+                            <property name="value">
+                             <number>0</number>
                             </property>
                            </widget>
                           </item>
@@ -3391,7 +3415,7 @@ background-color: none;
                         <item row="1" column="1">
                          <layout class="QHBoxLayout" name="horizontalLayout_4">
                           <property name="spacing">
-                           <number>-1</number>
+                           <number>6</number>
                           </property>
                           <property name="sizeConstraint">
                            <enum>QLayout::SetDefaultConstraint</enum>
@@ -4610,7 +4634,7 @@ background-color: none;
            </sizepolicy>
           </property>
           <property name="autoFillBackground">
-           <bool>false</bool>
+           <bool>true</bool>
           </property>
           <property name="styleSheet">
            <string notr="true">background-color: rgb(255, 255, 255)</string>
