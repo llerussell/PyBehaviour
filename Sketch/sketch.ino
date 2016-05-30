@@ -117,6 +117,7 @@ String txString;
 String comString;
 int responseNum;
 volatile long timeResponded;
+volatile long prevTimeResponded;
 long currentTime;
 
 // results
@@ -373,7 +374,7 @@ void configTrial() {
   // set(delay, repeat, function)
   taskManager.init();
 
-  tTransmit.set(100, -1, &txData);
+  tTransmit.set(200, -1, &txData);
   tCueOn.set(0, 0, &cueOn);
   tCueOff.set(50, 0, &cueOff);
   tStimStart.set(stimStartTime, 1, &stimOn);
@@ -381,7 +382,7 @@ void configTrial() {
   tResponseWindowOpen.set(responseWindowStartTime, 1, &responseWindowOpen);
   tResponseWindowClose.set(responseWindowStopTime, 1, &responseWindowClose);
   tRewardOn.set(0, 1, &rewardOn);
-  tRewardOff.set(20, 1, &rewardOff);
+  tRewardOff.set(40, 1, &rewardOff);
   tAutoReward.set(autoRewardStartTime, 1, &autoRewardOn);
   tRewardRemovalOn.set(rewardRemovalDelay, 1, &rewardRemovalOn);
   tRewardRemovalOff.set(50, 1, &rewardRemovalOff);
@@ -521,41 +522,44 @@ void processResponse(int responseNum) {
   cli(); // disable interrupts
 
   timeResponded = millis() - startTime;
-  newDataString = "";
-  newDataString = newDataString + responseNum + ":" + timeResponded + "|";
-  dataString = dataString + newDataString;
+  if (timeResponded > prevTimeResponded) {
+    newDataString = "";
+    newDataString = newDataString + responseNum + ":" + timeResponded + "|";
+    dataString = dataString + newDataString;
 
-  if (inWithold) { // include here active initiation trial if response is required
-    witholdTimer = 0;
-  }
-  else if ((timeResponded < responseWindowStartTime) && (postStimCancel)) {  // if post stim delay, cancel trial
-    cancelled = true;
-    tEndTrial.enable();
-  }
-  else if (inResponseWindow) {
-    if (!responded) {
-      firstResponse = responseNum;
-      responded = true;
-      if (responseNum == responseRequired) {  // correct choice
-        if ((!rewarded) && !(punished && !secondChance)) {
-          tRewardOn.enable();
-          txResults();
+    if (inWithold) { // include here active initiation trial if response is required
+      witholdTimer = 0;
+    }
+    else if ((timeResponded < responseWindowStartTime) && (postStimCancel)) {  // if post stim delay, cancel trial
+      cancelled = true;
+      tEndTrial.enable();
+    }
+    else if (inResponseWindow) {
+      if (!responded) {
+        firstResponse = responseNum;
+        responded = true;
+        if (responseNum == responseRequired) {  // correct choice
+          if ((!rewarded) && !(punished && !secondChance)) {
+            tRewardOn.enable();
+            txResults();
+          }
         }
-      }
-      else {  // else must be incorrect
-        if ((!punished) && (!rewarded)) {
-          if (punishTrigger) {
-            tPunishOn.enable();
+        else {  // else must be incorrect
+          if ((!punished) && (!rewarded)) {
+            if (punishTrigger) {
+              tPunishOn.enable();
+            }
+            if (punishDelay) {
+              currentTime = millis() - startTime;
+              tEndTrial.setInterval(trialDuration - currentTime + punishLength);
+            }
+          txResults();
           }
-          if (punishDelay) {
-            currentTime = millis() - startTime;
-            tEndTrial.setInterval(trialDuration - currentTime + punishLength);
-          }
-        txResults();
         }
       }
     }
   }
+  prevTimeResponded = timeResponded;
   SREG = SaveSREG; // restore the interrupt flag
 }
 
@@ -743,6 +747,7 @@ void resetConfig() {
   miss = false;
   cancelled = false;
   resultsTransmitted = false;
+  prevTimeResponded = 0;
 }
 
 void testPin(int pinNumber, int pinDuration) {

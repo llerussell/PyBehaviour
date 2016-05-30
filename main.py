@@ -74,6 +74,7 @@ class TrialRunner(QObject):
                 if self._session_running is False:
                     self.session_end_signal.emit()
 
+
     def connectArduino(self):
         self.comm_feed_signal.emit('Connecting Arduino on port ' + p['device'], 'pc')
         arduino['device'] = serial.Serial(p['device'], 19200)
@@ -390,25 +391,24 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         self.sessionTimer_label.setText('%d:%02d:%02d' % (h, m, s))
 
     def begin(self):
-        # reset everything
-        self.begin_Button.setEnabled(False)
-        self.tabWidget.setCurrentIndex(1)
-        self.sessionAbort_pushButton.setEnabled(True)
-        self.forceReward_pushButton.setEnabled(True)
-        self.reset()
-
-        p['sessionStartTime'] = time.time()
-        p['sessionStartTimeString'] = time.strftime('%Y%m%d_%H%M%S')
-        p['sessionID'] = p['subjectID'] + '_' + p['sessionStartTimeString']
-        self.setWindowTitle('PyBehaviour - ' + p['sessionID'])
-        self.sessionTimer.start(100)  # start the QTimer, executes every 100ms
-        self.sessionTimer_label.setStyleSheet('font-size: 18pt; font-weight: bold; color:''black'';')
-
-        self.trialRunner.trial_num = 0
-        self.trialRunner._session_running = True
+        if self.trialRunner._session_running is False:
+            # reset everything
+            self.begin_Button.setEnabled(False)
+            self.tabWidget.setCurrentIndex(1)
+            self.sessionAbort_pushButton.setEnabled(True)
+            self.forceReward_pushButton.setEnabled(True)
+            self.reset()
+            p['sessionStartTime'] = time.time()
+            p['sessionStartTimeString'] = time.strftime('%Y%m%d_%H%M%S')
+            p['sessionID'] = p['subjectID'] + '_' + p['sessionStartTimeString']
+            self.setWindowTitle('PyBehaviour - ' + p['sessionID'])
+            self.sessionTimer.start(100)  # start the QTimer, executes every 100ms
+            self.sessionTimer_label.setStyleSheet('font-size: 18pt; font-weight: bold; color:''black'';')
+            self.trialRunner._session_running = True
 
 
     def reset(self):
+        self.trialRunner.trial_num = 0
         # if self.trialRunner._session_running:
             # self.trialRunner.stop()
             # self.trialThread.quit()
