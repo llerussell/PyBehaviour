@@ -4,7 +4,7 @@
 PyBehaviour
 (c) 2015 Lloyd Russell
 '''
-__version__ = '2016.02.07.2'
+__version__ = '2016.05.30.1'
 
 
 import warnings
@@ -67,9 +67,11 @@ class TrialRunner(QObject):
                     if p['sessionDurationMode'] == 'Trials':
                         if self.trial_num == p['sessionDuration']:
                             self._session_running = False
-                            self.session_end_signal.emit()
+                            # self.session_end_signal.emit()
                 else:
                     self._session_running = False
+
+                if self._session_running is False:
                     self.session_end_signal.emit()
 
     def connectArduino(self):
@@ -389,6 +391,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
 
     def begin(self):
         # reset everything
+        self.begin_Button.setEnabled(False)
         self.tabWidget.setCurrentIndex(1)
         self.sessionAbort_pushButton.setEnabled(True)
         self.forceReward_pushButton.setEnabled(True)
@@ -421,8 +424,8 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
 
         num_stims = len(p['stimChannels'])
         num_trials = p['sessionDuration']
-        self.rasterFigPerfAx.imshow(np.ones([num_stims,num_trials,3]), interpolation='nearest', aspect='auto', origin='lower', extent=[0, num_stims, 0, num_trials])
-        self.performanceFigPerfAx.imshow(np.ones([num_trials,num_stims,3]), interpolation='nearest', aspect='auto', origin='lower', extent=[0, num_trials, 0, num_stims])
+        self.rasterFigPerfAxIm.set_data(np.ones([num_stims,num_trials,3]))
+        self.performanceFigPerfAxIm.set_data(np.ones([num_trials,num_stims,3]))
         self.updatePlotLayouts()
 
         global trials
@@ -430,6 +433,8 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         trials['results'] = []
         trials['running_score'] = np.empty(0)
         trials['correct_tally'] = 0  # not currently used, but will be used for auto incrementing
+
+        self.trial_log[:] = []
 
     def pause(self):
         self.trialRunner._paused = not self.trialRunner._paused
@@ -443,7 +448,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
     def abort(self):
         if self.trialRunner._session_running:
             self.trialRunner._session_running = False
-            self.sessionEndGUI()
+            # self.sessionEndGUI()
             self.updateCommFeed('Aborted', 'pc')
             self.sessionAbort_pushButton.setEnabled(False)
             self.forceReward_pushButton.setEnabled(False)
@@ -460,7 +465,9 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
     def updatePlotLayouts(self):
         self.preTrialRasterFigAx.set_xlim(0, p['witholdBeforeStimPlotVal'])
 
-        trials_ax_lim = [0, p['sessionDuration']]
+        num_trials = p['sessionDuration']
+
+        trials_ax_lim = [0, num_trials]
 
         # response raster
         pre_stim_plot = 1
@@ -468,11 +475,11 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         self.rasterFigAx.set_ylim(trials_ax_lim)
         self.raster_respwin.set_x(p['responseStart'])
         self.raster_respwin.set_width(p['responseWindow'])
-        self.raster_respwin.set_height(p['sessionDuration']+1)
+        self.raster_respwin.set_height(num_trials+1)
         self.raster_stimline.set_ydata(trials_ax_lim)
         self.raster_stimlength.set_x(p['stimStart'])
         self.raster_stimlength.set_width(p['stimLength'])
-        self.raster_stimlength.set_height(p['sessionDuration']+1)
+        self.raster_stimlength.set_height(num_trials+1)
 
         # performance line
         self.performanceFigAx.set_ylim(-1, 1)
@@ -485,6 +492,9 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         self.rasterFigPerfAx.set_xlim(0, num_stims)
         self.performanceFigPerfAx.set_ylim(0, num_stims)
         self.performanceFigPerfAx.set_xlim(trials_ax_lim)
+
+        self.rasterFigPerfAxIm.set_extent([0, num_stims, 0, num_trials])
+        self.performanceFigPerfAxIm.set_extent([0, num_trials, 0, num_stims])
 
         self.preTrialRasterFigCanvas.draw()
         self.rasterFigCanvas.draw()
@@ -516,7 +526,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         plot_series.set_array(new_colours)
 
         if is_first_response:
-            print('first response!!!!!!!!!!!')
+            # print('first response!!!!!!!!!!!')
             new_size = 28
         else:
             new_size = 8
@@ -543,8 +553,8 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
             stim_idx = p['stimChannels'].index(p['trialOrder'][t])
             performance_record[t, stim_idx] = colour
 
-        self.rasterFigPerfAx.imshow(performance_record, interpolation='nearest', aspect='auto', origin='lower', extent=[0, num_stims, 0, num_trials])
-        self.performanceFigPerfAx.imshow(np.rot90(performance_record), interpolation='nearest', aspect='auto', origin='lower', extent=[0, num_trials, 0, num_stims])
+        self.rasterFigPerfAxIm.set_data(performance_record)
+        self.performanceFigPerfAxIm.set_data(np.rot90(performance_record))
 
     def updateRunningPerformancePlot(self, trial_num):
         plot_series = self.runningScorePlot
@@ -986,6 +996,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
 
         self.rasterFigPerfAx = self.rasterFig.add_axes([0.9, 0.15, 0.05, 0.75])
         self.rasterFigPerfAx.axis('off')
+        self.rasterFigPerfAxIm = self.rasterFigPerfAx.imshow(np.ones([1,1,3]), interpolation='nearest', aspect='auto', origin='lower', extent=[0, 1, 0, 1])
 
         # results plot
         self.performanceFig = Figure()
@@ -1015,6 +1026,8 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         self.performanceFigPerfAx = self.performanceFig.add_axes([0.2, 0.86, 0.75, 0.04])
         self.performanceFigPerfAx.axis('off')
         self.performanceFigPerfAx.set_title('Performance', loc='left')
+
+        self.performanceFigPerfAxIm = self.performanceFigPerfAx.imshow(np.ones([1,1,3]), interpolation='nearest', aspect='auto', origin='lower', extent=[0, 1, 0, 1])
 
     def saveAsPreset(self):
         widgets = (QComboBox, QCheckBox, QLineEdit, QSpinBox, QDoubleSpinBox)
@@ -1082,6 +1095,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         self.updateCommFeed('Finished', 'pc')
         self.sessionAbort_pushButton.setEnabled(False)
         self.forceReward_pushButton.setEnabled(False)
+        self.begin_Button.setEnabled(True)
 
     def trialStartGUI(self, trial_num):
         self.trialNum_label.setText(str(trial_num+1))
@@ -1189,6 +1203,10 @@ if __name__ == '__main__':
             available_configs.append(os.path.splitext(file)[0])
 
     # initialise results and other directories
+    global trials
+    global arduino
+    global p
+
     trials = {}
     arduino = {}
     arduino['connected'] = False

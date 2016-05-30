@@ -140,6 +140,11 @@ void setup() {
   pinMode(responseWindowPin, OUTPUT);
   digitalWrite(responseWindowPin, LOW);
 
+  // for ( int i = 0; i < 99; ++i ) {
+  //   pinMode(i, OUTPUT);
+  //   digitalWrite(i, LOW);
+  // }
+  
   for ( int i = 0; i < sizeof(rewardPin); ++i ) {
     pinMode(rewardPin[i], OUTPUT);
     digitalWrite(rewardPin[i], LOW);
@@ -269,7 +274,7 @@ void rxConfig() {
           stimChan = atoi(varBuffer) - 1;
           break;
         case 2:
-          stimVariation = atoi(varBuffer) - 1;
+          stimVariation = atoi(varBuffer);
           break;
         case 3:
           responseRequired = atoi(varBuffer);
@@ -376,7 +381,7 @@ void configTrial() {
   tResponseWindowOpen.set(responseWindowStartTime, 1, &responseWindowOpen);
   tResponseWindowClose.set(responseWindowStopTime, 1, &responseWindowClose);
   tRewardOn.set(0, 1, &rewardOn);
-  tRewardOff.set(10, 1, &rewardOff);
+  tRewardOff.set(20, 1, &rewardOff);
   tAutoReward.set(autoRewardStartTime, 1, &autoRewardOn);
   tRewardRemovalOn.set(rewardRemovalDelay, 1, &rewardRemovalOn);
   tRewardRemovalOff.set(50, 1, &rewardRemovalOff);
@@ -575,7 +580,7 @@ void stimOn() {
   // stim variation, binary 'barcode' (1:16)
   int bits[] = {0,0,0,0};
     for (int i = 3; i >= 0; i--) {
-        bits[i] = (stimVariation & (1 << i)) == 0;
+        bits[i] = (stimVariation & (1 << i)) != 0;
         digitalWrite(stimVariationPin[i], bits[i]);
     }
   digitalWrite(stimPin[stimChan], HIGH);
