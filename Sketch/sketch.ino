@@ -89,6 +89,8 @@ int rewardRemovalDelay;
 int cueChan;
 bool postStimCancel;
 bool secondChance;
+int rewardDuration;
+int punishTriggerDuration;
 
 // session/trial states
 bool configReceived = false;
@@ -349,6 +351,12 @@ void rxConfig() {
         case 26:
           secondChance = atoi(varBuffer);
           break;
+        case 27:
+          rewardDuration = atoi(varBuffer);
+          break;
+        case 28:
+          punishTriggerDuration = atoi(varBuffer);
+          break;
       }
       varBufferIndex = 0;
       varBuffer[varBufferIndex] = '\0';
@@ -382,12 +390,12 @@ void configTrial() {
   tResponseWindowOpen.set(responseWindowStartTime, 1, &responseWindowOpen);
   tResponseWindowClose.set(responseWindowStopTime, 1, &responseWindowClose);
   tRewardOn.set(0, 1, &rewardOn);
-  tRewardOff.set(40, 1, &rewardOff);
+  tRewardOff.set(rewardDuration, 1, &rewardOff);
   tAutoReward.set(autoRewardStartTime, 1, &autoRewardOn);
   tRewardRemovalOn.set(rewardRemovalDelay, 1, &rewardRemovalOn);
   tRewardRemovalOff.set(50, 1, &rewardRemovalOff);
   tPunishOn.set(0, 1, &punishOn);
-  tPunishOff.set(50, 1, &punishOff);
+  tPunishOff.set(punishTriggerDuration, 1, &punishOff);
   tEndTrial.set(trialDuration, 1, &stopTasks);
 
   tTransmit.disableOnLastIteration(true);

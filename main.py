@@ -235,7 +235,7 @@ class TrialRunner(QObject):
             str(punish_chan) + ';' \
             'PUNISH_DELAY:' + \
             str(int(p['punishDelay'])) + ';' \
-            'PUNISH_LENGTH:' + \
+            'PUNISH_DELAY_LENGTH:' + \
             str(int(p['punishDelayLength']*1000)) + ';' \
             'REWARD_REMOVAL:' + \
             str(int(p['rewardRemoval'])) + ';' \
@@ -247,6 +247,10 @@ class TrialRunner(QObject):
             str(int(post_stim_cancel)) + ';' \
             'SECOND_CHANCE:' + \
             str(int(second_chance)) + ';' \
+            'REWARD_DURATION:' + \
+            str(int(p['rewardDuration']*1000)) + ';' \
+            'PUNISH_TRIGGER_DURATION:' + \
+            str(int(p['punishTriggerDuration']*1000)) + ';' \
             '>'
 
         # write config string to arduino
@@ -1155,7 +1159,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
 def main(argv):
     # create Qt application
     app = QApplication(argv)
-    app.setStyle('fusion')
+    # app.setStyle('fusion')
 
     # create main window
     GUI = MainWindow()
