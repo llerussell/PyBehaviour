@@ -55,7 +55,8 @@
       </property>
       <property name="font">
        <font>
-        <pointsize>9</pointsize>
+        <family>Arial</family>
+        <pointsize>8</pointsize>
        </font>
       </property>
       <property name="styleSheet">
@@ -128,7 +129,8 @@
               </property>
               <property name="font">
                <font>
-                <pointsize>9</pointsize>
+                <family>Arial</family>
+                <pointsize>8</pointsize>
                </font>
               </property>
               <property name="title">
@@ -190,6 +192,12 @@
                      <height>22</height>
                     </size>
                    </property>
+                   <property name="font">
+                    <font>
+                     <family>Arial</family>
+                     <pointsize>8</pointsize>
+                    </font>
+                   </property>
                    <property name="text">
                     <string>Duration</string>
                    </property>
@@ -211,6 +219,12 @@
                      <width>120</width>
                      <height>22</height>
                     </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <family>Arial</family>
+                     <pointsize>8</pointsize>
+                    </font>
                    </property>
                    <property name="text">
                     <string>Notes</string>
@@ -246,6 +260,12 @@
                      <height>22</height>
                     </size>
                    </property>
+                   <property name="font">
+                    <font>
+                     <family>Arial</family>
+                     <pointsize>8</pointsize>
+                    </font>
+                   </property>
                    <property name="text">
                     <string>Subject ID</string>
                    </property>
@@ -267,6 +287,12 @@
                      <width>0</width>
                      <height>0</height>
                     </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <family>Arial</family>
+                     <pointsize>8</pointsize>
+                    </font>
                    </property>
                    <property name="inputMask">
                     <string/>
@@ -293,6 +319,12 @@
                      <height>0</height>
                     </size>
                    </property>
+                   <property name="font">
+                    <font>
+                     <family>Arial</family>
+                     <pointsize>8</pointsize>
+                    </font>
+                   </property>
                    <property name="focusPolicy">
                     <enum>Qt::StrongFocus</enum>
                    </property>
@@ -316,6 +348,12 @@
                      <width>120</width>
                      <height>22</height>
                     </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <family>Arial</family>
+                     <pointsize>8</pointsize>
+                    </font>
                    </property>
                    <property name="text">
                     <string>Load preset</string>
@@ -359,6 +397,12 @@
                        <height>0</height>
                       </size>
                      </property>
+                     <property name="font">
+                      <font>
+                       <family>Arial</family>
+                       <pointsize>8</pointsize>
+                      </font>
+                     </property>
                      <property name="wrapping">
                       <bool>false</bool>
                      </property>
@@ -387,6 +431,12 @@
                        <height>0</height>
                       </size>
                      </property>
+                     <property name="font">
+                      <font>
+                       <family>Arial</family>
+                       <pointsize>8</pointsize>
+                      </font>
+                     </property>
                      <item>
                       <property name="text">
                        <string>Trials</string>
@@ -410,6 +460,12 @@
                      <height>0</height>
                     </size>
                    </property>
+                   <property name="font">
+                    <font>
+                     <family>Arial</family>
+                     <pointsize>8</pointsize>
+                    </font>
+                   </property>
                   </widget>
                  </item>
                 </layout>
@@ -430,6 +486,12 @@
                 <width>0</width>
                 <height>0</height>
                </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>Arial</family>
+                <pointsize>8</pointsize>
+               </font>
               </property>
               <property name="layoutDirection">
                <enum>Qt::LeftToRight</enum>
@@ -472,6 +534,12 @@
                    <width>0</width>
                    <height>0</height>
                   </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Arial</family>
+                   <pointsize>8</pointsize>
+                  </font>
                  </property>
                  <property name="styleSheet">
                   <string notr="true">color:rgb(255, 0, 100)</string>
@@ -518,6 +586,12 @@
                      <height>22</height>
                     </size>
                    </property>
+                   <property name="font">
+                    <font>
+                     <family>Arial</family>
+                     <pointsize>8</pointsize>
+                    </font>
+                   </property>
                    <property name="text">
                     <string>Manual pin control</string>
                    </property>
@@ -543,6 +617,12 @@
                      <height>0</height>
                     </size>
                    </property>
+                   <property name="font">
+                    <font>
+                     <family>Arial</family>
+                     <pointsize>8</pointsize>
+                    </font>
+                   </property>
                    <property name="focusPolicy">
                     <enum>Qt::StrongFocus</enum>
                    </property>
@@ -565,6 +645,12 @@
                      <height>22</height>
                     </size>
                    </property>
+                   <property name="font">
+                    <font>
+                     <family>Arial</family>
+                     <pointsize>8</pointsize>
+                    </font>
+                   </property>
                    <property name="text">
                     <string>Device</string>
                    </property>
@@ -586,6 +672,12 @@
                      <width>0</width>
                      <height>0</height>
                     </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <family>Arial</family>
+                     <pointsize>8</pointsize>
+                    </font>
                    </property>
                    <property name="focusPolicy">
                     <enum>Qt::StrongFocus</enum>
@@ -626,6 +718,12 @@
                        <height>0</height>
                       </size>
                      </property>
+                     <property name="font">
+                      <font>
+                       <family>Arial</family>
+                       <pointsize>8</pointsize>
+                      </font>
+                     </property>
                      <property name="alignment">
                       <set>Qt::AlignCenter</set>
                      </property>
@@ -653,6 +751,12 @@
                        <width>0</width>
                        <height>0</height>
                       </size>
+                     </property>
+                     <property name="font">
+                      <font>
+                       <family>Arial</family>
+                       <pointsize>8</pointsize>
+                      </font>
                      </property>
                      <property name="alignment">
                       <set>Qt::AlignCenter</set>
@@ -688,6 +792,12 @@
                        <height>0</height>
                       </size>
                      </property>
+                     <property name="font">
+                      <font>
+                       <family>Arial</family>
+                       <pointsize>8</pointsize>
+                      </font>
+                     </property>
                      <property name="text">
                       <string>Pin number</string>
                      </property>
@@ -709,6 +819,12 @@
                        <width>0</width>
                        <height>0</height>
                       </size>
+                     </property>
+                     <property name="font">
+                      <font>
+                       <family>Arial</family>
+                       <pointsize>8</pointsize>
+                      </font>
                      </property>
                      <property name="text">
                       <string>Duration (ms)</string>
@@ -743,7 +859,8 @@
             </property>
             <property name="font">
              <font>
-              <pointsize>9</pointsize>
+              <family>Arial</family>
+              <pointsize>8</pointsize>
              </font>
             </property>
             <property name="styleSheet">
@@ -819,7 +936,8 @@
                  </property>
                  <property name="font">
                   <font>
-                   <pointsize>9</pointsize>
+                   <family>Arial</family>
+                   <pointsize>8</pointsize>
                   </font>
                  </property>
                  <property name="styleSheet">
@@ -854,8 +972,8 @@ background-color: none;
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>630</width>
-                    <height>1205</height>
+                    <width>623</width>
+                    <height>1212</height>
                    </rect>
                   </property>
                   <property name="sizePolicy">
@@ -893,6 +1011,12 @@ background-color: none;
                        <width>0</width>
                        <height>0</height>
                       </size>
+                     </property>
+                     <property name="font">
+                      <font>
+                       <family>Arial</family>
+                       <pointsize>8</pointsize>
+                      </font>
                      </property>
                      <property name="title">
                       <string>Association matrix</string>
@@ -982,6 +1106,12 @@ background-color: none;
                               <height>0</height>
                              </size>
                             </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
+                            </property>
                             <property name="frame">
                              <bool>true</bool>
                             </property>
@@ -1019,6 +1149,12 @@ background-color: none;
                               <height>0</height>
                              </size>
                             </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
+                            </property>
                             <property name="frame">
                              <bool>true</bool>
                             </property>
@@ -1052,7 +1188,8 @@ background-color: none;
                             </property>
                             <property name="font">
                              <font>
-                              <pointsize>9</pointsize>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
                              </font>
                             </property>
                             <property name="toolTip">
@@ -1082,6 +1219,12 @@ background-color: none;
                               <width>0</width>
                               <height>0</height>
                              </size>
+                            </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
                             </property>
                             <property name="frame">
                              <bool>true</bool>
@@ -1114,6 +1257,12 @@ background-color: none;
                               <height>0</height>
                              </size>
                             </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
+                            </property>
                             <property name="frame">
                              <bool>true</bool>
                             </property>
@@ -1142,6 +1291,12 @@ background-color: none;
                               <height>0</height>
                              </size>
                             </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
+                            </property>
                             <property name="focusPolicy">
                              <enum>Qt::StrongFocus</enum>
                             </property>
@@ -1169,7 +1324,8 @@ background-color: none;
                             </property>
                             <property name="font">
                              <font>
-                              <pointsize>9</pointsize>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
                              </font>
                             </property>
                             <property name="toolTip">
@@ -1203,6 +1359,12 @@ background-color: none;
                               <height>0</height>
                              </size>
                             </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
+                            </property>
                             <property name="alignment">
                              <set>Qt::AlignCenter</set>
                             </property>
@@ -1233,6 +1395,12 @@ background-color: none;
                               <width>0</width>
                               <height>0</height>
                              </size>
+                            </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
                             </property>
                             <property name="alignment">
                              <set>Qt::AlignCenter</set>
@@ -1265,6 +1433,12 @@ background-color: none;
                               <height>0</height>
                              </size>
                             </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
+                            </property>
                             <property name="alignment">
                              <set>Qt::AlignCenter</set>
                             </property>
@@ -1295,6 +1469,12 @@ background-color: none;
                               <width>0</width>
                               <height>0</height>
                              </size>
+                            </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
                             </property>
                             <property name="frame">
                              <bool>true</bool>
@@ -1333,6 +1513,12 @@ background-color: none;
                               <height>0</height>
                              </size>
                             </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
+                            </property>
                             <property name="alignment">
                              <set>Qt::AlignCenter</set>
                             </property>
@@ -1363,6 +1549,12 @@ background-color: none;
                               <width>0</width>
                               <height>0</height>
                              </size>
+                            </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
                             </property>
                             <property name="frame">
                              <bool>true</bool>
@@ -1395,6 +1587,12 @@ background-color: none;
                               <height>0</height>
                              </size>
                             </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
+                            </property>
                             <property name="frame">
                              <bool>true</bool>
                             </property>
@@ -1425,6 +1623,12 @@ background-color: none;
                               <width>0</width>
                               <height>0</height>
                              </size>
+                            </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
                             </property>
                             <property name="frame">
                              <bool>true</bool>
@@ -1463,6 +1667,12 @@ background-color: none;
                               <height>0</height>
                              </size>
                             </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
+                            </property>
                             <property name="frame">
                              <bool>true</bool>
                             </property>
@@ -1493,6 +1703,12 @@ background-color: none;
                               <width>0</width>
                               <height>0</height>
                              </size>
+                            </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
                             </property>
                             <property name="frame">
                              <bool>true</bool>
@@ -1525,6 +1741,12 @@ background-color: none;
                               <height>0</height>
                              </size>
                             </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
+                            </property>
                             <property name="frame">
                              <bool>true</bool>
                             </property>
@@ -1553,6 +1775,12 @@ background-color: none;
                               <height>0</height>
                              </size>
                             </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
+                            </property>
                             <property name="focusPolicy">
                              <enum>Qt::StrongFocus</enum>
                             </property>
@@ -1574,6 +1802,12 @@ background-color: none;
                               <width>170</width>
                               <height>22</height>
                              </size>
+                            </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
                             </property>
                             <property name="text">
                              <string>Stim channels</string>
@@ -1602,7 +1836,8 @@ background-color: none;
                             </property>
                             <property name="font">
                              <font>
-                              <pointsize>9</pointsize>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
                              </font>
                             </property>
                             <property name="toolTip">
@@ -1632,6 +1867,12 @@ background-color: none;
                               <width>0</width>
                               <height>0</height>
                              </size>
+                            </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
                             </property>
                             <property name="alignment">
                              <set>Qt::AlignCenter</set>
@@ -1664,6 +1905,12 @@ background-color: none;
                               <height>0</height>
                              </size>
                             </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
+                            </property>
                             <property name="frame">
                              <bool>true</bool>
                             </property>
@@ -1695,6 +1942,12 @@ background-color: none;
                               <height>0</height>
                              </size>
                             </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
+                            </property>
                             <property name="text">
                              <string/>
                             </property>
@@ -1716,6 +1969,12 @@ background-color: none;
                               <width>0</width>
                               <height>0</height>
                              </size>
+                            </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
                             </property>
                             <property name="frame">
                              <bool>true</bool>
@@ -1754,6 +2013,12 @@ background-color: none;
                               <height>0</height>
                              </size>
                             </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
+                            </property>
                             <property name="alignment">
                              <set>Qt::AlignCenter</set>
                             </property>
@@ -1784,6 +2049,12 @@ background-color: none;
                               <width>0</width>
                               <height>0</height>
                              </size>
+                            </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
                             </property>
                             <property name="frame">
                              <bool>true</bool>
@@ -1816,6 +2087,12 @@ background-color: none;
                               <height>0</height>
                              </size>
                             </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
+                            </property>
                             <property name="frame">
                              <bool>true</bool>
                             </property>
@@ -1844,6 +2121,12 @@ background-color: none;
                               <height>0</height>
                              </size>
                             </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
+                            </property>
                             <property name="focusPolicy">
                              <enum>Qt::StrongFocus</enum>
                             </property>
@@ -1869,6 +2152,12 @@ background-color: none;
                               <height>0</height>
                              </size>
                             </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
+                            </property>
                             <property name="focusPolicy">
                              <enum>Qt::StrongFocus</enum>
                             </property>
@@ -1893,6 +2182,12 @@ background-color: none;
                               <width>0</width>
                               <height>0</height>
                              </size>
+                            </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
                             </property>
                             <property name="frame">
                              <bool>true</bool>
@@ -1925,6 +2220,12 @@ background-color: none;
                               <height>0</height>
                              </size>
                             </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
+                            </property>
                             <property name="frame">
                              <bool>true</bool>
                             </property>
@@ -1953,6 +2254,12 @@ background-color: none;
                               <height>22</height>
                              </size>
                             </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
+                            </property>
                             <property name="text">
                              <string>Auto reward</string>
                             </property>
@@ -1978,6 +2285,12 @@ background-color: none;
                               <height>0</height>
                              </size>
                             </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
+                            </property>
                             <property name="text">
                              <string/>
                             </property>
@@ -1996,6 +2309,12 @@ background-color: none;
                               <width>0</width>
                               <height>0</height>
                              </size>
+                            </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
                             </property>
                             <property name="focusPolicy">
                              <enum>Qt::StrongFocus</enum>
@@ -2022,6 +2341,12 @@ background-color: none;
                               <height>0</height>
                              </size>
                             </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
+                            </property>
                             <property name="text">
                              <string/>
                             </property>
@@ -2046,7 +2371,8 @@ background-color: none;
                             </property>
                             <property name="font">
                              <font>
-                              <pointsize>9</pointsize>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
                              </font>
                             </property>
                             <property name="toolTip">
@@ -2076,6 +2402,12 @@ background-color: none;
                               <width>0</width>
                               <height>0</height>
                              </size>
+                            </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
                             </property>
                             <property name="alignment">
                              <set>Qt::AlignCenter</set>
@@ -2107,6 +2439,12 @@ background-color: none;
                               <width>0</width>
                               <height>0</height>
                              </size>
+                            </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
                             </property>
                             <property name="frame">
                              <bool>true</bool>
@@ -2144,7 +2482,8 @@ background-color: none;
                             </property>
                             <property name="font">
                              <font>
-                              <pointsize>9</pointsize>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
                              </font>
                             </property>
                             <property name="toolTip">
@@ -2174,6 +2513,12 @@ background-color: none;
                               <width>0</width>
                               <height>0</height>
                              </size>
+                            </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
                             </property>
                             <property name="frame">
                              <bool>true</bool>
@@ -2212,6 +2557,12 @@ background-color: none;
                               <height>0</height>
                              </size>
                             </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
+                            </property>
                             <property name="frame">
                              <bool>true</bool>
                             </property>
@@ -2242,6 +2593,12 @@ background-color: none;
                               <width>0</width>
                               <height>0</height>
                              </size>
+                            </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
                             </property>
                             <property name="frame">
                              <bool>true</bool>
@@ -2280,6 +2637,12 @@ background-color: none;
                               <height>0</height>
                              </size>
                             </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
+                            </property>
                             <property name="frame">
                              <bool>true</bool>
                             </property>
@@ -2317,6 +2680,12 @@ background-color: none;
                               <height>0</height>
                              </size>
                             </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
+                            </property>
                             <property name="text">
                              <string/>
                             </property>
@@ -2335,6 +2704,12 @@ background-color: none;
                               <width>0</width>
                               <height>0</height>
                              </size>
+                            </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
                             </property>
                             <property name="focusPolicy">
                              <enum>Qt::StrongFocus</enum>
@@ -2360,6 +2735,12 @@ background-color: none;
                               <width>0</width>
                               <height>0</height>
                              </size>
+                            </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
                             </property>
                             <property name="alignment">
                              <set>Qt::AlignCenter</set>
@@ -2392,6 +2773,12 @@ background-color: none;
                               <height>0</height>
                              </size>
                             </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
+                            </property>
                             <property name="text">
                              <string/>
                             </property>
@@ -2416,7 +2803,8 @@ background-color: none;
                             </property>
                             <property name="font">
                              <font>
-                              <pointsize>9</pointsize>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
                              </font>
                             </property>
                             <property name="toolTip">
@@ -2446,6 +2834,12 @@ background-color: none;
                               <width>0</width>
                               <height>0</height>
                              </size>
+                            </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
                             </property>
                             <property name="alignment">
                              <set>Qt::AlignCenter</set>
@@ -2478,6 +2872,12 @@ background-color: none;
                               <height>0</height>
                              </size>
                             </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
+                            </property>
                             <property name="alignment">
                              <set>Qt::AlignCenter</set>
                             </property>
@@ -2508,6 +2908,12 @@ background-color: none;
                               <width>0</width>
                               <height>0</height>
                              </size>
+                            </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
                             </property>
                             <property name="alignment">
                              <set>Qt::AlignCenter</set>
@@ -2542,7 +2948,8 @@ background-color: none;
                             </property>
                             <property name="font">
                              <font>
-                              <pointsize>9</pointsize>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
                              </font>
                             </property>
                             <property name="toolTip">
@@ -2572,6 +2979,12 @@ background-color: none;
                               <width>0</width>
                               <height>0</height>
                              </size>
+                            </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
                             </property>
                             <property name="alignment">
                              <set>Qt::AlignCenter</set>
@@ -2606,7 +3019,8 @@ background-color: none;
                             </property>
                             <property name="font">
                              <font>
-                              <pointsize>9</pointsize>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
                              </font>
                             </property>
                             <property name="toolTip">
@@ -2637,6 +3051,12 @@ background-color: none;
                               <height>0</height>
                              </size>
                             </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
+                            </property>
                             <property name="text">
                              <string/>
                             </property>
@@ -2658,6 +3078,12 @@ background-color: none;
                               <width>0</width>
                               <height>0</height>
                              </size>
+                            </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
                             </property>
                             <property name="frame">
                              <bool>true</bool>
@@ -2693,6 +3119,12 @@ background-color: none;
                               <height>0</height>
                              </size>
                             </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
+                            </property>
                             <property name="focusPolicy">
                              <enum>Qt::StrongFocus</enum>
                             </property>
@@ -2717,6 +3149,12 @@ background-color: none;
                               <width>0</width>
                               <height>0</height>
                              </size>
+                            </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
                             </property>
                             <property name="frame">
                              <bool>true</bool>
@@ -2746,6 +3184,12 @@ background-color: none;
                               <height>0</height>
                              </size>
                             </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
+                            </property>
                             <property name="focusPolicy">
                              <enum>Qt::StrongFocus</enum>
                             </property>
@@ -2770,6 +3214,12 @@ background-color: none;
                               <width>0</width>
                               <height>0</height>
                              </size>
+                            </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
                             </property>
                             <property name="frame">
                              <bool>true</bool>
@@ -2799,6 +3249,12 @@ background-color: none;
                               <height>22</height>
                              </size>
                             </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
+                            </property>
                             <property name="text">
                              <string>Cue channel</string>
                             </property>
@@ -2820,6 +3276,12 @@ background-color: none;
                               <width>170</width>
                               <height>22</height>
                              </size>
+                            </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
                             </property>
                             <property name="text">
                              <string>Variations</string>
@@ -2845,6 +3307,12 @@ background-color: none;
                               <width>0</width>
                               <height>0</height>
                              </size>
+                            </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
                             </property>
                             <property name="alignment">
                              <set>Qt::AlignCenter</set>
@@ -2874,6 +3342,12 @@ background-color: none;
                               <height>22</height>
                              </size>
                             </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
+                            </property>
                             <property name="text">
                              <string>Proportion</string>
                             </property>
@@ -2899,6 +3373,12 @@ background-color: none;
                               <height>0</height>
                              </size>
                             </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
+                            </property>
                             <property name="text">
                              <string/>
                             </property>
@@ -2917,6 +3397,12 @@ background-color: none;
                               <width>170</width>
                               <height>22</height>
                              </size>
+                            </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
                             </property>
                             <property name="text">
                              <string>Punish channel</string>
@@ -2942,6 +3428,12 @@ background-color: none;
                               <width>0</width>
                               <height>0</height>
                              </size>
+                            </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
                             </property>
                             <property name="alignment">
                              <set>Qt::AlignCenter</set>
@@ -2974,6 +3466,12 @@ background-color: none;
                               <height>0</height>
                              </size>
                             </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
+                            </property>
                             <property name="text">
                              <string/>
                             </property>
@@ -2992,6 +3490,12 @@ background-color: none;
                               <width>170</width>
                               <height>22</height>
                              </size>
+                            </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
                             </property>
                             <property name="text">
                              <string>Response required</string>
@@ -3014,6 +3518,12 @@ background-color: none;
                               <width>170</width>
                               <height>22</height>
                              </size>
+                            </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
                             </property>
                             <property name="text">
                              <string>Reward channel</string>
@@ -3039,6 +3549,12 @@ background-color: none;
                               <width>0</width>
                               <height>0</height>
                              </size>
+                            </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
                             </property>
                             <property name="alignment">
                              <set>Qt::AlignCenter</set>
@@ -3074,6 +3590,12 @@ background-color: none;
                        <width>0</width>
                        <height>0</height>
                       </size>
+                     </property>
+                     <property name="font">
+                      <font>
+                       <family>Arial</family>
+                       <pointsize>8</pointsize>
+                      </font>
                      </property>
                      <property name="title">
                       <string>Trial order</string>
@@ -3154,6 +3676,12 @@ background-color: none;
                               <height>22</height>
                              </size>
                             </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
+                            </property>
                             <property name="text">
                              <string>Repeat if incorrect</string>
                             </property>
@@ -3175,6 +3703,12 @@ background-color: none;
                               <width>170</width>
                               <height>22</height>
                              </size>
+                            </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
                             </property>
                             <property name="text">
                              <string>Manual control</string>
@@ -3207,7 +3741,7 @@ background-color: none;
                             <item>
                              <widget class="QCheckBox" name="repeatIfIncorrect_CheckBox">
                               <property name="sizePolicy">
-                               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                               <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                                 <horstretch>0</horstretch>
                                 <verstretch>0</verstretch>
                                </sizepolicy>
@@ -3217,6 +3751,12 @@ background-color: none;
                                 <width>0</width>
                                 <height>0</height>
                                </size>
+                              </property>
+                              <property name="font">
+                               <font>
+                                <family>Arial</family>
+                                <pointsize>8</pointsize>
+                               </font>
                               </property>
                               <property name="focusPolicy">
                                <enum>Qt::StrongFocus</enum>
@@ -3243,6 +3783,12 @@ background-color: none;
                                 <height>0</height>
                                </size>
                               </property>
+                              <property name="font">
+                               <font>
+                                <family>Arial</family>
+                                <pointsize>8</pointsize>
+                               </font>
+                              </property>
                               <property name="prefix">
                                <string>Maximum repeats: </string>
                               </property>
@@ -3266,6 +3812,12 @@ background-color: none;
                               <width>170</width>
                               <height>22</height>
                              </size>
+                            </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
                             </property>
                             <property name="text">
                              <string>Stim order</string>
@@ -3309,6 +3861,12 @@ background-color: none;
                                 <height>0</height>
                                </size>
                               </property>
+                              <property name="font">
+                               <font>
+                                <family>Arial</family>
+                                <pointsize>8</pointsize>
+                               </font>
+                              </property>
                               <property name="focusPolicy">
                                <enum>Qt::StrongFocus</enum>
                               </property>
@@ -3343,6 +3901,12 @@ background-color: none;
                                 <height>0</height>
                                </size>
                               </property>
+                              <property name="font">
+                               <font>
+                                <family>Arial</family>
+                                <pointsize>8</pointsize>
+                               </font>
+                              </property>
                               <property name="suffix">
                                <string/>
                               </property>
@@ -3372,6 +3936,12 @@ background-color: none;
                               <width>170</width>
                               <height>22</height>
                              </size>
+                            </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
                             </property>
                             <property name="text">
                              <string>External file</string>
@@ -3415,6 +3985,12 @@ background-color: none;
                                 <height>0</height>
                                </size>
                               </property>
+                              <property name="font">
+                               <font>
+                                <family>Arial</family>
+                                <pointsize>8</pointsize>
+                               </font>
+                              </property>
                               <property name="text">
                                <string>Save...</string>
                               </property>
@@ -3434,6 +4010,12 @@ background-color: none;
                                 <height>0</height>
                                </size>
                               </property>
+                              <property name="font">
+                               <font>
+                                <family>Arial</family>
+                                <pointsize>8</pointsize>
+                               </font>
+                              </property>
                               <property name="text">
                                <string>Load...</string>
                               </property>
@@ -3452,6 +4034,12 @@ background-color: none;
                                 <width>0</width>
                                 <height>0</height>
                                </size>
+                              </property>
+                              <property name="font">
+                               <font>
+                                <family>Arial</family>
+                                <pointsize>8</pointsize>
+                               </font>
                               </property>
                               <property name="text">
                                <string/>
@@ -3483,7 +4071,7 @@ background-color: none;
                             <item>
                              <widget class="QCheckBox" name="controlFirstStim_checkBox">
                               <property name="sizePolicy">
-                               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                               <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                                 <horstretch>0</horstretch>
                                 <verstretch>0</verstretch>
                                </sizepolicy>
@@ -3493,6 +4081,12 @@ background-color: none;
                                 <width>0</width>
                                 <height>0</height>
                                </size>
+                              </property>
+                              <property name="font">
+                               <font>
+                                <family>Arial</family>
+                                <pointsize>8</pointsize>
+                               </font>
                               </property>
                               <property name="text">
                                <string/>
@@ -3516,6 +4110,12 @@ background-color: none;
                                 <height>0</height>
                                </size>
                               </property>
+                              <property name="font">
+                               <font>
+                                <family>Arial</family>
+                                <pointsize>8</pointsize>
+                               </font>
+                              </property>
                               <property name="suffix">
                                <string> stim(s)</string>
                               </property>
@@ -3536,7 +4136,7 @@ background-color: none;
                                <bool>false</bool>
                               </property>
                               <property name="sizePolicy">
-                               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                               <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                                 <horstretch>0</horstretch>
                                 <verstretch>0</verstretch>
                                </sizepolicy>
@@ -3546,6 +4146,12 @@ background-color: none;
                                 <width>0</width>
                                 <height>0</height>
                                </size>
+                              </property>
+                              <property name="font">
+                               <font>
+                                <family>Arial</family>
+                                <pointsize>8</pointsize>
+                               </font>
                               </property>
                               <property name="text">
                                <string/>
@@ -3569,6 +4175,12 @@ background-color: none;
                                 <height>0</height>
                                </size>
                               </property>
+                              <property name="font">
+                               <font>
+                                <family>Arial</family>
+                                <pointsize>8</pointsize>
+                               </font>
+                              </property>
                               <property name="prefix">
                                <string>Stim channel: </string>
                               </property>
@@ -3586,7 +4198,7 @@ background-color: none;
                                <bool>false</bool>
                               </property>
                               <property name="sizePolicy">
-                               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                               <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                                 <horstretch>0</horstretch>
                                 <verstretch>0</verstretch>
                                </sizepolicy>
@@ -3596,6 +4208,12 @@ background-color: none;
                                 <width>0</width>
                                 <height>0</height>
                                </size>
+                              </property>
+                              <property name="font">
+                               <font>
+                                <family>Arial</family>
+                                <pointsize>8</pointsize>
+                               </font>
                               </property>
                               <property name="text">
                                <string/>
@@ -3618,6 +4236,12 @@ background-color: none;
                                 <width>0</width>
                                 <height>0</height>
                                </size>
+                              </property>
+                              <property name="font">
+                               <font>
+                                <family>Arial</family>
+                                <pointsize>8</pointsize>
+                               </font>
                               </property>
                               <property name="prefix">
                                <string>Variation: </string>
@@ -3652,6 +4276,12 @@ background-color: none;
                        <width>0</width>
                        <height>0</height>
                       </size>
+                     </property>
+                     <property name="font">
+                      <font>
+                       <family>Arial</family>
+                       <pointsize>8</pointsize>
+                      </font>
                      </property>
                      <property name="title">
                       <string>Trial initiation</string>
@@ -3735,6 +4365,12 @@ background-color: none;
                               <height>22</height>
                              </size>
                             </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
+                            </property>
                             <property name="text">
                              <string>Active initiation</string>
                             </property>
@@ -3756,6 +4392,12 @@ background-color: none;
                               <width>170</width>
                               <height>22</height>
                              </size>
+                            </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
                             </property>
                             <property name="text">
                              <string>Withold before start</string>
@@ -3791,7 +4433,7 @@ background-color: none;
                                <bool>false</bool>
                               </property>
                               <property name="sizePolicy">
-                               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                               <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                                 <horstretch>0</horstretch>
                                 <verstretch>0</verstretch>
                                </sizepolicy>
@@ -3801,6 +4443,12 @@ background-color: none;
                                 <width>0</width>
                                 <height>0</height>
                                </size>
+                              </property>
+                              <property name="font">
+                               <font>
+                                <family>Arial</family>
+                                <pointsize>8</pointsize>
+                               </font>
                               </property>
                               <property name="text">
                                <string/>
@@ -3823,6 +4471,12 @@ background-color: none;
                                 <width>0</width>
                                 <height>0</height>
                                </size>
+                              </property>
+                              <property name="font">
+                               <font>
+                                <family>Arial</family>
+                                <pointsize>8</pointsize>
+                               </font>
                               </property>
                               <property name="prefix">
                                <string>Response: </string>
@@ -3857,7 +4511,7 @@ background-color: none;
                             <item>
                              <widget class="QCheckBox" name="witholdBeforeStim_CheckBox">
                               <property name="sizePolicy">
-                               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                               <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                                 <horstretch>0</horstretch>
                                 <verstretch>0</verstretch>
                                </sizepolicy>
@@ -3867,6 +4521,12 @@ background-color: none;
                                 <width>0</width>
                                 <height>0</height>
                                </size>
+                              </property>
+                              <property name="font">
+                               <font>
+                                <family>Arial</family>
+                                <pointsize>8</pointsize>
+                               </font>
                               </property>
                               <property name="focusPolicy">
                                <enum>Qt::StrongFocus</enum>
@@ -3892,6 +4552,12 @@ background-color: none;
                                 <width>0</width>
                                 <height>0</height>
                                </size>
+                              </property>
+                              <property name="font">
+                               <font>
+                                <family>Arial</family>
+                                <pointsize>8</pointsize>
+                               </font>
                               </property>
                               <property name="focusPolicy">
                                <enum>Qt::StrongFocus</enum>
@@ -3924,6 +4590,12 @@ background-color: none;
                                 <height>0</height>
                                </size>
                               </property>
+                              <property name="font">
+                               <font>
+                                <family>Arial</family>
+                                <pointsize>8</pointsize>
+                               </font>
+                              </property>
                               <property name="focusPolicy">
                                <enum>Qt::StrongFocus</enum>
                               </property>
@@ -3953,6 +4625,12 @@ background-color: none;
                               <width>170</width>
                               <height>22</height>
                              </size>
+                            </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
                             </property>
                             <property name="text">
                              <string>Cue</string>
@@ -3985,7 +4663,7 @@ background-color: none;
                             <item>
                              <widget class="QCheckBox" name="cueTrial_CheckBox">
                               <property name="sizePolicy">
-                               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                               <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                                 <horstretch>0</horstretch>
                                 <verstretch>0</verstretch>
                                </sizepolicy>
@@ -3995,6 +4673,12 @@ background-color: none;
                                 <width>0</width>
                                 <height>0</height>
                                </size>
+                              </property>
+                              <property name="font">
+                               <font>
+                                <family>Arial</family>
+                                <pointsize>8</pointsize>
+                               </font>
                               </property>
                               <property name="focusPolicy">
                                <enum>Qt::StrongFocus</enum>
@@ -4026,6 +4710,12 @@ background-color: none;
                        <width>0</width>
                        <height>0</height>
                       </size>
+                     </property>
+                     <property name="font">
+                      <font>
+                       <family>Arial</family>
+                       <pointsize>8</pointsize>
+                      </font>
                      </property>
                      <property name="title">
                       <string>Timing</string>
@@ -4083,6 +4773,12 @@ background-color: none;
                             <height>22</height>
                            </size>
                           </property>
+                          <property name="font">
+                           <font>
+                            <family>Arial</family>
+                            <pointsize>8</pointsize>
+                           </font>
+                          </property>
                           <property name="text">
                            <string>End of trial delay</string>
                           </property>
@@ -4125,6 +4821,12 @@ background-color: none;
                               <height>0</height>
                              </size>
                             </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
+                            </property>
                             <property name="focusPolicy">
                              <enum>Qt::StrongFocus</enum>
                             </property>
@@ -4153,6 +4855,12 @@ background-color: none;
                               <height>0</height>
                              </size>
                             </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
+                            </property>
                             <property name="text">
                              <string>Response cancels trial</string>
                             </property>
@@ -4173,6 +4881,12 @@ background-color: none;
                             <width>0</width>
                             <height>0</height>
                            </size>
+                          </property>
+                          <property name="font">
+                           <font>
+                            <family>Arial</family>
+                            <pointsize>8</pointsize>
+                           </font>
                           </property>
                           <property name="suffix">
                            <string> s</string>
@@ -4198,6 +4912,12 @@ background-color: none;
                             <width>170</width>
                             <height>22</height>
                            </size>
+                          </property>
+                          <property name="font">
+                           <font>
+                            <family>Arial</family>
+                            <pointsize>8</pointsize>
+                           </font>
                           </property>
                           <property name="text">
                            <string>Response window start</string>
@@ -4241,6 +4961,12 @@ background-color: none;
                               <height>0</height>
                              </size>
                             </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
+                            </property>
                             <property name="focusPolicy">
                              <enum>Qt::StrongFocus</enum>
                             </property>
@@ -4272,6 +4998,12 @@ background-color: none;
                               <height>0</height>
                              </size>
                             </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
+                            </property>
                             <property name="text">
                              <string>Response stops stim</string>
                             </property>
@@ -4292,6 +5024,12 @@ background-color: none;
                             <width>170</width>
                             <height>22</height>
                            </size>
+                          </property>
+                          <property name="font">
+                           <font>
+                            <family>Arial</family>
+                            <pointsize>8</pointsize>
+                           </font>
                           </property>
                           <property name="text">
                            <string>Stimulus duration</string>
@@ -4335,6 +5073,12 @@ background-color: none;
                               <height>0</height>
                              </size>
                             </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
+                            </property>
                             <property name="suffix">
                              <string> s</string>
                             </property>
@@ -4356,6 +5100,12 @@ background-color: none;
                               <width>0</width>
                               <height>0</height>
                              </size>
+                            </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
                             </property>
                             <property name="prefix">
                              <string>Randomise: ±</string>
@@ -4382,6 +5132,12 @@ background-color: none;
                               <height>0</height>
                              </size>
                             </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
+                            </property>
                             <property name="focusPolicy">
                              <enum>Qt::StrongFocus</enum>
                             </property>
@@ -4406,6 +5162,12 @@ background-color: none;
                             <height>22</height>
                            </size>
                           </property>
+                          <property name="font">
+                           <font>
+                            <family>Arial</family>
+                            <pointsize>8</pointsize>
+                           </font>
+                          </property>
                           <property name="text">
                            <string>Stimulus start</string>
                           </property>
@@ -4427,6 +5189,12 @@ background-color: none;
                             <width>170</width>
                             <height>22</height>
                            </size>
+                          </property>
+                          <property name="font">
+                           <font>
+                            <family>Arial</family>
+                            <pointsize>8</pointsize>
+                           </font>
                           </property>
                           <property name="text">
                            <string>Response window duration</string>
@@ -4470,6 +5238,12 @@ background-color: none;
                               <height>0</height>
                              </size>
                             </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
+                            </property>
                             <property name="focusPolicy">
                              <enum>Qt::StrongFocus</enum>
                             </property>
@@ -4495,6 +5269,12 @@ background-color: none;
                               <height>0</height>
                              </size>
                             </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
+                            </property>
                             <property name="prefix">
                              <string>Randomise: ±</string>
                             </property>
@@ -4519,6 +5299,12 @@ background-color: none;
                               <width>0</width>
                               <height>0</height>
                              </size>
+                            </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
                             </property>
                             <property name="focusPolicy">
                              <enum>Qt::StrongFocus</enum>
@@ -4548,6 +5334,12 @@ background-color: none;
                        <width>0</width>
                        <height>0</height>
                       </size>
+                     </property>
+                     <property name="font">
+                      <font>
+                       <family>Arial</family>
+                       <pointsize>8</pointsize>
+                      </font>
                      </property>
                      <property name="title">
                       <string>Reward</string>
@@ -4605,6 +5397,12 @@ background-color: none;
                             <height>0</height>
                            </size>
                           </property>
+                          <property name="font">
+                           <font>
+                            <family>Arial</family>
+                            <pointsize>8</pointsize>
+                           </font>
+                          </property>
                           <property name="toolTip">
                            <string>Allow reward after incorrect choice?</string>
                           </property>
@@ -4626,6 +5424,12 @@ background-color: none;
                             <width>170</width>
                             <height>22</height>
                            </size>
+                          </property>
+                          <property name="font">
+                           <font>
+                            <family>Arial</family>
+                            <pointsize>8</pointsize>
+                           </font>
                           </property>
                           <property name="text">
                            <string>Auto reward delay</string>
@@ -4651,6 +5455,12 @@ background-color: none;
                             <width>0</width>
                             <height>0</height>
                            </size>
+                          </property>
+                          <property name="font">
+                           <font>
+                            <family>Arial</family>
+                            <pointsize>8</pointsize>
+                           </font>
                           </property>
                           <property name="focusPolicy">
                            <enum>Qt::StrongFocus</enum>
@@ -4705,6 +5515,12 @@ background-color: none;
                             <height>22</height>
                            </size>
                           </property>
+                          <property name="font">
+                           <font>
+                            <family>Arial</family>
+                            <pointsize>8</pointsize>
+                           </font>
+                          </property>
                           <property name="text">
                            <string>Second chance</string>
                           </property>
@@ -4736,7 +5552,7 @@ background-color: none;
                           <item>
                            <widget class="QCheckBox" name="rewardRemoval_checkBox">
                             <property name="sizePolicy">
-                             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                             <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                               <horstretch>0</horstretch>
                               <verstretch>0</verstretch>
                              </sizepolicy>
@@ -4746,6 +5562,12 @@ background-color: none;
                               <width>0</width>
                               <height>0</height>
                              </size>
+                            </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
                             </property>
                             <property name="text">
                              <string/>
@@ -4768,6 +5590,12 @@ background-color: none;
                               <width>0</width>
                               <height>0</height>
                              </size>
+                            </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
                             </property>
                             <property name="toolTip">
                              <string>After reward delivery</string>
@@ -4802,6 +5630,12 @@ background-color: none;
                             <height>22</height>
                            </size>
                           </property>
+                          <property name="font">
+                           <font>
+                            <family>Arial</family>
+                            <pointsize>8</pointsize>
+                           </font>
+                          </property>
                           <property name="text">
                            <string>Reward removal</string>
                           </property>
@@ -4823,6 +5657,12 @@ background-color: none;
                             <width>170</width>
                             <height>22</height>
                            </size>
+                          </property>
+                          <property name="font">
+                           <font>
+                            <family>Arial</family>
+                            <pointsize>8</pointsize>
+                           </font>
                           </property>
                           <property name="text">
                            <string>Reward size</string>
@@ -4848,6 +5688,12 @@ background-color: none;
                             <width>0</width>
                             <height>0</height>
                            </size>
+                          </property>
+                          <property name="font">
+                           <font>
+                            <family>Arial</family>
+                            <pointsize>8</pointsize>
+                           </font>
                           </property>
                           <property name="alignment">
                            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -4878,6 +5724,12 @@ background-color: none;
                        <width>0</width>
                        <height>0</height>
                       </size>
+                     </property>
+                     <property name="font">
+                      <font>
+                       <family>Arial</family>
+                       <pointsize>8</pointsize>
+                      </font>
                      </property>
                      <property name="title">
                       <string>Punishment</string>
@@ -4944,7 +5796,7 @@ background-color: none;
                           <item>
                            <widget class="QCheckBox" name="punishDelay_checkBox">
                             <property name="sizePolicy">
-                             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                             <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                               <horstretch>0</horstretch>
                               <verstretch>0</verstretch>
                              </sizepolicy>
@@ -4954,6 +5806,12 @@ background-color: none;
                               <width>0</width>
                               <height>0</height>
                              </size>
+                            </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
                             </property>
                             <property name="text">
                              <string/>
@@ -4976,6 +5834,12 @@ background-color: none;
                               <width>0</width>
                               <height>0</height>
                              </size>
+                            </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
                             </property>
                             <property name="focusPolicy">
                              <enum>Qt::StrongFocus</enum>
@@ -5007,6 +5871,12 @@ background-color: none;
                             <height>22</height>
                            </size>
                           </property>
+                          <property name="font">
+                           <font>
+                            <family>Arial</family>
+                            <pointsize>8</pointsize>
+                           </font>
+                          </property>
                           <property name="text">
                            <string>Delay</string>
                           </property>
@@ -5028,6 +5898,12 @@ background-color: none;
                             <width>170</width>
                             <height>22</height>
                            </size>
+                          </property>
+                          <property name="font">
+                           <font>
+                            <family>Arial</family>
+                            <pointsize>8</pointsize>
+                           </font>
                           </property>
                           <property name="text">
                            <string>Trigger</string>
@@ -5060,7 +5936,7 @@ background-color: none;
                           <item>
                            <widget class="QCheckBox" name="punishTrigger_checkBox">
                             <property name="sizePolicy">
-                             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                             <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                               <horstretch>0</horstretch>
                               <verstretch>0</verstretch>
                              </sizepolicy>
@@ -5070,6 +5946,12 @@ background-color: none;
                               <width>0</width>
                               <height>0</height>
                              </size>
+                            </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
                             </property>
                             <property name="text">
                              <string/>
@@ -5092,6 +5974,12 @@ background-color: none;
                               <width>0</width>
                               <height>0</height>
                              </size>
+                            </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
                             </property>
                             <property name="prefix">
                              <string>Duration: </string>
@@ -5121,6 +6009,12 @@ background-color: none;
                        <width>0</width>
                        <height>0</height>
                       </size>
+                     </property>
+                     <property name="font">
+                      <font>
+                       <family>Arial</family>
+                       <pointsize>8</pointsize>
+                      </font>
                      </property>
                      <property name="title">
                       <string>Automatic transitions</string>
@@ -5190,7 +6084,7 @@ background-color: none;
                              <bool>false</bool>
                             </property>
                             <property name="sizePolicy">
-                             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                             <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                               <horstretch>0</horstretch>
                               <verstretch>0</verstretch>
                              </sizepolicy>
@@ -5200,6 +6094,12 @@ background-color: none;
                               <width>0</width>
                               <height>0</height>
                              </size>
+                            </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
                             </property>
                             <property name="text">
                              <string/>
@@ -5222,6 +6122,12 @@ background-color: none;
                               <width>0</width>
                               <height>0</height>
                              </size>
+                            </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
                             </property>
                             <property name="prefix">
                              <string>By: </string>
@@ -5251,6 +6157,12 @@ background-color: none;
                               <height>0</height>
                              </size>
                             </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
+                            </property>
                             <property name="prefix">
                              <string>After: </string>
                             </property>
@@ -5272,6 +6184,12 @@ background-color: none;
                               <width>0</width>
                               <height>0</height>
                              </size>
+                            </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
                             </property>
                             <item>
                              <property name="text">
@@ -5312,6 +6230,12 @@ background-color: none;
                               <height>0</height>
                              </size>
                             </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
+                            </property>
                             <property name="suffix">
                              <string> min</string>
                             </property>
@@ -5336,6 +6260,12 @@ background-color: none;
                             <height>22</height>
                            </size>
                           </property>
+                          <property name="font">
+                           <font>
+                            <family>Arial</family>
+                            <pointsize>8</pointsize>
+                           </font>
+                          </property>
                           <property name="text">
                            <string>Session preset</string>
                           </property>
@@ -5358,6 +6288,12 @@ background-color: none;
                             <height>22</height>
                            </size>
                           </property>
+                          <property name="font">
+                           <font>
+                            <family>Arial</family>
+                            <pointsize>8</pointsize>
+                           </font>
+                          </property>
                           <property name="text">
                            <string>Post stim delay</string>
                           </property>
@@ -5379,6 +6315,12 @@ background-color: none;
                             <width>170</width>
                             <height>22</height>
                            </size>
+                          </property>
+                          <property name="font">
+                           <font>
+                            <family>Arial</family>
+                            <pointsize>8</pointsize>
+                           </font>
                           </property>
                           <property name="text">
                            <string>Auto reward delay</string>
@@ -5414,7 +6356,7 @@ background-color: none;
                              <bool>false</bool>
                             </property>
                             <property name="sizePolicy">
-                             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                             <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                               <horstretch>0</horstretch>
                               <verstretch>0</verstretch>
                              </sizepolicy>
@@ -5424,6 +6366,12 @@ background-color: none;
                               <width>0</width>
                               <height>0</height>
                              </size>
+                            </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
                             </property>
                             <property name="focusPolicy">
                              <enum>Qt::StrongFocus</enum>
@@ -5449,6 +6397,12 @@ background-color: none;
                               <width>0</width>
                               <height>0</height>
                              </size>
+                            </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
                             </property>
                             <property name="focusPolicy">
                              <enum>Qt::StrongFocus</enum>
@@ -5477,6 +6431,12 @@ background-color: none;
                               <height>0</height>
                              </size>
                             </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
+                            </property>
                             <property name="focusPolicy">
                              <enum>Qt::StrongFocus</enum>
                             </property>
@@ -5501,6 +6461,12 @@ background-color: none;
                               <width>0</width>
                               <height>0</height>
                              </size>
+                            </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
                             </property>
                             <property name="focusPolicy">
                              <enum>Qt::StrongFocus</enum>
@@ -5544,6 +6510,12 @@ background-color: none;
                               <height>0</height>
                              </size>
                             </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
+                            </property>
                             <property name="suffix">
                              <string> min</string>
                             </property>
@@ -5580,7 +6552,7 @@ background-color: none;
                              <bool>false</bool>
                             </property>
                             <property name="sizePolicy">
-                             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                             <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                               <horstretch>0</horstretch>
                               <verstretch>0</verstretch>
                              </sizepolicy>
@@ -5590,6 +6562,12 @@ background-color: none;
                               <width>0</width>
                               <height>0</height>
                              </size>
+                            </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
                             </property>
                             <property name="text">
                              <string/>
@@ -5612,6 +6590,12 @@ background-color: none;
                               <width>0</width>
                               <height>0</height>
                              </size>
+                            </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
                             </property>
                             <property name="prefix">
                              <string>By: </string>
@@ -5641,6 +6625,12 @@ background-color: none;
                               <height>0</height>
                              </size>
                             </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
+                            </property>
                             <property name="prefix">
                              <string>After: </string>
                             </property>
@@ -5662,6 +6652,12 @@ background-color: none;
                               <width>0</width>
                               <height>0</height>
                              </size>
+                            </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
                             </property>
                             <item>
                              <property name="text">
@@ -5702,6 +6698,12 @@ background-color: none;
                               <height>0</height>
                              </size>
                             </property>
+                            <property name="font">
+                             <font>
+                              <family>Arial</family>
+                              <pointsize>8</pointsize>
+                             </font>
+                            </property>
                             <property name="suffix">
                              <string> min</string>
                             </property>
@@ -5730,6 +6732,12 @@ background-color: none;
                        <width>0</width>
                        <height>40</height>
                       </size>
+                     </property>
+                     <property name="font">
+                      <font>
+                       <family>Arial</family>
+                       <pointsize>8</pointsize>
+                      </font>
                      </property>
                      <property name="focusPolicy">
                       <enum>Qt::StrongFocus</enum>
@@ -5764,6 +6772,12 @@ background-color: none;
             <height>40</height>
            </size>
           </property>
+          <property name="font">
+           <font>
+            <family>Arial</family>
+            <pointsize>8</pointsize>
+           </font>
+          </property>
           <property name="focusPolicy">
            <enum>Qt::StrongFocus</enum>
           </property>
@@ -5792,6 +6806,12 @@ background-color: none;
             <height>20</height>
            </size>
           </property>
+          <property name="font">
+           <font>
+            <family>Arial</family>
+            <pointsize>8</pointsize>
+           </font>
+          </property>
           <property name="focusPolicy">
            <enum>Qt::StrongFocus</enum>
           </property>
@@ -5811,24 +6831,36 @@ background-color: none;
          <widget class="QGroupBox" name="groupBox">
           <layout class="QVBoxLayout" name="verticalLayout_4">
            <property name="spacing">
-            <number>0</number>
+            <number>2</number>
            </property>
            <property name="leftMargin">
-            <number>5</number>
+            <number>20</number>
            </property>
            <property name="topMargin">
-            <number>5</number>
+            <number>20</number>
            </property>
            <property name="rightMargin">
-            <number>5</number>
+            <number>20</number>
            </property>
            <property name="bottomMargin">
-            <number>5</number>
+            <number>20</number>
            </property>
            <item>
             <layout class="QVBoxLayout" name="liveTabVerticalLayout">
              <property name="spacing">
               <number>5</number>
+             </property>
+             <property name="leftMargin">
+              <number>2</number>
+             </property>
+             <property name="topMargin">
+              <number>2</number>
+             </property>
+             <property name="rightMargin">
+              <number>2</number>
+             </property>
+             <property name="bottomMargin">
+              <number>2</number>
              </property>
              <item>
               <widget class="QLabel" name="sessionTimer_label">
@@ -6021,19 +7053,19 @@ background-color: none;
           </property>
           <layout class="QHBoxLayout" name="horizontalLayout_15">
            <property name="spacing">
-            <number>0</number>
+            <number>5</number>
            </property>
            <property name="leftMargin">
-            <number>5</number>
+            <number>20</number>
            </property>
            <property name="topMargin">
-            <number>5</number>
+            <number>20</number>
            </property>
            <property name="rightMargin">
-            <number>5</number>
+            <number>20</number>
            </property>
            <property name="bottomMargin">
-            <number>5</number>
+            <number>20</number>
            </property>
            <item>
             <layout class="QGridLayout" name="gridLayout_14">
