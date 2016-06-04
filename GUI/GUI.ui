@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>720</width>
-    <height>850</height>
+    <height>865</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -876,7 +876,7 @@ QGroupBox#trial_GroupBox::title {
                   <property name="geometry">
                    <rect>
                     <x>0</x>
-                    <y>0</y>
+                    <y>-287</y>
                     <width>637</width>
                     <height>1212</height>
                    </rect>
@@ -4568,7 +4568,7 @@ QGroupBox#trial_GroupBox::title {
                             <item>
                              <widget class="QCheckBox" name="cueTrial_CheckBox">
                               <property name="sizePolicy">
-                               <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                                 <horstretch>0</horstretch>
                                 <verstretch>0</verstretch>
                                </sizepolicy>
