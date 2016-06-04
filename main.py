@@ -1146,6 +1146,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         elif device == 'trial':
             # self.toSessionFeed_textEdit.setText(input_string)
             # self.fromSessionFeed_textEdit.setText('')
+            input_string = input_string
         self.trial_log.append(input_string)
         print(input_string)
 
