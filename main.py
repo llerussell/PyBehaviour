@@ -31,11 +31,11 @@ import os
 import time
 import sys
 import serial
-from PyQt5.QtCore import QObject, pyqtSignal, QThread, QTimer
+from PyQt5.QtCore import Qt, QObject, pyqtSignal, QThread, QTimer
 from PyQt5.QtWidgets import (QComboBox, QCheckBox, QLineEdit, QSpinBox,
                              QDoubleSpinBox, QFileDialog, QApplication,
                              QDesktopWidget, QMainWindow, QMessageBox)
-from PyQt5.QtGui import QIcon
+from PyQt5.QtGui import QColor, QIcon, QPalette
 from GUI import GUI
 from GUI import serial_ports
 
@@ -1138,14 +1138,14 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
     def updateCommFeed(self, input_string, device=None):
         # input_string = input_string.replace('<', '{').replace('>', '}')
         if device == 'pc':
-            self.toSessionFeed_textEdit.append(input_string)
+            # self.toSessionFeed_textEdit.append(input_string)
             input_string = 'PC:      ' + input_string
         elif device == 'arduino':
-            self.fromSessionFeed_textEdit.append(input_string)
+            # self.fromSessionFeed_textEdit.append(input_string)
             input_string = 'ARDUINO: ' + input_string
         elif device == 'trial':
-            self.toSessionFeed_textEdit.setText(input_string)
-            self.fromSessionFeed_textEdit.setText('')
+            # self.toSessionFeed_textEdit.setText(input_string)
+            # self.fromSessionFeed_textEdit.setText('')
         self.trial_log.append(input_string)
         print(input_string)
 
