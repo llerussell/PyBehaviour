@@ -317,6 +317,10 @@ class TrialRunner(QObject):
                         temp_read = temp_read[1:-1]  # only process everything between { and }
                         if temp_read == 'DONE':
                             trialRunning = False
+                        elif temp_read == 'READY':  # arduino has reset
+                            trialRunning = False
+                            self.disconnectArduino()
+                            self.connectArduino()
                         else:
                             data = temp_read.split('|')
                             for idx, val in enumerate(data):
@@ -338,6 +342,9 @@ class TrialRunner(QObject):
             except:
                 if self._session_running:
                     self.comm_feed_signal.emit('Something went wrong', 'pc')
+                    trialRunning = False
+                    self.disconnectArduino()
+                    self.connectArduino()
 
     def stop(self):
         if self._session_running:
@@ -844,7 +851,11 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         p['autoRewardStart'] = p['startToStimDelay'] + p['autoRewardDelay']
 
     def updateTrialConfigPlot(self):
-        self.duration_line.set_width(p['totalDuration'])
+        self.withold_line.set_width(p['witholdBeforeStimPlotVal'])
+
+        self.duration_line.set_width(p['trialDuration'])
+        self.duration_line.set_x(p['witholdBeforeStimPlotVal'])
+
         self.trial_cue_rectangle.set_width(p['cueTrial'] * 0.1)
 
         self.stim_cue_rectangle.set_width(p['cueStim'] * 0.1)
@@ -859,7 +870,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         self.resp_rectangle.set_x(p['witholdBeforeStimPlotVal'] + p['responseStart'])
         self.resp_rectangle.set_width(p['responseWindow'])
 
-        self.reward_rectangle.set_width(np.any(p['autoRewards']) * 0.1)
+        self.reward_rectangle.set_width(np.any(p['autoRewards']) * p['rewardDuration'])
         self.reward_rectangle.set_x(p['witholdBeforeStimPlotVal'] + p['autoRewardStart'])
 
         self.trialConfigAx.set_xlim([0, p['totalDuration']])
@@ -943,12 +954,13 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         self.trialConfigAx.hold(True)
 
         # make the shapes
+        self.withold_line = patches.Rectangle([0, 0], 0, 0.05, ec=[.8, .8, .8], linewidth=0, zorder=0, fill=None, hatch='||')
         self.duration_line = patches.Rectangle([0, 0], 0, 0.05, fc=[.8, .8, .8], ec='none', zorder=0)
         self.trial_cue_rectangle = patches.Rectangle([0, 0], 0, 0.9, fc=[1, .7, 0], ec='none')
         self.stim_cue_rectangle = patches.Rectangle([0, 0], 0, 0.9, fc=[1, .7, 0], ec='none')
         self.response_cue_rectangle = patches.Rectangle([0, 0], 0, 0.9, fc=[1, .7, 0], ec='none')
         self.stim_rectangle = patches.Rectangle([0, 0], 0, 1, fc=[.3, .3, .3], ec='none')
-        self.resp_rectangle = patches.Rectangle([0, 0], 0, 0.9, fc=[.8, .8, .8], ec=[.6, .6, .6])
+        self.resp_rectangle = patches.Rectangle([0, 0], 0, 0.9, fc=[.8, .8, .8], ec='none')
         self.reward_rectangle = patches.Rectangle([0, 0], 0, 0.9, fc=[0, .75, .95], ec='none')
 
         # add the shapes to the figure
@@ -959,6 +971,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         self.trialConfigAx.add_patch(self.stim_cue_rectangle)
         self.trialConfigAx.add_patch(self.response_cue_rectangle)
         self.trialConfigAx.add_patch(self.duration_line)
+        self.trialConfigAx.add_patch(self.withold_line)
 
         # add to GUI
         self.advancedGroupBox_layout.addWidget(self.trialConfigCanvas)
