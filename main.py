@@ -1134,6 +1134,8 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
 
     def trialStartGUI(self, trial_num):
         self.trialNum_label.setText(str(trial_num+1))
+        self.trialType_label.setText(str(int(p['trialOrder'][trial_num])))
+        self.trialVar_label.setText(str(int(p['trialVariations'][trial_num]+1)))
         self.updateCommFeed('\n')
         self.updateCommFeed('Trial ' + str(trial_num+1), 'trial')
         plots = [self.preTrialRaster_responses]
