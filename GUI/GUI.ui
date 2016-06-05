@@ -298,7 +298,7 @@ QGroupBox::title {
                   <enum>Qt::StrongFocus</enum>
                  </property>
                  <property name="text">
-                  <string>Test arduino pin</string>
+                  <string>Test</string>
                  </property>
                 </widget>
                </item>
@@ -836,9 +836,9 @@ QGroupBox#trial_GroupBox::title {
                   <property name="geometry">
                    <rect>
                     <x>0</x>
-                    <y>-569</y>
+                    <y>0</y>
                     <width>737</width>
-                    <height>1234</height>
+                    <height>1212</height>
                    </rect>
                   </property>
                   <property name="sizePolicy">
@@ -982,7 +982,7 @@ QGroupBox#trial_GroupBox::title {
                              <set>Qt::AlignCenter</set>
                             </property>
                             <property name="buttonSymbols">
-                             <enum>QAbstractSpinBox::NoButtons</enum>
+                             <enum>QAbstractSpinBox::UpDownArrows</enum>
                             </property>
                             <property name="maximum">
                              <double>1.000000000000000</double>
@@ -1024,7 +1024,7 @@ QGroupBox#trial_GroupBox::title {
                              <set>Qt::AlignCenter</set>
                             </property>
                             <property name="buttonSymbols">
-                             <enum>QAbstractSpinBox::NoButtons</enum>
+                             <enum>QAbstractSpinBox::UpDownArrows</enum>
                             </property>
                             <property name="minimum">
                              <number>1</number>
@@ -1060,7 +1060,7 @@ QGroupBox#trial_GroupBox::title {
                              <set>Qt::AlignCenter</set>
                             </property>
                             <property name="buttonSymbols">
-                             <enum>QAbstractSpinBox::NoButtons</enum>
+                             <enum>QAbstractSpinBox::UpDownArrows</enum>
                             </property>
                            </widget>
                           </item>
@@ -1093,7 +1093,7 @@ QGroupBox#trial_GroupBox::title {
                              <set>Qt::AlignCenter</set>
                             </property>
                             <property name="buttonSymbols">
-                             <enum>QAbstractSpinBox::NoButtons</enum>
+                             <enum>QAbstractSpinBox::UpDownArrows</enum>
                             </property>
                             <property name="minimum">
                              <number>1</number>
@@ -1129,7 +1129,7 @@ QGroupBox#trial_GroupBox::title {
                              <set>Qt::AlignCenter</set>
                             </property>
                             <property name="buttonSymbols">
-                             <enum>QAbstractSpinBox::NoButtons</enum>
+                             <enum>QAbstractSpinBox::UpDownArrows</enum>
                             </property>
                             <property name="minimum">
                              <number>1</number>
@@ -1195,7 +1195,7 @@ QGroupBox#trial_GroupBox::title {
                              <set>Qt::AlignCenter</set>
                             </property>
                             <property name="buttonSymbols">
-                             <enum>QAbstractSpinBox::NoButtons</enum>
+                             <enum>QAbstractSpinBox::UpDownArrows</enum>
                             </property>
                            </widget>
                           </item>
@@ -1225,7 +1225,7 @@ QGroupBox#trial_GroupBox::title {
                              <set>Qt::AlignCenter</set>
                             </property>
                             <property name="buttonSymbols">
-                             <enum>QAbstractSpinBox::NoButtons</enum>
+                             <enum>QAbstractSpinBox::UpDownArrows</enum>
                             </property>
                             <property name="minimum">
                              <number>0</number>
@@ -1261,7 +1261,7 @@ QGroupBox#trial_GroupBox::title {
                              <set>Qt::AlignCenter</set>
                             </property>
                             <property name="buttonSymbols">
-                             <enum>QAbstractSpinBox::NoButtons</enum>
+                             <enum>QAbstractSpinBox::UpDownArrows</enum>
                             </property>
                             <property name="minimum">
                              <number>0</number>
@@ -1297,7 +1297,7 @@ QGroupBox#trial_GroupBox::title {
                              <set>Qt::AlignCenter</set>
                             </property>
                             <property name="buttonSymbols">
-                             <enum>QAbstractSpinBox::NoButtons</enum>
+                             <enum>QAbstractSpinBox::UpDownArrows</enum>
                             </property>
                             <property name="minimum">
                              <number>0</number>
@@ -1336,7 +1336,7 @@ QGroupBox#trial_GroupBox::title {
                              <set>Qt::AlignCenter</set>
                             </property>
                             <property name="buttonSymbols">
-                             <enum>QAbstractSpinBox::NoButtons</enum>
+                             <enum>QAbstractSpinBox::UpDownArrows</enum>
                             </property>
                             <property name="maximum">
                              <double>1.000000000000000</double>
@@ -1375,7 +1375,7 @@ QGroupBox#trial_GroupBox::title {
                              <set>Qt::AlignCenter</set>
                             </property>
                             <property name="buttonSymbols">
-                             <enum>QAbstractSpinBox::NoButtons</enum>
+                             <enum>QAbstractSpinBox::UpDownArrows</enum>
                             </property>
                             <property name="minimum">
                              <number>0</number>
@@ -1414,7 +1414,7 @@ QGroupBox#trial_GroupBox::title {
                              <set>Qt::AlignCenter</set>
                             </property>
                             <property name="buttonSymbols">
-                             <enum>QAbstractSpinBox::NoButtons</enum>
+                             <enum>QAbstractSpinBox::UpDownArrows</enum>
                             </property>
                             <property name="minimum">
                              <number>1</number>
@@ -1450,7 +1450,7 @@ QGroupBox#trial_GroupBox::title {
                              <set>Qt::AlignCenter</set>
                             </property>
                             <property name="buttonSymbols">
-                             <enum>QAbstractSpinBox::NoButtons</enum>
+                             <enum>QAbstractSpinBox::UpDownArrows</enum>
                             </property>
                             <property name="minimum">
                              <number>1</number>
@@ -1486,7 +1486,7 @@ QGroupBox#trial_GroupBox::title {
                              <set>Qt::AlignCenter</set>
                             </property>
                             <property name="buttonSymbols">
-                             <enum>QAbstractSpinBox::NoButtons</enum>
+                             <enum>QAbstractSpinBox::UpDownArrows</enum>
                             </property>
                             <property name="maximum">
                              <double>1.000000000000000</double>
@@ -1528,7 +1528,7 @@ QGroupBox#trial_GroupBox::title {
                              <set>Qt::AlignCenter</set>
                             </property>
                             <property name="buttonSymbols">
-                             <enum>QAbstractSpinBox::NoButtons</enum>
+                             <enum>QAbstractSpinBox::UpDownArrows</enum>
                             </property>
                             <property name="minimum">
                              <number>1</number>
@@ -1564,7 +1564,7 @@ QGroupBox#trial_GroupBox::title {
                              <set>Qt::AlignCenter</set>
                             </property>
                             <property name="buttonSymbols">
-                             <enum>QAbstractSpinBox::NoButtons</enum>
+                             <enum>QAbstractSpinBox::UpDownArrows</enum>
                             </property>
                             <property name="minimum">
                              <number>1</number>
@@ -1600,7 +1600,7 @@ QGroupBox#trial_GroupBox::title {
                              <set>Qt::AlignCenter</set>
                             </property>
                             <property name="buttonSymbols">
-                             <enum>QAbstractSpinBox::NoButtons</enum>
+                             <enum>QAbstractSpinBox::UpDownArrows</enum>
                             </property>
                             <property name="minimum">
                              <number>1</number>
@@ -1690,7 +1690,7 @@ QGroupBox#trial_GroupBox::title {
                              <set>Qt::AlignCenter</set>
                             </property>
                             <property name="buttonSymbols">
-                             <enum>QAbstractSpinBox::NoButtons</enum>
+                             <enum>QAbstractSpinBox::UpDownArrows</enum>
                             </property>
                            </widget>
                           </item>
@@ -1720,7 +1720,7 @@ QGroupBox#trial_GroupBox::title {
                              <set>Qt::AlignCenter</set>
                             </property>
                             <property name="buttonSymbols">
-                             <enum>QAbstractSpinBox::NoButtons</enum>
+                             <enum>QAbstractSpinBox::UpDownArrows</enum>
                             </property>
                             <property name="minimum">
                              <number>0</number>
@@ -1759,7 +1759,7 @@ QGroupBox#trial_GroupBox::title {
                              <set>Qt::AlignCenter</set>
                             </property>
                             <property name="buttonSymbols">
-                             <enum>QAbstractSpinBox::NoButtons</enum>
+                             <enum>QAbstractSpinBox::UpDownArrows</enum>
                             </property>
                             <property name="minimum">
                              <number>1</number>
@@ -1822,7 +1822,7 @@ QGroupBox#trial_GroupBox::title {
                              <set>Qt::AlignCenter</set>
                             </property>
                             <property name="buttonSymbols">
-                             <enum>QAbstractSpinBox::NoButtons</enum>
+                             <enum>QAbstractSpinBox::UpDownArrows</enum>
                             </property>
                             <property name="maximum">
                              <double>1.000000000000000</double>
@@ -1861,7 +1861,7 @@ QGroupBox#trial_GroupBox::title {
                              <set>Qt::AlignCenter</set>
                             </property>
                             <property name="buttonSymbols">
-                             <enum>QAbstractSpinBox::NoButtons</enum>
+                             <enum>QAbstractSpinBox::UpDownArrows</enum>
                             </property>
                             <property name="minimum">
                              <number>0</number>
@@ -1900,7 +1900,7 @@ QGroupBox#trial_GroupBox::title {
                              <set>Qt::AlignCenter</set>
                             </property>
                             <property name="buttonSymbols">
-                             <enum>QAbstractSpinBox::NoButtons</enum>
+                             <enum>QAbstractSpinBox::UpDownArrows</enum>
                             </property>
                             <property name="minimum">
                              <number>1</number>
@@ -1936,7 +1936,7 @@ QGroupBox#trial_GroupBox::title {
                              <set>Qt::AlignCenter</set>
                             </property>
                             <property name="buttonSymbols">
-                             <enum>QAbstractSpinBox::NoButtons</enum>
+                             <enum>QAbstractSpinBox::UpDownArrows</enum>
                             </property>
                             <property name="minimum">
                              <number>1</number>
@@ -2029,7 +2029,7 @@ QGroupBox#trial_GroupBox::title {
                              <set>Qt::AlignCenter</set>
                             </property>
                             <property name="buttonSymbols">
-                             <enum>QAbstractSpinBox::NoButtons</enum>
+                             <enum>QAbstractSpinBox::UpDownArrows</enum>
                             </property>
                             <property name="minimum">
                              <number>1</number>
@@ -2065,7 +2065,7 @@ QGroupBox#trial_GroupBox::title {
                              <set>Qt::AlignCenter</set>
                             </property>
                             <property name="buttonSymbols">
-                             <enum>QAbstractSpinBox::NoButtons</enum>
+                             <enum>QAbstractSpinBox::UpDownArrows</enum>
                             </property>
                             <property name="minimum">
                              <number>1</number>
@@ -2209,7 +2209,7 @@ QGroupBox#trial_GroupBox::title {
                              <set>Qt::AlignCenter</set>
                             </property>
                             <property name="buttonSymbols">
-                             <enum>QAbstractSpinBox::NoButtons</enum>
+                             <enum>QAbstractSpinBox::UpDownArrows</enum>
                             </property>
                            </widget>
                           </item>
@@ -2239,7 +2239,7 @@ QGroupBox#trial_GroupBox::title {
                              <set>Qt::AlignCenter</set>
                             </property>
                             <property name="buttonSymbols">
-                             <enum>QAbstractSpinBox::NoButtons</enum>
+                             <enum>QAbstractSpinBox::UpDownArrows</enum>
                             </property>
                             <property name="minimum">
                              <number>1</number>
@@ -2278,7 +2278,7 @@ QGroupBox#trial_GroupBox::title {
                              <set>Qt::AlignCenter</set>
                             </property>
                             <property name="buttonSymbols">
-                             <enum>QAbstractSpinBox::NoButtons</enum>
+                             <enum>QAbstractSpinBox::UpDownArrows</enum>
                             </property>
                             <property name="minimum">
                              <number>0</number>
@@ -2317,7 +2317,7 @@ QGroupBox#trial_GroupBox::title {
                              <set>Qt::AlignCenter</set>
                             </property>
                             <property name="buttonSymbols">
-                             <enum>QAbstractSpinBox::NoButtons</enum>
+                             <enum>QAbstractSpinBox::UpDownArrows</enum>
                             </property>
                            </widget>
                           </item>
@@ -2350,7 +2350,7 @@ QGroupBox#trial_GroupBox::title {
                              <set>Qt::AlignCenter</set>
                             </property>
                             <property name="buttonSymbols">
-                             <enum>QAbstractSpinBox::NoButtons</enum>
+                             <enum>QAbstractSpinBox::UpDownArrows</enum>
                             </property>
                             <property name="maximum">
                              <double>1.000000000000000</double>
@@ -2392,7 +2392,7 @@ QGroupBox#trial_GroupBox::title {
                              <set>Qt::AlignCenter</set>
                             </property>
                             <property name="buttonSymbols">
-                             <enum>QAbstractSpinBox::NoButtons</enum>
+                             <enum>QAbstractSpinBox::UpDownArrows</enum>
                             </property>
                             <property name="minimum">
                              <number>1</number>
@@ -2428,7 +2428,7 @@ QGroupBox#trial_GroupBox::title {
                              <set>Qt::AlignCenter</set>
                             </property>
                             <property name="buttonSymbols">
-                             <enum>QAbstractSpinBox::NoButtons</enum>
+                             <enum>QAbstractSpinBox::UpDownArrows</enum>
                             </property>
                             <property name="maximum">
                              <double>1.000000000000000</double>
@@ -2470,7 +2470,7 @@ QGroupBox#trial_GroupBox::title {
                              <set>Qt::AlignCenter</set>
                             </property>
                             <property name="buttonSymbols">
-                             <enum>QAbstractSpinBox::NoButtons</enum>
+                             <enum>QAbstractSpinBox::UpDownArrows</enum>
                             </property>
                             <property name="maximum">
                              <double>1.000000000000000</double>
@@ -2563,7 +2563,7 @@ QGroupBox#trial_GroupBox::title {
                              <set>Qt::AlignCenter</set>
                             </property>
                             <property name="buttonSymbols">
-                             <enum>QAbstractSpinBox::NoButtons</enum>
+                             <enum>QAbstractSpinBox::UpDownArrows</enum>
                             </property>
                             <property name="minimum">
                              <number>0</number>
@@ -2629,7 +2629,7 @@ QGroupBox#trial_GroupBox::title {
                              <set>Qt::AlignCenter</set>
                             </property>
                             <property name="buttonSymbols">
-                             <enum>QAbstractSpinBox::NoButtons</enum>
+                             <enum>QAbstractSpinBox::UpDownArrows</enum>
                             </property>
                            </widget>
                           </item>
@@ -2659,7 +2659,7 @@ QGroupBox#trial_GroupBox::title {
                              <set>Qt::AlignCenter</set>
                             </property>
                             <property name="buttonSymbols">
-                             <enum>QAbstractSpinBox::NoButtons</enum>
+                             <enum>QAbstractSpinBox::UpDownArrows</enum>
                             </property>
                             <property name="minimum">
                              <number>1</number>
@@ -2695,7 +2695,7 @@ QGroupBox#trial_GroupBox::title {
                              <set>Qt::AlignCenter</set>
                             </property>
                             <property name="buttonSymbols">
-                             <enum>QAbstractSpinBox::NoButtons</enum>
+                             <enum>QAbstractSpinBox::UpDownArrows</enum>
                             </property>
                             <property name="minimum">
                              <number>1</number>
@@ -2731,7 +2731,7 @@ QGroupBox#trial_GroupBox::title {
                              <set>Qt::AlignCenter</set>
                             </property>
                             <property name="buttonSymbols">
-                             <enum>QAbstractSpinBox::NoButtons</enum>
+                             <enum>QAbstractSpinBox::UpDownArrows</enum>
                             </property>
                             <property name="minimum">
                              <number>1</number>
@@ -2770,7 +2770,7 @@ QGroupBox#trial_GroupBox::title {
                              <set>Qt::AlignCenter</set>
                             </property>
                             <property name="buttonSymbols">
-                             <enum>QAbstractSpinBox::NoButtons</enum>
+                             <enum>QAbstractSpinBox::UpDownArrows</enum>
                             </property>
                            </widget>
                           </item>
@@ -2800,7 +2800,7 @@ QGroupBox#trial_GroupBox::title {
                              <set>Qt::AlignCenter</set>
                             </property>
                             <property name="buttonSymbols">
-                             <enum>QAbstractSpinBox::NoButtons</enum>
+                             <enum>QAbstractSpinBox::UpDownArrows</enum>
                             </property>
                             <property name="minimum">
                              <number>1</number>
@@ -2839,7 +2839,7 @@ QGroupBox#trial_GroupBox::title {
                              <set>Qt::AlignCenter</set>
                             </property>
                             <property name="buttonSymbols">
-                             <enum>QAbstractSpinBox::NoButtons</enum>
+                             <enum>QAbstractSpinBox::UpDownArrows</enum>
                             </property>
                            </widget>
                           </item>
@@ -2899,7 +2899,7 @@ QGroupBox#trial_GroupBox::title {
                              <set>Qt::AlignCenter</set>
                             </property>
                             <property name="buttonSymbols">
-                             <enum>QAbstractSpinBox::NoButtons</enum>
+                             <enum>QAbstractSpinBox::UpDownArrows</enum>
                             </property>
                             <property name="maximum">
                              <double>1.000000000000000</double>
@@ -2968,7 +2968,7 @@ QGroupBox#trial_GroupBox::title {
                              <set>Qt::AlignCenter</set>
                             </property>
                             <property name="buttonSymbols">
-                             <enum>QAbstractSpinBox::NoButtons</enum>
+                             <enum>QAbstractSpinBox::UpDownArrows</enum>
                             </property>
                             <property name="minimum">
                              <number>1</number>
@@ -3031,7 +3031,7 @@ QGroupBox#trial_GroupBox::title {
                              <set>Qt::AlignCenter</set>
                             </property>
                             <property name="buttonSymbols">
-                             <enum>QAbstractSpinBox::NoButtons</enum>
+                             <enum>QAbstractSpinBox::UpDownArrows</enum>
                             </property>
                             <property name="minimum">
                              <number>1</number>
@@ -3118,7 +3118,7 @@ QGroupBox#trial_GroupBox::title {
                              <set>Qt::AlignCenter</set>
                             </property>
                             <property name="buttonSymbols">
-                             <enum>QAbstractSpinBox::NoButtons</enum>
+                             <enum>QAbstractSpinBox::UpDownArrows</enum>
                             </property>
                             <property name="minimum">
                              <number>1</number>
@@ -3235,7 +3235,7 @@ QGroupBox#trial_GroupBox::title {
                              <set>Qt::AlignCenter</set>
                             </property>
                             <property name="buttonSymbols">
-                             <enum>QAbstractSpinBox::NoButtons</enum>
+                             <enum>QAbstractSpinBox::UpDownArrows</enum>
                             </property>
                             <property name="minimum">
                              <number>1</number>
@@ -3352,7 +3352,7 @@ QGroupBox#trial_GroupBox::title {
                              <set>Qt::AlignCenter</set>
                             </property>
                             <property name="buttonSymbols">
-                             <enum>QAbstractSpinBox::NoButtons</enum>
+                             <enum>QAbstractSpinBox::UpDownArrows</enum>
                             </property>
                             <property name="minimum">
                              <number>1</number>
@@ -6969,9 +6969,20 @@ QGroupBox::title {
  </widget>
  <layoutdefault spacing="3" margin="5"/>
  <tabstops>
+  <tabstop>subjectID_LineEdit</tabstop>
+  <tabstop>notes_lineEdit</tabstop>
+  <tabstop>sessionDuration_SpinBox</tabstop>
+  <tabstop>sessionDurationMode_ComboBox</tabstop>
+  <tabstop>loadPreset_ComboBox</tabstop>
+  <tabstop>device_ComboBox</tabstop>
+  <tabstop>arduinoConnectDisconnect_pushButton</tabstop>
+  <tabstop>testPinNum_SpinBox</tabstop>
+  <tabstop>testPinDuration_doubleSpinBox</tabstop>
+  <tabstop>testPin_Button</tabstop>
   <tabstop>stim1_CheckBox</tabstop>
   <tabstop>respReq1_SpinBox</tabstop>
   <tabstop>rewardChan1_SpinBox</tabstop>
+  <tabstop>autoReward1_checkBox</tabstop>
   <tabstop>punishChan1_spinBox</tabstop>
   <tabstop>cueChan1_spinBox</tabstop>
   <tabstop>variations1_spinBox</tabstop>
@@ -6979,14 +6990,15 @@ QGroupBox::title {
   <tabstop>stim2_CheckBox</tabstop>
   <tabstop>respReq2_SpinBox</tabstop>
   <tabstop>rewardChan2_SpinBox</tabstop>
+  <tabstop>autoReward2_checkBox</tabstop>
   <tabstop>punishChan2_spinBox</tabstop>
   <tabstop>cueChan2_spinBox</tabstop>
   <tabstop>variations2_spinBox</tabstop>
   <tabstop>proportion2_doubleSpinBox</tabstop>
   <tabstop>proportion2_doubleSpinBox</tabstop>
-  <tabstop>stim3_CheckBox</tabstop>
   <tabstop>respReq3_SpinBox</tabstop>
   <tabstop>rewardChan3_SpinBox</tabstop>
+  <tabstop>autoReward3_checkBox</tabstop>
   <tabstop>punishChan3_spinBox</tabstop>
   <tabstop>cueChan3_spinBox</tabstop>
   <tabstop>variations3_spinBox</tabstop>
@@ -6994,6 +7006,7 @@ QGroupBox::title {
   <tabstop>stim4_CheckBox</tabstop>
   <tabstop>respReq4_SpinBox</tabstop>
   <tabstop>rewardChan4_SpinBox</tabstop>
+  <tabstop>autoReward4_checkBox</tabstop>
   <tabstop>punishChan4_spinBox</tabstop>
   <tabstop>cueChan4_spinBox</tabstop>
   <tabstop>variations4_spinBox</tabstop>
@@ -7001,6 +7014,7 @@ QGroupBox::title {
   <tabstop>stim5_CheckBox</tabstop>
   <tabstop>respReq5_SpinBox</tabstop>
   <tabstop>rewardChan5_SpinBox</tabstop>
+  <tabstop>autoReward5_checkBox</tabstop>
   <tabstop>punishChan5_spinBox</tabstop>
   <tabstop>cueChan5_spinBox</tabstop>
   <tabstop>variations5_spinBox</tabstop>
@@ -7008,6 +7022,7 @@ QGroupBox::title {
   <tabstop>stim6_CheckBox</tabstop>
   <tabstop>respReq6_SpinBox</tabstop>
   <tabstop>rewardChan6_SpinBox</tabstop>
+  <tabstop>autoReward6_checkBox</tabstop>
   <tabstop>punishChan6_spinBox</tabstop>
   <tabstop>cueChan6_spinBox</tabstop>
   <tabstop>variations6_spinBox</tabstop>
@@ -7015,6 +7030,7 @@ QGroupBox::title {
   <tabstop>stim7_CheckBox</tabstop>
   <tabstop>respReq7_SpinBox</tabstop>
   <tabstop>rewardChan7_SpinBox</tabstop>
+  <tabstop>autoReward7_checkBox</tabstop>
   <tabstop>punishChan7_spinBox</tabstop>
   <tabstop>cueChan7_spinBox</tabstop>
   <tabstop>variations7_spinBox</tabstop>
@@ -7022,6 +7038,7 @@ QGroupBox::title {
   <tabstop>stim8_CheckBox</tabstop>
   <tabstop>respReq8_SpinBox</tabstop>
   <tabstop>rewardChan8_SpinBox</tabstop>
+  <tabstop>autoReward8_checkBox</tabstop>
   <tabstop>punishChan8_spinBox</tabstop>
   <tabstop>cueChan8_spinBox</tabstop>
   <tabstop>variations8_spinBox</tabstop>
@@ -7040,26 +7057,9 @@ QGroupBox::title {
   <tabstop>maximumRepeatsIfIncorrect_DoubleSpinBox</tabstop>
   <tabstop>activeInitiation_checkBox</tabstop>
   <tabstop>activeInitiationRespRe_checkBox</tabstop>
-  <tabstop>witholdBeforeStim_CheckBox</tabstop>
-  <tabstop>witholdBeforeStimDuration_SpinBox</tabstop>
-  <tabstop>witholdBeforeStimRandomise_SpinBox</tabstop>
-  <tabstop>cueTrial_CheckBox</tabstop>
-  <tabstop>stimLength_SpinBox</tabstop>
-  <tabstop>respStopsStim_CheckBox</tabstop>
-  <tabstop>postStimDelay_doubleSpinBox</tabstop>
-  <tabstop>responseWindow_SpinBox</tabstop>
-  <tabstop>endOfTrialDelay_SpinBox</tabstop>
-  <tabstop>rewardRemoval_checkBox</tabstop>
-  <tabstop>rewardRemovalDelay_SpinBox</tabstop>
-  <tabstop>punishDelayLength_SpinBox</tabstop>
-  <tabstop>autoTransition_CheckBox</tabstop>
-  <tabstop>autoTransitionTo_ComboBox</tabstop>
-  <tabstop>autoTransitionAfterNum_SpinBox</tabstop>
-  <tabstop>autoTransitionAfterCriteria_ComboBox</tabstop>
-  <tabstop>autoTransitionFor_SpinBox</tabstop>
   <tabstop>checkBox</tabstop>
   <tabstop>doubleSpinBox</tabstop>
-  <tabstop>postStimDelayRandomise_doubleSpinBox</tabstop>
+  <tabstop>punishDelayLength_SpinBox</tabstop>
   <tabstop>comboBox</tabstop>
   <tabstop>spinBox</tabstop>
   <tabstop>checkBox_5</tabstop>
@@ -7071,6 +7071,40 @@ QGroupBox::title {
   <tabstop>sessionPause_pushButton</tabstop>
   <tabstop>tabWidget</tabstop>
   <tabstop>sessionAbort_pushButton</tabstop>
+  <tabstop>responseWindow_SpinBox</tabstop>
+  <tabstop>postStimCancel_CheckBox</tabstop>
+  <tabstop>endOfTrialDelay_SpinBox</tabstop>
+  <tabstop>postStimDelayRandomise_doubleSpinBox</tabstop>
+  <tabstop>cueResponse_CheckBox</tabstop>
+  <tabstop>cueStim_CheckBox</tabstop>
+  <tabstop>respStopsStim_CheckBox</tabstop>
+  <tabstop>postStimDelay_doubleSpinBox</tabstop>
+  <tabstop>startToStimDelayRandomise_doubleSpinBox</tabstop>
+  <tabstop>startToStimDelay_SpinBox</tabstop>
+  <tabstop>scrollArea</tabstop>
+  <tabstop>stim3_CheckBox</tabstop>
+  <tabstop>punishDelay_checkBox</tabstop>
+  <tabstop>punishTriggerDuration_doubleSpinBox</tabstop>
+  <tabstop>autoTransitionAfterCriteria_ComboBox</tabstop>
+  <tabstop>autoTransition_CheckBox</tabstop>
+  <tabstop>autoTransitionFor_SpinBox</tabstop>
+  <tabstop>rewardDuration_doubleSpinBox</tabstop>
+  <tabstop>stimLength_SpinBox</tabstop>
+  <tabstop>autoTransitionTo_ComboBox</tabstop>
+  <tabstop>punishTrigger_checkBox</tabstop>
+  <tabstop>secondChance_checkBox</tabstop>
+  <tabstop>autoRewardDelay_SpinBox</tabstop>
+  <tabstop>rewardRemoval_checkBox</tabstop>
+  <tabstop>autoTransitionAfterNum_SpinBox</tabstop>
+  <tabstop>witholdBeforeStimDuration_SpinBox</tabstop>
+  <tabstop>rewardRemovalDelay_SpinBox</tabstop>
+  <tabstop>witholdBeforeStim_CheckBox</tabstop>
+  <tabstop>witholdBeforeStimRandomise_SpinBox</tabstop>
+  <tabstop>cueTrial_CheckBox</tabstop>
+  <tabstop>doubleSpinBox_2</tabstop>
+  <tabstop>begin_Button</tabstop>
+  <tabstop>setDefaults_Button</tabstop>
+  <tabstop>forceReward_pushButton</tabstop>
  </tabstops>
  <resources/>
  <connections>
