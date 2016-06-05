@@ -387,7 +387,7 @@ class Ui_MainWindow(object):
         self.scrollArea.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 737, 1234))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, -569, 737, 1234))
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -2452,6 +2452,7 @@ class Ui_MainWindow(object):
         font.setPointSize(9)
         self.rewardDuration_doubleSpinBox.setFont(font)
         self.rewardDuration_doubleSpinBox.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.rewardDuration_doubleSpinBox.setSingleStep(0.001)
         self.rewardDuration_doubleSpinBox.setObjectName("rewardDuration_doubleSpinBox")
         self.gridLayout_13.addWidget(self.rewardDuration_doubleSpinBox, 1, 2, 1, 1)
         self.verticalLayout_11.addLayout(self.gridLayout_13)
@@ -3059,6 +3060,7 @@ class Ui_MainWindow(object):
         self.groupBox_4.setStyleSheet("QGroupBox {\n"
 "    border: 1px solid rgb(240, 240, 240);\n"
 "    margin-top: 1.1em;\n"
+"    background-color: white;\n"
 "}\n"
 "\n"
 "QGroupBox::title {\n"

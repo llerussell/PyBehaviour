@@ -836,7 +836,7 @@ QGroupBox#trial_GroupBox::title {
                   <property name="geometry">
                    <rect>
                     <x>0</x>
-                    <y>0</y>
+                    <y>-569</y>
                     <width>737</width>
                     <height>1234</height>
                    </rect>
@@ -5441,6 +5441,9 @@ QGroupBox#trial_GroupBox::title {
                           <property name="suffix">
                            <string> s</string>
                           </property>
+                          <property name="singleStep">
+                           <double>0.001000000000000</double>
+                          </property>
                          </widget>
                         </item>
                        </layout>
@@ -6877,6 +6880,7 @@ QGroupBox#trial_GroupBox::title {
              <string notr="true">QGroupBox {
     border: 1px solid rgb(240, 240, 240);
     margin-top: 1.1em;
+	background-color: white;
 }
 
 QGroupBox::title {
