@@ -13,3 +13,5 @@
 
 *.sublime-project
 *.tif
+
+*.log

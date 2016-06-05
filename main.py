@@ -38,6 +38,23 @@ from PyQt5.QtWidgets import (QComboBox, QCheckBox, QLineEdit, QSpinBox,
 from PyQt5.QtGui import QColor, QIcon, QPalette
 from GUI import GUI
 from GUI import serial_ports
+import logging
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+
+# create a file handler
+handler = logging.FileHandler('errors.log')
+handler.setLevel(logging.DEBUG)
+
+# create a logging format
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+handler.setFormatter(formatter)
+
+# add the handlers to the logger
+logger.addHandler(handler)
+
+logger.info('Started application')
 
 
 class TrialRunner(QObject):
@@ -339,12 +356,12 @@ class TrialRunner(QObject):
                                 score = 0
                             trials['running_score'] = np.append(trials['running_score'], score)
                             self.results_signal.emit(trial_num)
-            except:
+            except Exception as e:
+                logging.exception(e)
                 if self._session_running:
                     self.comm_feed_signal.emit('Something went wrong', 'pc')
                     trialRunning = False
                     self.disconnectArduino()
-                    self.connectArduino()
 
     def stop(self):
         if self._session_running:
@@ -416,6 +433,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
             self.sessionTimer.start(100)  # start the QTimer, executes every 100ms
             self.sessionTimer_label.setStyleSheet('font-size: 18pt; font-weight: bold; color:''black'';')
             self.trialRunner._session_running = True
+            logger.info('Started session: ' + p['sessionID'])
 
 
     def reset(self):
@@ -1234,4 +1252,7 @@ if __name__ == '__main__':
     np.random.seed()
 
     # launch program
-    main(sys.argv)
+    try:
+        main(sys.argv)
+    except Exception as e:
+        logging.exception(e)
