@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>817</width>
-    <height>865</height>
+    <width>820</width>
+    <height>870</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -55,12 +55,11 @@
       </property>
       <property name="font">
        <font>
-        <family>Arial</family>
-        <pointsize>8</pointsize>
+        <pointsize>9</pointsize>
        </font>
       </property>
       <property name="styleSheet">
-       <string notr="true">QTabWidget&gt;QWidget&gt;QWidget{background: white;}</string>
+       <string notr="true">font-size: 9pt;</string>
       </property>
       <property name="currentIndex">
        <number>0</number>
@@ -103,8 +102,7 @@
             </property>
             <property name="font">
              <font>
-              <family>Arial</family>
-              <pointsize>8</pointsize>
+              <pointsize>9</pointsize>
              </font>
             </property>
             <property name="layoutDirection">
@@ -182,8 +180,7 @@ QGroupBox::title {
                  </property>
                  <property name="font">
                   <font>
-                   <family>Arial</family>
-                   <pointsize>8</pointsize>
+                   <pointsize>9</pointsize>
                   </font>
                  </property>
                  <property name="text">
@@ -210,8 +207,7 @@ QGroupBox::title {
                  </property>
                  <property name="font">
                   <font>
-                   <family>Arial</family>
-                   <pointsize>8</pointsize>
+                   <pointsize>9</pointsize>
                   </font>
                  </property>
                  <property name="alignment">
@@ -247,8 +243,7 @@ QGroupBox::title {
                  </property>
                  <property name="font">
                   <font>
-                   <family>Arial</family>
-                   <pointsize>8</pointsize>
+                   <pointsize>9</pointsize>
                   </font>
                  </property>
                  <property name="alignment">
@@ -296,8 +291,7 @@ QGroupBox::title {
                  </property>
                  <property name="font">
                   <font>
-                   <family>Arial</family>
-                   <pointsize>8</pointsize>
+                   <pointsize>9</pointsize>
                   </font>
                  </property>
                  <property name="focusPolicy">
@@ -324,8 +318,7 @@ QGroupBox::title {
                  </property>
                  <property name="font">
                   <font>
-                   <family>Arial</family>
-                   <pointsize>8</pointsize>
+                   <pointsize>9</pointsize>
                   </font>
                  </property>
                  <property name="focusPolicy">
@@ -349,8 +342,7 @@ QGroupBox::title {
                  </property>
                  <property name="font">
                   <font>
-                   <family>Arial</family>
-                   <pointsize>8</pointsize>
+                   <pointsize>9</pointsize>
                   </font>
                  </property>
                  <property name="text">
@@ -392,8 +384,7 @@ QGroupBox::title {
             </property>
             <property name="font">
              <font>
-              <family>Arial</family>
-              <pointsize>8</pointsize>
+              <pointsize>9</pointsize>
              </font>
             </property>
             <property name="styleSheet">
@@ -464,8 +455,7 @@ QGroupBox::title {
                  </property>
                  <property name="font">
                   <font>
-                   <family>Arial</family>
-                   <pointsize>8</pointsize>
+                   <pointsize>9</pointsize>
                   </font>
                  </property>
                  <property name="text">
@@ -492,8 +482,7 @@ QGroupBox::title {
                  </property>
                  <property name="font">
                   <font>
-                   <family>Arial</family>
-                   <pointsize>8</pointsize>
+                   <pointsize>9</pointsize>
                   </font>
                  </property>
                  <property name="text">
@@ -520,8 +509,7 @@ QGroupBox::title {
                  </property>
                  <property name="font">
                   <font>
-                   <family>Arial</family>
-                   <pointsize>8</pointsize>
+                   <pointsize>9</pointsize>
                   </font>
                  </property>
                  <property name="text">
@@ -560,8 +548,7 @@ QGroupBox::title {
                  </property>
                  <property name="font">
                   <font>
-                   <family>Arial</family>
-                   <pointsize>8</pointsize>
+                   <pointsize>9</pointsize>
                   </font>
                  </property>
                  <property name="text">
@@ -588,8 +575,7 @@ QGroupBox::title {
                  </property>
                  <property name="font">
                   <font>
-                   <family>Arial</family>
-                   <pointsize>8</pointsize>
+                   <pointsize>9</pointsize>
                   </font>
                  </property>
                  <property name="wrapping">
@@ -622,8 +608,7 @@ QGroupBox::title {
                  </property>
                  <property name="font">
                   <font>
-                   <family>Arial</family>
-                   <pointsize>8</pointsize>
+                   <pointsize>9</pointsize>
                   </font>
                  </property>
                  <item>
@@ -649,8 +634,7 @@ QGroupBox::title {
                  </property>
                  <property name="font">
                   <font>
-                   <family>Arial</family>
-                   <pointsize>8</pointsize>
+                   <pointsize>9</pointsize>
                   </font>
                  </property>
                  <property name="focusPolicy">
@@ -679,8 +663,7 @@ QGroupBox::title {
                  </property>
                  <property name="font">
                   <font>
-                   <family>Arial</family>
-                   <pointsize>8</pointsize>
+                   <pointsize>9</pointsize>
                   </font>
                  </property>
                 </widget>
@@ -701,8 +684,7 @@ QGroupBox::title {
                  </property>
                  <property name="font">
                   <font>
-                   <family>Arial</family>
-                   <pointsize>8</pointsize>
+                   <pointsize>9</pointsize>
                   </font>
                  </property>
                  <property name="inputMask">
@@ -737,8 +719,7 @@ QGroupBox::title {
             </property>
             <property name="font">
              <font>
-              <family>Arial</family>
-              <pointsize>8</pointsize>
+              <pointsize>9</pointsize>
              </font>
             </property>
             <property name="autoFillBackground">
@@ -824,8 +805,7 @@ QGroupBox#trial_GroupBox::title {
                  </property>
                  <property name="font">
                   <font>
-                   <family>Arial</family>
-                   <pointsize>8</pointsize>
+                   <pointsize>9</pointsize>
                   </font>
                  </property>
                  <property name="styleSheet">
@@ -857,8 +837,8 @@ QGroupBox#trial_GroupBox::title {
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>734</width>
-                    <height>1212</height>
+                    <width>737</width>
+                    <height>1234</height>
                    </rect>
                   </property>
                   <property name="sizePolicy">
@@ -899,8 +879,7 @@ QGroupBox#trial_GroupBox::title {
                      </property>
                      <property name="font">
                       <font>
-                       <family>Arial</family>
-                       <pointsize>8</pointsize>
+                       <pointsize>9</pointsize>
                       </font>
                      </property>
                      <property name="title">
@@ -993,8 +972,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="frame">
@@ -1036,8 +1014,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="frame">
@@ -1073,8 +1050,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="toolTip">
@@ -1107,8 +1083,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="frame">
@@ -1144,8 +1119,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="frame">
@@ -1178,8 +1152,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="focusPolicy">
@@ -1209,8 +1182,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="toolTip">
@@ -1246,8 +1218,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="alignment">
@@ -1283,8 +1254,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="alignment">
@@ -1320,8 +1290,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="alignment">
@@ -1357,8 +1326,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="frame">
@@ -1400,8 +1368,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="alignment">
@@ -1437,8 +1404,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="frame">
@@ -1474,8 +1440,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="frame">
@@ -1511,8 +1476,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="frame">
@@ -1554,8 +1518,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="frame">
@@ -1591,8 +1554,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="frame">
@@ -1628,8 +1590,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="frame">
@@ -1662,8 +1623,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="focusPolicy">
@@ -1690,8 +1650,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="text">
@@ -1721,8 +1680,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="toolTip">
@@ -1755,8 +1713,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="alignment">
@@ -1792,8 +1749,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="frame">
@@ -1829,8 +1785,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="text">
@@ -1857,8 +1812,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="frame">
@@ -1900,8 +1854,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="alignment">
@@ -1937,8 +1890,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="frame">
@@ -1974,8 +1926,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="frame">
@@ -2008,8 +1959,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="focusPolicy">
@@ -2039,8 +1989,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="focusPolicy">
@@ -2070,8 +2019,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="frame">
@@ -2107,8 +2055,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="frame">
@@ -2141,8 +2088,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="text">
@@ -2172,8 +2118,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="text">
@@ -2197,8 +2142,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="focusPolicy">
@@ -2228,8 +2172,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="text">
@@ -2256,8 +2199,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="toolTip">
@@ -2290,8 +2232,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="alignment">
@@ -2327,8 +2268,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="frame">
@@ -2367,8 +2307,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="toolTip">
@@ -2401,8 +2340,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="frame">
@@ -2444,8 +2382,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="frame">
@@ -2481,8 +2418,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="frame">
@@ -2524,8 +2460,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="frame">
@@ -2567,8 +2502,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="text">
@@ -2592,8 +2526,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="focusPolicy">
@@ -2623,8 +2556,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="alignment">
@@ -2660,8 +2592,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="text">
@@ -2688,8 +2619,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="toolTip">
@@ -2722,8 +2652,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="alignment">
@@ -2759,8 +2688,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="alignment">
@@ -2796,8 +2724,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="alignment">
@@ -2833,8 +2760,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="toolTip">
@@ -2867,8 +2793,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="alignment">
@@ -2904,8 +2829,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="toolTip">
@@ -2938,8 +2862,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="text">
@@ -2966,8 +2889,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="frame">
@@ -3006,8 +2928,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="focusPolicy">
@@ -3037,8 +2958,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="frame">
@@ -3071,8 +2991,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="focusPolicy">
@@ -3102,8 +3021,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="frame">
@@ -3136,8 +3054,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="text">
@@ -3164,8 +3081,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="text">
@@ -3195,8 +3111,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="alignment">
@@ -3229,8 +3144,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="text">
@@ -3260,8 +3174,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="text">
@@ -3285,8 +3198,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="text">
@@ -3316,8 +3228,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="alignment">
@@ -3353,8 +3264,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="text">
@@ -3378,8 +3288,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="text">
@@ -3406,8 +3315,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="text">
@@ -3437,8 +3345,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="alignment">
@@ -3478,8 +3385,7 @@ QGroupBox#trial_GroupBox::title {
                      </property>
                      <property name="font">
                       <font>
-                       <family>Arial</family>
-                       <pointsize>8</pointsize>
+                       <pointsize>9</pointsize>
                       </font>
                      </property>
                      <property name="title">
@@ -3563,8 +3469,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="text">
@@ -3591,8 +3496,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="text">
@@ -3639,8 +3543,7 @@ QGroupBox#trial_GroupBox::title {
                               </property>
                               <property name="font">
                                <font>
-                                <family>Arial</family>
-                                <pointsize>8</pointsize>
+                                <pointsize>9</pointsize>
                                </font>
                               </property>
                               <property name="focusPolicy">
@@ -3670,8 +3573,7 @@ QGroupBox#trial_GroupBox::title {
                               </property>
                               <property name="font">
                                <font>
-                                <family>Arial</family>
-                                <pointsize>8</pointsize>
+                                <pointsize>9</pointsize>
                                </font>
                               </property>
                               <property name="prefix">
@@ -3700,8 +3602,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="text">
@@ -3748,8 +3649,7 @@ QGroupBox#trial_GroupBox::title {
                               </property>
                               <property name="font">
                                <font>
-                                <family>Arial</family>
-                                <pointsize>8</pointsize>
+                                <pointsize>9</pointsize>
                                </font>
                               </property>
                               <property name="focusPolicy">
@@ -3788,8 +3688,7 @@ QGroupBox#trial_GroupBox::title {
                               </property>
                               <property name="font">
                                <font>
-                                <family>Arial</family>
-                                <pointsize>8</pointsize>
+                                <pointsize>9</pointsize>
                                </font>
                               </property>
                               <property name="suffix">
@@ -3824,8 +3723,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="text">
@@ -3872,8 +3770,7 @@ QGroupBox#trial_GroupBox::title {
                               </property>
                               <property name="font">
                                <font>
-                                <family>Arial</family>
-                                <pointsize>8</pointsize>
+                                <pointsize>9</pointsize>
                                </font>
                               </property>
                               <property name="text">
@@ -3897,8 +3794,7 @@ QGroupBox#trial_GroupBox::title {
                               </property>
                               <property name="font">
                                <font>
-                                <family>Arial</family>
-                                <pointsize>8</pointsize>
+                                <pointsize>9</pointsize>
                                </font>
                               </property>
                               <property name="text">
@@ -3922,8 +3818,7 @@ QGroupBox#trial_GroupBox::title {
                               </property>
                               <property name="font">
                                <font>
-                                <family>Arial</family>
-                                <pointsize>8</pointsize>
+                                <pointsize>9</pointsize>
                                </font>
                               </property>
                               <property name="text">
@@ -3969,8 +3864,7 @@ QGroupBox#trial_GroupBox::title {
                               </property>
                               <property name="font">
                                <font>
-                                <family>Arial</family>
-                                <pointsize>8</pointsize>
+                                <pointsize>9</pointsize>
                                </font>
                               </property>
                               <property name="text">
@@ -3997,8 +3891,7 @@ QGroupBox#trial_GroupBox::title {
                               </property>
                               <property name="font">
                                <font>
-                                <family>Arial</family>
-                                <pointsize>8</pointsize>
+                                <pointsize>9</pointsize>
                                </font>
                               </property>
                               <property name="suffix">
@@ -4034,8 +3927,7 @@ QGroupBox#trial_GroupBox::title {
                               </property>
                               <property name="font">
                                <font>
-                                <family>Arial</family>
-                                <pointsize>8</pointsize>
+                                <pointsize>9</pointsize>
                                </font>
                               </property>
                               <property name="text">
@@ -4062,8 +3954,7 @@ QGroupBox#trial_GroupBox::title {
                               </property>
                               <property name="font">
                                <font>
-                                <family>Arial</family>
-                                <pointsize>8</pointsize>
+                                <pointsize>9</pointsize>
                                </font>
                               </property>
                               <property name="prefix">
@@ -4096,8 +3987,7 @@ QGroupBox#trial_GroupBox::title {
                               </property>
                               <property name="font">
                                <font>
-                                <family>Arial</family>
-                                <pointsize>8</pointsize>
+                                <pointsize>9</pointsize>
                                </font>
                               </property>
                               <property name="text">
@@ -4124,8 +4014,7 @@ QGroupBox#trial_GroupBox::title {
                               </property>
                               <property name="font">
                                <font>
-                                <family>Arial</family>
-                                <pointsize>8</pointsize>
+                                <pointsize>9</pointsize>
                                </font>
                               </property>
                               <property name="prefix">
@@ -4164,8 +4053,7 @@ QGroupBox#trial_GroupBox::title {
                      </property>
                      <property name="font">
                       <font>
-                       <family>Arial</family>
-                       <pointsize>8</pointsize>
+                       <pointsize>9</pointsize>
                       </font>
                      </property>
                      <property name="title">
@@ -4252,8 +4140,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="text">
@@ -4280,8 +4167,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="text">
@@ -4331,8 +4217,7 @@ QGroupBox#trial_GroupBox::title {
                               </property>
                               <property name="font">
                                <font>
-                                <family>Arial</family>
-                                <pointsize>8</pointsize>
+                                <pointsize>9</pointsize>
                                </font>
                               </property>
                               <property name="text">
@@ -4359,8 +4244,7 @@ QGroupBox#trial_GroupBox::title {
                               </property>
                               <property name="font">
                                <font>
-                                <family>Arial</family>
-                                <pointsize>8</pointsize>
+                                <pointsize>9</pointsize>
                                </font>
                               </property>
                               <property name="prefix">
@@ -4409,8 +4293,7 @@ QGroupBox#trial_GroupBox::title {
                               </property>
                               <property name="font">
                                <font>
-                                <family>Arial</family>
-                                <pointsize>8</pointsize>
+                                <pointsize>9</pointsize>
                                </font>
                               </property>
                               <property name="focusPolicy">
@@ -4440,8 +4323,7 @@ QGroupBox#trial_GroupBox::title {
                               </property>
                               <property name="font">
                                <font>
-                                <family>Arial</family>
-                                <pointsize>8</pointsize>
+                                <pointsize>9</pointsize>
                                </font>
                               </property>
                               <property name="focusPolicy">
@@ -4477,8 +4359,7 @@ QGroupBox#trial_GroupBox::title {
                               </property>
                               <property name="font">
                                <font>
-                                <family>Arial</family>
-                                <pointsize>8</pointsize>
+                                <pointsize>9</pointsize>
                                </font>
                               </property>
                               <property name="focusPolicy">
@@ -4513,8 +4394,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="text">
@@ -4561,8 +4441,7 @@ QGroupBox#trial_GroupBox::title {
                               </property>
                               <property name="font">
                                <font>
-                                <family>Arial</family>
-                                <pointsize>8</pointsize>
+                                <pointsize>9</pointsize>
                                </font>
                               </property>
                               <property name="focusPolicy">
@@ -4598,8 +4477,7 @@ QGroupBox#trial_GroupBox::title {
                      </property>
                      <property name="font">
                       <font>
-                       <family>Arial</family>
-                       <pointsize>8</pointsize>
+                       <pointsize>9</pointsize>
                       </font>
                      </property>
                      <property name="title">
@@ -4660,8 +4538,7 @@ QGroupBox#trial_GroupBox::title {
                           </property>
                           <property name="font">
                            <font>
-                            <family>Arial</family>
-                            <pointsize>8</pointsize>
+                            <pointsize>9</pointsize>
                            </font>
                           </property>
                           <property name="text">
@@ -4708,8 +4585,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="focusPolicy">
@@ -4742,8 +4618,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="text">
@@ -4769,8 +4644,7 @@ QGroupBox#trial_GroupBox::title {
                           </property>
                           <property name="font">
                            <font>
-                            <family>Arial</family>
-                            <pointsize>8</pointsize>
+                            <pointsize>9</pointsize>
                            </font>
                           </property>
                           <property name="suffix">
@@ -4800,8 +4674,7 @@ QGroupBox#trial_GroupBox::title {
                           </property>
                           <property name="font">
                            <font>
-                            <family>Arial</family>
-                            <pointsize>8</pointsize>
+                            <pointsize>9</pointsize>
                            </font>
                           </property>
                           <property name="text">
@@ -4848,8 +4721,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="focusPolicy">
@@ -4885,8 +4757,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="text">
@@ -4912,8 +4783,7 @@ QGroupBox#trial_GroupBox::title {
                           </property>
                           <property name="font">
                            <font>
-                            <family>Arial</family>
-                            <pointsize>8</pointsize>
+                            <pointsize>9</pointsize>
                            </font>
                           </property>
                           <property name="text">
@@ -4960,8 +4830,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="suffix">
@@ -4988,8 +4857,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="prefix">
@@ -5019,8 +4887,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="focusPolicy">
@@ -5049,8 +4916,7 @@ QGroupBox#trial_GroupBox::title {
                           </property>
                           <property name="font">
                            <font>
-                            <family>Arial</family>
-                            <pointsize>8</pointsize>
+                            <pointsize>9</pointsize>
                            </font>
                           </property>
                           <property name="text">
@@ -5077,8 +4943,7 @@ QGroupBox#trial_GroupBox::title {
                           </property>
                           <property name="font">
                            <font>
-                            <family>Arial</family>
-                            <pointsize>8</pointsize>
+                            <pointsize>9</pointsize>
                            </font>
                           </property>
                           <property name="text">
@@ -5125,8 +4990,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="focusPolicy">
@@ -5156,8 +5020,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="prefix">
@@ -5187,8 +5050,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="focusPolicy">
@@ -5222,8 +5084,7 @@ QGroupBox#trial_GroupBox::title {
                      </property>
                      <property name="font">
                       <font>
-                       <family>Arial</family>
-                       <pointsize>8</pointsize>
+                       <pointsize>9</pointsize>
                       </font>
                      </property>
                      <property name="title">
@@ -5284,8 +5145,7 @@ QGroupBox#trial_GroupBox::title {
                           </property>
                           <property name="font">
                            <font>
-                            <family>Arial</family>
-                            <pointsize>8</pointsize>
+                            <pointsize>9</pointsize>
                            </font>
                           </property>
                           <property name="toolTip">
@@ -5312,8 +5172,7 @@ QGroupBox#trial_GroupBox::title {
                           </property>
                           <property name="font">
                            <font>
-                            <family>Arial</family>
-                            <pointsize>8</pointsize>
+                            <pointsize>9</pointsize>
                            </font>
                           </property>
                           <property name="text">
@@ -5343,8 +5202,7 @@ QGroupBox#trial_GroupBox::title {
                           </property>
                           <property name="font">
                            <font>
-                            <family>Arial</family>
-                            <pointsize>8</pointsize>
+                            <pointsize>9</pointsize>
                            </font>
                           </property>
                           <property name="focusPolicy">
@@ -5402,8 +5260,7 @@ QGroupBox#trial_GroupBox::title {
                           </property>
                           <property name="font">
                            <font>
-                            <family>Arial</family>
-                            <pointsize>8</pointsize>
+                            <pointsize>9</pointsize>
                            </font>
                           </property>
                           <property name="text">
@@ -5450,8 +5307,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="text">
@@ -5478,8 +5334,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="toolTip">
@@ -5517,8 +5372,7 @@ QGroupBox#trial_GroupBox::title {
                           </property>
                           <property name="font">
                            <font>
-                            <family>Arial</family>
-                            <pointsize>8</pointsize>
+                            <pointsize>9</pointsize>
                            </font>
                           </property>
                           <property name="text">
@@ -5545,8 +5399,7 @@ QGroupBox#trial_GroupBox::title {
                           </property>
                           <property name="font">
                            <font>
-                            <family>Arial</family>
-                            <pointsize>8</pointsize>
+                            <pointsize>9</pointsize>
                            </font>
                           </property>
                           <property name="text">
@@ -5576,8 +5429,7 @@ QGroupBox#trial_GroupBox::title {
                           </property>
                           <property name="font">
                            <font>
-                            <family>Arial</family>
-                            <pointsize>8</pointsize>
+                            <pointsize>9</pointsize>
                            </font>
                           </property>
                           <property name="alignment">
@@ -5612,8 +5464,7 @@ QGroupBox#trial_GroupBox::title {
                      </property>
                      <property name="font">
                       <font>
-                       <family>Arial</family>
-                       <pointsize>8</pointsize>
+                       <pointsize>9</pointsize>
                       </font>
                      </property>
                      <property name="title">
@@ -5694,8 +5545,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="text">
@@ -5722,8 +5572,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="focusPolicy">
@@ -5758,8 +5607,7 @@ QGroupBox#trial_GroupBox::title {
                           </property>
                           <property name="font">
                            <font>
-                            <family>Arial</family>
-                            <pointsize>8</pointsize>
+                            <pointsize>9</pointsize>
                            </font>
                           </property>
                           <property name="text">
@@ -5786,8 +5634,7 @@ QGroupBox#trial_GroupBox::title {
                           </property>
                           <property name="font">
                            <font>
-                            <family>Arial</family>
-                            <pointsize>8</pointsize>
+                            <pointsize>9</pointsize>
                            </font>
                           </property>
                           <property name="text">
@@ -5834,8 +5681,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="text">
@@ -5862,8 +5708,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="prefix">
@@ -5897,8 +5742,7 @@ QGroupBox#trial_GroupBox::title {
                      </property>
                      <property name="font">
                       <font>
-                       <family>Arial</family>
-                       <pointsize>8</pointsize>
+                       <pointsize>9</pointsize>
                       </font>
                      </property>
                      <property name="title">
@@ -5982,8 +5826,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="text">
@@ -6010,8 +5853,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="prefix">
@@ -6044,8 +5886,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="prefix">
@@ -6072,8 +5913,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <item>
@@ -6117,8 +5957,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="suffix">
@@ -6147,8 +5986,7 @@ QGroupBox#trial_GroupBox::title {
                           </property>
                           <property name="font">
                            <font>
-                            <family>Arial</family>
-                            <pointsize>8</pointsize>
+                            <pointsize>9</pointsize>
                            </font>
                           </property>
                           <property name="text">
@@ -6175,8 +6013,7 @@ QGroupBox#trial_GroupBox::title {
                           </property>
                           <property name="font">
                            <font>
-                            <family>Arial</family>
-                            <pointsize>8</pointsize>
+                            <pointsize>9</pointsize>
                            </font>
                           </property>
                           <property name="text">
@@ -6203,8 +6040,7 @@ QGroupBox#trial_GroupBox::title {
                           </property>
                           <property name="font">
                            <font>
-                            <family>Arial</family>
-                            <pointsize>8</pointsize>
+                            <pointsize>9</pointsize>
                            </font>
                           </property>
                           <property name="text">
@@ -6254,8 +6090,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="focusPolicy">
@@ -6285,8 +6120,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="focusPolicy">
@@ -6318,8 +6152,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="focusPolicy">
@@ -6349,8 +6182,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="focusPolicy">
@@ -6397,8 +6229,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="suffix">
@@ -6450,8 +6281,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="text">
@@ -6478,8 +6308,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="prefix">
@@ -6512,8 +6341,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="prefix">
@@ -6540,8 +6368,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <item>
@@ -6585,8 +6412,7 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                             <property name="font">
                              <font>
-                              <family>Arial</family>
-                              <pointsize>8</pointsize>
+                              <pointsize>9</pointsize>
                              </font>
                             </property>
                             <property name="suffix">
@@ -6620,8 +6446,7 @@ QGroupBox#trial_GroupBox::title {
                      </property>
                      <property name="font">
                       <font>
-                       <family>Arial</family>
-                       <pointsize>8</pointsize>
+                       <pointsize>9</pointsize>
                       </font>
                      </property>
                      <property name="focusPolicy">
@@ -6676,8 +6501,7 @@ QGroupBox#trial_GroupBox::title {
             </property>
             <property name="font">
              <font>
-              <family>Arial</family>
-              <pointsize>8</pointsize>
+              <pointsize>9</pointsize>
              </font>
             </property>
             <property name="focusPolicy">
@@ -6710,8 +6534,7 @@ QGroupBox#trial_GroupBox::title {
             </property>
             <property name="font">
              <font>
-              <family>Arial</family>
-              <pointsize>8</pointsize>
+              <pointsize>9</pointsize>
              </font>
             </property>
             <property name="focusPolicy">
@@ -6837,9 +6660,13 @@ QGroupBox#trial_GroupBox::title {
                    </property>
                    <property name="font">
                     <font>
+                     <pointsize>9</pointsize>
                      <weight>75</weight>
                      <bold>true</bold>
                     </font>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">font-weight: bold;</string>
                    </property>
                    <property name="text">
                     <string>Trial:</string>
@@ -6865,9 +6692,13 @@ QGroupBox#trial_GroupBox::title {
                    </property>
                    <property name="font">
                     <font>
+                     <pointsize>9</pointsize>
                      <weight>75</weight>
                      <bold>true</bold>
                     </font>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">font-weight: bold;</string>
                    </property>
                    <property name="text">
                     <string>0</string>
