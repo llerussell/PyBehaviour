@@ -308,6 +308,15 @@ class TrialRunner(QObject):
         is_first_response = True
         while trialRunning:
             try:
+                if arduino['connected'] == False:
+                    self.comm_feed_signal.emit('Arduino not connected', 'pc')
+                    trials['results'][trial_num]['firstresponse'] = 0
+                    trials['results'][trial_num]['correct'] = 0
+                    trials['results'][trial_num]['incorrect'] = 0
+                    trials['results'][trial_num]['miss'] = 0
+                    trials['running_score'] = np.append(trials['running_score'], 0)
+                    trialRunning = False  # abort current trial if arduino disconnects
+
                 temp_read = arduino['device'].readline().strip().decode('utf-8')
                 if temp_read:
                     self.comm_feed_signal.emit(temp_read, 'arduino')
@@ -337,11 +346,11 @@ class TrialRunner(QObject):
                         elif temp_read == 'READY':  # arduino has reset
                             trialRunning = False
                             self.disconnectArduino()
-                            self.connectArduino()
                         else:
                             data = temp_read.split('|')
                             for idx, val in enumerate(data):
                                 if val:  # in val is not just
+                                    # firstresponse, correct, incorrect, miss
                                     key, val = val.split(':')
                                     val = int(val)
                                     key = str(key)
@@ -357,11 +366,16 @@ class TrialRunner(QObject):
                             trials['running_score'] = np.append(trials['running_score'], score)
                             self.results_signal.emit(trial_num)
             except Exception as e:
-                logging.exception(e)
+                logger.exception(e)
                 if self._session_running:
                     self.comm_feed_signal.emit('Something went wrong', 'pc')
-                    trialRunning = False
                     self.disconnectArduino()
+                    trials['results'][trial_num]['firstresponse'] = 0
+                    trials['results'][trial_num]['correct'] = 0
+                    trials['results'][trial_num]['incorrect'] = 0
+                    trials['results'][trial_num]['miss'] = 0
+                    trials['running_score'] = np.append(trials['running_score'], 0)
+                    trialRunning = False
 
     def stop(self):
         if self._session_running:
@@ -575,10 +589,12 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         for t in range(trial_num+1):
             if trials['results'][t]['correct']:
                 colour = [0, 0.85, 0.45]
-            elif not trials['results'][t]['miss']:  # means incorrect
+            elif trials['results'][t]['incorrect']:  # means incorrect
                 colour = [1, 0.1, 0.4]
-            else:  # means miss
+            elif trials['results'][t]['miss']:  # means miss
                 colour = [.7, .7, .7]
+            else:
+                colour = [1, 1, 1]
             stim_idx = p['stimChannels'].index(p['trialOrder'][t])
             performance_record[t, stim_idx] = colour
 
@@ -611,6 +627,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         # add connects for control button clicks
         self.setDefaults_Button.clicked.connect(self.GUISave)
         self.saveAsPreset_Button.clicked.connect(self.saveAsPreset)
+        self.arduinoConnectDisconnect_pushButton.clicked.connect(self.manualConnectDisconnect)
         self.testPin_Button.clicked.connect(self.testPin)
         self.begin_Button.clicked.connect(self.begin)
         self.sessionPause_pushButton.clicked.connect(self.pause)
@@ -649,6 +666,12 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
                 if isinstance(obj, QDoubleSpinBox):
                     obj.valueChanged.connect(self.getValues)
 
+    def manualConnectDisconnect(self):
+        if arduino['connected'] is False:
+            self.trialRunner.connectArduino()
+        elif arduino['connected'] is True:
+            self.trialRunner.disconnectArduino()
+
     def testPin(self):
         if arduino['connected'] is False:
             self.trialRunner.connectArduino()
@@ -660,12 +683,16 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
             self.updateCommFeed(temp_read, 'arduino')
 
     def arduinoConnected(self):
-        self.arduinoConnectedText_Label.setText('Connected')
-        self.arduinoConnectedText_Label.setStyleSheet('color:rgb(0, 188, 152);')
+        #self.arduinoConnectedText_Label.setText('Connected')
+        #self.arduinoConnectedText_Label.setStyleSheet('color:rgb(0, 188, 152);')
+        self.arduinoConnectDisconnect_pushButton.setText('Disconnect')
+        #self.arduinoConnectDisconnect_pushButton.setStyleSheet('color:rgb(0, 188, 152);')
+        self.arduino_GroupBox.setStyleSheet('QGroupBox {\n    border: 1px solid rgb(225, 225, 225);\n    margin-top: 1.1em;\n   background-color: rgb(226, 255, 242);\n}\n\nQGroupBox::title {\n    subcontrol-origin: margin;\n}')
 
     def arduinoDisconnected(self):
-        self.arduinoConnectedText_Label.setText('Not connected')
-        self.arduinoConnectedText_Label.setStyleSheet('color:rgb(255, 0, 100);')
+        self.arduinoConnectDisconnect_pushButton.setText('Connect')
+        #self.arduinoConnectedText_Label.setStyleSheet('color:rgb(255, 0, 100);')
+        self.arduino_GroupBox.setStyleSheet('QGroupBox {\n    border: 1px solid rgb(225, 225, 225);\n    margin-top: 1.1em;\n   background-color: rgb(255, 234, 238);\n}\n\nQGroupBox::title {\n    subcontrol-origin: margin;\n}')
 
     def makeTrialOrder(self):
         if not self.trialRunner._session_running:
@@ -1257,4 +1284,4 @@ if __name__ == '__main__':
     try:
         main(sys.argv)
     except Exception as e:
-        logging.exception(e)
+        logger.exception(e)

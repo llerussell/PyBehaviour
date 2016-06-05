@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>720</width>
+    <width>817</width>
     <height>865</height>
    </rect>
   </property>
@@ -117,6 +117,7 @@
              <string notr="true">QGroupBox {
     border: 1px solid rgb(225, 225, 225);
     margin-top: 1.1em;
+	background-color: rgb(255, 234, 238);
 }
 
 QGroupBox::title {
@@ -230,37 +231,6 @@ QGroupBox::title {
                  </property>
                 </widget>
                </item>
-               <item row="3" column="1" colspan="2">
-                <widget class="QPushButton" name="testPin_Button">
-                 <property name="enabled">
-                  <bool>true</bool>
-                 </property>
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>120</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="font">
-                  <font>
-                   <family>Arial</family>
-                   <pointsize>8</pointsize>
-                  </font>
-                 </property>
-                 <property name="focusPolicy">
-                  <enum>Qt::StrongFocus</enum>
-                 </property>
-                 <property name="text">
-                  <string>Test arduino pin</string>
-                 </property>
-                </widget>
-               </item>
                <item row="2" column="2">
                 <widget class="QDoubleSpinBox" name="testPinDuration_doubleSpinBox">
                  <property name="sizePolicy">
@@ -307,6 +277,37 @@ QGroupBox::title {
                  </property>
                 </widget>
                </item>
+               <item row="3" column="1" colspan="2">
+                <widget class="QPushButton" name="testPin_Button">
+                 <property name="enabled">
+                  <bool>true</bool>
+                 </property>
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>120</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Arial</family>
+                   <pointsize>8</pointsize>
+                  </font>
+                 </property>
+                 <property name="focusPolicy">
+                  <enum>Qt::StrongFocus</enum>
+                 </property>
+                 <property name="text">
+                  <string>Test arduino pin</string>
+                 </property>
+                </widget>
+               </item>
                <item row="0" column="1" colspan="2">
                 <widget class="QComboBox" name="device_ComboBox">
                  <property name="sizePolicy">
@@ -332,37 +333,6 @@ QGroupBox::title {
                  </property>
                 </widget>
                </item>
-               <item row="1" column="1" colspan="2">
-                <widget class="QLabel" name="arduinoConnectedText_Label">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>0</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="font">
-                  <font>
-                   <family>Arial</family>
-                   <pointsize>8</pointsize>
-                  </font>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">color:rgb(255, 0, 100)</string>
-                 </property>
-                 <property name="text">
-                  <string>Not connected</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignCenter</set>
-                 </property>
-                </widget>
-               </item>
                <item row="2" column="0">
                 <widget class="QLabel" name="label_29">
                  <property name="sizePolicy">
@@ -384,10 +354,20 @@ QGroupBox::title {
                   </font>
                  </property>
                  <property name="text">
-                  <string>Manual pin control</string>
+                  <string>Manual control</string>
                  </property>
                  <property name="alignment">
                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="1" colspan="2">
+                <widget class="QPushButton" name="arduinoConnectDisconnect_pushButton">
+                 <property name="text">
+                  <string>Connect</string>
+                 </property>
+                 <property name="checkable">
+                  <bool>false</bool>
                  </property>
                 </widget>
                </item>
@@ -418,7 +398,7 @@ QGroupBox::title {
             </property>
             <property name="styleSheet">
              <string notr="true">QGroupBox {
-    border: 1px solid rgb(225, 225, 225);
+    border: 1px solid rgb(120,120,120);
     margin-top: 1.1em;
 }
 
@@ -877,7 +857,7 @@ QGroupBox#trial_GroupBox::title {
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>637</width>
+                    <width>734</width>
                     <height>1212</height>
                    </rect>
                   </property>
