@@ -39,6 +39,7 @@ from PyQt5.QtGui import QColor, QIcon, QPalette
 from GUI import GUI
 from GUI import serial_ports
 import logging
+#from scipy.signal import savgol_filter
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -71,25 +72,28 @@ class TrialRunner(QObject):
         while not self._exiting:
             time.sleep(0.01)
             # the main session loop
-            while self._session_running:
-                if arduino['connected'] is False:
-                   self.connectArduino()
-                if arduino['connected']:
-                    while self._paused:
-                        time.sleep(0.01)
+            try:
+                while self._session_running:
+                    if arduino['connected'] is False:
+                       self.connectArduino()
+                    if arduino['connected']:
+                        while self._paused:
+                            time.sleep(0.01)
 
-                    self.runTrial(self.trial_num, trials)
+                        self.runTrial(self.trial_num, trials)
 
-                    self.trial_num += 1
-                    if p['sessionDurationMode'] == 'Trials':
-                        if self.trial_num == p['sessionDuration']:
-                            self._session_running = False
-                            # self.session_end_signal.emit()
-                else:
-                    self._session_running = False
+                        self.trial_num += 1
+                        if p['sessionDurationMode'] == 'Trials':
+                            if self.trial_num == p['sessionDuration']:
+                                self._session_running = False
+                                # self.session_end_signal.emit()
+                    else:
+                        self._session_running = False
 
-                if self._session_running is False:
-                    self.session_end_signal.emit()
+                    if self._session_running is False:
+                        self.session_end_signal.emit()
+            except Exception as e:
+                logger.exception(e)
 
 
     def connectArduino(self):
@@ -152,6 +156,7 @@ class TrialRunner(QObject):
                 prev_trials = p['trialOrder'][:trial_num]
             if (trial_num >= max_repeats) and (np.sum(trials['running_score'][-max_repeats:]) == -max_repeats) and (prev_trials.min() == prev_trials.max()):
                     pass  # do not repeat any more if max_repeats of a stim has been exceeded
+                    # add in here the option of changing to a different stim type if desired
             elif trials['running_score'][trial_num-1] <= 0:
                 # make this stim same as previous
                 p['trialOrder'][trial_num] = p['trialOrder'][trial_num-1]
@@ -188,6 +193,7 @@ class TrialRunner(QObject):
         # auto reward?
         auto_reward = p['autoRewards'][this_stim_idx]
         trials['results'][trial_num]['auto_reward'] = auto_reward
+        # add in here the option to trigger auto reward if previous X trials were wrong
 
         # generate withold requirement (if enabled)
         if p['witholdBeforeStim']:
@@ -273,18 +279,24 @@ class TrialRunner(QObject):
         # write config string to arduino
         arduino_ready = 0
         while not arduino_ready:
-            write_string = '@?'
-            self.comm_feed_signal.emit(write_string, 'pc')
-            arduino['device'].write(write_string.encode('utf-8'))
-            temp_read = arduino['device'].readline().strip().decode('utf-8')
-            self.comm_feed_signal.emit(temp_read, 'arduino')
-            if temp_read == '{!}':
-                arduino_ready = 1
-                write_string = config_string
+            try:
+                write_string = '@?'
                 self.comm_feed_signal.emit(write_string, 'pc')
                 arduino['device'].write(write_string.encode('utf-8'))
                 temp_read = arduino['device'].readline().strip().decode('utf-8')
                 self.comm_feed_signal.emit(temp_read, 'arduino')
+                if temp_read == '{!}':
+                    arduino_ready = 1
+                    write_string = config_string
+                    self.comm_feed_signal.emit(write_string, 'pc')
+                    arduino['device'].write(write_string.encode('utf-8'))
+                    temp_read = arduino['device'].readline().strip().decode('utf-8')
+                    self.comm_feed_signal.emit(temp_read, 'arduino')
+            except Exception as e:
+                logger.exception(e)
+                self.comm_feed_signal.emit('Something went wrong', 'pc')
+                self.disconnectArduino()
+                self.connectArduino()
 
     # signals allow communication between the TrialRunner thread and GUI thread. i.e. send data to main GUI thread where it can be displayed and saved. I don't know why they are here outside of any function...
     response_signal = pyqtSignal(int, float, int, str, bool, name='responseSignal')
@@ -345,7 +357,6 @@ class TrialRunner(QObject):
                             trialRunning = False
                         elif temp_read == 'READY':  # arduino has reset
                             trialRunning = False
-                            self.disconnectArduino()
                         else:
                             data = temp_read.split('|')
                             for idx, val in enumerate(data):
@@ -510,31 +521,43 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
 
         num_trials = p['sessionDuration']
 
-        trials_ax_lim = [0, num_trials]
+        if p['autoScalePlots'] and self.trialRunner._session_running:
+            trials_ax_lim = [0, self.trialRunner.trial_num+1]
+        else:
+            trials_ax_lim = [0, num_trials]
 
         # response raster
         pre_stim_plot = 1
         self.rasterFigAx.set_xlim(-pre_stim_plot, p['trialDuration'])
-        self.rasterFigAx.set_ylim(trials_ax_lim)
+        self.rasterFigAx.set_ylim(trials_ax_lim[0], trials_ax_lim[1])
         self.raster_respwin.set_x(p['responseStart'])
         self.raster_respwin.set_width(p['responseWindow'])
-        self.raster_respwin.set_height(num_trials+1)
+        self.raster_respwin.set_height(trials_ax_lim[1]+1)
         self.raster_stimline.set_ydata(trials_ax_lim)
         self.raster_stimlength.set_x(p['stimStart'])
         self.raster_stimlength.set_width(p['stimLength'])
-        self.raster_stimlength.set_height(num_trials+1)
+        self.raster_stimlength.set_height(trials_ax_lim[1]+1)
 
         # performance line
-        self.performanceFigAx.set_ylim(-1, 1)
-        self.performanceFigAx.set_xlim(trials_ax_lim)
+        if p['negativeMarking'] == 0:
+            self.performanceFigAx.set_ylim(0, 1)
+            self.performanceFigAx.set_ylabel('Correct (%)')
+            self.performanceFigAx.set_yticks(np.linspace(0, 1, 10))
+            self.performanceFigAx.set_yticklabels([0,10,30,40,50,60,70,80,90,100])
+        else:
+            self.performanceFigAx.set_ylim(-1, 1)
+            self.performanceFigAx.set_ylabel('Score (%)')
+            self.performanceFigAx.set_yticks(np.linspace(-1, 1, 9))
+            self.performanceFigAx.set_yticklabels([-100, -75, -50, -25, 0, 25, 50, 75, 100])
+        self.performanceFigAx.set_xlim(trials_ax_lim[0], trials_ax_lim[1])
         self.perf_0_line.set_xdata(trials_ax_lim)
 
         # performance blocks
         num_stims = len(p['stimChannels'])
-        self.rasterFigPerfAx.set_ylim(trials_ax_lim)
+        self.rasterFigPerfAx.set_ylim(trials_ax_lim[0], trials_ax_lim[1])
         self.rasterFigPerfAx.set_xlim(0, num_stims)
         self.performanceFigPerfAx.set_ylim(0, num_stims)
-        self.performanceFigPerfAx.set_xlim(trials_ax_lim)
+        self.performanceFigPerfAx.set_xlim(trials_ax_lim[0], trials_ax_lim[1])
 
         self.rasterFigPerfAxIm.set_extent([0, num_stims, 0, num_trials])
         self.performanceFigPerfAxIm.set_extent([0, num_trials, 0, num_stims])
@@ -585,42 +608,62 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         num_stims = len(p['stimChannels'])
         num_trials = p['sessionDuration']
 
-        performance_record = np.ones([num_trials, num_stims, 3])
-        for t in range(trial_num+1):
-            if trials['results'][t]['correct']:
-                colour = [0, 0.85, 0.45]
-            elif trials['results'][t]['incorrect']:  # means incorrect
-                colour = [1, 0.1, 0.4]
-            elif trials['results'][t]['miss']:  # means miss
-                colour = [.7, .7, .7]
-            else:
-                colour = [1, 1, 1]
-            stim_idx = p['stimChannels'].index(p['trialOrder'][t])
-            performance_record[t, stim_idx] = colour
+        if trial_num == 0:
+            performance_record = np.ones([num_trials, num_stims, 3])
+        else:
+            performance_record = self.rasterFigPerfAxIm.get_array()
+
+        if trials['results'][trial_num]['correct']:
+            colour = [0, 0.85, 0.45]
+        elif trials['results'][trial_num]['incorrect']:  # means incorrect
+            colour = [1, 0.1, 0.4]
+        elif trials['results'][trial_num]['miss']:  # means miss
+            colour = [.7, .7, .7]
+        else:
+            colour = [1, 1, 1]
+        stim_idx = p['stimChannels'].index(p['trialOrder'][trial_num])
+        performance_record[trial_num, stim_idx] = colour
 
         self.rasterFigPerfAxIm.set_data(performance_record)
         self.performanceFigPerfAxIm.set_data(np.rot90(performance_record))
 
     def updateRunningPerformancePlot(self, trial_num):
         plot_series = self.runningScorePlot
-        old_ydata = plot_series.get_ydata()
-        moving_avg_size = 20
-        if trial_num >= moving_avg_size:
-            new_ydata = np.append(old_ydata, np.mean(trials['running_score'][-moving_avg_size:]))
-        else:
-            new_ydata = np.append(old_ydata, np.mean(trials['running_score']))
-        plot_series.set_ydata(new_ydata)
-        plot_series.set_xdata(range(len(new_ydata)))
+        ydata = np.zeros([trial_num+1], dtype=np.float32)
+        moving_avg_size = int(p['slidingWindowSize'])
+        running_score = trials['running_score']
+
+        if p['negativeMarking'] == 0:
+            running_score[running_score<0] = 0
+
+        # make moving average
+        for t in range(trial_num+1):
+            if t >= moving_avg_size:
+                ydata[t] = np.mean(running_score[t-moving_avg_size:t])
+            else:
+                ydata[t] = np.mean(running_score[:t+1])
+        # smooth = 1
+        # if smooth:
+        #     if len(ydata) < 5:
+        #         smooth_window = 1
+        #         poly_order = 0
+        #     else:
+        #         smooth_window = 3
+        #         poly_order = 2
+        #     ydata = savgol_filter(ydata, smooth_window, poly_order, mode='nearest')
+            # ydata = gaussian_filter1d(ydata, 10)
+        plot_series.set_ydata(ydata)
+        plot_series.set_xdata(range(1, len(ydata)+1))
 
         plot_series = self.averageScorePlot
-        plot_series.set_ydata([np.mean(trials['running_score']), np.mean(trials['running_score'])])
+        plot_series.set_ydata([np.mean(running_score), np.mean(running_score)])
         plot_series.set_xdata([0, p['sessionDuration']])
 
         for stim_type in p['stimChannels']:
             plot_series = self.subScorePlots[stim_type-1]
             mask = p['trialOrder'][:trial_num+1] == stim_type
             if mask.any():
-                plot_series.set_ydata([np.mean(trials['running_score'][mask]), np.mean(trials['running_score'][mask])])
+                plot_series.set_ydata([np.mean(running_score[mask]), np.mean(running_score[mask])])
                 plot_series.set_xdata([0, p['sessionDuration']])
 
     def setConnects(self):
@@ -652,7 +695,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         # auto add connects to update p and trial config plot whenever anything changes
         widgets = (QComboBox, QCheckBox, QLineEdit, QSpinBox, QDoubleSpinBox)
         groups = (self.session_GroupBox, self.arduino_GroupBox,
-                  self.trial_GroupBox)
+                  self.trial_GroupBox, self.plotOptions_groupBox)
         for group in groups:
             for obj in group.findChildren(widgets):
                 if isinstance(obj, QComboBox):
@@ -808,7 +851,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         # extract gui values
         widgets = (QComboBox, QCheckBox, QLineEdit, QSpinBox, QDoubleSpinBox)
         groups = (self.session_GroupBox, self.arduino_GroupBox,
-                  self.trial_GroupBox)
+                  self.trial_GroupBox, self.plotOptions_groupBox)
         for group in groups:
             for obj in group.findChildren(widgets):
                 fullname = str(obj.objectName())
@@ -923,7 +966,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
 
     def GUISave(self):
         widgets = (QComboBox, QCheckBox, QLineEdit, QSpinBox, QDoubleSpinBox)
-        groups = (self.session_GroupBox, self.arduino_GroupBox)
+        groups = (self.session_GroupBox, self.arduino_GroupBox, self.plotOptions_groupBox)
         for group in groups:
             for obj in group.findChildren(widgets):
                 name = str(obj.objectName())
@@ -944,7 +987,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         if os.path.isfile(os.path.join('GUI', 'GUIdefaults.cfg')):
             self.defaults = json.load(open(os.path.join('GUI', 'GUIdefaults.cfg'), 'r'))
             widgets = (QComboBox, QCheckBox, QLineEdit, QSpinBox, QDoubleSpinBox)
-            groups = (self.session_GroupBox, self.arduino_GroupBox)
+            groups = (self.session_GroupBox, self.arduino_GroupBox, self.plotOptions_groupBox)
             for group in groups:
                 for obj in group.findChildren(widgets):
                     name = str(obj.objectName())
@@ -1058,6 +1101,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
 
         self.rasterFigPerfAx = self.rasterFig.add_axes([0.9, 0.15, 0.05, 0.75])
         self.rasterFigPerfAx.axis('off')
+        self.rasterFigPerfAx.autoscale(False)
         self.rasterFigPerfAxIm = self.rasterFigPerfAx.imshow(np.ones([1,1,3]), interpolation='nearest', aspect='auto', origin='lower', extent=[0, 1, 0, 1])
 
         # results plot
@@ -1065,16 +1109,16 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         self.performanceFigCanvas = FigureCanvas(self.performanceFig)  # a canvas holds a figure
         self.performanceFigAx = self.performanceFig.add_axes([0.2, 0.15, 0.75, 0.7])
         self.resultsFigsHorizontalLayout.addWidget(self.performanceFigCanvas)
-        self.perf_0_line, = self.performanceFigAx.plot([0, 0], [0, 0], '-', c=[0.3, 0.3, 0.3], linewidth=1, zorder=6, clip_on=False)
+        self.perf_0_line, = self.performanceFigAx.plot([0, 0], [0, 0], '-', c=[0.3, 0.3, 0.3], linewidth=1, zorder=6, clip_on=True)
 
-        self.runningScorePlot, = self.performanceFigAx.plot(0, 0, 'k-', linewidth=2, aa=True, clip_on=False, zorder=9)
-        self.averageScorePlot, = self.performanceFigAx.plot(0, 0, '-', c=[0.7, 0.7, 0.7], linewidth=2, aa=True, clip_on=False, zorder=8)
+        self.runningScorePlot, = self.performanceFigAx.plot(0, 0, 'k-', linewidth=2, aa=True, clip_on=True, zorder=9)
+        self.averageScorePlot, = self.performanceFigAx.plot(0, 0, '-', c=[0.7, 0.7, 0.7], linewidth=2, aa=True, clip_on=True, zorder=8)
 
         NUM_STIMS = 8
         cmap = matplotlib.cm.get_cmap(name='rainbow', lut=NUM_STIMS-1)
         self.subScorePlots = []
         for sub_plot in range(NUM_STIMS):
-            temp, = self.performanceFigAx.plot([], [], '-', c=cmap(sub_plot), linewidth=1, aa=True, clip_on=False, zorder=7)
+            temp, = self.performanceFigAx.plot([], [], '-', c=cmap(sub_plot), linewidth=1, aa=True, clip_on=True, zorder=7)
             self.subScorePlots.append(temp)
 
         self.performanceFigAx.set_xlabel('Trial')
@@ -1088,6 +1132,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         self.performanceFigPerfAx = self.performanceFig.add_axes([0.2, 0.86, 0.75, 0.04])
         self.performanceFigPerfAx.axis('off')
         self.performanceFigPerfAx.set_title('Performance', loc='left')
+        self.performanceFigPerfAx.autoscale(False)
 
         self.performanceFigPerfAxIm = self.performanceFigPerfAx.imshow(np.ones([1,1,3]), interpolation='nearest', aspect='auto', origin='lower', extent=[0, 1, 0, 1])
 
@@ -1169,6 +1214,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         for plot_series in plots:
             plot_series.set_offsets(np.empty(0))
             plot_series.set_array(np.empty(0))
+        self.updatePlotLayouts()
         self.preTrialRasterFigAx.set_xlim([0, trials['results'][trial_num]['withold_req']])
         self.preTrialRasterFigCanvas.draw()
 
@@ -1178,9 +1224,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
     def updatePerformancePlots(self, trial_num):
         self.updateRunningPerformancePlot(trial_num)
         self.updateResultBlockPlots(trial_num)
-
-        self.rasterFigCanvas.draw()
-        self.performanceFigCanvas.draw()
+        self.updatePlotLayouts()
 
     def updateCommFeed(self, input_string, device=None):
         # input_string = input_string.replace('<', '{').replace('>', '}')
