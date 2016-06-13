@@ -143,35 +143,35 @@ void setup() {
   pinMode(responseWindowPin, OUTPUT);
   digitalWrite(responseWindowPin, LOW);
 
-  // for ( int i = 0; i < 99; ++i ) {
-  //   pinMode(i, OUTPUT);
-  //   digitalWrite(i, LOW);
-  // }
+  for ( int i = 0; i < 99; ++i ) {
+    pinMode(i, OUTPUT);
+    digitalWrite(i, LOW);
+  }
   
-  for ( int i = 0; i < sizeof(rewardPin); ++i ) {
-    pinMode(rewardPin[i], OUTPUT);
-    digitalWrite(rewardPin[i], LOW);
-  }
-  for ( int i = 0; i < sizeof(cuePin); ++i ) {
-    pinMode(cuePin[i], OUTPUT);
-    digitalWrite(cuePin[i], LOW);
-  }
-  for ( int i = 0; i < sizeof(stimPin); ++i ) {
-    pinMode(stimPin[i], OUTPUT);
-    digitalWrite(stimPin[i], LOW);
-  }
-  for ( int i = 0; i < sizeof(stimVariationPin); ++i ) {
-    pinMode(stimVariationPin[i], OUTPUT);
-    digitalWrite(stimVariationPin[i], LOW);
-  }
-  for ( int i = 0; i < sizeof(punishPin); ++i ) {
-    pinMode(punishPin[i], OUTPUT);
-    digitalWrite(punishPin[i], LOW);
-  }
-  for( int i = 0; i < sizeof(rewardRemovalPin);  ++i ) {
-   pinMode(rewardRemovalPin[i], OUTPUT);
-   digitalWrite(rewardRemovalPin[i], LOW);
-  }
+  // for ( int i = 0; i < sizeof(rewardPin); ++i ) {
+  //   pinMode(rewardPin[i], OUTPUT);
+  //   digitalWrite(rewardPin[i], LOW);
+  // }
+  // for ( int i = 0; i < sizeof(cuePin); ++i ) {
+  //   pinMode(cuePin[i], OUTPUT);
+  //   digitalWrite(cuePin[i], LOW);
+  // }
+  // for ( int i = 0; i < sizeof(stimPin); ++i ) {
+  //   pinMode(stimPin[i], OUTPUT);
+  //   digitalWrite(stimPin[i], LOW);
+  // }
+  // for ( int i = 0; i < sizeof(stimVariationPin); ++i ) {
+  //   pinMode(stimVariationPin[i], OUTPUT);
+  //   digitalWrite(stimVariationPin[i], LOW);
+  // }
+  // for ( int i = 0; i < sizeof(punishPin); ++i ) {
+  //   pinMode(punishPin[i], OUTPUT);
+  //   digitalWrite(punishPin[i], LOW);
+  // }
+  // for( int i = 0; i < sizeof(rewardRemovalPin);  ++i ) {
+  //  pinMode(rewardRemovalPin[i], OUTPUT);
+  //  digitalWrite(rewardRemovalPin[i], LOW);
+  // }
 }
 
 
