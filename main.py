@@ -40,6 +40,7 @@ from GUI import GUI
 from GUI import serial_ports
 import logging
 #from scipy.signal import savgol_filter
+#from scipy.ndimage.filters import gaussian_filter1d
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -98,21 +99,25 @@ class TrialRunner(QObject):
 
     def connectArduino(self):
         self.comm_feed_signal.emit('Connecting Arduino on port ' + p['device'], 'pc')
-        arduino['device'] = serial.Serial(p['device'], 19200)
-        arduino['device'].timeout = 1
-        connect_attempts = 1
-        current_attempt = 1
-        while arduino['connected'] is False and current_attempt <= connect_attempts:
-            temp_read = arduino['device'].readline().strip().decode('utf-8')
-            self.comm_feed_signal.emit(temp_read, 'arduino')
-            if temp_read == '{READY}':
-                arduino['connected'] = True
-                self.arduino_connected_signal.emit()
-            else:
-                current_attempt += 1
-            if current_attempt > connect_attempts:
-                self.comm_feed_signal.emit('Failed to connect', 'pc')
-                arduino['device'].close()
+        try:
+            arduino['device'] = serial.Serial(p['device'], 19200)
+            arduino['device'].timeout = 1
+            connect_attempts = 1
+            current_attempt = 1
+            while arduino['connected'] is False and current_attempt <= connect_attempts:
+                temp_read = arduino['device'].readline().strip().decode('utf-8')
+                self.comm_feed_signal.emit(temp_read, 'arduino')
+                if temp_read == '{READY}':
+                    arduino['connected'] = True
+                    self.arduino_connected_signal.emit()
+                else:
+                    current_attempt += 1
+                if current_attempt > connect_attempts:
+                    self.comm_feed_signal.emit('Failed to connect', 'pc')
+                    arduino['device'].close()
+        except serial.SerialException as e:
+            logger.exception(e)
+            self.comm_feed_signal.emit('Serial error', 'pc')
 
     def disconnectArduino(self):
         if arduino['connected']:
@@ -139,6 +144,10 @@ class TrialRunner(QObject):
         trials['results'][trial_num]['response_required'] = []
         trials['results'][trial_num]['reward_channel'] = []
         trials['results'][trial_num]['parameters'] = p
+        trials['results'][trial_num]['firstresponse'] = []
+        trials['results'][trial_num]['correct'] = []
+        trials['results'][trial_num]['incorrect'] = []
+        trials['results'][trial_num]['miss'] = []
 
     def transmitConfig(self, trial_num):
         '''
@@ -322,10 +331,6 @@ class TrialRunner(QObject):
             try:
                 if arduino['connected'] == False:
                     self.comm_feed_signal.emit('Arduino not connected', 'pc')
-                    trials['results'][trial_num]['firstresponse'] = 0
-                    trials['results'][trial_num]['correct'] = 0
-                    trials['results'][trial_num]['incorrect'] = 0
-                    trials['results'][trial_num]['miss'] = 0
                     trials['running_score'] = np.append(trials['running_score'], 0)
                     trialRunning = False  # abort current trial if arduino disconnects
 
@@ -380,11 +385,7 @@ class TrialRunner(QObject):
                 logger.exception(e)
                 if self._session_running:
                     self.comm_feed_signal.emit('Something went wrong', 'pc')
-                    self.disconnectArduino()
-                    trials['results'][trial_num]['firstresponse'] = 0
-                    trials['results'][trial_num]['correct'] = 0
-                    trials['results'][trial_num]['incorrect'] = 0
-                    trials['results'][trial_num]['miss'] = 0
+                    self.connectArduino()
                     trials['running_score'] = np.append(trials['running_score'], 0)
                     trialRunning = False
 
