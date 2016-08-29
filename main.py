@@ -838,15 +838,30 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
 
     def loadTrialOrder(self):
         filepath = str(QFileDialog.getOpenFileName(self, 'Load trial sequence', trial_sequence_directory, '*.txt')[0])
-        arr = np.genfromtxt(filepath, delimiter=',')
-        p['trialOrder'] = arr[0]
-        p['trialVariations'] = arr[1]
+        if filepath:
+            arr = np.genfromtxt(filepath, delimiter=',')
+            p['trialOrder'] = arr[0]
+            p['trialVariations'] = arr[1]
+            self.plotTrialOrder()
 
-        filename = os.path.splitext(os.path.basename(filepath))[0]
-        self.stimOrder_ComboBox.setCurrentIndex(2)
-        self.loadedTrialSequence_label.setText('Loaded: ' + filename)
+            filename = os.path.splitext(os.path.basename(filepath))[0]
+            self.stimOrder_ComboBox.setCurrentIndex(2)
+            self.loadedTrialSequence_label.setText('(' + filename + ')')
 
-        self.getValues()
+            # set num trials
+            self.sessionDuration_SpinBox.setValue(len(p['trialOrder']))
+
+            # set the appropriate stim check boxes
+            unique_stims = np.unique(p['trialOrder'])
+            stimCheckBoxes = [self.stim1_CheckBox, self.stim2_CheckBox, self.stim3_CheckBox, self.stim4_CheckBox,
+                              self.stim5_CheckBox, self.stim6_CheckBox, self.stim7_CheckBox, self.stim8_CheckBox]
+            for i, check_box in enumerate(stimCheckBoxes):
+                if i+1 in unique_stims:
+                    check_box.setChecked(True)
+                else:
+                    check_box.setChecked(False)
+
+            self.getValues()
 
     def getValues(self):
         # extract gui values
