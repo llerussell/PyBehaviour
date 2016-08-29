@@ -163,8 +163,8 @@ class TrialRunner(QObject):
                 prev_trials = p['trialOrder'][trial_num-max_repeats:trial_num]
             else:
                 prev_trials = p['trialOrder'][:trial_num]
-            if (trial_num >= max_repeats) and (np.sum(trials['running_score'][-max_repeats:]) == -max_repeats) and (prev_trials.min() == prev_trials.max()):
-                    pass  # do not repeat any more if max_repeats of a stim has been exceeded
+            if (trial_num >= max_repeats) and (np.sum(trials['running_score'][-max_repeats:]) <= 0) and (prev_trials.min() == prev_trials.max()):
+                pass  # do not repeat any more if max_repeats of a stim has been exceeded
                     # add in here the option of changing to a different stim type if desired
             elif trials['running_score'][trial_num-1] <= 0:
                 # make this stim same as previous
