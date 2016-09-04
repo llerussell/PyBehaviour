@@ -2,7 +2,7 @@
 % Lloyd Russell
 
 %%
-subjects = {''};
+subjects = {'A123'};
 
 %%
 current_mfile_path = mfilename('fullpath');
