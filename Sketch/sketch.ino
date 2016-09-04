@@ -445,6 +445,12 @@ void runTrial() {
   trialRunning = true;
   digitalWrite(trialRunningPin, HIGH);
 
+  int bits[] = {0,0,0,0};
+  for (int i = 3; i >= 0; i--) {
+    bits[i] = (stimVariation & (1 << i)) != 0;
+    digitalWrite(stimVariationPin[i], bits[i]);
+  }
+
   // deliver trial cue
   if (trialStartCue) {
     Serial.println("trial cue");
@@ -589,12 +595,6 @@ void txData() {
 }
 
 void stimOn() {
-  // stim variation, binary 'barcode' (1:16)
-  int bits[] = {0,0,0,0};
-    for (int i = 3; i >= 0; i--) {
-        bits[i] = (stimVariation & (1 << i)) != 0;
-        digitalWrite(stimVariationPin[i], bits[i]);
-    }
   digitalWrite(stimPin[stimChan], HIGH);
   if (stimStartCue) {
     tCueOn.setIterations(1);  // reset iterations to allow repeat
