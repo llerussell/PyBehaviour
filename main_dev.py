@@ -42,6 +42,7 @@ from PyQt5.QtGui import QColor, QIcon, QPalette
 from GUI import GUI
 from GUI import serial_ports
 import logging
+import pickle
 #from scipy.signal import savgol_filter
 #from scipy.ndimage.filters import gaussian_filter1d
 
@@ -1533,14 +1534,20 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         #print(input_string)
 
     def saveResults(self):
+        #if not divmod(self.trialRunner.trial_num, 10)[1]:
         save_directory = os.path.join(results_directory, p['subjectID'])
         if not os.path.exists(save_directory):
             os.makedirs(save_directory)
         save_name = os.path.join(save_directory, p['sessionID'])
 
-        sio.savemat(save_name + '.mat', trials)
-        self.updateCommFeed('Saved to ' + p['sessionID'] + '.mat')
 
+        started = time.time()
+        with open(save_name + '.pkl', 'wb') as pkl:
+            pickle.dump(trials, pkl, -1)
+        self.updateCommFeed('Saved to ' + p['sessionID'] + '.mat')
+        elapsed = time.time() - started
+        
+        
         # save figures to pdf (slow, take 0.5s to complete)
         with PdfPages(save_name + '.pdf') as pdf:
            pdf.savefig(self.rasterFig)
@@ -1549,6 +1556,9 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         # save terminal outputs to text file
         with open(save_name + '.txt', 'w') as log:
             log.write('\n'.join(self.trial_log))
+
+        
+        print(self.trialRunner.trial_num, 'save time:', elapsed)
 
 
 # Main entry to program.  Sets up the main app and create a new window.
