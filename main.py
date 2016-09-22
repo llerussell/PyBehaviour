@@ -507,6 +507,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
 
     def reset(self):
         self.trialRunner.trial_num = 0
+        NUM_STIMS = 8
         num_stims = len(p['stimChannels'])
         num_trials = p['sessionDuration']
         num_max_variations = max(p['variations'])
@@ -555,7 +556,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         self.hist_bins = np.arange(0, p['trialDuration'], 0.1)
         counts,edges = np.histogram(trials['reaction_time'], bins=self.hist_bins)
 
-        for stim in range(num_stims):
+        for stim in range(NUM_STIMS):
             self.reactionTimeHists[stim].set_xdata(edges[:-1])
             self.reactionTimeHists[stim].set_ydata(counts)
             if stim+1 in p['stimChannels']:
@@ -585,7 +586,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
             self.summaryResultsAx.set_xticks(np.arange(0,num_stims))
             self.summaryResultsAx.set_xticklabels(np.arange(0,num_stims)+1)
 
-        for stim in range(num_stims):
+        for stim in range(NUM_STIMS):
             self.summaryResultsPlot[stim].set_xdata(0)
             self.summaryResultsPlot[stim].set_ydata(0)
             if stim+1 in p['stimChannels']:
