@@ -445,6 +445,7 @@ void runTrial() {
   trialRunning = true;
   digitalWrite(trialRunningPin, HIGH);
 
+  // stim variation, binary 'barcode' (0:15)
   int bits[] = {0,0,0,0};
   for (int i = 3; i >= 0; i--) {
     bits[i] = (stimVariation & (1 << i)) != 0;

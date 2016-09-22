@@ -15,3 +15,5 @@
 *.tif
 
 *.log
+*.pkl
+Analysis/MATLAB/loadpickle_test.m
