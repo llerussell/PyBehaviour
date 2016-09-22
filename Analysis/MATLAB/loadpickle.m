@@ -36,7 +36,9 @@ matname = strrep(filename, '.pkl', '.mat');
 % if .mat file doesn't exist, create it
 if ~exist(matname, 'file')
     % call python script to deserialise pickle and resave as mat file
-    py.scipy.io.savemat(matname, py.pickle.load(py.open(filename, 'rb')));
+    py.scipy.io.savemat(matname, ...
+                        py.pickle.load(py.open(filename, 'rb'), ...
+                                       pyargs('encoding','latin1')));
 end
 
 % load in .mat file
