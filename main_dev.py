@@ -540,7 +540,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         self.rasterFigPerfAxIm.set_data(np.full([num_trials,num_stims], np.nan))
         self.performanceFigPerfAxIm.set_data(np.full([num_stims,num_trials], np.nan))
 
-        self.updatePlotLayouts()
+
 
         # reset the trial results dictionary
         global trials
@@ -594,6 +594,8 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
             else:
                 self.summaryResultsPlot[stim].set_visible(False)
 
+        self.updatePlotLayouts()
+
 
     def pause(self):
         self.trialRunner._paused = not self.trialRunner._paused
@@ -622,12 +624,16 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
             arduino['device'].write(write_string.encode('utf-8'))
 
     def updatePlotLayouts(self):
+                
         self.preTrialRasterFigAx.set_xlim(0, p['witholdBeforeStimPlotVal'])
 
         num_trials = p['sessionDuration']
+
         trial_num = self.trialRunner.trial_num
 
-        if p['autoScalePlots'] and self.trialRunner._session_running:
+        self.updateResultBlockPlots(trial_num)
+
+        if p['autoScalePlots']:
             if (num_trials>20) & (trial_num<20):
                 trials_ax_lim = [0,20]
             else:
@@ -684,9 +690,9 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
 
         # performance blocks
         num_max_variations = max(p['variations'])
-        self.rasterFigPerfAxIm.set_extent(   [0,0.75, 0,(num_trials+1)/(trials_ax_lim[1])])
-        self.rasterFigPerfAxVarIm.set_extent([0.85,1, 0,(num_trials+1)/(trials_ax_lim[1])])
-        self.performanceFigPerfAxIm.set_extent([      0,(num_trials+1)/(trials_ax_lim[1]),0,1])
+        self.rasterFigPerfAxIm.set_extent(   [0,0.75, 0,(num_trials-2)/(trials_ax_lim[1]-1)])
+        self.rasterFigPerfAxVarIm.set_extent([0.85,1, 0,(num_trials-2)/(trials_ax_lim[1]-1)])
+        self.performanceFigPerfAxIm.set_extent([      0,(num_trials-2)/(trials_ax_lim[1]-1),0,1])
 
         self.rasterFigPerfAxVarIm.set_clim([0,num_max_variations-1])
 
@@ -786,44 +792,52 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
 
     def updateResultBlockPlots(self, trial_num):
         # initialise
-        num_stims = len(p['stimChannels'])
-        num_trials = p['sessionDuration']
-        performance_record = np.full([num_trials, num_stims], np.nan)
-        variation_record = np.array(p['trialVariations']).reshape([-1,1])
-        variation_record[trial_num+1:] = np.nan
+        stored_variations = self.live_trialvariations.get_array()[0]
+        stored_trialorder = self.live_trialorder.get_array()[0]
+        num_stims = len(np.unique(stored_trialorder))
+        num_trials = len(stored_trialorder)
 
-        # build the performance record
-        for t in range(trial_num+1):
-            s = p['stimChannels'].index(p['trialOrder'][t])
-            performance_record[t,s] = trials['running_score'][t]
-    
-        # sort the raster plots?
-        if p['sortPlots']:
-            # sort the performance bar
-            order = np.arange(num_trials)
-            #order[:trial_num+1] = np.argsort(p['trialOrder'][:trial_num+1], kind='mergesort')
-            order[:trial_num+1] = np.lexsort([p['trialVariations'][:trial_num+1], p['trialOrder'][:trial_num+1]])
+        if (trial_num > 0) and (trial_num <= num_trials):
+            performance_record = np.full([num_trials, num_stims], np.nan)
+            variation_record = np.array(stored_variations).reshape([-1,1])
+            variation_record[trial_num:] = np.nan
 
-            # sort the response raster
-            offsets = np.copy(plot_data['offsets'])
-            y = np.copy(offsets[1::2]) -1  # trial number
-            new_y = np.copy(y)
-            for val in np.unique(y):
-                new_val = np.argwhere(order==val)
-                new_y[y==val] = new_val
-            offsets[1::2] = new_y
-
-        else:
-            order = np.arange(num_trials)
-            offsets = np.copy(plot_data['offsets'])
+            # build the performance record
+            for t in range(trial_num):
+                s = p['stimChannels'].index(stored_trialorder[t])
+                performance_record[t,s] = trials['running_score'][t]
         
-        self.rasterFigPerfAxIm.set_data(performance_record[order])
-        self.rasterFigPerfAxVarIm.set_data(variation_record[order])
+            # sort the raster plots?
+            if p['sortPlots']:
+                # sort the performance bar
+                order = np.arange(num_trials)
+                #order[:trial_num+1] = np.argsort(p['trialOrder'][:trial_num+1], kind='mergesort')
+                order[:trial_num+1] = np.lexsort([stored_variations[:trial_num+1], stored_trialorder[:trial_num+1]])
 
-        self.raster_responses.set_offsets(offsets)
+                # sort the response raster
+                offsets = np.copy(plot_data['offsets'])
+                y = np.copy(offsets[1::2]) -1  # trial number
+                new_y = np.copy(y)
+                for val in np.unique(y):
+                    new_val = np.argwhere(order==val)
+                    new_y[y==val] = new_val
+                offsets[1::2] = new_y
 
-        # update the performance bar (never sorted)
-        self.performanceFigPerfAxIm.set_data(np.rot90(performance_record))
+            else:
+                order = np.arange(num_trials)
+                offsets = np.copy(plot_data['offsets'])
+            
+            self.rasterFigPerfAxIm.set_data(performance_record[order])
+            self.rasterFigPerfAxVarIm.set_data(variation_record[order])
+
+            self.raster_responses.set_offsets(offsets)
+
+            if trial_num < num_trials:
+                self.raster_current_trial.set_xdata(self.rasterFigAx.get_xlim())
+                self.raster_current_trial.set_ydata([np.argwhere(order==trial_num)+1, np.argwhere(order==trial_num)+1])
+
+            # update the performance bar (never sorted)
+            self.performanceFigPerfAxIm.set_data(np.rot90(performance_record))
 
     def updateRunningPerformancePlot(self, trial_num):
         ydata = np.zeros([trial_num+1], dtype=np.float32)
@@ -1500,21 +1514,16 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         self.live_trialvariations.set_data([p['trialVariations']])
         self.live_trialvariations.set_clim([0, max(p['trialVariations'])])
         self.trialOrderLiveTabCanvas.draw()
-
-        self.raster_current_trial.set_xdata(self.rasterFigAx.get_xlim())
-        self.raster_current_trial.set_ydata([trial_num+1, trial_num+1])
         
         self.updatePlotLayouts()
 
 
     def trialStopGUI(self, trial_num):
-        self.updatePlotLayouts()
         self.saveResults()
 
     def updatePerformancePlots(self, trial_num):
         self.summaryResults(trial_num)
         self.updateRunningPerformancePlot(trial_num)
-        self.updateResultBlockPlots(trial_num)
         self.updatePlotLayouts()
 
 
@@ -1531,7 +1540,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
             # self.fromSessionFeed_textEdit.setText('')
             input_string = input_string
         self.trial_log.append(input_string)
-        #print(input_string)
+        print(input_string)
 
     def saveResults(self):
         #if not divmod(self.trialRunner.trial_num, 10)[1]:
@@ -1540,13 +1549,10 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
             os.makedirs(save_directory)
         save_name = os.path.join(save_directory, p['sessionID'])
 
-
-        started = time.time()
+        # save data to pickle
         with open(save_name + '.pkl', 'wb') as pkl:
             pickle.dump(trials, pkl, -1)
-        self.updateCommFeed('Saved to ' + p['sessionID'] + '.mat')
-        elapsed = time.time() - started
-        
+        self.updateCommFeed('Saved to ' + p['sessionID'] + '.pkl')
         
         # save figures to pdf (slow, take 0.5s to complete)
         with PdfPages(save_name + '.pdf') as pdf:
@@ -1557,8 +1563,6 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         with open(save_name + '.txt', 'w') as log:
             log.write('\n'.join(self.trial_log))
 
-        
-        print(self.trialRunner.trial_num, 'save time:', elapsed)
 
 
 # Main entry to program.  Sets up the main app and create a new window.
@@ -1619,10 +1623,18 @@ if __name__ == '__main__':
     global plot_data
 
     trials = {}
+    trials['results'] = np.full([1,1], np.nan)
+    trials['running_score'] = np.full([1,1], np.nan)
+    trials['reaction_time'] = np.full([1,1], np.nan)
+    trials['correct_tally'] = 0  # not currently used, but will be used for auto incrementing
+
+    plot_data = {}
+    plot_data['offsets'] = []
+
     arduino = {}
     arduino['connected'] = False
     p = {}
-    plot_data = {}
+
 
     # start random number seed
     np.random.seed()
