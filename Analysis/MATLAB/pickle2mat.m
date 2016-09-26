@@ -29,14 +29,14 @@ function varargout = pickle2mat(varargin)
 
 % parse inputs
 p = inputParser;
-p.addOptional('filename', false);
+p.addOptional('filename', '');
 p.addOptional('overwrite', false);
 parse(p, varargin{:});
 filename = p.Results.filename;
 overwrite = p.Results.overwrite;
 
 % open file select dialog if no filename provided
-if ~filename
+if strcmpi(filename, '')
    [filename,pathname] = uigetfile('*.pkl'); 
    filename = [pathname filesep filename];
 end
@@ -51,6 +51,6 @@ if ~exist(matname, 'file') || (exist(matname, 'file') && overwrite)
 end
 
 % load .mat file, if requested
-if nargout || ~p.Results.filename
+if (nargout) || strcmpi(p.Results.filename,'')
     varargout{1} = load(matname);
 end

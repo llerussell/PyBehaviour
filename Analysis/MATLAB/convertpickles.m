@@ -23,7 +23,7 @@ for f = 1:num_files
     waitbar(f/num_files, h, ['Current file: ' strrep(strrep(filelist{f},'\','/'), '_','\_')], 'Interpreter','none');
     
     % do conversion
-    pickle2mat(filelist{f}, 'overwrite',false);
+    pickle2mat('filename',filelist{f}, 'overwrite',false);
     
 end
 close(h)

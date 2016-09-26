@@ -21,19 +21,20 @@ def pickle2mat(filename, overwrite=False):
 def update_progress(workdone):
 	sys.stdout.write("\rProgress: [{0:50s}] {1:.1f}%".format('#' * int(workdone * 50), workdone*100))
 
-# select main directory
-root = tk.Tk()
-root.withdraw()
-directory = filedialog.askdirectory()
+if __name__ == '__main__':
+	# select main directory
+	root = tk.Tk()
+	root.withdraw()
+	directory = filedialog.askdirectory()
 
-# build file list
-filelist = glob.glob(os.path.join(directory, '**', '*.pkl'))
-num_files = len(filelist)
+	# build file list
+	filelist = glob.glob(os.path.join(directory, '**', '*.pkl'))
+	num_files = len(filelist)
 
-# convert file list
-for f, filename in enumerate(filelist):
-	print('[' + str(f+1) + ' of ' + str(num_files) + '] - ' + filename)
-	#update_progress(f/num_files)
-	pickle2mat(filename)
+	# convert file list
+	for f, filename in enumerate(filelist):
+		print('[' + str(f+1) + ' of ' + str(num_files) + '] - ' + filename)
+		#update_progress(f/num_files)
+		pickle2mat(filename)
 
-print('Done')
+	print('Done')
