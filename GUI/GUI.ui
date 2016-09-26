@@ -7106,7 +7106,7 @@ QGroupBox::title {
               <number>10</number>
              </property>
              <item>
-              <layout class="QGridLayout" name="gridLayout_4">
+              <layout class="QGridLayout" name="gridLayout_4" columnstretch="1,1">
                <item row="0" column="0">
                 <layout class="QVBoxLayout" name="preTrialResponseVerticalLayout">
                  <property name="spacing">
@@ -7154,10 +7154,10 @@ QGroupBox::title {
                  </property>
                  <layout class="QVBoxLayout" name="verticalLayout_14">
                   <property name="spacing">
-                   <number>5</number>
+                   <number>0</number>
                   </property>
                   <property name="leftMargin">
-                   <number>4</number>
+                   <number>5</number>
                   </property>
                   <property name="topMargin">
                    <number>5</number>
@@ -7170,6 +7170,23 @@ QGroupBox::title {
                   </property>
                   <item>
                    <layout class="QGridLayout" name="plotOptions_gridLayout">
+                    <item row="1" column="3">
+                     <layout class="QHBoxLayout" name="horizontalLayout_15">
+                      <item>
+                       <widget class="QCheckBox" name="negativeMarking_checkBox">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <property name="text">
+                         <string/>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
+                    </item>
                     <item row="0" column="2">
                      <widget class="QLabel" name="label_23">
                       <property name="sizePolicy">
@@ -7191,6 +7208,51 @@ QGroupBox::title {
                       </property>
                       <property name="alignment">
                        <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="0" column="4">
+                     <widget class="QLabel" name="label_35">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <pointsize>7</pointsize>
+                       </font>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">font-size: 7pt;</string>
+                      </property>
+                      <property name="text">
+                       <string>Sliding window</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="0" column="1">
+                     <widget class="QLabel" name="label_37">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <pointsize>7</pointsize>
+                       </font>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">font-size: 7pt;</string>
+                      </property>
+                      <property name="text">
+                       <string>Sort raster</string>
                       </property>
                      </widget>
                     </item>
@@ -7221,27 +7283,22 @@ QGroupBox::title {
                       </property>
                      </widget>
                     </item>
-                    <item row="1" column="0">
-                     <spacer name="horizontalSpacer_3">
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                      <property name="orientation">
-                       <enum>Qt::Horizontal</enum>
-                      </property>
-                      <property name="sizeType">
-                       <enum>QSizePolicy::Expanding</enum>
-                      </property>
-                      <property name="sizeHint" stdset="0">
-                       <size>
-                        <width>40</width>
-                        <height>20</height>
-                       </size>
-                      </property>
-                     </spacer>
+                    <item row="1" column="1">
+                     <layout class="QHBoxLayout" name="horizontalLayout_5">
+                      <item>
+                       <widget class="QCheckBox" name="sortPlots_checkBox">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <property name="text">
+                         <string/>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
                     </item>
                     <item row="1" column="2">
                      <layout class="QHBoxLayout" name="horizontalLayout_13">
@@ -7259,47 +7316,6 @@ QGroupBox::title {
                        </widget>
                       </item>
                      </layout>
-                    </item>
-                    <item row="1" column="3">
-                     <layout class="QHBoxLayout" name="horizontalLayout_15">
-                      <item>
-                       <widget class="QCheckBox" name="negativeMarking_checkBox">
-                        <property name="sizePolicy">
-                         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                          <horstretch>0</horstretch>
-                          <verstretch>0</verstretch>
-                         </sizepolicy>
-                        </property>
-                        <property name="text">
-                         <string/>
-                        </property>
-                       </widget>
-                      </item>
-                     </layout>
-                    </item>
-                    <item row="0" column="4">
-                     <widget class="QLabel" name="label_35">
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                      <property name="font">
-                       <font>
-                        <pointsize>7</pointsize>
-                       </font>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true">font-size: 7pt;</string>
-                      </property>
-                      <property name="text">
-                       <string>Sliding window</string>
-                      </property>
-                      <property name="alignment">
-                       <set>Qt::AlignCenter</set>
-                      </property>
-                     </widget>
                     </item>
                     <item row="1" column="4">
                      <widget class="QSpinBox" name="slidingWindowSize_spinBox">
@@ -7337,43 +7353,27 @@ QGroupBox::title {
                       </property>
                      </widget>
                     </item>
-                    <item row="0" column="1">
-                     <widget class="QLabel" name="label_37">
+                    <item row="1" column="0">
+                     <spacer name="horizontalSpacer_3">
                       <property name="sizePolicy">
-                       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                       <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
                       </property>
-                      <property name="font">
-                       <font>
-                        <pointsize>7</pointsize>
-                       </font>
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
                       </property>
-                      <property name="styleSheet">
-                       <string notr="true">font-size: 7pt;</string>
+                      <property name="sizeType">
+                       <enum>QSizePolicy::Expanding</enum>
                       </property>
-                      <property name="text">
-                       <string>Sort</string>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>40</width>
+                        <height>20</height>
+                       </size>
                       </property>
-                     </widget>
-                    </item>
-                    <item row="1" column="1">
-                     <layout class="QHBoxLayout" name="horizontalLayout_5">
-                      <item>
-                       <widget class="QCheckBox" name="sortPlots_checkBox">
-                        <property name="sizePolicy">
-                         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                          <horstretch>0</horstretch>
-                          <verstretch>0</verstretch>
-                         </sizepolicy>
-                        </property>
-                        <property name="text">
-                         <string/>
-                        </property>
-                       </widget>
-                      </item>
-                     </layout>
+                     </spacer>
                     </item>
                    </layout>
                   </item>

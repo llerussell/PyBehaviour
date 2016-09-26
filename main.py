@@ -28,6 +28,7 @@ seaborn.set(rc={
 import numpy as np
 import scipy.io as sio
 from scipy import stats
+from statsmodels.stats.proportion import proportion_confint
 import json
 import os
 import time
@@ -60,7 +61,6 @@ handler.setFormatter(formatter)
 logger.addHandler(handler)
 
 logger.info('Started application')
-
 
 class TrialRunner(QObject):
     '''
@@ -420,6 +420,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
 
         # make colormaps
         self.NUM_STIMS = 8
+        self.NUM_VARS = 16
         self.defineColormaps()
 
         # place figure widgets
@@ -512,16 +513,10 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         num_trials = p['sessionDuration']
         num_max_variations = max(p['variations'])
 
-        # if self.trialRunner._session_running:
-            # self.trialRunner.stop()
-            # self.trialThread.quit()
-
         # reset perfromance plots
         plots = [self.runningScorePlot, self.averageScorePlot]
         for plot in plots:
-            plot.set_data([0, 0])
-        # for plot in self.subScorePlots:
-        #     plot.set_data([[], []])
+            plot.set_data([np.empty(0), np.empty(0)])
 
         # reset raster plots
         plots = [self.preTrialRaster_responses, self.raster_responses]
@@ -538,9 +533,8 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
 
         # reset the performance block plots
         self.rasterFigPerfAxIm.set_data(np.full([num_trials,num_stims], np.nan))
+        self.rasterFigPerfAxVarIm.set_data(np.full([num_trials,num_stims], np.nan))
         self.performanceFigPerfAxIm.set_data(np.full([num_stims,num_trials], np.nan))
-
-
 
         # reset the trial results dictionary
         global trials
@@ -550,31 +544,22 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         trials['reaction_time'] = np.full([num_trials,1], np.nan)
         trials['correct_tally'] = 0  # not currently used, but will be used for auto incrementing
 
-        self.trial_log[:] = []
+        self.trial_log = []
 
         # reset reaction time hists
         self.hist_bins = np.arange(0, p['trialDuration'], 0.1)
         counts,edges = np.histogram(trials['reaction_time'], bins=self.hist_bins)
 
         for stim in range(NUM_STIMS):
-            self.reactionTimeHists[stim].set_xdata(edges[:-1])
-            self.reactionTimeHists[stim].set_ydata(counts)
+            self.reactionTimeHists[stim].set_xy(np.empty([1,2]))
+            #self.reactionTimeHists[stim].set_xy(np.hstack([np.random.rand(4,1), np.random.randint(0,5,[4,1])]))
             if stim+1 in p['stimChannels']:
                 self.reactionTimeHists[stim].set_visible(True)
             else:
                 self.reactionTimeHists[stim].set_visible(False)
 
-        # # reset sumamry results matrix
-        # num_stims = len(p['stimChannels'])
-        # num_max_variations = max(p['variations'])
-        # self.summaryResultsIm.set_data(np.full([num_max_variations,num_stims], np.nan))
-        # self.summaryResultsAx.set_yticks(np.arange(0,1,(1/num_max_variations))+(1/num_max_variations)/2)
-        # self.summaryResultsAx.set_yticklabels(np.arange(1,num_max_variations+1))
-        # self.summaryResultsAx.set_xticks(np.arange(0,1,(1/num_stims))+(1/num_stims)/2)
-        # self.summaryResultsAx.set_xticklabels(np.arange(1,num_stims+1))
 
         # reset summary results plot
-
         if num_max_variations > 1:
             self.summaryResultsAx.set_xlabel('Variation')
             self.summaryResultsAx.set_xlim([-1,num_max_variations])
@@ -586,9 +571,14 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
             self.summaryResultsAx.set_xticks(np.arange(0,num_stims))
             self.summaryResultsAx.set_xticklabels(np.arange(0,num_stims)+1)
 
-        for stim in range(NUM_STIMS):
-            self.summaryResultsPlot[stim].set_xdata(0)
-            self.summaryResultsPlot[stim].set_ydata(0)
+        for stim in range(self.NUM_STIMS):
+            self.summaryResultsPlot[stim].set_xdata(np.nan)
+            self.summaryResultsPlot[stim].set_ydata(np.nan)
+
+            for var in range(self.NUM_VARS):
+                self.summaryResultsPlotErr[stim][var].set_xdata(np.nan)
+                self.summaryResultsPlotErr[stim][var].set_ydata(np.nan)
+
             if stim+1 in p['stimChannels']:
                 self.summaryResultsPlot[stim].set_visible(True)
             else:
@@ -625,7 +615,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
 
     def updatePlotLayouts(self):
                 
-        self.preTrialRasterFigAx.set_xlim(0, p['witholdBeforeStimPlotVal'])
+        self.preTrialRasterFigAx.set_xlim(0, np.max([1, p['witholdBeforeStimPlotVal']]))
 
         num_trials = p['sessionDuration']
 
@@ -634,12 +624,18 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         self.updateResultBlockPlots(trial_num)
 
         if p['autoScalePlots']:
-            if (num_trials>20) & (trial_num<20):
+            if trial_num<20:
                 trials_ax_lim = [0,20]
             else:
-                trials_ax_lim = [0, trial_num+2]
+                if not self.trialRunner._session_running:
+                    trials_ax_lim = [0, trial_num]
+                    self.raster_current_trial.set_xdata(np.empty(0))
+                    self.raster_current_trial.set_ydata(np.empty(0))
+                else:
+                    trials_ax_lim = [0, trial_num+2]
         else:
             trials_ax_lim = [0, num_trials]
+
 
         # response raster
         pre_stim_plot = 1
@@ -656,20 +652,32 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         self.raster_autorewardline.set_xdata([p['autoRewardStart'], p['autoRewardStart']])
         self.raster_autorewardline.set_alpha(int(np.any(p['autoRewards'])))
 
+        # reaction time plot
+        self.rxn_respwin.set_x(p['responseStart'])
+        self.rxn_respwin.set_width(p['responseWindow'])
+        self.rxn_respwin.set_height(trials_ax_lim[1]+1)
+        self.rxn_stimline.set_ydata(trials_ax_lim)
+        self.rxn_stimlength.set_x(p['stimStart'])
+        self.rxn_stimlength.set_width(p['stimLength'])
+        self.rxn_stimlength.set_height(trials_ax_lim[1]+1)
+        self.rxn_autorewardline.set_ydata(trials_ax_lim)
+        self.rxn_autorewardline.set_xdata([p['autoRewardStart'], p['autoRewardStart']])
+        self.rxn_autorewardline.set_alpha(int(np.any(p['autoRewards'])))
+
         # performance line
         if p['negativeMarking'] == 0:
             self.performanceFigAx.set_ylim([0, 1])
             self.performanceFigAx.set_ylabel('Correct (%)')
             self.performanceFigAx.set_yticks(np.linspace(0, 1, 11))
-            self.performanceFigAx.set_yticklabels([0,10,20,30,40,50,60,70,80,90,100])
+            self.performanceFigAx.set_yticklabels([0,'',20,'',40,'',60,'',80,'',100])
 
             self.summaryResultsAx.set_ylim([0, 1])
             self.summaryResultsAx.set_ylabel('Correct (%)')
-            self.summaryResultsAx.set_yticks(np.linspace(0, 1, 6))
-            self.summaryResultsAx.set_yticklabels([0,20,40,60,80,100])
+            self.summaryResultsAx.set_yticks(np.linspace(0, 1, 11))
+            self.summaryResultsAx.set_yticklabels([0,'',20,'',40,'',60,'',80,'',100])
 
-            self.perf_0_line.set_xdata(trials_ax_lim)
-            self.perf_0_line.set_ydata([0.5,0.5])
+            self.chance_line1.set_ydata([0.5,0.5])
+            self.chance_line2.set_ydata([0.5,0.5])
             #self.summaryResultsIm.set_clim([0,1])
         else:
             self.performanceFigAx.set_ylim([-1, 1])
@@ -682,17 +690,18 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
             self.summaryResultsAx.set_yticks(np.linspace(-1, 1, 9))
             self.summaryResultsAx.set_yticklabels([-100, -75, -50, -25, 0, 25, 50, 75, 100])
 
-            self.perf_0_line.set_xdata(trials_ax_lim)
-            self.perf_0_line.set_ydata([0,0])
+            self.chance_line1.set_ydata([0,0])
+            self.chance_line2.set_ydata([0,0])
             #self.summaryResultsIm.set_clim([-1,1])
         self.performanceFigAx.set_xlim(trials_ax_lim[0], trials_ax_lim[1])
-        self.perf_0_line.set_xdata(trials_ax_lim)
+        self.chance_line1.set_xdata(trials_ax_lim)
+        self.chance_line2.set_xdata([-1,16])
 
         # performance blocks
         num_max_variations = max(p['variations'])
-        self.rasterFigPerfAxIm.set_extent(   [0,0.75, 0,(num_trials-2)/(trials_ax_lim[1]-1)])
-        self.rasterFigPerfAxVarIm.set_extent([0.85,1, 0,(num_trials-2)/(trials_ax_lim[1]-1)])
-        self.performanceFigPerfAxIm.set_extent([      0,(num_trials-2)/(trials_ax_lim[1]-1),0,1])
+        self.rasterFigPerfAxIm.set_extent(   [0,0.75, 0,(num_trials)/(trials_ax_lim[1])])
+        self.rasterFigPerfAxVarIm.set_extent([0.85,1, 0,(num_trials)/(trials_ax_lim[1])])
+        self.performanceFigPerfAxIm.set_extent([      0,(num_trials)/(trials_ax_lim[1]),0,1])
 
         self.rasterFigPerfAxVarIm.set_clim([0,num_max_variations-1])
 
@@ -707,6 +716,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
             canvas = self.rasterFigCanvas
             x = val
             y = trial_num + 1
+
             # update plot_data dictionary record
             plot_data['offsets'] = np.append(plot_data['offsets'], [x,y])
         elif state == 'PRETRIAL':
@@ -727,8 +737,14 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
             rxn_times = trials['reaction_time']
             rxn_times = rxn_times[p['trialOrder']==stim_type]
             counts,edges = np.histogram(rxn_times, bins=self.hist_bins)
-            # self.reactionTimeHists[stim_type].set_xdata(edges[:-1])
-            self.reactionTimeHists[stim_type-1].set_ydata(counts)
+            # self.reactionTimeHists[stim_type-1].set_xdata(edges[:-1])
+            #self.reactionTimeHists[stim_type-1].set_ydata(counts)
+            print(edges)
+            edges = np.hstack([np.array([0]), edges])
+            print(edges)
+            counts = np.hstack([np.array([0]), counts, np.array([0])])
+            print(counts)
+            self.reactionTimeHists[stim_type-1].set_xy(np.vstack([edges, counts]).T)
             self.reactionTimesAx.set_ylim([0, max(counts.max()+1, max(self.reactionTimesAx.get_ylim()))])
             # self.reactionTimesAx.draw_artist(self.reactionTimeHists[stim_type])
         else:
@@ -765,6 +781,8 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
 
         # initialise
         results = np.full([num_max_variations, num_diff_stims], np.nan)
+        errs_hi = np.full([num_max_variations, num_diff_stims], np.nan)
+        errs_lo = np.full([num_max_variations, num_diff_stims], np.nan)
 
         # compute results
         if not p['negativeMarking']:
@@ -773,21 +791,52 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
             for var in range(num_max_variations):
                 values = score[(trial_order==stim_num) & (variations==var)]
                 if len(values) > 0:
-                    perf = values.mean()
-                    results[var, stim_idx] = perf
+                    # calculations
+                    count = np.float(sum(values==1))
+                    ntrials = np.float(len(values))
+                    mu = values.mean()
+                    sd = values.std()
+                    sem = sd / np.sqrt(ntrials)
+                    ci_lo, ci_hi = proportion_confint(count, ntrials, alpha=0.1)
+
+                    if ntrials < 5:
+                        sd = 0
+                        sem = 0
+                        ci_lo = mu
+                        ci_hi = mu
+
+                    # mean
+                    results[var, stim_idx] = mu
+
+                    # confidence intervals
+                    errs_lo[var, stim_idx] = ci_lo
+                    errs_hi[var, stim_idx] = ci_hi
+
+                    # # std dev
+                    # errs_lo[var, stim_idx] = mu - sd
+                    # errs_hi[var, stim_idx] = mu + sd
+
+                    # # sem
+                    # errs_lo[var, stim_idx] = mu - sem
+                    # errs_hi[var, stim_idx] = mu + sem
 
         # update plot
-        #self.summaryResultsIm.set_data(results)
         for stim_idx,stim_num in enumerate(p['stimChannels']):
             if num_max_variations > 1:
-                y = results[:,stim_idx]
                 x = np.arange(0,num_max_variations)
             else:
-                y = results[:,stim_idx]
-                x = stim_idx
+                x = [stim_idx]
+                
+            y = results[:,stim_idx]
+            yerr_hi = errs_hi[:,stim_idx]
+            yerr_lo = errs_lo[:,stim_idx]
 
             self.summaryResultsPlot[stim_num-1].set_ydata(y)
             self.summaryResultsPlot[stim_num-1].set_xdata(x)
+
+            for erridx in range(len(y)):
+                self.summaryResultsPlotErr[stim_num-1][erridx].set_ydata([yerr_lo[erridx], yerr_hi[erridx]])
+                self.summaryResultsPlotErr[stim_num-1][erridx].set_xdata([x[erridx], x[erridx]])
 
 
     def updateResultBlockPlots(self, trial_num):
@@ -811,7 +860,6 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
             if p['sortPlots']:
                 # sort the performance bar
                 order = np.arange(num_trials)
-                #order[:trial_num+1] = np.argsort(p['trialOrder'][:trial_num+1], kind='mergesort')
                 order[:trial_num+1] = np.lexsort([stored_variations[:trial_num+1], stored_trialorder[:trial_num+1]])
 
                 # sort the response raster
@@ -834,13 +882,19 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
 
             if trial_num < num_trials:
                 self.raster_current_trial.set_xdata(self.rasterFigAx.get_xlim())
-                self.raster_current_trial.set_ydata([np.argwhere(order==trial_num)+1, np.argwhere(order==trial_num)+1])
+                if p['sortPlots']:
+                    self.raster_current_trial.set_ydata([np.argwhere(order==trial_num), np.argwhere(order==trial_num)])
+                else:
+                    self.raster_current_trial.set_ydata([np.argwhere(order==trial_num)+1, np.argwhere(order==trial_num)+1])
 
             # update the performance bar (never sorted)
             self.performanceFigPerfAxIm.set_data(np.rot90(performance_record))
 
     def updateRunningPerformancePlot(self, trial_num):
-        ydata = np.zeros([trial_num+1], dtype=np.float32)
+        if not self.trialRunner._session_running:
+            trial_num -= 1
+
+        ydata = np.full([trial_num+1], np.nan, dtype=np.float)
         moving_avg_size = int(p['slidingWindowSize'])
         running_score = np.copy(trials['running_score'])
 
@@ -1032,10 +1086,6 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         self.trialOrderAx.imshow([p['trialOrder']], interpolation='none', cmap=self.cmap_stims, vmin=1, vmax=8, aspect='auto')
         self.trialOrderAx2.imshow([p['trialVariations']], interpolation='none', cmap='gray', aspect='auto')
         self.trialOrderCanvas.draw()
-
-        #self.live_trialorder.set_data([p['trialOrder']])
-        #self.live_trialvariations.set_data([p['trialVariations']])
-        #self.trialOrderLiveTabCanvas.draw()
 
     def saveTrialOrder(self):
         filepath = str(QFileDialog.getSaveFileName(self, 'Save trial sequence', trial_sequence_directory, 'Trial sequence (*.txt)')[0])
@@ -1248,9 +1298,6 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
                         continue
 
     def addFigures(self):
-
-
-
         # trial order ribbon
         self.trialOrderFig = Figure()
         self.trialOrderFig.set_facecolor('white')
@@ -1325,6 +1372,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         self.preTrialRasterFigAx.hold(True)
         self.preTrialRasterFigAx.axis('on')
         self.preTrialRasterFigAx.get_yaxis().set_visible(False)
+        self.preTrialRasterFigAx.set_xlim([0,1])
         self.preTrialRasterFigAx.set_title('Pre-trial', loc='left')
         self.preTrialRaster_responses = self.preTrialRasterFigAx.scatter(np.empty(0), np.empty(0), c=np.empty(0), s=np.empty(0), edgecolor='', antialiased=True, clip_on=False, vmin=1, vmax=3, cmap=self.cmap_resps, zorder=9)
         self.preTrialRasterFigCanvas.setFixedHeight(50)
@@ -1336,7 +1384,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         self.rasterFig = Figure()
         self.rasterFigCanvas = FigureCanvas(self.rasterFig)  # a canvas holds a figure
         self.resultsFigsHorizontalLayout.addWidget(self.rasterFigCanvas)
-        self.rasterFigAx = self.rasterFig.add_axes([0.15, 0.28, 0.72, 0.65])
+        self.rasterFigAx = self.rasterFig.add_axes([0.15, 0.25, 0.72, 0.7])
         self.rasterFig.set_facecolor('white')
         self.rasterFigAx.set_title('Responses', loc='left')
         self.rasterFigAx.hold(True)
@@ -1345,12 +1393,11 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         self.raster_stimlength = patches.Rectangle([0, 0], 0, 0, fc=[0, 0, 0, 0.05], ec='none', zorder=3)
         self.rasterFigAx.add_patch(self.raster_respwin)
         self.rasterFigAx.add_patch(self.raster_stimlength)
-        self.raster_stimline, = self.rasterFigAx.plot([0, 0], [0, 0], '-', c=[0.3, 0.3, 0.3], linewidth=2, clip_on=False, zorder=8)
-        self.raster_autorewardline, = self.rasterFigAx.plot([0, 0], [0, 0], '-', c=[0, .75, .95], linewidth=2, clip_on=False, zorder=8)
+        self.raster_stimline, = self.rasterFigAx.plot([0, 0], [0, 0], '-', c=[0.3, 0.3, 0.3], linewidth=2, clip_on=True, zorder=8)
+        self.raster_autorewardline, = self.rasterFigAx.plot([0, 0], [0, 0], '-', c=[0, .75, .95], linewidth=2, clip_on=True, zorder=8)
         self.raster_responses = self.rasterFigAx.scatter(np.empty(0), np.empty(0), c=np.empty(0), s=np.empty(0), edgecolor='', antialiased=True, clip_on=True, vmin=1, vmax=3, cmap=self.cmap_resps, zorder=9)
         
         self.raster_current_trial, = self.rasterFigAx.plot([],[], 'y-', alpha=0.3, lw=5, clip_on=False)
-
         # self.raster_reward, = self.rasterFigAx.plot([], [], 'o', clip_on=False)  # currently unused
         # self.raster_punish, = self.rasterFigAx.plot([], [], 'o', clip_on=False)  # currently unused
 
@@ -1358,7 +1405,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         self.rasterFigAx.set_ylabel('Trial')
         self.rasterFigAx.get_xaxis().set_visible(False)
 
-        self.rasterFigPerfAx = self.rasterFig.add_axes([0.88, 0.28, 0.1, 0.63])
+        self.rasterFigPerfAx = self.rasterFig.add_axes([0.88, 0.25, 0.1, 0.7])
         self.rasterFigPerfAx.axis('off')
         self.rasterFigPerfAx.set_ylim([0,1])
         self.rasterFigPerfAx.autoscale(False)
@@ -1367,33 +1414,39 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
 
 
         # summary results 1 plot (reaction times on left)
-        self.reactionTimesAx = self.rasterFig.add_axes([0.15, 0.1, 0.72, 0.15], sharex=self.rasterFigAx)
+        self.reactionTimesAx = self.rasterFig.add_axes([0.15, 0.1, 0.72, 0.12], sharex=self.rasterFigAx)
+        self.rxn_respwin = patches.Rectangle([0, 0], 0, 0, fc=[0, 0, 0, 0.05], ec='none', zorder=1)
+        self.rxn_stimlength = patches.Rectangle([0, 0], 0, 0, fc=[0, 0, 0, 0.05], ec='none', zorder=3)
+        self.reactionTimesAx.add_patch(self.rxn_respwin)
+        self.reactionTimesAx.add_patch(self.rxn_stimlength)
+        self.rxn_stimline, = self.reactionTimesAx.plot([0, 0], [0, 0], '-', c=[0.3, 0.3, 0.3], linewidth=2, clip_on=True, zorder=8)
+        self.rxn_autorewardline, = self.reactionTimesAx.plot([0, 0], [0, 0], '-', c=[0, .75, .95], linewidth=2, clip_on=True, zorder=8)
         self.reactionTimesAx.set_xlabel('Time (s)')
         self.reactionTimesAx.set_ylabel('Count')
         self.reactionTimesAx.set_ylim([0,5])
+        self.reactionTimesAx.yaxis.grid(False)
 
         self.reactionTimeHists = []
         for sub_plot in range(self.NUM_STIMS):
-            temp, = self.reactionTimesAx.plot(0,0, lw=2, c=self.cmap_stims(sub_plot), drawstyle='steps-post', clip_on=False, zorder=sub_plot+10)
+            temp = patches.Polygon(np.empty([1,2]), closed=True, color=self.cmap_stims(sub_plot), alpha=0.5, lw=1)
             self.reactionTimeHists.append(temp)
+            self.reactionTimesAx.add_patch(self.reactionTimeHists[-1])
 
 
 
         # results plot
         self.performanceFig = Figure()
         self.performanceFigCanvas = FigureCanvas(self.performanceFig)  # a canvas holds a figure
-        self.performanceFigAx = self.performanceFig.add_axes([0.15, 0.45, 0.78, 0.45])
+        self.performanceFigAx = self.performanceFig.add_axes([0.15, 0.55, 0.78, 0.35])
         self.resultsFigsHorizontalLayout.addWidget(self.performanceFigCanvas)
-        self.perf_0_line, = self.performanceFigAx.plot([0, 0], [0, 0], ':', c=[0.3, 0.3, 0.3], linewidth=1, zorder=6, clip_on=True)
+        self.chance_line1, = self.performanceFigAx.plot([0, 0], [0, 0], ':', c=[0.3, 0.3, 0.3], linewidth=1, zorder=6, clip_on=True)
 
-        self.runningScorePlot, = self.performanceFigAx.plot(0, 0, 'k-', linewidth=2, aa=True, clip_on=True, zorder=9)
-        self.averageScorePlot, = self.performanceFigAx.plot(0, 0, '-', c=[0.7, 0.7, 0.7], linewidth=3, aa=True, clip_on=True, zorder=8)
+        self.runningScorePlot, = self.performanceFigAx.plot(0, 0, 'k-', linewidth=2, aa=True, clip_on=False, zorder=20)
+        self.averageScorePlot, = self.performanceFigAx.plot(0, 0, '-', c=[0.7, 0.7, 0.7], linewidth=3, aa=True, clip_on=True, zorder=19)
 
         self.performanceFigAx.set_xlabel('Trial')
         self.performanceFigAx.set_ylabel('Performance (%)')
         self.performanceFigAx.set_yticks(np.linspace(-1, 1, 9))
-        # self.performanceFigAx.get_yaxis().set_minor_locator(matplotlib.ticker.AutoMinorLocator())
-        # self.performanceFigAx.grid(b=True, which='minor', alpha=0.5)
         self.performanceFigAx.set_yticklabels([-100, -75, -50, -25, 0, 25, 50, 75, 100])
         self.performanceFig.set_facecolor('white')
 
@@ -1405,21 +1458,28 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         self.performanceFigPerfAxIm = self.performanceFigPerfAx.imshow(np.full([1,1], np.nan), interpolation='none', aspect='auto', origin='lower', extent=[0, 1, 0, 1], vmin=-1, vmax=1, cmap=self.cmap_score)
 
         # summary results 2 plot (overall scores by stim type)
-        self.summaryResultsAx = self.performanceFig.add_axes([0.15, 0.1, 0.78, 0.25])
-        # self.summaryResultsIm = self.summaryResultsAx.imshow(np.full([1,1], np.nan), interpolation='none', aspect='auto', origin='lower', extent=[0, 1, 0, 1], vmin=-1, vmax=1, cmap=self.cmap_score)
-        # self.summaryResultsAx.axis('off') 
+        self.summaryResultsAx = self.performanceFig.add_axes([0.15, 0.1, 0.78, 0.35])
+        self.chance_line2, = self.summaryResultsAx.plot([0, 0], [0, 0], ':', c=[0.3, 0.3, 0.3], linewidth=1, zorder=6, clip_on=True)
         self.summaryResultsAx.set_ylabel('Score (%)')
         self.summaryResultsAx.set_xlabel('Stimulus type')
+        self.summaryResultsAx.set_xlim([-1,1])
+        #self.summaryResultsAx.set_xticklabels(['',1,''])
         self.summaryResultsAx.xaxis.grid(False)
         
-        #self.summaryResultsAx.set_prop_cycle(cmap)
         self.summaryResultsPlot = []
+        self.summaryResultsPlotErr = []
         for sub_plot in range(self.NUM_STIMS):
-            temp, = self.summaryResultsAx.plot([],[], 'o-', lw=2, c=self.cmap_stims(sub_plot), clip_on=False, zorder=sub_plot+10)
+            temp, = self.summaryResultsAx.plot(np.nan, np.nan, marker='o', lw=2, color=self.cmap_stims(sub_plot), clip_on=False, zorder=sub_plot+10)
             self.summaryResultsPlot.append(temp)
+
+            # error bars
+            errorbars = []
+            for err in range(self.NUM_VARS):
+                temp_err, = self.summaryResultsAx.plot(np.nan, np.nan, lw=2, color=self.cmap_stims(sub_plot), clip_on=True, zorder=sub_plot+10, alpha=0.5)
+                errorbars.append(temp_err)
+            self.summaryResultsPlotErr.append(errorbars)
+
         self.summaryResultsAx.set_ylim([0,1])
-
-
 
 
     def saveAsPreset(self):
@@ -1473,6 +1533,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
                     obj.setValue(value)  # restore lineEditFile
             except:
                 continue
+        self.reset()
 
     def closeEvent(self, event):
         self._exiting = True
@@ -1486,6 +1547,9 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         end_time_string = self.sessionTimer_label.text()
         self.sessionTimer_label.setText('<font color=''#ff0066''>' + end_time_string + '</font>')
         self.updateCommFeed('Finished', 'pc')
+        self.updatePerformancePlots(self.trialRunner.trial_num)
+        self.saveResults()
+        self.saveMat()
         self.sessionAbort_pushButton.setEnabled(False)
         self.forceReward_pushButton.setEnabled(False)
         self.begin_Button.setEnabled(True)
@@ -1501,9 +1565,6 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
             plot_series.set_offsets(np.empty(0))
             plot_series.set_array(np.empty(0))
         
-        self.preTrialRasterFigAx.set_xlim([0, trials['results'][trial_num]['withold_req']])
-        self.preTrialRasterFigCanvas.draw()
-
         # make trial progress bar
         progress_bar = np.zeros([1, len(p['trialOrder'])])
         progress_bar[0,:trial_num] = 0.5
@@ -1561,8 +1622,16 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
 
         # save terminal outputs to text file
         with open(save_name + '.txt', 'w') as log:
-            log.write('\n'.join(self.trial_log))
+            log.write('\n'.join(self.trial_log))           
 
+    def saveMat(self):
+        save_directory = os.path.join(results_directory, p['subjectID'])
+        if not os.path.exists(save_directory):
+            os.makedirs(save_directory)
+        save_name = os.path.join(save_directory, p['sessionID'])
+
+        sio.savemat(save_name + '.mat', trials)
+        self.updateCommFeed('Saved to ' + p['sessionID'] + '.mat')
 
 
 # Main entry to program.  Sets up the main app and create a new window.
@@ -1634,7 +1703,6 @@ if __name__ == '__main__':
     arduino = {}
     arduino['connected'] = False
     p = {}
-
 
     # start random number seed
     np.random.seed()
