@@ -106,7 +106,7 @@ class TrialRunner(QObject):
         try:
             arduino['device'] = serial.Serial(p['device'], 19200)
             arduino['device'].timeout = 1
-            connect_attempts = 1
+            connect_attempts = 3
             current_attempt = 1
             while arduino['connected'] is False and current_attempt <= connect_attempts:
                 temp_read = arduino['device'].readline().strip().decode('utf-8')
@@ -333,14 +333,25 @@ class TrialRunner(QObject):
         trialRunning = True
         state = 'PRETRIAL'
         is_first_response = True
+        actual_trial_started = False
         while trialRunning:
+
             try:
+                if actual_trial_started:
+                    trial_elapsed = time.time() - trial_started
+                    # print(trial_elapsed)
+                    if trial_elapsed > 2 * p['trialDuration']:
+                        print('********************************')
+                        print('OH NO, SOMETHING IS UNRESPONSIVE')
+                        print('********************************')
+
                 if arduino['connected'] == False:
                     self.comm_feed_signal.emit('Arduino not connected', 'pc')
                     trials['running_score'][trial_num] = 0
                     trialRunning = False  # abort current trial if arduino disconnects
 
                 temp_read = arduino['device'].readline().strip().decode('utf-8')
+
                 if temp_read:
                     self.comm_feed_signal.emit(temp_read, 'arduino')
                     if temp_read[0] == '<' and temp_read[-1] == '>':  # whole data packet received
@@ -351,6 +362,8 @@ class TrialRunner(QObject):
                                 ID, val = val.split(':')
                                 val = float(val) / 1000
                                 if ID == '*':
+                                    actual_trial_started = True
+                                    trial_started = time.time()
                                     state = 'INTRIAL'
                                     trials['results'][trial_num]['responses'][0] = [x - val for x in trials['results'][trial_num]['responses'][0]]
                                     trials['results'][trial_num]['withold_act'] = val
@@ -485,7 +498,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
             p['sessionStartTimeString'] = time.strftime('%Y%m%d_%H%M%S')
             p['sessionID'] = p['subjectID'] + '_' + p['sessionStartTimeString']
             self.setWindowTitle('PyBehaviour - ' + p['sessionID'])
-            self.sessionTimer.start(100)  # start the QTimer, executes every 100ms
+            self.sessionTimer.start(10)  # start the QTimer, executes every 100ms
             self.sessionTimer_label.setStyleSheet('font-size: 18pt; font-weight: bold; color:''black'';')
             self.trialRunner._session_running = True
             logger.info('Started session: ' + p['sessionID'])
