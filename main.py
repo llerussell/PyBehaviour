@@ -106,7 +106,7 @@ class TrialRunner(QObject):
         try:
             arduino['device'] = serial.Serial(p['device'], 19200)
             arduino['device'].timeout = 1
-            connect_attempts = 3
+            connect_attempts = 1
             current_attempt = 1
             while arduino['connected'] is False and current_attempt <= connect_attempts:
                 temp_read = arduino['device'].readline().strip().decode('utf-8')
@@ -114,6 +114,7 @@ class TrialRunner(QObject):
                 if temp_read == '{READY}':
                     arduino['connected'] = True
                     self.arduino_connected_signal.emit()
+                    arduino['device'].timeout = 0.05
                 else:
                     current_attempt += 1
                 if current_attempt > connect_attempts:
