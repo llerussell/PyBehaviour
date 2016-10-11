@@ -795,8 +795,8 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
                     # calculations
                     count = np.float(sum(values==1))
                     ntrials = np.float(len(values))
-                    mu = values.mean()
-                    sd = values.std()
+                    mu = np.nanmean(values)
+                    sd = np.nanstd(values)
                     sem = sd / np.sqrt(ntrials)
                     ci_lo, ci_hi = proportion_confint(count, ntrials, alpha=0.1)
 
