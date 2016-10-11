@@ -698,7 +698,11 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         self.chance_line2.set_xdata([-1,16])
 
         # performance blocks
-        num_max_variations = max(p['variations'])
+        if np.any(p['variations']):
+            num_max_variations = max(p['variations'])
+        else:
+            num_max_variations = 1
+
         self.rasterFigPerfAxIm.set_extent(   [0,0.75, 0,(num_trials)/(trials_ax_lim[1])])
         self.rasterFigPerfAxVarIm.set_extent([0.85,1, 0,(num_trials)/(trials_ax_lim[1])])
         self.performanceFigPerfAxIm.set_extent([      0,(num_trials)/(trials_ax_lim[1]),0,1])

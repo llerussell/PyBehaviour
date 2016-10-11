@@ -1,5 +1,5 @@
 function convertpickles(varargin)
-% convert a list of pickles to mat files
+% convert fodlers and subfolders of pickles to mat files
 % lloyd russell 2016
 
 % select main directory
