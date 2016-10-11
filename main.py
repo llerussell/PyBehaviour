@@ -485,7 +485,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         s,ms = divmod(elapsed_time, 1000)
         m, s = divmod(s, 60)
         h, m = divmod(m, 60)
-        self.sessionTimer_label.setText('%d:%02d:%02d:%d' % (h, m, s, int(ms/100)))
+        self.sessionTimer_label.setText('%d:%02d:%02d.%d' % (h, m, s, int(ms/100)))
 
     def begin(self):
         if self.trialRunner._session_running is False:
