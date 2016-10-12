@@ -138,7 +138,7 @@ void setup() {
   Serial.println("{READY}");
   delay(10);
 
-  for ( int i = 0; i < 99; ++i ) {
+  for ( int i = 0; i < 54; ++i ) {
     pinMode(i, OUTPUT);
     digitalWrite(i, LOW);
   }
@@ -657,7 +657,7 @@ void stopTasks() {
 void endTrial() {
   digitalWrite(trialRunningPin, LOW);
 
-  for ( int i = 0; i < 99; ++i ) {
+  for ( int i = 0; i < 54; ++i ) {
     digitalWrite(i, LOW);
   }
   
