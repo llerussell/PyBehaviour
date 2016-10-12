@@ -1032,7 +1032,8 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
                         if len(p['trialOrder']) < num_trials:
                             diff = p['sessionDuration'] - len(p['trialOrder'])
                             xk = p['stimChannels']
-                            pk = p['proportions']
+                            pk = np.array(p['proportions'])
+                            pk = pk / pk.sum()
                             custm = stats.rv_discrete(name='custm', values=(xk, pk))
                             extra_trials = custm.rvs(size=diff)
                             p['trialOrder'] = np.append(p['trialOrder'], extra_trials)
