@@ -562,7 +562,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
 
         # reset reaction time hists
         self.hist_bins = np.arange(0, p['trialDuration'], 0.1)
-        counts,edges = np.histogram(trials['reaction_time'], bins=self.hist_bins)
+        counts,edges = np.histogram(trials['reaction_time'], bins=self.hist_bins, range=[np.nanmin(self.hist_bins), np.nanmax(self.hist_bins)])
 
         for stim in range(NUM_STIMS):
             self.reactionTimeHists[stim].set_xy(np.empty([1,2]))
