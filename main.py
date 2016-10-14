@@ -754,7 +754,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
             stim_type = int(p['trialOrder'][trial_num])
             rxn_times = trials['reaction_time']
             rxn_times = rxn_times[p['trialOrder']==stim_type]
-            counts,edges = np.histogram(rxn_times, bins=self.hist_bins)
+            counts,edges = np.histogram(rxn_times, bins=self.hist_bins, range=[np.nanmin(self.hist_bins), np.nanmax(self.hist_bins)])
             # self.reactionTimeHists[stim_type-1].set_xdata(edges[:-1])
             #self.reactionTimeHists[stim_type-1].set_ydata(counts)
             edges = np.hstack([np.array([0]), edges])
