@@ -2,7 +2,7 @@
 // PyBehaviour            //
 // (c) 2015 Lloyd Russell //
 ////////////////////////////
-// 2016.02.06.1
+// 2017.02.23.1
 
 #include "elapsedMillis.h"
 #include "TaskScheduler.h"
@@ -126,6 +126,7 @@ long currentTime;
 bool correct;
 bool incorrect;
 bool miss;
+bool cheated;
 volatile bool resultsTransmitted;
 
 
@@ -474,6 +475,7 @@ void serialListen() {
       test_command = Serial.read();
       // delay(1);
       if (test_command == FORCE_REWARD) {
+        cheated = true;
         tRewardOn.enable();
       }
     }
@@ -688,7 +690,8 @@ void txResults() {
     resultsString = "{firstresponse:" + String(firstResponse) + "|";
     resultsString = resultsString + "correct:" + String(correct) + "|";
     resultsString = resultsString + "incorrect:" + String(incorrect) + "|";
-    resultsString = resultsString + "miss:" + String(miss) + "}";
+    resultsString = resultsString + "miss:" + String(miss) + "|";
+    resultsString = resultsString + "cheated:" + String(cheated) + "}";
     delay(100);
     Serial.println(resultsString);
 
@@ -708,6 +711,7 @@ void resetConfig() {
   correct = false;
   incorrect = false;
   miss = false;
+  cheated = false;
   cancelled = false;
   resultsTransmitted = false;
   prevTimeResponded = 0;
@@ -722,4 +726,3 @@ void testPin(int pinNumber, int pinDuration) {
   delay(pinDuration);
   digitalWrite(pinNumber, LOW);
 }
-

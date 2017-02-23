@@ -153,6 +153,7 @@ class TrialRunner(QObject):
         trials['results'][trial_num]['correct'] = []
         trials['results'][trial_num]['incorrect'] = []
         trials['results'][trial_num]['miss'] = []
+        trials['results'][trial_num]['cheated'] = []
 
     def transmitConfig(self, trial_num):
         '''
@@ -386,7 +387,7 @@ class TrialRunner(QObject):
                             data = temp_read.split('|')
                             for idx, val in enumerate(data):
                                 if val:  # in val is not just
-                                    # firstresponse, correct, incorrect, miss
+                                    # firstresponse, correct, incorrect, miss, cheated
                                     key, val = val.split(':')
                                     val = int(val)
                                     key = str(key)
