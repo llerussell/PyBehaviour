@@ -1,25 +1,32 @@
-# PyBehaviour
-![Imgur](http://i.imgur.com/FoJIX5g.png)
+# <img src="http://imgur.com/NKyhO5c.png" height=30px> PyBehaviour
+
+## <img src="http://imgur.com/NKyhO5c.png" height=30px> Description
+Software for control of stimulus presentation, recording of responses, and delivery of associated consequences in associative learning (operant conditioning) behavioural paradigms. 
+
+## Screenshots
+![Imgur](http://imgur.com/2tMiybH.png)
 
 ## Prerequisites
-* Python (3.4 recommended)
+* Python (3.6 recommended)
   * numpy
   * matplotlib
   * scipy
   * seaborn
   * PyQt5
+  * pyserial
 * Arduino (MEGA 2560 recommended)
   * [TaskScheduler](http://playground.arduino.cc/Code/TaskScheduler) - NOTE: use the version included in this repository
   * [ElapsedMillis](http://playground.arduino.cc/Code/ElapsedMillis) - NOTE: use the version included in this repository
 
-## Install instructions
-Windows 64-bit:
-* Install [winpython](http://winpython.github.io) (includes PyQt5)
- * Append python directory (e.g. `C:\WinPython-64bit-3.4.3.5\python-3.4.3.amd64`) to system PATH
-* Unzip the PyBehaviour [download](https://github.com/llerussell/PyBehaviour/archive/master.zip)
-* Install [Arduino IDE](https://www.arduino.cc/en/Main/Software)
- * Upload `Sketch/sketch.ino` to the arduino
-* Double click on `execute.bat` (you can also make a shorcut and place it on your Desktop)
+## Installation
+* Install [Anaconda](https://www.continuum.io/downloads) (Python 3.6)
+  * Install PySerial `conda install pyserial`
+  * Install seaborn `conda install seaborn`
+* Download or clone [PyBehaviour](https://github.com/llerussell/PyBehaviour/archive/master.zip)
+  * Unzip to folder of your choice, e.g. `C:/git/PyBehaviour`
+* Upload `Sketch/sketch.ino` to the arduino
+  * First, install [Arduino IDE](https://www.arduino.cc/en/Main/Software)
+* Double click on `execute.bat` (Tip: make a shorcut and place it on your Desktop)
 
 ## Known issues
 * Interrupt 2 (pin 21) not compatible? Might be device specific.
@@ -35,7 +42,7 @@ Windows 64-bit:
     * dynamically define 'trial types' composed of multiple 'states' wherein actions are associated with triggering 'events'
 
 ## Tested compatibility
-* Windows 7, 8.1 (64-bit)
+* Windows 7, 8.1, 10 (64-bit)
 * Mac OS X 10.10
 
 ## Contributors / beta testers
