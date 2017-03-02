@@ -117,6 +117,7 @@ int lengthDataString;
 String newDataString;
 String txString;
 String comString;
+String resultsString;
 int responseNum;
 volatile long timeResponded;
 volatile long prevTimeResponded;
@@ -345,7 +346,9 @@ void rxConfig() {
     configReceived = true;
 
     String ConfigString = "{";
-    ConfigString = ConfigString + "withold_req:" + witholdReq + "}";
+    ConfigString.concat("withold_req:");
+    ConfigString.concat(witholdReq);
+    ConfigString.concat("}");
     Serial.println(ConfigString);
   }
 }
@@ -455,7 +458,8 @@ void runTrial() {
   now = millis() - startTime;
   startTime = millis();
   comString = "<*:";
-  comString = comString + now + ">";
+  comString.concat(now);
+  comString.concat(">");
   Serial.println(comString);
   enableTasks();
   while (trialRunning) {
@@ -512,8 +516,11 @@ void processResponse(int responseNum) {
   timeResponded = millis() - startTime;
   if (timeResponded > prevTimeResponded) {
     newDataString = "";
-    newDataString = newDataString + responseNum + ":" + timeResponded + "|";
-    dataString = dataString + newDataString;
+    newDataString.concat(responseNum);
+    newDataString.concat(":");
+    newDataString.concat(timeResponded);
+    newDataString.concat("|");
+    dataString.concat(newDataString);
 
     if (inWithold) { // include here active initiation trial if response is required
       witholdTimer = 0;
@@ -558,7 +565,8 @@ void txData() {
 
     //copy the data into new string to transmit
     txString = "<";
-    txString = txString + dataString.substring(0, lengthDataString) + ">";
+    txString.concat(dataString.substring(0, lengthDataString));
+    txString.concat(">");
 
     //remove the tranmitted substring, whilst preserving any new data
     dataString.remove(0, lengthDataString);
@@ -686,12 +694,17 @@ void txResults() {
     }
 
     // transmit results
-    String resultsString;
-    resultsString = "{firstresponse:" + String(firstResponse) + "|";
-    resultsString = resultsString + "correct:" + String(correct) + "|";
-    resultsString = resultsString + "incorrect:" + String(incorrect) + "|";
-    resultsString = resultsString + "miss:" + String(miss) + "|";
-    resultsString = resultsString + "cheated:" + String(cheated) + "}";
+    resultsString = "{firstresponse:";
+    resultsString.concat(firstResponse);
+    resultsString.concat("|correct:");
+    resultsString.concat(correct);
+    resultsString.concat("|incorrect:");
+    resultsString.concat(incorrect);
+    resultsString.concat("|miss:");
+    resultsString.concat(miss);
+    resultsString.concat("|cheated:");
+    resultsString.concat(cheated);
+    resultsString.concat("}");
     delay(100);
     Serial.println(resultsString);
 
