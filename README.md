@@ -1,7 +1,7 @@
 # <img src="http://imgur.com/NKyhO5c.png" height=30px> PyBehaviour
 
 ## Description
-Software for control of stimulus presentation, recording of responses, and delivery of associated consequences in associative learning (operant conditioning) behavioural paradigms. 
+Software for control of stimuli presentation, recording of responses, and delivery of associated consequences in associative learning (operant conditioning) behavioural paradigms. 
 
 ## Screenshots
 ![Imgur](http://imgur.com/2tMiybH.png)
