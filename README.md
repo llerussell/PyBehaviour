@@ -1,4 +1,4 @@
-# <img src="http://imgur.com/NKyhO5c.png" height=50px> PyBehaviour
+# <img src="http://imgur.com/NKyhO5c.png" height=30px> PyBehaviour
 
 ## Description
 Software for control of stimulus presentation, recording of responses, and delivery of associated consequences in associative learning (operant conditioning) behavioural paradigms. 
