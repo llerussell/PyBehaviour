@@ -478,7 +478,14 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         #self.cmap_score = cm.get_cmap(name='coolwarm', lut=n_bins)
 
         # define colormap for response
-        self.cmap_resps = cm.get_cmap(name='gray') 
+        low  = [0,0,0]
+        mid  = [1,0.5,0.2]
+        high = [1,0.4,0.2]
+        colors = [low, mid, high] 
+        n_bins = 100  
+        self.cmap_resps = LinearSegmentedColormap.from_list('resps', colors, N=n_bins)
+        # self.cmap_resps = cm.get_cmap(name='Spectral_r', lut=100)
+        # self.cmap_resps = cm.get_cmap(name='gray') 
 
 
     def sessionTimerUpdate(self):
@@ -1391,7 +1398,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         self.preTrialRasterFigAx.get_yaxis().set_visible(False)
         self.preTrialRasterFigAx.set_xlim([0,1])
         self.preTrialRasterFigAx.set_title('Pre-trial', loc='left')
-        self.preTrialRaster_responses = self.preTrialRasterFigAx.scatter(np.empty(0), np.empty(0), c=np.empty(0), s=np.empty(0), edgecolor='', antialiased=True, clip_on=False, vmin=1, vmax=3, cmap=self.cmap_resps, zorder=9)
+        self.preTrialRaster_responses = self.preTrialRasterFigAx.scatter(np.empty(0), np.empty(0), c=np.empty(0), s=np.empty(0), edgecolor='', antialiased=True, clip_on=False, vmin=1, vmax=2, cmap=self.cmap_resps, zorder=9)
         self.preTrialRasterFigCanvas.setFixedHeight(50)
         self.preTrialRasterFig.set_facecolor('white')
         self.preTrialRasterFigCanvas.draw()

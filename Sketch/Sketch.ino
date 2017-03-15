@@ -357,7 +357,7 @@ void configTrial() {
   // set(delay, repeat, function)
   taskManager.init();
 
-  tTransmit.set(200, -1, &txData);
+  tTransmit.set(50, -1, &txData);
   tCueOn.set(0, 0, &cueOn);
   tCueOff.set(50, 0, &cueOff);
   tStimStart.set(stimStartTime, 1, &stimOn);
@@ -373,21 +373,21 @@ void configTrial() {
   tPunishOff.set(punishTriggerDuration, 1, &punishOff);
   tEndTrial.set(trialDuration, 1, &stopTasks);
 
-  tTransmit.disableOnLastIteration(true);
-  tCueOn.disableOnLastIteration(false);
-  tCueOff.disableOnLastIteration(false);
-  tStimStart.disableOnLastIteration(true);
-  tStimStop.disableOnLastIteration(true);
-  tResponseWindowOpen.disableOnLastIteration(true);
-  tResponseWindowClose.disableOnLastIteration(true);
-  tRewardOn.disableOnLastIteration(true);
-  tRewardOff.disableOnLastIteration(true);
-  tAutoReward.disableOnLastIteration(true);
-  tRewardRemovalOn.disableOnLastIteration(true);
-  tRewardRemovalOff.disableOnLastIteration(true);
-  tPunishOn.disableOnLastIteration(true);
-  tPunishOff.disableOnLastIteration(true);
-  tEndTrial.disableOnLastIteration(true);
+  // tTransmit.disableOnLastIteration(true);
+  // tCueOn.disableOnLastIteration(false);
+  // tCueOff.disableOnLastIteration(false);
+  // tStimStart.disableOnLastIteration(true);
+  // tStimStop.disableOnLastIteration(true);
+  // tResponseWindowOpen.disableOnLastIteration(true);
+  // tResponseWindowClose.disableOnLastIteration(true);
+  // tRewardOn.disableOnLastIteration(true);
+  // tRewardOff.disableOnLastIteration(true);
+  // tAutoReward.disableOnLastIteration(true);
+  // tRewardRemovalOn.disableOnLastIteration(true);
+  // tRewardRemovalOff.disableOnLastIteration(true);
+  // tPunishOn.disableOnLastIteration(true);
+  // tPunishOff.disableOnLastIteration(true);
+  // tEndTrial.disableOnLastIteration(true);
 
   taskManager.addTask(tRewardOn); // pseudo priority
   taskManager.addTask(tTransmit);
