@@ -2,7 +2,7 @@
 // PyBehaviour            //
 // (c) 2015 Lloyd Russell //
 ////////////////////////////
-// 2017.02.23.1
+// 2017.03.17.1
 
 #include "elapsedMillis.h"
 #include "TaskScheduler.h"
@@ -32,7 +32,7 @@ Scheduler taskManager;
 elapsedMillis witholdTimer;
 
 // pin numbers
-const int responsePin[] = {0, 1}; // interrupt numbers 0:2 1:3 [2:21 do not use] 3:20
+const int responsePin[] = {2, 3}; // interrupt:pin numbers 0:2 1:3 [2:21 do not use?] 3:20
 const int stimPin[] = {30,31,32,33,34,35,36,37};
 const int rewardPin[] = {4, 5};
 const int rewardRemovalPin[] = {8, 9};
@@ -140,11 +140,11 @@ void setup() {
   Serial.println("{READY}");
   delay(10);
 
+  // set all pins as output
   for ( int i = 0; i < 54; ++i ) {
     pinMode(i, OUTPUT);
     digitalWrite(i, LOW);
   }
- 
 }
 
 
@@ -414,8 +414,8 @@ void configTrial() {
 
 void runTrial() {
   startTime = millis();
-  attachInterrupt(responsePin[0], response1, RISING);
-  attachInterrupt(responsePin[1], response2, RISING);
+  attachInterrupt(digitalPinToInterrupt(responsePin[0]), response1, RISING);
+  attachInterrupt(digitalPinToInterrupt(responsePin[1]), response2, RISING);
   //attachInterrupt(responsePin[2], response3, RISING);
   trialRunning = true;
   digitalWrite(trialRunningPin, HIGH);
