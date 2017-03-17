@@ -41,25 +41,22 @@ from PyQt5.QtWidgets import (QComboBox, QCheckBox, QLineEdit, QSpinBox,
 from PyQt5.QtGui import QColor, QIcon, QPalette
 from GUI import GUI
 from GUI import serial_ports
-import logging
 import pickle
-#from scipy.signal import savgol_filter
-#from scipy.ndimage.filters import gaussian_filter1d
+import logging
 
+# enable printing colours to command window
+import colorama
+from termcolor import colored
+colorama.init()
+
+# configure logging
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
-
-# create a file handler
-handler = logging.FileHandler('errors.log')
+handler = logging.FileHandler('errors.log')  # create a file handler
 handler.setLevel(logging.DEBUG)
-
-# create a logging format
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')  # create a logging format
 handler.setFormatter(formatter)
-
-# add the handlers to the logger
-logger.addHandler(handler)
-
+logger.addHandler(handler)  # add the handlers to the logger
 logger.info('Started application')
 
 class TrialRunner(QObject):
@@ -1614,17 +1611,21 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
 
     def updateCommFeed(self, input_string, device=None):
         # input_string = input_string.replace('<', '{').replace('>', '}')
+
+        # write to text file
         if device == 'pc':
-            # self.toSessionFeed_textEdit.append(input_string)
             input_string = 'PC:      ' + input_string
         elif device == 'arduino':
-            # self.fromSessionFeed_textEdit.append(input_string)
             input_string = 'ARDUINO: ' + input_string
         elif device == 'trial':
-            # self.toSessionFeed_textEdit.setText(input_string)
-            # self.fromSessionFeed_textEdit.setText('')
             input_string = input_string
         self.trial_log.append(input_string)
+
+        # print to terminal/command window
+        if device == 'pc':
+        elif device == 'arduino':
+        elif device == 'trial':
+            input_string = colored(input_string, 'grey', 'on_white')
         print(input_string)
 
     def saveResults(self):
