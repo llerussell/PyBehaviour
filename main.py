@@ -1623,7 +1623,9 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
 
         # print to terminal/command window
         if device == 'pc':
+            input_string = colored(input_string, 'cyan')
         elif device == 'arduino':
+            input_string = colored(input_string, 'yellow')
         elif device == 'trial':
             input_string = colored(input_string, 'grey', 'on_white')
         print(input_string)
