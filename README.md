@@ -8,12 +8,11 @@ Software for control of stimuli presentation, recording of responses, and delive
 
 ## Prerequisites
 * Python (3.6 recommended)
-  * numpy
-  * matplotlib
-  * scipy
-  * seaborn
-  * PyQt5
-  * pyserial
+  * `numpy`, `scipy`, `matplotlib`
+  * `seaborn`
+  * `PyQt5`
+  * `pyserial`
+  * `colorama`, `termcolor`
 * Arduino (MEGA 2560 recommended)
   * [TaskScheduler](http://playground.arduino.cc/Code/TaskScheduler) - NOTE: use the version included in this repository
   * [ElapsedMillis](http://playground.arduino.cc/Code/ElapsedMillis) - NOTE: use the version included in this repository
@@ -22,10 +21,11 @@ Software for control of stimuli presentation, recording of responses, and delive
 * Install [Anaconda](https://www.continuum.io/downloads) (Python 3.6)
   * Install PySerial `conda install pyserial`
   * Install seaborn `conda install seaborn`
+  * Install termcolor `pip install termcolor`
 * Download or clone [PyBehaviour](https://github.com/llerussell/PyBehaviour/archive/master.zip)
   * Unzip to folder of your choice, e.g. `C:/git/PyBehaviour`
 * Upload `Sketch/sketch.ino` to the arduino
-  * First, install [Arduino IDE](https://www.arduino.cc/en/Main/Software)
+  * Requires [Arduino IDE](https://www.arduino.cc/en/Main/Software)
 * Double click on `execute.bat` (Tip: make a shorcut and place it on your Desktop)
 
 ## Known issues
