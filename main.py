@@ -887,7 +887,6 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
 
                 # build the performance record
                 for t in range(trial_num+1):
-                    print(t)
                     s = p['stimChannels'].index(stored_trialorder[t])
                     performance_record[t,s] = trials['running_score'][t]
             
