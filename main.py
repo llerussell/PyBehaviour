@@ -924,7 +924,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
                 self.performanceFigPerfAxIm.set_data(np.rot90(performance_record))
 
     def updateRunningPerformancePlot(self, trial_num):
-        if trial_num < p['sessionDuration']:
+        if self.trialRunner._session_running:
             ydata = np.full([trial_num+1], np.nan, dtype=np.float)
             moving_avg_size = int(p['slidingWindowSize'])
             running_score = np.copy(trials['running_score'])
