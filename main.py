@@ -214,6 +214,11 @@ class TrialRunner(QObject):
 
         # auto reward?
         auto_reward = p['autoRewards'][this_stim_idx]
+        if p['autoForceReward']:
+             if trial_num >= p['autoForceRewardAfter']:
+                if np.sum(trials['running_score'][trial_num-p['autoForceRewardAfter']:trial_num]) <= 0:
+                    auto_reward = True
+        
         trials['results'][trial_num]['auto_reward'] = auto_reward
         # add in here the option to trigger auto reward if previous X trials were wrong
 
