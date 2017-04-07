@@ -620,17 +620,17 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
     def pause(self):
         self.trialRunner._paused = not self.trialRunner._paused
         if self.trialRunner._paused:
-            self.updateCommFeed('Paused', 'pc')
+            self.updateCommFeed('Paused', 'session')
             self.sessionPause_pushButton.setText('Resume')
         else:
-            self.updateCommFeed('Resumed', 'pc')
+            self.updateCommFeed('Resumed', 'session')
             self.sessionPause_pushButton.setText('Pause')
 
     def abort(self):
         if self.trialRunner._session_running:
             self.trialRunner._session_running = False
             # self.sessionEndGUI()
-            self.updateCommFeed('Aborted', 'pc')
+            self.updateCommFeed('Aborted', 'session')
             self.sessionAbort_pushButton.setEnabled(False)
             self.forceReward_pushButton.setEnabled(False)
 
@@ -1578,7 +1578,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         self.sessionTimer.stop()
         end_time_string = self.sessionTimer_label.text()
         self.sessionTimer_label.setText('<font color=''#ff0066''>' + end_time_string + '</font>')
-        self.updateCommFeed('Finished', 'pc')
+        self.updateCommFeed('Finished', 'session')
         self.updatePerformancePlots(self.trialRunner.trial_num)
         self.saveResults()
         self.saveMat()
@@ -1639,6 +1639,8 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
             input_string = colored(input_string, 'yellow')
         elif device == 'trial':
             input_string = colored(input_string, 'grey', 'on_white')
+        elif device == 'session':
+            input_string = colored(input_string, 'white', 'on_red')    
         print(input_string)
 
     def saveResults(self):
