@@ -100,34 +100,34 @@ bool inResponseWindow;
 bool inWithold;
 
 // response states
-bool responded = false;
-bool rewarded = false;
-bool punished = false;
-bool cancelled = false;
+volatile bool responded = false;
+volatile bool rewarded = false;
+volatile bool punished = false;
+volatile bool cancelled = false;
 volatile int firstResponse = 0;
 
 // record times
 int preTrialDelayStart;
 long startTime;
 long now;
-int timeRewarded;
-int timePunished;
+volatile int timeRewarded;
+volatile int timePunished;
 String dataString;
-int lengthDataString;
+volatile int lengthDataString;
 String newDataString;
 String txString;
 String comString;
 String resultsString;
-int responseNum;
+volatile int responseNum;
 volatile long timeResponded;
 volatile long prevTimeResponded;
-long currentTime;
+volatile long currentTime;
 
 // results
-bool correct;
-bool incorrect;
-bool miss;
-bool cheated;
+volatile bool correct;
+volatile bool incorrect;
+volatile bool miss;
+volatile bool cheated;
 volatile bool resultsTransmitted;
 
 
@@ -534,12 +534,13 @@ void processResponse(int responseNum) {
         firstResponse = responseNum;
         responded = true;
         if (responseNum == responseRequired) {  // correct choice
-          if ((!rewarded) && !(punished && !secondChance)) {
+          if ((!rewarded) && !(incorrect && !secondChance)) {
             tRewardOn.enable();
             txResults();
           }
         }
         else {  // else must be incorrect
+          incorrect = true;
           if ((!punished) && (!rewarded)) {
             if (punishTrigger) {
               tPunishOn.enable();
@@ -603,7 +604,9 @@ void rewardOn() {
 }
 
 void autoRewardOn() {
-  tRewardOn.enable();
+  if ((!rewarded) && !(incorrect && !secondChance)) {
+    tRewardOn.enable();
+  }
 }
 
 void rewardOff() {
@@ -705,7 +708,7 @@ void txResults() {
     resultsString.concat("|cheated:");
     resultsString.concat(cheated);
     resultsString.concat("}");
-    delay(100);
+    // delay(100);
     Serial.println(resultsString);
 
   }
