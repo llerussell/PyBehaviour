@@ -105,6 +105,7 @@ class TrialRunner(QObject):
                         self.session_end_signal.emit()
             except Exception as e:
                 logger.exception(e)
+                self.comm_feed_signal.emit(str(e), 'pc')
 
 
     def connectArduino(self):
@@ -323,6 +324,7 @@ class TrialRunner(QObject):
             except Exception as e:
                 logger.exception(e)
                 self.comm_feed_signal.emit('Something went wrong', 'pc')
+                self.comm_feed_signal.emit(str(e), 'pc')
                 self.disconnectArduino()
                 self.connectArduino()
 
@@ -417,6 +419,7 @@ class TrialRunner(QObject):
                 logger.exception(e)
                 if self._session_running:
                     self.comm_feed_signal.emit('Something went wrong', 'pc')
+                    self.comm_feed_signal.emit(str(e), 'pc')
                     self.connectArduino()
                     trials['running_score'][trial_num] = 0
                     trialRunning = False
@@ -1466,7 +1469,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
 
         self.reactionTimeHists = []
         for sub_plot in range(self.NUM_STIMS):
-            temp = patches.Polygon(np.empty([1,2]), closed=False, fc='none', ec=self.cmap_stims(sub_plot), alpha=0.7, lw=2, clip_on=False)
+            temp = patches.Polygon(np.empty([1,2]), closed=False, fc='none', ec=self.cmap_stims(sub_plot), alpha=0.7, lw=2, clip_on=True)
             self.reactionTimeHists.append(temp)
             self.reactionTimesAx.add_patch(self.reactionTimeHists[-1])
 
@@ -1758,3 +1761,4 @@ if __name__ == '__main__':
         main(sys.argv)
     except Exception as e:
         logger.exception(e)
+        print(str(e))
