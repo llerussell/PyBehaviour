@@ -25,7 +25,8 @@ seaborn.set(rc={
     'axes.facecolor': [1.0, 1.0, 1.0],
     'axes.edgecolor': [0.9, 0.9, 0.9],
     'grid.color': [0.9, 0.9, 0.9]
-    })
+    },
+    font_scale=0.9)
 import numpy as np
 import scipy.io as sio
 from scipy import stats
@@ -218,7 +219,7 @@ class TrialRunner(QObject):
              if trial_num >= p['autoForceRewardAfter']:
                 if np.sum(trials['running_score'][trial_num-p['autoForceRewardAfter']:trial_num]) <= 0:
                     auto_reward = True
-        
+
         trials['results'][trial_num]['auto_reward'] = auto_reward
         # add in here the option to trigger auto reward if previous X trials were wrong
 
@@ -563,7 +564,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
 
         # self.raster_current_trial.set_data([0,0])
         self.raster_current_trial.set_xdata(self.rasterFigAx.get_xlim())
-        self.raster_current_trial.set_ydata([0, 0])
+        self.raster_current_trial.set_ydata(np.empty(0))
         self.CurrentTrialSorted = 0
 
         # reset the performance block plots
@@ -670,8 +671,8 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
             trials_ax_lim[1] =5
 
         if not self.trialRunner._session_running:
-            self.raster_current_trial.set_xdata([0,0])
-            self.raster_current_trial.set_ydata([0,0])
+            self.raster_current_trial.set_xdata(np.empty(0))
+            self.raster_current_trial.set_ydata(np.empty(0))
 
 
         # response raster
@@ -1043,7 +1044,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
                         # build blocks of trial types to allow absolute proportions
                         trial_blocks = []
                         for i, chan in enumerate(p['stimChannels']):
-                            trial_blocks.append(chan * np.ones([np.floor(p['proportions'][i] / total_prop * p['sessionDuration'])]))
+                            trial_blocks.append(chan * np.ones( [int(np.floor(p['proportions'][i] / total_prop * p['sessionDuration']))] ))
 
                         # stack all trial type blocks and shuffle
                         p['trialOrder'] = np.hstack(trial_blocks)
@@ -1506,7 +1507,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         self.summaryResultsPlot = []
         self.summaryResultsPlotErr = []
         for sub_plot in range(self.NUM_STIMS):
-            temp, = self.summaryResultsAx.plot(np.nan, np.nan, marker='o', markersize=10, lw=2, color=self.cmap_stims(sub_plot), clip_on=False, zorder=sub_plot+10)
+            temp, = self.summaryResultsAx.plot(np.nan, np.nan, marker='o', markersize=8, lw=2, color=self.cmap_stims(sub_plot), clip_on=False, zorder=sub_plot+10)
             self.summaryResultsPlot.append(temp)
 
             # error bars
