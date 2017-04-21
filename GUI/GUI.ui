@@ -5452,6 +5452,12 @@ QGroupBox#trial_GroupBox::title {
                             <property name="prefix">
                              <string>For the next: </string>
                             </property>
+                            <property name="minimum">
+                             <number>1</number>
+                            </property>
+                            <property name="maximum">
+                             <number>1</number>
+                            </property>
                            </widget>
                           </item>
                          </layout>
@@ -7552,11 +7558,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>251</x>
-     <y>707</y>
+     <y>117</y>
     </hint>
     <hint type="destinationlabel">
      <x>494</x>
-     <y>707</y>
+     <y>117</y>
     </hint>
    </hints>
   </connection>
@@ -7568,11 +7574,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>251</x>
-     <y>707</y>
+     <y>117</y>
     </hint>
     <hint type="destinationlabel">
      <x>736</x>
-     <y>707</y>
+     <y>117</y>
     </hint>
    </hints>
   </connection>
@@ -7584,11 +7590,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>294</x>
-     <y>281</y>
+     <y>-309</y>
     </hint>
     <hint type="destinationlabel">
      <x>294</x>
-     <y>304</y>
+     <y>-286</y>
     </hint>
    </hints>
   </connection>
@@ -7600,11 +7606,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>294</x>
-     <y>281</y>
+     <y>-309</y>
     </hint>
     <hint type="destinationlabel">
      <x>294</x>
-     <y>327</y>
+     <y>-263</y>
     </hint>
    </hints>
   </connection>
@@ -7616,11 +7622,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>294</x>
-     <y>281</y>
+     <y>-309</y>
     </hint>
     <hint type="destinationlabel">
      <x>294</x>
-     <y>373</y>
+     <y>-217</y>
     </hint>
    </hints>
   </connection>
@@ -7632,11 +7638,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>294</x>
-     <y>281</y>
+     <y>-309</y>
     </hint>
     <hint type="destinationlabel">
      <x>294</x>
-     <y>396</y>
+     <y>-194</y>
     </hint>
    </hints>
   </connection>
@@ -7648,11 +7654,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>294</x>
-     <y>281</y>
+     <y>-309</y>
     </hint>
     <hint type="destinationlabel">
      <x>294</x>
-     <y>442</y>
+     <y>-148</y>
     </hint>
    </hints>
   </connection>
@@ -7664,11 +7670,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>358</x>
-     <y>281</y>
+     <y>-309</y>
     </hint>
     <hint type="destinationlabel">
      <x>358</x>
-     <y>304</y>
+     <y>-286</y>
     </hint>
    </hints>
   </connection>
@@ -7680,11 +7686,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>358</x>
-     <y>281</y>
+     <y>-309</y>
     </hint>
     <hint type="destinationlabel">
      <x>358</x>
-     <y>327</y>
+     <y>-263</y>
     </hint>
    </hints>
   </connection>
@@ -7696,11 +7702,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>358</x>
-     <y>281</y>
+     <y>-309</y>
     </hint>
     <hint type="destinationlabel">
      <x>358</x>
-     <y>373</y>
+     <y>-217</y>
     </hint>
    </hints>
   </connection>
@@ -7712,11 +7718,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>358</x>
-     <y>281</y>
+     <y>-309</y>
     </hint>
     <hint type="destinationlabel">
      <x>358</x>
-     <y>396</y>
+     <y>-194</y>
     </hint>
    </hints>
   </connection>
@@ -7728,11 +7734,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>358</x>
-     <y>281</y>
+     <y>-309</y>
     </hint>
     <hint type="destinationlabel">
      <x>358</x>
-     <y>442</y>
+     <y>-148</y>
     </hint>
    </hints>
   </connection>
@@ -7744,11 +7750,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>421</x>
-     <y>281</y>
+     <y>-309</y>
     </hint>
     <hint type="destinationlabel">
      <x>421</x>
-     <y>304</y>
+     <y>-286</y>
     </hint>
    </hints>
   </connection>
@@ -7760,11 +7766,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>421</x>
-     <y>281</y>
+     <y>-309</y>
     </hint>
     <hint type="destinationlabel">
      <x>421</x>
-     <y>327</y>
+     <y>-263</y>
     </hint>
    </hints>
   </connection>
@@ -7776,11 +7782,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>421</x>
-     <y>281</y>
+     <y>-309</y>
     </hint>
     <hint type="destinationlabel">
      <x>421</x>
-     <y>373</y>
+     <y>-217</y>
     </hint>
    </hints>
   </connection>
@@ -7792,11 +7798,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>421</x>
-     <y>281</y>
+     <y>-309</y>
     </hint>
     <hint type="destinationlabel">
      <x>421</x>
-     <y>396</y>
+     <y>-194</y>
     </hint>
    </hints>
   </connection>
@@ -7808,11 +7814,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>421</x>
-     <y>281</y>
+     <y>-309</y>
     </hint>
     <hint type="destinationlabel">
      <x>421</x>
-     <y>442</y>
+     <y>-148</y>
     </hint>
    </hints>
   </connection>
@@ -7824,11 +7830,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>249</x>
-     <y>1069</y>
+     <y>479</y>
     </hint>
     <hint type="destinationlabel">
      <x>738</x>
-     <y>1069</y>
+     <y>479</y>
     </hint>
    </hints>
   </connection>
@@ -7840,11 +7846,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>586</x>
-     <y>545</y>
+     <y>-45</y>
     </hint>
     <hint type="destinationlabel">
      <x>736</x>
-     <y>545</y>
+     <y>-45</y>
     </hint>
    </hints>
   </connection>
@@ -7856,11 +7862,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>419</x>
-     <y>545</y>
+     <y>-45</y>
     </hint>
     <hint type="destinationlabel">
      <x>568</x>
-     <y>545</y>
+     <y>-45</y>
     </hint>
    </hints>
   </connection>
@@ -7872,11 +7878,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>251</x>
-     <y>545</y>
+     <y>-45</y>
     </hint>
     <hint type="destinationlabel">
      <x>401</x>
-     <y>545</y>
+     <y>-45</y>
     </hint>
    </hints>
   </connection>
@@ -7888,11 +7894,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>251</x>
-     <y>545</y>
+     <y>-45</y>
     </hint>
     <hint type="destinationlabel">
      <x>419</x>
-     <y>545</y>
+     <y>-45</y>
     </hint>
    </hints>
   </connection>
@@ -7904,11 +7910,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>251</x>
-     <y>545</y>
+     <y>-45</y>
     </hint>
     <hint type="destinationlabel">
      <x>586</x>
-     <y>545</y>
+     <y>-45</y>
     </hint>
    </hints>
   </connection>
@@ -7920,11 +7926,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>294</x>
-     <y>281</y>
+     <y>-309</y>
     </hint>
     <hint type="destinationlabel">
      <x>294</x>
-     <y>419</y>
+     <y>-171</y>
     </hint>
    </hints>
   </connection>
@@ -7936,11 +7942,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>358</x>
-     <y>281</y>
+     <y>-309</y>
     </hint>
     <hint type="destinationlabel">
      <x>358</x>
-     <y>419</y>
+     <y>-171</y>
     </hint>
    </hints>
   </connection>
@@ -7952,11 +7958,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>421</x>
-     <y>281</y>
+     <y>-309</y>
     </hint>
     <hint type="destinationlabel">
      <x>421</x>
-     <y>419</y>
+     <y>-171</y>
     </hint>
    </hints>
   </connection>
@@ -7968,11 +7974,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>485</x>
-     <y>281</y>
+     <y>-309</y>
     </hint>
     <hint type="destinationlabel">
      <x>485</x>
-     <y>442</y>
+     <y>-148</y>
     </hint>
    </hints>
   </connection>
@@ -7984,11 +7990,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>485</x>
-     <y>281</y>
+     <y>-309</y>
     </hint>
     <hint type="destinationlabel">
      <x>485</x>
-     <y>419</y>
+     <y>-171</y>
     </hint>
    </hints>
   </connection>
@@ -8000,11 +8006,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>485</x>
-     <y>281</y>
+     <y>-309</y>
     </hint>
     <hint type="destinationlabel">
      <x>485</x>
-     <y>396</y>
+     <y>-194</y>
     </hint>
    </hints>
   </connection>
@@ -8016,11 +8022,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>485</x>
-     <y>281</y>
+     <y>-309</y>
     </hint>
     <hint type="destinationlabel">
      <x>485</x>
-     <y>373</y>
+     <y>-217</y>
     </hint>
    </hints>
   </connection>
@@ -8032,11 +8038,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>485</x>
-     <y>281</y>
+     <y>-309</y>
     </hint>
     <hint type="destinationlabel">
      <x>485</x>
-     <y>327</y>
+     <y>-263</y>
     </hint>
    </hints>
   </connection>
@@ -8048,11 +8054,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>485</x>
-     <y>281</y>
+     <y>-309</y>
     </hint>
     <hint type="destinationlabel">
      <x>485</x>
-     <y>304</y>
+     <y>-286</y>
     </hint>
    </hints>
   </connection>
@@ -8064,11 +8070,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>548</x>
-     <y>281</y>
+     <y>-309</y>
     </hint>
     <hint type="destinationlabel">
      <x>548</x>
-     <y>442</y>
+     <y>-148</y>
     </hint>
    </hints>
   </connection>
@@ -8080,11 +8086,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>548</x>
-     <y>281</y>
+     <y>-309</y>
     </hint>
     <hint type="destinationlabel">
      <x>548</x>
-     <y>419</y>
+     <y>-171</y>
     </hint>
    </hints>
   </connection>
@@ -8096,11 +8102,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>548</x>
-     <y>281</y>
+     <y>-309</y>
     </hint>
     <hint type="destinationlabel">
      <x>548</x>
-     <y>396</y>
+     <y>-194</y>
     </hint>
    </hints>
   </connection>
@@ -8112,11 +8118,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>548</x>
-     <y>281</y>
+     <y>-309</y>
     </hint>
     <hint type="destinationlabel">
      <x>548</x>
-     <y>373</y>
+     <y>-217</y>
     </hint>
    </hints>
   </connection>
@@ -8128,11 +8134,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>548</x>
-     <y>281</y>
+     <y>-309</y>
     </hint>
     <hint type="destinationlabel">
      <x>548</x>
-     <y>327</y>
+     <y>-263</y>
     </hint>
    </hints>
   </connection>
@@ -8144,11 +8150,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>548</x>
-     <y>281</y>
+     <y>-309</y>
     </hint>
     <hint type="destinationlabel">
      <x>548</x>
-     <y>304</y>
+     <y>-286</y>
     </hint>
    </hints>
   </connection>
@@ -8160,11 +8166,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>611</x>
-     <y>281</y>
+     <y>-309</y>
     </hint>
     <hint type="destinationlabel">
      <x>611</x>
-     <y>442</y>
+     <y>-148</y>
     </hint>
    </hints>
   </connection>
@@ -8176,11 +8182,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>611</x>
-     <y>281</y>
+     <y>-309</y>
     </hint>
     <hint type="destinationlabel">
      <x>611</x>
-     <y>419</y>
+     <y>-171</y>
     </hint>
    </hints>
   </connection>
@@ -8192,11 +8198,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>611</x>
-     <y>281</y>
+     <y>-309</y>
     </hint>
     <hint type="destinationlabel">
      <x>611</x>
-     <y>396</y>
+     <y>-194</y>
     </hint>
    </hints>
   </connection>
@@ -8208,11 +8214,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>611</x>
-     <y>281</y>
+     <y>-309</y>
     </hint>
     <hint type="destinationlabel">
      <x>611</x>
-     <y>373</y>
+     <y>-217</y>
     </hint>
    </hints>
   </connection>
@@ -8224,11 +8230,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>611</x>
-     <y>281</y>
+     <y>-309</y>
     </hint>
     <hint type="destinationlabel">
      <x>611</x>
-     <y>327</y>
+     <y>-263</y>
     </hint>
    </hints>
   </connection>
@@ -8240,11 +8246,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>611</x>
-     <y>281</y>
+     <y>-309</y>
     </hint>
     <hint type="destinationlabel">
      <x>611</x>
-     <y>304</y>
+     <y>-286</y>
     </hint>
    </hints>
   </connection>
@@ -8256,11 +8262,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>675</x>
-     <y>281</y>
+     <y>-309</y>
     </hint>
     <hint type="destinationlabel">
      <x>675</x>
-     <y>442</y>
+     <y>-148</y>
     </hint>
    </hints>
   </connection>
@@ -8272,11 +8278,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>675</x>
-     <y>281</y>
+     <y>-309</y>
     </hint>
     <hint type="destinationlabel">
      <x>675</x>
-     <y>419</y>
+     <y>-171</y>
     </hint>
    </hints>
   </connection>
@@ -8288,11 +8294,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>675</x>
-     <y>281</y>
+     <y>-309</y>
     </hint>
     <hint type="destinationlabel">
      <x>675</x>
-     <y>396</y>
+     <y>-194</y>
     </hint>
    </hints>
   </connection>
@@ -8304,11 +8310,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>675</x>
-     <y>281</y>
+     <y>-309</y>
     </hint>
     <hint type="destinationlabel">
      <x>675</x>
-     <y>373</y>
+     <y>-217</y>
     </hint>
    </hints>
   </connection>
@@ -8320,11 +8326,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>675</x>
-     <y>281</y>
+     <y>-309</y>
     </hint>
     <hint type="destinationlabel">
      <x>675</x>
-     <y>327</y>
+     <y>-263</y>
     </hint>
    </hints>
   </connection>
@@ -8336,11 +8342,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>675</x>
-     <y>281</y>
+     <y>-309</y>
     </hint>
     <hint type="destinationlabel">
      <x>675</x>
-     <y>304</y>
+     <y>-286</y>
     </hint>
    </hints>
   </connection>
@@ -8352,11 +8358,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>738</x>
-     <y>281</y>
+     <y>-309</y>
     </hint>
     <hint type="destinationlabel">
      <x>738</x>
-     <y>442</y>
+     <y>-148</y>
     </hint>
    </hints>
   </connection>
@@ -8368,11 +8374,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>738</x>
-     <y>281</y>
+     <y>-309</y>
     </hint>
     <hint type="destinationlabel">
      <x>738</x>
-     <y>419</y>
+     <y>-171</y>
     </hint>
    </hints>
   </connection>
@@ -8384,11 +8390,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>738</x>
-     <y>281</y>
+     <y>-309</y>
     </hint>
     <hint type="destinationlabel">
      <x>738</x>
-     <y>396</y>
+     <y>-194</y>
     </hint>
    </hints>
   </connection>
@@ -8400,11 +8406,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>738</x>
-     <y>281</y>
+     <y>-309</y>
     </hint>
     <hint type="destinationlabel">
      <x>738</x>
-     <y>373</y>
+     <y>-217</y>
     </hint>
    </hints>
   </connection>
@@ -8416,11 +8422,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>738</x>
-     <y>281</y>
+     <y>-309</y>
     </hint>
     <hint type="destinationlabel">
      <x>738</x>
-     <y>304</y>
+     <y>-286</y>
     </hint>
    </hints>
   </connection>
@@ -8432,11 +8438,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>738</x>
-     <y>281</y>
+     <y>-309</y>
     </hint>
     <hint type="destinationlabel">
      <x>738</x>
-     <y>327</y>
+     <y>-263</y>
     </hint>
    </hints>
   </connection>
@@ -8448,11 +8454,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>251</x>
-     <y>604</y>
+     <y>14</y>
     </hint>
     <hint type="destinationlabel">
      <x>736</x>
-     <y>604</y>
+     <y>14</y>
     </hint>
    </hints>
   </connection>
@@ -8464,11 +8470,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>249</x>
-     <y>1168</y>
+     <y>578</y>
     </hint>
     <hint type="destinationlabel">
      <x>738</x>
-     <y>1168</y>
+     <y>578</y>
     </hint>
    </hints>
   </connection>
@@ -8480,11 +8486,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>294</x>
-     <y>281</y>
+     <y>-309</y>
     </hint>
     <hint type="destinationlabel">
      <x>294</x>
-     <y>350</y>
+     <y>-240</y>
     </hint>
    </hints>
   </connection>
@@ -8496,11 +8502,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>358</x>
-     <y>281</y>
+     <y>-309</y>
     </hint>
     <hint type="destinationlabel">
      <x>358</x>
-     <y>350</y>
+     <y>-240</y>
     </hint>
    </hints>
   </connection>
@@ -8512,11 +8518,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>421</x>
-     <y>281</y>
+     <y>-309</y>
     </hint>
     <hint type="destinationlabel">
      <x>421</x>
-     <y>350</y>
+     <y>-240</y>
     </hint>
    </hints>
   </connection>
@@ -8528,11 +8534,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>485</x>
-     <y>281</y>
+     <y>-309</y>
     </hint>
     <hint type="destinationlabel">
      <x>485</x>
-     <y>350</y>
+     <y>-240</y>
     </hint>
    </hints>
   </connection>
@@ -8544,11 +8550,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>548</x>
-     <y>281</y>
+     <y>-309</y>
     </hint>
     <hint type="destinationlabel">
      <x>548</x>
-     <y>350</y>
+     <y>-240</y>
     </hint>
    </hints>
   </connection>
@@ -8560,11 +8566,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>611</x>
-     <y>281</y>
+     <y>-309</y>
     </hint>
     <hint type="destinationlabel">
      <x>611</x>
-     <y>350</y>
+     <y>-240</y>
     </hint>
    </hints>
   </connection>
@@ -8576,11 +8582,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>675</x>
-     <y>281</y>
+     <y>-309</y>
     </hint>
     <hint type="destinationlabel">
      <x>675</x>
-     <y>350</y>
+     <y>-240</y>
     </hint>
    </hints>
   </connection>
@@ -8592,11 +8598,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>738</x>
-     <y>281</y>
+     <y>-309</y>
     </hint>
     <hint type="destinationlabel">
      <x>738</x>
-     <y>350</y>
+     <y>-240</y>
     </hint>
    </hints>
   </connection>
@@ -8608,11 +8614,43 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>249</x>
-     <y>1195</y>
+     <y>605</y>
     </hint>
     <hint type="destinationlabel">
-     <x>730</x>
-     <y>1195</y>
+     <x>738</x>
+     <y>605</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>autoForceReward_checkBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>autoForceRewardAfter_spinBox</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>239</x>
+     <y>501</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>296</x>
+     <y>501</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>autoForceReward_checkBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>autoForceRewardFor_spinBox</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>241</x>
+     <y>494</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>544</x>
+     <y>497</y>
     </hint>
    </hints>
   </connection>
