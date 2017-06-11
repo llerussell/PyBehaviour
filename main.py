@@ -33,14 +33,15 @@ from scipy import stats
 from statsmodels.stats.proportion import proportion_confint
 import json
 import os
+import ctypes
 import time
 import sys
 import serial
-from PyQt5.QtCore import Qt, QObject, pyqtSignal, QThread, QTimer
+from PyQt5.QtCore import QObject, pyqtSignal, QThread, QTimer
 from PyQt5.QtWidgets import (QComboBox, QCheckBox, QLineEdit, QSpinBox,
                              QDoubleSpinBox, QFileDialog, QApplication,
-                             QDesktopWidget, QMainWindow, QMessageBox)
-from PyQt5.QtGui import QColor, QIcon, QPalette
+                             QDesktopWidget, QMainWindow)
+from PyQt5.QtGui import QIcon
 from GUI import GUI, serial_ports
 import pickle
 import logging
@@ -59,6 +60,7 @@ formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(messag
 handler.setFormatter(formatter)
 logger.addHandler(handler)  # add the handlers to the logger
 logger.info('Started application')
+
 
 class TrialRunner(QObject):
     '''
@@ -1692,6 +1694,11 @@ def main(argv):
     # create main window
     GUI = MainWindow()
 
+    # fix for windows to show icon in taskbar
+    if os.name == 'nt':
+        myappid = 'PyBehaviour' # arbitrary string
+        ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
+
     # resize if larger than desktop
     screen_res = QDesktopWidget().availableGeometry()
     if GUI.frameSize().height() > screen_res.height():
@@ -1712,6 +1719,8 @@ def main(argv):
 
     # start the app
     sys.exit(app.exec_())
+
+
 
 if __name__ == '__main__':
     # find available serial ports
