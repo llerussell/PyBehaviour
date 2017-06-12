@@ -457,9 +457,6 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         # place figure widgets
         self.addFigures()
 
-        # signal/slot connections
-        self.setConnects()
-
         # configure existing widgets programmatically
         self.device_ComboBox.addItems(available_devices)
         if available_configs != []:
@@ -474,11 +471,16 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         self.trial_config = {}
         self.trial_log = []
 
+        # open the config file and populate GUI with values
+        self.GUIRestore()
+
+        # signal/slot connections
+        self.setConnects()
+        self.loadPreset()
+        
         # ready
         self._gui_ready = True
 
-        # open the config file and populate GUI with values
-        self.GUIRestore()
 
     def defineColormaps(self):
         # define colormap for different stims
@@ -753,10 +755,16 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         self.performanceFigPerfAxIm.set_extent([(0.5/trials_ax_lim[1]),(num_trials/trials_ax_lim[1])+(0.5/trials_ax_lim[1]), 0,1])
 
         self.rasterFigPerfAxVarIm.set_clim([0,num_max_variations-1])
-
+        
         self.preTrialRasterFigCanvas.draw()
         self.rasterFigCanvas.draw()
         self.performanceFigCanvas.draw()
+        # self.preTrialRasterFigCanvas.update()  # need to add all the other elements like the lines and rectangles!
+        # self.rasterFigCanvas.update()
+        # self.performanceFigCanvas.update()
+        # self.preTrialRasterFigCanvas.flush_events()
+        # self.rasterFigCanvas.flush_events()
+        # self.performanceFigCanvas.flush_events()
 
     def updateRasterPlotData(self, trial_num, val, ID, state, is_first_response):
         if state == 'INTRIAL':
@@ -993,11 +1001,11 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
                 if isinstance(obj, QCheckBox):
                     obj.stateChanged.connect(self.getValues)
                 if isinstance(obj, QLineEdit):
-                    obj.textChanged.connect(self.getValues)
+                    obj.editingFinished.connect(self.getValues)
                 if isinstance(obj, QSpinBox):
-                    obj.valueChanged.connect(self.getValues)
+                    obj.editingFinished.connect(self.getValues)
                 if isinstance(obj, QDoubleSpinBox):
-                    obj.valueChanged.connect(self.getValues)
+                    obj.editingFinished.connect(self.getValues)
 
     def manualConnectDisconnect(self):
         if arduino['connected'] is False:
@@ -1170,72 +1178,78 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
             self.getValues()
 
     def getValues(self):
-        # extract gui values
-        widgets = (QComboBox, QCheckBox, QLineEdit, QSpinBox, QDoubleSpinBox)
-        groups = (self.session_GroupBox, self.arduino_GroupBox,
-                  self.trial_GroupBox, self.plotOptions_groupBox)
-        for group in groups:
-            for obj in group.findChildren(widgets):
-                fullname = str(obj.objectName())
-                trimmed_name = fullname.split('_')[0]
-                if isinstance(obj, QComboBox):
-                    p[trimmed_name] = str(obj.currentText())
-                if isinstance(obj, QCheckBox):
-                    p[trimmed_name] = bool(obj.isChecked())
-                if isinstance(obj, QLineEdit):
-                    if 'spinbox' not in fullname:
-                        p[trimmed_name] = str(obj.text())
-                if isinstance(obj, QSpinBox):
-                    p[trimmed_name] = int(obj.value())
-                if isinstance(obj, QDoubleSpinBox):
-                    p[trimmed_name] = float(obj.value())
-
-        # process gui values
-        stimChannels = [p['stim1'], p['stim2'], p['stim3'], p['stim4'],
-                        p['stim5'], p['stim6'], p['stim7'], p['stim8']]
-
-        respRequired = [p['respReq1'], p['respReq2'], p['respReq3'], p['respReq4'],
-                        p['respReq5'], p['respReq6'], p['respReq7'], p['respReq8']]
-
-        rewardChannels = [p['rewardChan1'], p['rewardChan2'], p['rewardChan3'], p['rewardChan4'],
-                          p['rewardChan5'], p['rewardChan6'], p['rewardChan7'], p['rewardChan8']]
-
-        autoRewards = [p['autoReward1'], p['autoReward2'], p['autoReward3'], p['autoReward4'],
-                       p['autoReward5'], p['autoReward6'], p['autoReward7'], p['autoReward8']]
-
-        cueChannels = [p['cueChan1'], p['cueChan2'], p['cueChan3'], p['cueChan4'],
-                       p['cueChan5'], p['cueChan6'], p['cueChan7'], p['cueChan8']]
-
-        punishChannels = [p['punishChan1'], p['punishChan2'], p['punishChan3'], p['punishChan4'],
-                          p['punishChan5'], p['punishChan6'], p['punishChan7'], p['punishChan8']]
-
-        proportions = [p['proportion1'], p['proportion2'], p['proportion3'], p['proportion4'],
-                       p['proportion5'], p['proportion6'], p['proportion7'], p['proportion8']]
-
-        variations = [p['variations1'], p['variations2'], p['variations3'], p['variations4'],
-                      p['variations5'], p['variations6'], p['variations7'], p['variations8']]
-
-        p['stimChannels'] = [int(idx+1) for idx, val in enumerate(stimChannels) if val]
-        p['cueChannels'] = [cueChannels[idx-1] for idx in p['stimChannels']]
-        p['punishChannels'] = [punishChannels[idx-1] for idx in p['stimChannels']]
-        p['respRequired'] = [respRequired[idx-1] for idx in p['stimChannels']]
-        p['rewardChannels'] = [rewardChannels[idx-1] for idx in p['stimChannels']]
-        p['autoRewards'] = [autoRewards[idx-1] for idx in p['stimChannels']]
-        p['proportions'] = [proportions[idx-1] for idx in p['stimChannels']]
-        p['variations'] = [variations[idx-1] for idx in p['stimChannels']]
-
-        if p['witholdBeforeStim']:
-            p['witholdBeforeStimPlotVal'] = p['witholdBeforeStimDuration']
-        else:
-            p['witholdBeforeStimPlotVal'] = 0
-
-        self.updateTrialTimings()
-
-        # update gui
         if self._gui_ready:
+
+            t0 = time.time()
+            # extract gui values
+            widgets = (QComboBox, QCheckBox, QLineEdit, QSpinBox, QDoubleSpinBox)
+            groups = (self.session_GroupBox, self.arduino_GroupBox,
+                      self.trial_GroupBox, self.plotOptions_groupBox)
+            for group in groups:
+                for obj in group.findChildren(widgets):
+                    fullname = str(obj.objectName())
+                    trimmed_name = fullname.split('_')[0]
+                    if isinstance(obj, QComboBox):
+                        p[trimmed_name] = str(obj.currentText())
+                    if isinstance(obj, QCheckBox):
+                        p[trimmed_name] = bool(obj.isChecked())
+                    if isinstance(obj, QLineEdit):
+                        if 'spinbox' not in fullname:
+                            p[trimmed_name] = str(obj.text())
+                    if isinstance(obj, QSpinBox):
+                        p[trimmed_name] = int(obj.value())
+                    if isinstance(obj, QDoubleSpinBox):
+                        p[trimmed_name] = float(obj.value())
+
+            # process gui values
+            stimChannels = [p['stim1'], p['stim2'], p['stim3'], p['stim4'],
+                            p['stim5'], p['stim6'], p['stim7'], p['stim8']]
+
+            respRequired = [p['respReq1'], p['respReq2'], p['respReq3'], p['respReq4'],
+                            p['respReq5'], p['respReq6'], p['respReq7'], p['respReq8']]
+
+            rewardChannels = [p['rewardChan1'], p['rewardChan2'], p['rewardChan3'], p['rewardChan4'],
+                              p['rewardChan5'], p['rewardChan6'], p['rewardChan7'], p['rewardChan8']]
+
+            autoRewards = [p['autoReward1'], p['autoReward2'], p['autoReward3'], p['autoReward4'],
+                           p['autoReward5'], p['autoReward6'], p['autoReward7'], p['autoReward8']]
+
+            cueChannels = [p['cueChan1'], p['cueChan2'], p['cueChan3'], p['cueChan4'],
+                           p['cueChan5'], p['cueChan6'], p['cueChan7'], p['cueChan8']]
+
+            punishChannels = [p['punishChan1'], p['punishChan2'], p['punishChan3'], p['punishChan4'],
+                              p['punishChan5'], p['punishChan6'], p['punishChan7'], p['punishChan8']]
+
+            proportions = [p['proportion1'], p['proportion2'], p['proportion3'], p['proportion4'],
+                           p['proportion5'], p['proportion6'], p['proportion7'], p['proportion8']]
+
+            variations = [p['variations1'], p['variations2'], p['variations3'], p['variations4'],
+                          p['variations5'], p['variations6'], p['variations7'], p['variations8']]
+
+            p['stimChannels'] = [int(idx+1) for idx, val in enumerate(stimChannels) if val]
+            p['cueChannels'] = [cueChannels[idx-1] for idx in p['stimChannels']]
+            p['punishChannels'] = [punishChannels[idx-1] for idx in p['stimChannels']]
+            p['respRequired'] = [respRequired[idx-1] for idx in p['stimChannels']]
+            p['rewardChannels'] = [rewardChannels[idx-1] for idx in p['stimChannels']]
+            p['autoRewards'] = [autoRewards[idx-1] for idx in p['stimChannels']]
+            p['proportions'] = [proportions[idx-1] for idx in p['stimChannels']]
+            p['variations'] = [variations[idx-1] for idx in p['stimChannels']]
+
+            if p['witholdBeforeStim']:
+                p['witholdBeforeStimPlotVal'] = p['witholdBeforeStimDuration']
+            else:
+                p['witholdBeforeStimPlotVal'] = 0
+
+            e1 = time.time() - t0
+            self.updateTrialTimings()
+            e2 = time.time() - t0
+            # update gui
             self.makeTrialOrder()
+            e3 = time.time() - t0
             self.updateTrialConfigPlot()
+            e4 = time.time() - t0
             self.updatePlotLayouts()
+            e5 = time.time() - t0
 
             # colour stim names if selected
             stimCheckBoxes = [self.stim1_CheckBox, self.stim2_CheckBox, self.stim3_CheckBox, self.stim4_CheckBox,
@@ -1246,6 +1260,8 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
                 colour_string = 'rgb(' + str(int(colour[0]*255)) + ',' + str(int(colour[1]*255)) + ',' + str(int(colour[2]*255)) + ')'
                 stimCheckBox.setStyleSheet('QCheckBox::indicator:checked { background-color:' + colour_string +
                     '; border: 1px solid #b1b1b1;}')
+            e6 = time.time() - t0
+            # print(e1,e2,e3,e4,e5,e6)
 
     def updateTrialTimings(self, for_plot=False):
         p['totalDuration'] = p['witholdBeforeStimPlotVal'] + p['startToStimDelay'] + \
@@ -1313,6 +1329,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
             for group in groups:
                 for obj in group.findChildren(widgets):
                     name = str(obj.objectName())
+                    
                     try:
                         if isinstance(obj, QComboBox):
                             value = self.defaults[name]
@@ -1549,12 +1566,14 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         self.loadPreset_ComboBox.setCurrentIndex(index)
 
     def loadPreset(self):
+        self._gui_ready = False
         filename = str(self.loadPreset_ComboBox.currentText())
         filepath = os.path.join(config_directory, filename + '.cfg')
         self.trial_config = json.load(open(filepath, 'r'))
         widgets = (QComboBox, QCheckBox, QLineEdit, QSpinBox, QDoubleSpinBox)
         for obj in self.trial_GroupBox.findChildren(widgets):
             name = str(obj.objectName())
+
             try:
                 if isinstance(obj, QComboBox):
                     value = self.trial_config[name]
@@ -1576,7 +1595,9 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
                     obj.setValue(value)  # restore lineEditFile
             except:
                 continue
-        self.reset()
+        self._gui_ready = True
+        self.getValues()
+        # self.reset()
 
     def closeEvent(self, event):
         self._exiting = True
@@ -1687,6 +1708,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
 
 # Main entry to program.  Sets up the main app and create a new window.
 def main(argv):
+    # print('entering main')
     # create Qt application
     app = QApplication(argv)
     # app.setStyle('fusion')
@@ -1716,7 +1738,7 @@ def main(argv):
     # show the window icon
     if os.path.isfile(os.path.join('GUI', 'icon.ico')):
         GUI.setWindowIcon(QIcon(os.path.join('GUI', 'icon.ico')))
-
+    # print('finishing main')
     # start the app
     sys.exit(app.exec_())
 
