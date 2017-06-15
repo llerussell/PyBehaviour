@@ -40,7 +40,7 @@ import serial
 from PyQt5.QtCore import QObject, pyqtSignal, QThread, QTimer
 from PyQt5.QtWidgets import (QComboBox, QCheckBox, QLineEdit, QSpinBox,
                              QDoubleSpinBox, QFileDialog, QApplication,
-                             QDesktopWidget, QMainWindow)
+                             QDesktopWidget, QMainWindow, QMessageBox)
 from PyQt5.QtGui import QIcon
 from GUI import GUI, serial_ports
 import pickle
@@ -327,8 +327,26 @@ class TrialRunner(QObject):
                 logger.exception(e)
                 self.comm_feed_signal.emit('Something went wrong', 'pc')
                 self.comm_feed_signal.emit(str(e), 'pc')
-                self.disconnectArduino()
-                self.connectArduino()
+                # self.disconnectArduino()
+                # self.connectArduino()
+                msg = QMessageBox()
+                msg.setIcon(QMessageBox.Critical)
+                msg.setText("Error")
+                msg.setInformativeText(e)
+                msg.setWindowTitle("Error")
+                print(temp_read1)
+                print(temp_read2)
+                print(temp_read)
+                self.comm_feed_signal.emit(str(temp_read1), 'pc')
+                self.comm_feed_signal.emit(str(temp_read2), 'pc')
+                self.comm_feed_signal.emit(str(temp_read), 'pc')
+                dict = {}
+                dict['temp_read'] = temp_read
+                dict['temp_read1'] = temp_read1
+                dict['temp_read2'] = temp_read2
+                save_name = 'errordump' + time.strftime('%Y%m%d_%H%M%S')
+                sio.savemat(save_name + '.mat', dict)
+
 
     # signals allow communication between the TrialRunner thread and GUI thread. i.e. send data to main GUI thread where it can be displayed and saved. I don't know why they are here outside of any function...
     response_signal = pyqtSignal(int, float, int, str, bool, name='responseSignal')
@@ -352,22 +370,23 @@ class TrialRunner(QObject):
         is_first_response = True
         actual_trial_started = False
         while trialRunning:
+            if actual_trial_started:
+                trial_elapsed = time.time() - trial_started
+                # print(trial_elapsed)
+                if trial_elapsed > 5 * p['trialDuration']:
+                    print('********************************')
+                    print('OH NO, SOMETHING IS UNRESPONSIVE')
+                    print('********************************')
+
+            if arduino['connected'] == False:
+                self.comm_feed_signal.emit('Arduino not connected', 'pc')
+                trials['running_score'][trial_num] = 0
+                trialRunning = False  # abort current trial if arduino disconnects
 
             try:
-                if actual_trial_started:
-                    trial_elapsed = time.time() - trial_started
-                    # print(trial_elapsed)
-                    if trial_elapsed > 5 * p['trialDuration']:
-                        print('********************************')
-                        print('OH NO, SOMETHING IS UNRESPONSIVE')
-                        print('********************************')
-
-                if arduino['connected'] == False:
-                    self.comm_feed_signal.emit('Arduino not connected', 'pc')
-                    trials['running_score'][trial_num] = 0
-                    trialRunning = False  # abort current trial if arduino disconnects
-
-                temp_read = arduino['device'].readline().strip().decode('utf-8')
+                temp_read1 = arduino['device'].readline()
+                temp_read2 = temp_read1.strip()
+                temp_read = temp_read2.decode('utf-8')
 
                 if temp_read:
                     self.comm_feed_signal.emit(temp_read, 'arduino')
@@ -477,7 +496,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         # signal/slot connections
         self.setConnects()
         self.loadPreset()
-        
+
         # ready
         self._gui_ready = True
 
@@ -1569,35 +1588,36 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         self._gui_ready = False
         filename = str(self.loadPreset_ComboBox.currentText())
         filepath = os.path.join(config_directory, filename + '.cfg')
-        self.trial_config = json.load(open(filepath, 'r'))
-        widgets = (QComboBox, QCheckBox, QLineEdit, QSpinBox, QDoubleSpinBox)
-        for obj in self.trial_GroupBox.findChildren(widgets):
-            name = str(obj.objectName())
+        if os.path.exists(filepath):
+            self.trial_config = json.load(open(filepath, 'r'))
+            widgets = (QComboBox, QCheckBox, QLineEdit, QSpinBox, QDoubleSpinBox)
+            for obj in self.trial_GroupBox.findChildren(widgets):
+                name = str(obj.objectName())
 
-            try:
-                if isinstance(obj, QComboBox):
-                    value = self.trial_config[name]
-                    index = obj.findText(value)  # get the corresponding index for specified string in combobox
-                    obj.setCurrentIndex(index)  # preselect a combobox value by index
-                if isinstance(obj, QLineEdit):
-                    value = self.trial_config[name]
-                    if 'spinbox' not in name:
-                        obj.setText(value)  # restore lineEditFile
-                if isinstance(obj, QCheckBox):
-                    value = self.trial_config[name]
-                    if value is not None:
-                        obj.setChecked(value)  # restore checkbox
-                if isinstance(obj, QSpinBox):
-                    value = self.trial_config[name]
-                    obj.setValue(value)  # restore lineEditFile
-                if isinstance(obj, QDoubleSpinBox):
-                    value = self.trial_config[name]
-                    obj.setValue(value)  # restore lineEditFile
-            except:
-                continue
-        self._gui_ready = True
-        self.getValues()
-        # self.reset()
+                try:
+                    if isinstance(obj, QComboBox):
+                        value = self.trial_config[name]
+                        index = obj.findText(value)  # get the corresponding index for specified string in combobox
+                        obj.setCurrentIndex(index)  # preselect a combobox value by index
+                    if isinstance(obj, QLineEdit):
+                        value = self.trial_config[name]
+                        if 'spinbox' not in name:
+                            obj.setText(value)  # restore lineEditFile
+                    if isinstance(obj, QCheckBox):
+                        value = self.trial_config[name]
+                        if value is not None:
+                            obj.setChecked(value)  # restore checkbox
+                    if isinstance(obj, QSpinBox):
+                        value = self.trial_config[name]
+                        obj.setValue(value)  # restore lineEditFile
+                    if isinstance(obj, QDoubleSpinBox):
+                        value = self.trial_config[name]
+                        obj.setValue(value)  # restore lineEditFile
+                except:
+                    continue
+            self._gui_ready = True
+            self.getValues()
+            # self.reset()
 
     def closeEvent(self, event):
         self._exiting = True
