@@ -570,7 +570,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         NUM_STIMS = 8
         num_stims = len(p['stimChannels'])
         num_trials = p['sessionDuration']
-        num_max_variations = max(p['variations'])
+        num_max_variations = int(max(p['trialVariations']) +1)
 
         # reset perfromance plots
         plots = [self.runningScorePlot, self.averageScorePlot]
@@ -680,10 +680,10 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         self.preTrialRasterFigAx.set_xlim(0, np.max([1, p['witholdBeforeStimPlotVal']]))
 
         num_trials = p['sessionDuration']
-
         trial_num = self.trialRunner.trial_num
 
-        self.updateResultBlockPlots(trial_num)
+        if self.trialRunner._session_running:
+            self.updateResultBlockPlots(trial_num)
 
         if p['autoScalePlots']:
             if not self.trialRunner._session_running:
@@ -763,17 +763,18 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         self.chance_line2.set_xdata([-1,16])
 
         # performance blocks
-        if np.any(p['variations']):
-            num_max_variations = max(p['variations'])
-        else:
-            num_max_variations = 1
+        if self.trialRunner._session_running:
+            if np.any(p['trialVariations']):
+                num_max_variations = int(max(p['trialVariations']))
+            else:
+                num_max_variations = 0
+            self.rasterFigPerfAxVarIm.set_clim([0,num_max_variations])
 
         self.rasterFigPerfAxIm.set_extent(   [0,0.75, (0.5/trials_ax_lim[1]),(num_trials/trials_ax_lim[1])+(0.5/trials_ax_lim[1])])
         self.rasterFigPerfAxVarIm.set_extent([0.85,1, (0.5/trials_ax_lim[1]),(num_trials/trials_ax_lim[1])+(0.5/trials_ax_lim[1])])
 
         self.performanceFigPerfAxIm.set_extent([(0.5/trials_ax_lim[1]),(num_trials/trials_ax_lim[1])+(0.5/trials_ax_lim[1]), 0,1])
 
-        self.rasterFigPerfAxVarIm.set_clim([0,num_max_variations-1])
         
         self.preTrialRasterFigCanvas.draw()
         self.rasterFigCanvas.draw()
@@ -848,7 +849,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         variations = p['trialVariations'][:trial_num+1]
 
         num_diff_stims = len(p['stimChannels'])
-        num_max_variations = max(p['variations'])
+        num_max_variations = int(max(p['trialVariations']) +1)
 
         # initialise
         results = np.full([num_max_variations, num_diff_stims], np.nan)
@@ -1186,10 +1187,13 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
             varSpinBoxes = [self.variations1_spinBox, self.variations2_spinBox, self.variations3_spinBox, self.variations4_spinBox,
                              self.variations5_spinBox, self.variations6_spinBox, self.variations7_spinBox, self.variations8_spinBox]
             for i, check_box in enumerate(stimCheckBoxes):
-                if i+1 in unique_stims:
+                this_stim_type = i+1
+                if this_stim_type in unique_stims:
                     check_box.setChecked(True)
                     propSpinBoxes[i].setEnabled(False)
                     varSpinBoxes[i].setEnabled(False)
+                    propSpinBoxes[i].setValue(sum(p['trialOrder']==this_stim_type)/len(p['trialOrder']))
+                    varSpinBoxes[i].setValue(max(p['trialVariations'][p['trialOrder']==this_stim_type])+1)
                 else:
                     check_box.setChecked(False)
                     check_box.setEnabled(False)
@@ -1761,7 +1765,6 @@ def main(argv):
     # print('finishing main')
     # start the app
     sys.exit(app.exec_())
-
 
 
 if __name__ == '__main__':
