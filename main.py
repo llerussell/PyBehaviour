@@ -327,26 +327,8 @@ class TrialRunner(QObject):
                 logger.exception(e)
                 self.comm_feed_signal.emit('Something went wrong', 'pc')
                 self.comm_feed_signal.emit(str(e), 'pc')
-                # self.disconnectArduino()
-                # self.connectArduino()
-                msg = QMessageBox()
-                msg.setIcon(QMessageBox.Critical)
-                msg.setText("Error")
-                msg.setInformativeText(e)
-                msg.setWindowTitle("Error")
-                print(temp_read1)
-                print(temp_read2)
-                print(temp_read)
-                self.comm_feed_signal.emit(str(temp_read1), 'pc')
-                self.comm_feed_signal.emit(str(temp_read2), 'pc')
-                self.comm_feed_signal.emit(str(temp_read), 'pc')
-                dict = {}
-                dict['temp_read'] = temp_read
-                dict['temp_read1'] = temp_read1
-                dict['temp_read2'] = temp_read2
-                save_name = 'errordump' + time.strftime('%Y%m%d_%H%M%S')
-                sio.savemat(save_name + '.mat', dict)
-
+                self.disconnectArduino()
+                self.connectArduino()
 
     # signals allow communication between the TrialRunner thread and GUI thread. i.e. send data to main GUI thread where it can be displayed and saved. I don't know why they are here outside of any function...
     response_signal = pyqtSignal(int, float, int, str, bool, name='responseSignal')
@@ -441,9 +423,26 @@ class TrialRunner(QObject):
                 if self._session_running:
                     self.comm_feed_signal.emit('Something went wrong', 'pc')
                     self.comm_feed_signal.emit(str(e), 'pc')
-                    self.connectArduino()
-                    trials['running_score'][trial_num] = 0
-                    trialRunning = False
+                    # self.connectArduino()
+                    # trials['running_score'][trial_num] = 0
+                    # trialRunning = False
+                    msg = QMessageBox()
+                    msg.setIcon(QMessageBox.Critical)
+                    msg.setText("Error")
+                    msg.setInformativeText(e)
+                    msg.setWindowTitle("Error")
+                    print(temp_read1)
+                    print(temp_read2)
+                    print(temp_read)
+                    self.comm_feed_signal.emit(str(temp_read1), 'pc')
+                    self.comm_feed_signal.emit(str(temp_read2), 'pc')
+                    self.comm_feed_signal.emit(str(temp_read), 'pc')
+                    dict = {}
+                    dict['temp_read'] = temp_read
+                    dict['temp_read1'] = temp_read1
+                    dict['temp_read2'] = temp_read2
+                    save_name = 'errordump' + time.strftime('%Y%m%d_%H%M%S')
+                    sio.savemat(save_name + '.mat', dict)
 
     def stop(self):
         if self._session_running:
