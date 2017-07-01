@@ -838,7 +838,7 @@ QGroupBox#trial_GroupBox::title {
                     <x>0</x>
                     <y>0</y>
                     <width>737</width>
-                    <height>1198</height>
+                    <height>1223</height>
                    </rect>
                   </property>
                   <property name="sizePolicy">
@@ -4124,63 +4124,6 @@ QGroupBox#trial_GroupBox::title {
                           <property name="spacing">
                            <number>5</number>
                           </property>
-                          <item row="0" column="0">
-                           <widget class="QLabel" name="label_11">
-                            <property name="enabled">
-                             <bool>false</bool>
-                            </property>
-                            <property name="sizePolicy">
-                             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                              <horstretch>0</horstretch>
-                              <verstretch>0</verstretch>
-                             </sizepolicy>
-                            </property>
-                            <property name="minimumSize">
-                             <size>
-                              <width>170</width>
-                              <height>22</height>
-                             </size>
-                            </property>
-                            <property name="font">
-                             <font>
-                              <pointsize>9</pointsize>
-                             </font>
-                            </property>
-                            <property name="text">
-                             <string>Active initiation</string>
-                            </property>
-                            <property name="alignment">
-                             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                            </property>
-                           </widget>
-                          </item>
-                          <item row="1" column="0">
-                           <widget class="QLabel" name="label_2">
-                            <property name="sizePolicy">
-                             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                              <horstretch>0</horstretch>
-                              <verstretch>0</verstretch>
-                             </sizepolicy>
-                            </property>
-                            <property name="minimumSize">
-                             <size>
-                              <width>170</width>
-                              <height>22</height>
-                             </size>
-                            </property>
-                            <property name="font">
-                             <font>
-                              <pointsize>9</pointsize>
-                             </font>
-                            </property>
-                            <property name="text">
-                             <string>Withold before start</string>
-                            </property>
-                            <property name="alignment">
-                             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                            </property>
-                           </widget>
-                          </item>
                           <item row="0" column="1">
                            <layout class="QHBoxLayout" name="horizontalLayout_23">
                             <property name="spacing">
@@ -4259,6 +4202,36 @@ QGroupBox#trial_GroupBox::title {
                              </widget>
                             </item>
                            </layout>
+                          </item>
+                          <item row="0" column="0">
+                           <widget class="QLabel" name="label_11">
+                            <property name="enabled">
+                             <bool>false</bool>
+                            </property>
+                            <property name="sizePolicy">
+                             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                              <horstretch>0</horstretch>
+                              <verstretch>0</verstretch>
+                             </sizepolicy>
+                            </property>
+                            <property name="minimumSize">
+                             <size>
+                              <width>170</width>
+                              <height>22</height>
+                             </size>
+                            </property>
+                            <property name="font">
+                             <font>
+                              <pointsize>9</pointsize>
+                             </font>
+                            </property>
+                            <property name="text">
+                             <string>Active initiation</string>
+                            </property>
+                            <property name="alignment">
+                             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                            </property>
+                           </widget>
                           </item>
                           <item row="1" column="1">
                            <layout class="QHBoxLayout" name="horizontalLayout_10">
@@ -4387,33 +4360,6 @@ QGroupBox#trial_GroupBox::title {
                             </item>
                            </layout>
                           </item>
-                          <item row="2" column="0">
-                           <widget class="QLabel" name="label_22">
-                            <property name="sizePolicy">
-                             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                              <horstretch>0</horstretch>
-                              <verstretch>0</verstretch>
-                             </sizepolicy>
-                            </property>
-                            <property name="minimumSize">
-                             <size>
-                              <width>170</width>
-                              <height>22</height>
-                             </size>
-                            </property>
-                            <property name="font">
-                             <font>
-                              <pointsize>9</pointsize>
-                             </font>
-                            </property>
-                            <property name="text">
-                             <string>Cue</string>
-                            </property>
-                            <property name="alignment">
-                             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                            </property>
-                           </widget>
-                          </item>
                           <item row="2" column="1">
                            <layout class="QHBoxLayout" name="horizontalLayout_9">
                             <property name="spacing">
@@ -4458,6 +4404,81 @@ QGroupBox#trial_GroupBox::title {
                               </property>
                               <property name="text">
                                <string/>
+                              </property>
+                             </widget>
+                            </item>
+                           </layout>
+                          </item>
+                          <item row="1" column="0">
+                           <widget class="QLabel" name="label_2">
+                            <property name="sizePolicy">
+                             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                              <horstretch>0</horstretch>
+                              <verstretch>0</verstretch>
+                             </sizepolicy>
+                            </property>
+                            <property name="minimumSize">
+                             <size>
+                              <width>170</width>
+                              <height>22</height>
+                             </size>
+                            </property>
+                            <property name="font">
+                             <font>
+                              <pointsize>9</pointsize>
+                             </font>
+                            </property>
+                            <property name="text">
+                             <string>Withold before start</string>
+                            </property>
+                            <property name="alignment">
+                             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                            </property>
+                           </widget>
+                          </item>
+                          <item row="2" column="0">
+                           <widget class="QLabel" name="label_22">
+                            <property name="sizePolicy">
+                             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                              <horstretch>0</horstretch>
+                              <verstretch>0</verstretch>
+                             </sizepolicy>
+                            </property>
+                            <property name="minimumSize">
+                             <size>
+                              <width>170</width>
+                              <height>22</height>
+                             </size>
+                            </property>
+                            <property name="font">
+                             <font>
+                              <pointsize>9</pointsize>
+                             </font>
+                            </property>
+                            <property name="text">
+                             <string>Cue (Trial initiated)</string>
+                            </property>
+                            <property name="alignment">
+                             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                            </property>
+                           </widget>
+                          </item>
+                          <item row="3" column="0">
+                           <widget class="QLabel" name="label_38">
+                            <property name="text">
+                             <string>Cue (Trial actually started)</string>
+                            </property>
+                            <property name="alignment">
+                             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                            </property>
+                           </widget>
+                          </item>
+                          <item row="3" column="1">
+                           <layout class="QHBoxLayout" name="horizontalLayout_29">
+                            <item>
+                             <widget class="QCheckBox" name="cueTrialActuallyStarted_checkBox">
+                              <property name="text">
+                               <string> </string>
                               </property>
                              </widget>
                             </item>

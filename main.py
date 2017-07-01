@@ -259,6 +259,8 @@ class TrialRunner(QObject):
             str(reward_chan) + ';' \
             'TRIAL_CUE:' + \
             str(int(p['cueTrial'])) + ';' \
+            'TRIAL_STARTED_CUE:' + \
+            str(int(p['cueTrialActuallyStarted'])) + ';' \
             'STIM_CUE:' + \
             str(int(p['cueStim'])) + ';' \
             'RESP_CUE:' + \
@@ -1306,8 +1308,11 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
 
         self.trial_cue_rectangle.set_width(p['cueTrial'] * 0.1)
 
+        self.trial_actually_started_cue_rectangle.set_width(p['cueTrialActuallyStarted'] * 0.1)
+        self.trial_actually_started_cue_rectangle.set_x(p['witholdBeforeStimPlotVal'])
+
         self.stim_cue_rectangle.set_width(p['cueStim'] * 0.1)
-        self.stim_cue_rectangle.set_x(p['witholdBeforeStimPlotVal'])
+        self.stim_cue_rectangle.set_x(p['witholdBeforeStimPlotVal']+ p['stimStart'])
 
         self.response_cue_rectangle.set_width(p['cueResponse'] * 0.1)
         self.response_cue_rectangle.set_x(p['witholdBeforeStimPlotVal'] + p['responseCueStart'])
@@ -1426,6 +1431,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         self.withold_line = patches.Rectangle([0, 0], 0, 0.05, ec=[.8, .8, .8], linewidth=0, zorder=0, fill=None, hatch='||')
         self.duration_line = patches.Rectangle([0, 0], 0, 0.05, fc=[.8, .8, .8], ec='none', zorder=0)
         self.trial_cue_rectangle = patches.Rectangle([0, 0], 0, 0.9, fc=[1, .7, 0], ec='none')
+        self.trial_actually_started_cue_rectangle = patches.Rectangle([0, 0], 0, 0.9, fc=[1, .7, 0], ec='none')
         self.stim_cue_rectangle = patches.Rectangle([0, 0], 0, 0.9, fc=[1, .7, 0], ec='none')
         self.response_cue_rectangle = patches.Rectangle([0, 0], 0, 0.9, fc=[1, .7, 0], ec='none')
         self.stim_rectangle = patches.Rectangle([0, 0], 0, 1, fc=[.3, .3, .3], ec='none')
@@ -1437,6 +1443,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         self.trialConfigAx.add_patch(self.resp_rectangle)
         self.trialConfigAx.add_patch(self.reward_rectangle)
         self.trialConfigAx.add_patch(self.trial_cue_rectangle)
+        self.trialConfigAx.add_patch(self.trial_actually_started_cue_rectangle)
         self.trialConfigAx.add_patch(self.stim_cue_rectangle)
         self.trialConfigAx.add_patch(self.response_cue_rectangle)
         self.trialConfigAx.add_patch(self.duration_line)

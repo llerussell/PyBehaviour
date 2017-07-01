@@ -68,6 +68,7 @@ int stimVariation;
 int responseRequired;
 int rewardChan;
 bool trialStartCue;
+bool trialActuallyStartedCue;
 bool stimStartCue;
 bool responseWindowCue;
 int responseWindowCueStartTime;
@@ -262,72 +263,75 @@ void rxConfig() {
           trialStartCue = atoi(varBuffer);
           break;
         case 6:
-          stimStartCue = atoi(varBuffer);
+          trialActuallyStartedCue = atoi(varBuffer);
           break;
         case 7:
-          responseWindowCue = atoi(varBuffer);
+          stimStartCue = atoi(varBuffer);
           break;
         case 8:
-          responseWindowCueStartTime = atoi(varBuffer);
+          responseWindowCue = atoi(varBuffer);
           break;
         case 9:
-          withold = atoi(varBuffer);
+          responseWindowCueStartTime = atoi(varBuffer);
           break;
         case 10:
-          witholdReq = atoi(varBuffer);
+          withold = atoi(varBuffer);
           break;
         case 11:
-          stimStartTime = atoi(varBuffer);
+          witholdReq = atoi(varBuffer);
           break;
         case 12:
-          stimStopTime = atoi(varBuffer);
+          stimStartTime = atoi(varBuffer);
           break;
         case 13:
-          responseWindowStartTime = atoi(varBuffer);
+          stimStopTime = atoi(varBuffer);
           break;
         case 14:
-          responseWindowStopTime = atoi(varBuffer);
+          responseWindowStartTime = atoi(varBuffer);
           break;
         case 15:
-          trialDuration = atoi(varBuffer);
+          responseWindowStopTime = atoi(varBuffer);
           break;
         case 16:
-          autoReward = atoi(varBuffer);
+          trialDuration = atoi(varBuffer);
           break;
         case 17:
-          autoRewardStartTime = atoi(varBuffer);
+          autoReward = atoi(varBuffer);
           break;
         case 18:
-          punishTrigger = atoi(varBuffer);
+          autoRewardStartTime = atoi(varBuffer);
           break;
         case 19:
-          punishChan = atoi(varBuffer) - 1;
+          punishTrigger = atoi(varBuffer);
           break;
         case 20:
-          punishDelay = atoi(varBuffer);
+          punishChan = atoi(varBuffer) - 1;
           break;
         case 21:
-          punishLength = atoi(varBuffer);
+          punishDelay = atoi(varBuffer);
           break;
         case 22:
-          rewardRemoval = atoi(varBuffer);
+          punishLength = atoi(varBuffer);
           break;
         case 23:
-          rewardRemovalDelay = atoi(varBuffer);
+          rewardRemoval = atoi(varBuffer);
           break;
         case 24:
-          cueChan = atoi(varBuffer) - 1;
+          rewardRemovalDelay = atoi(varBuffer);
           break;
         case 25:
-          postStimCancel = atoi(varBuffer);
+          cueChan = atoi(varBuffer) - 1;
           break;
         case 26:
-          secondChance = atoi(varBuffer);
+          postStimCancel = atoi(varBuffer);
           break;
         case 27:
-          rewardDuration = atoi(varBuffer);
+          secondChance = atoi(varBuffer);
           break;
         case 28:
+          rewardDuration = atoi(varBuffer);
+          break;
+        case 29:
           punishTriggerDuration = atoi(varBuffer);
           break;
       }
@@ -452,6 +456,14 @@ void runTrial() {
       }
       SREG = SaveSREG; // restore the interrupt flag
     }
+  }
+
+  // deliver trial cue
+  if (trialActuallyStartedCue) {
+    Serial.println("trial cue");
+    tCueOn.setIterations(1);  // reset iterations to allow repeat
+    tCueOff.setIterations(1);  // reset iterations to allow repeat
+    tCueOn.enable();
   }
 
   // start trial
