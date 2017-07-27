@@ -33,7 +33,7 @@ elapsedMillis witholdTimer;
 
 // pin numbers
 const int responsePin[] = {2, 3}; // interrupt:pin numbers 0:2 1:3 [2:21 do not use?] 3:20
-const int stimPin[] = {30,31,32,33,34,35,36,37};
+const int stimPin[] = {30, 31, 32, 33, 34, 35, 36, 37};
 const int rewardPin[] = {4, 5};
 const int rewardRemovalPin[] = {8, 9};
 const int punishPin[] = {6, 7};
@@ -131,6 +131,22 @@ volatile bool miss;
 volatile bool cheated;
 volatile bool resultsTransmitted;
 
+// running to initiate trials
+bool runToInitiate = true;
+const int inputPin = A0;
+long analogVal;
+long analogZero = 123;
+long runningTimeTarget = 2000;  // milliseconds
+int runningSpeedThresh = 10;
+int runningTimeReset = 500;
+long runningAccumulator;
+long runningVal;
+bool isRunning = false;
+bool startTrial = false;
+elapsedMillis runningTimer;
+long lastRunTime;
+bool enforceStop = false;
+
 
 //---------------------------------------------------------
 // RUNS ONCE AT STARTUP
@@ -146,6 +162,8 @@ void setup() {
     pinMode(i, OUTPUT);
     digitalWrite(i, LOW);
   }
+
+  digitalWrite(inputPin, INPUT_PULLUP);
 }
 
 
@@ -425,7 +443,7 @@ void runTrial() {
   digitalWrite(trialRunningPin, HIGH);
 
   // stim variation, binary 'barcode' (0:15)
-  int bits[] = {0,0,0,0};
+  int bits[] = {0, 0, 0, 0};
   for (int i = 3; i >= 0; i--) {
     bits[i] = (stimVariation & (1 << i)) != 0;
     digitalWrite(stimVariationPin[i], bits[i]);
@@ -455,6 +473,53 @@ void runTrial() {
         inWithold = false;
       }
       SREG = SaveSREG; // restore the interrupt flag
+    }
+  }
+
+  if (runToInitiate) {
+    Serial.println("waiting for running");
+    while (!startTrial) {
+      // initate the 'running' loop
+      runningVal = analogRead(inputPin);
+      //  Serial.print("analog: ");
+      //  Serial.println(runningVal);
+      if (runningVal > analogZero + runningSpeedThresh) {
+        // animal is moving
+        isRunning = true;
+        runningTimer = 0;
+        runningAccumulator = 0;
+        Serial.println("Running started");
+
+        while (isRunning) {
+          runningVal = analogRead(inputPin);
+          //      Serial.print("analog: ");
+          //      Serial.println(runningVal);
+          if (runningVal <= analogZero + runningSpeedThresh) {  // is animal still running?
+            if (runningTimer - lastRunTime > runningTimeReset) { // has animal run in the past X milliseconds?
+              isRunning = false;
+              Serial.println("Running stopped");
+            }
+          }
+
+          else {  // animal is running
+            lastRunTime = runningTimer;
+            runningAccumulator = runningAccumulator + runningVal;
+//            Serial.println(runningTimer);
+          }
+
+          if (runningTimer >= runningTimeTarget) {
+            // has been running long enough, now wait for animal to stop?
+            if (enforceStop) {
+
+            }
+            isRunning = false;
+            startTrial = true;
+          }
+
+        taskManager.execute();
+        }
+      }
+      taskManager.execute();
     }
   }
 
@@ -561,7 +626,7 @@ void processResponse(int responseNum) {
               currentTime = millis() - startTime;
               tEndTrial.setInterval(trialDuration - currentTime + punishLength);
             }
-          txResults();
+            txResults();
           }
         }
       }
@@ -685,7 +750,7 @@ void endTrial() {
   for ( int i = 0; i < 54; ++i ) {
     digitalWrite(i, LOW);
   }
-  
+
   txData();
   txResults();
   resetConfig();
@@ -743,6 +808,8 @@ void resetConfig() {
   cancelled = false;
   resultsTransmitted = false;
   prevTimeResponded = 0;
+  isRunning = false;
+  startTrial = false;
 }
 
 void testPin(int pinNumber, int pinDuration) {
@@ -754,3 +821,5 @@ void testPin(int pinNumber, int pinDuration) {
   delay(pinDuration);
   digitalWrite(pinNumber, LOW);
 }
+
+
