@@ -132,7 +132,7 @@ volatile bool cheated;
 volatile bool resultsTransmitted;
 
 // running to initiate trials
-bool runToInitiate = true;
+bool runToInitiate = false;
 const int inputPin = A0;
 long analogVal;
 long analogZero = 123;
@@ -161,6 +161,10 @@ void setup() {
   for ( int i = 0; i < 54; ++i ) {
     pinMode(i, OUTPUT);
     digitalWrite(i, LOW);
+  }
+
+  for ( int i = 0; i < sizeof(responsePin); ++i ) {
+    pinMode(responsePin[i], INPUT);
   }
 
   digitalWrite(inputPin, INPUT_PULLUP);
