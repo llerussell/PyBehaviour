@@ -334,6 +334,7 @@ class TrialRunner(QObject):
 
     # signals allow communication between the TrialRunner thread and GUI thread. i.e. send data to main GUI thread where it can be displayed and saved. I don't know why they are here outside of any function...
     response_signal = pyqtSignal(int, float, int, str, bool, name='responseSignal')
+    state_signal = pyqtSignal(str, name='stateSignal')
     results_signal = pyqtSignal(int, name='resultsSignal')
     trial_start_signal = pyqtSignal(int, name='trialStartSignal')
     trial_end_signal = pyqtSignal(int, name='trialEndSignal')
@@ -420,6 +421,9 @@ class TrialRunner(QObject):
                                 score = 0
                             trials['running_score'][trial_num] = score
                             self.results_signal.emit(trial_num)
+                    elif temp_read == 'stim on' or temp_read == 'stim off' or temp_read == 'response window open' or temp_read == 'response window closed':
+                        state = temp_read
+                        self.state_signal.emit(state)
             except Exception as e:
                 logger.exception(e)
                 if self._session_running:
@@ -843,6 +847,29 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         canvas.update()
         canvas.flush_events()
 
+    def updateStatePlot(self, state):
+        ax = self.rasterFigAx
+        canvas = self.rasterFigCanvas
+
+        if state == 'stim on':
+            plot_series = self.raster_stimlength
+            plot_series.set_facecolor([0.9,0.8,0.1, 0.1])
+        elif state == 'stim off':
+            plot_series = self.raster_stimlength
+            plot_series.set_facecolor([0,0,0, 0.05])
+        elif state == 'response window open':
+            plot_series = self.raster_respwin
+            plot_series.set_facecolor([0.9,0.8,0.1, 0.1])
+        elif state == 'response window closed':
+            plot_series = self.raster_respwin
+            plot_series.set_facecolor([0,0,0, 0.05])
+
+        # # update/draw plots
+        ax.draw_artist(plot_series)
+        canvas.update()
+        canvas.flush_events()
+        canvas.draw()
+
     def summaryResults(self, trial_num):
         # get details
         score = np.copy(trials['running_score'][:trial_num+1])
@@ -1005,6 +1032,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         self.trialRunner.arduino_connected_signal.connect(self.arduinoConnected)
         self.trialRunner.arduino_disconnected_signal.connect(self.arduinoDisconnected)
         self.trialRunner.response_signal.connect(self.updateRasterPlotData)
+        self.trialRunner.state_signal.connect(self.updateStatePlot)
         self.trialRunner.results_signal.connect(self.updatePerformancePlots)
         self.trialRunner.trial_start_signal.connect(self.trialStartGUI)
         self.trialRunner.trial_end_signal.connect(self.trialStopGUI)
