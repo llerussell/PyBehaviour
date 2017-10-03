@@ -135,7 +135,7 @@ volatile bool resultsTransmitted;
 bool runToInitiate = false;
 const int inputPin = A0;
 long analogVal;
-long analogZero = 123;
+long analogZero = 135;
 long runningTimeTarget = 2000;  // milliseconds
 int runningSpeedThresh = 10;
 int runningTimeReset = 500;

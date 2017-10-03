@@ -351,7 +351,7 @@ class TrialRunner(QObject):
         '''
         trials['results'][trial_num]['trialstart'] = time.strftime('%Y%m%d_%H%M%S')
         trialRunning = True
-        state = 'PRETRIAL'
+        session_state = 'PRETRIAL'
         is_first_response = True
         actual_trial_started = False
         while trialRunning:
@@ -385,15 +385,15 @@ class TrialRunner(QObject):
                                 if ID == '*':
                                     actual_trial_started = True
                                     trial_started = time.time()
-                                    state = 'INTRIAL'
+                                    session_state = 'INTRIAL'
                                     trials['results'][trial_num]['responses'][0] = [x - val for x in trials['results'][trial_num]['responses'][0]]
                                     trials['results'][trial_num]['withold_act'] = val
-                                    self.state_signal.emit(state)
+                                    self.state_signal.emit(session_state)
                                 else:
                                     ID = int(ID)
                                     trials['results'][trial_num]['responses'][0].append(val)  # time
                                     trials['results'][trial_num]['responses'][1].append(ID)  # channel
-                                    self.response_signal.emit(trial_num, val, ID, state, is_first_response)
+                                    self.response_signal.emit(trial_num, val, ID, session_state, is_first_response)
                                     if state == 'INTRIAL':
                                         is_first_response = False  # first response has now happened
 
@@ -817,6 +817,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
 
         if is_first_response:
             new_size = 30
+            opacity = 1
             # update reaction time histogram
             trials['reaction_time'][trial_num] = val
             stim_type = int(p['trialOrder'][trial_num])
@@ -829,6 +830,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
             # self.reactionTimesAxd.raw_artist(self.reactionTimeHists[stim_type])
         else:
             new_size = 10
+            opacity = 0.1
 
         # get old data
         old_xy      = plot_series.get_offsets()
