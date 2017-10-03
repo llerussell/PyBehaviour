@@ -394,7 +394,7 @@ class TrialRunner(QObject):
                                     trials['results'][trial_num]['responses'][0].append(val)  # time
                                     trials['results'][trial_num]['responses'][1].append(ID)  # channel
                                     self.response_signal.emit(trial_num, val, ID, session_state, is_first_response)
-                                    if state == 'INTRIAL':
+                                    if session_state == 'INTRIAL':
                                         is_first_response = False  # first response has now happened
 
                     elif temp_read[0] == '{' and temp_read[-1] == '}':  # whole trial outcome packet received
