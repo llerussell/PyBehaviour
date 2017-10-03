@@ -388,6 +388,7 @@ class TrialRunner(QObject):
                                     state = 'INTRIAL'
                                     trials['results'][trial_num]['responses'][0] = [x - val for x in trials['results'][trial_num]['responses'][0]]
                                     trials['results'][trial_num]['withold_act'] = val
+                                    self.state_signal.emit(state)
                                 else:
                                     ID = int(ID)
                                     trials['results'][trial_num]['responses'][0].append(val)  # time
@@ -400,6 +401,8 @@ class TrialRunner(QObject):
                         temp_read = temp_read[1:-1]  # only process everything between { and }
                         if temp_read == 'DONE':
                             trialRunning = False
+                            state = temp_read
+                            self.state_signal.emit(state)
                         elif temp_read == 'READY':  # arduino has reset
                             trialRunning = False
                         else:
@@ -421,7 +424,7 @@ class TrialRunner(QObject):
                                 score = 0
                             trials['running_score'][trial_num] = score
                             self.results_signal.emit(trial_num)
-                    elif temp_read == 'stim on' or temp_read == 'stim off' or temp_read == 'response window open' or temp_read == 'response window closed':
+                    elif temp_read == 'stim on' or temp_read == 'stim off' or temp_read == 'response window open' or temp_read == 'response window closed' or temp_read == 'waiting for withold':
                         state = temp_read
                         self.state_signal.emit(state)
             except Exception as e:
@@ -848,27 +851,43 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         canvas.flush_events()
 
     def updateStatePlot(self, state):
-        ax = self.rasterFigAx
-        canvas = self.rasterFigCanvas
-
         if state == 'stim on':
-            plot_series = self.raster_stimlength
-            plot_series.set_facecolor([0.9,0.8,0.1, 0.1])
-        elif state == 'stim off':
-            plot_series = self.raster_stimlength
-            plot_series.set_facecolor([0,0,0, 0.05])
+            self.raster_stimlength.set_facecolor([0.9,0.8,0.1, 0.1])
+            self.rasterFigCanvas.draw()
+        elif state == 'stim off': 
+            self.raster_stimlength.set_facecolor([0,0,0, 0.05])
+            self.rasterFigCanvas.draw()
         elif state == 'response window open':
-            plot_series = self.raster_respwin
-            plot_series.set_facecolor([0.9,0.8,0.1, 0.1])
+            self.raster_respwin.set_facecolor([0.9,0.8,0.1, 0.1])
+            self.rasterFigCanvas.draw()
         elif state == 'response window closed':
-            plot_series = self.raster_respwin
-            plot_series.set_facecolor([0,0,0, 0.05])
+            self.raster_respwin.set_facecolor([0,0,0, 0.05])
+            self.rasterFigCanvas.draw()
+        elif state == 'waiting for withold':
+            ax = self.preTrialRasterFigAx
+            spine_names = ['top','bottom','left','right']
+            for spine in spine_names:
+                ax.spines[spine].set_color([1,.6,.6])
+            self.preTrialRasterFigCanvas.draw()
+        elif state == 'INTRIAL':
+            ax1 = self.preTrialRasterFigAx
+            ax2 = self.rasterFigAx
+            spine_names = ['top','bottom','left','right']
+            for spine in spine_names:
+                ax1.spines[spine].set_color([.95, .95, .95])
+                ax2.spines[spine].set_color([1,.6,.6])
 
-        # # update/draw plots
-        ax.draw_artist(plot_series)
-        canvas.update()
-        canvas.flush_events()
-        canvas.draw()
+            self.preTrialRasterFigCanvas.draw()
+            self.rasterFigCanvas.draw()
+        elif state == 'DONE':
+            ax = self.rasterFigAx
+            spine_names = ['top','bottom','left','right']
+            for spine in spine_names:
+                ax.spines[spine].set_color([.95, .95, .95])
+            self.rasterFigCanvas.draw()
+
+
+        
 
     def summaryResults(self, trial_num):
         # get details
