@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>820</width>
-    <height>870</height>
+    <height>943</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -838,7 +838,7 @@ QGroupBox#trial_GroupBox::title {
                     <x>0</x>
                     <y>0</y>
                     <width>737</width>
-                    <height>1223</height>
+                    <height>1387</height>
                    </rect>
                   </property>
                   <property name="sizePolicy">
@@ -3467,7 +3467,7 @@ QGroupBox#trial_GroupBox::title {
                             <property name="minimumSize">
                              <size>
                               <width>170</width>
-                              <height>22</height>
+                              <height>18</height>
                              </size>
                             </property>
                             <property name="font">
@@ -3494,7 +3494,7 @@ QGroupBox#trial_GroupBox::title {
                             <property name="minimumSize">
                              <size>
                               <width>170</width>
-                              <height>22</height>
+                              <height>18</height>
                              </size>
                             </property>
                             <property name="font">
@@ -3600,7 +3600,7 @@ QGroupBox#trial_GroupBox::title {
                             <property name="minimumSize">
                              <size>
                               <width>170</width>
-                              <height>22</height>
+                              <height>18</height>
                              </size>
                             </property>
                             <property name="font">
@@ -3721,7 +3721,7 @@ QGroupBox#trial_GroupBox::title {
                             <property name="minimumSize">
                              <size>
                               <width>170</width>
-                              <height>22</height>
+                              <height>18</height>
                              </size>
                             </property>
                             <property name="font">
@@ -4065,7 +4065,7 @@ QGroupBox#trial_GroupBox::title {
                      <property name="alignment">
                       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
                      </property>
-                     <layout class="QHBoxLayout" name="horizontalLayout_18">
+                     <layout class="QVBoxLayout" name="verticalLayout_17">
                       <property name="spacing">
                        <number>0</number>
                       </property>
@@ -4101,7 +4101,10 @@ QGroupBox#trial_GroupBox::title {
                         <property name="bottomMargin">
                          <number>2</number>
                         </property>
-                        <property name="spacing">
+                        <property name="horizontalSpacing">
+                         <number>2</number>
+                        </property>
+                        <property name="verticalSpacing">
                          <number>5</number>
                         </property>
                         <item row="0" column="0">
@@ -4124,86 +4127,7 @@ QGroupBox#trial_GroupBox::title {
                           <property name="spacing">
                            <number>5</number>
                           </property>
-                          <item row="0" column="1">
-                           <layout class="QHBoxLayout" name="horizontalLayout_23">
-                            <property name="spacing">
-                             <number>5</number>
-                            </property>
-                            <property name="sizeConstraint">
-                             <enum>QLayout::SetNoConstraint</enum>
-                            </property>
-                            <property name="leftMargin">
-                             <number>2</number>
-                            </property>
-                            <property name="topMargin">
-                             <number>2</number>
-                            </property>
-                            <property name="rightMargin">
-                             <number>2</number>
-                            </property>
-                            <property name="bottomMargin">
-                             <number>2</number>
-                            </property>
-                            <item>
-                             <widget class="QCheckBox" name="activeInitiation_checkBox">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="sizePolicy">
-                               <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                                <horstretch>0</horstretch>
-                                <verstretch>0</verstretch>
-                               </sizepolicy>
-                              </property>
-                              <property name="minimumSize">
-                               <size>
-                                <width>0</width>
-                                <height>0</height>
-                               </size>
-                              </property>
-                              <property name="font">
-                               <font>
-                                <pointsize>9</pointsize>
-                               </font>
-                              </property>
-                              <property name="text">
-                               <string/>
-                              </property>
-                             </widget>
-                            </item>
-                            <item>
-                             <widget class="QDoubleSpinBox" name="activeInitiationRespRe_checkBox">
-                              <property name="enabled">
-                               <bool>false</bool>
-                              </property>
-                              <property name="sizePolicy">
-                               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                                <horstretch>0</horstretch>
-                                <verstretch>0</verstretch>
-                               </sizepolicy>
-                              </property>
-                              <property name="minimumSize">
-                               <size>
-                                <width>0</width>
-                                <height>0</height>
-                               </size>
-                              </property>
-                              <property name="font">
-                               <font>
-                                <pointsize>9</pointsize>
-                               </font>
-                              </property>
-                              <property name="prefix">
-                               <string>Response: </string>
-                              </property>
-                              <property name="decimals">
-                               <number>0</number>
-                              </property>
-                             </widget>
-                            </item>
-                           </layout>
-                          </item>
-                          <item row="0" column="0">
+                          <item row="3" column="0">
                            <widget class="QLabel" name="label_11">
                             <property name="enabled">
                              <bool>false</bool>
@@ -4217,7 +4141,13 @@ QGroupBox#trial_GroupBox::title {
                             <property name="minimumSize">
                              <size>
                               <width>170</width>
-                              <height>22</height>
+                              <height>18</height>
+                             </size>
+                            </property>
+                            <property name="maximumSize">
+                             <size>
+                              <width>250</width>
+                              <height>16777215</height>
                              </size>
                             </property>
                             <property name="font">
@@ -4233,7 +4163,121 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                            </widget>
                           </item>
-                          <item row="1" column="1">
+                          <item row="3" column="1">
+                           <widget class="QCheckBox" name="activeInitiation_checkBox">
+                            <property name="enabled">
+                             <bool>false</bool>
+                            </property>
+                            <property name="sizePolicy">
+                             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                              <horstretch>0</horstretch>
+                              <verstretch>0</verstretch>
+                             </sizepolicy>
+                            </property>
+                            <property name="minimumSize">
+                             <size>
+                              <width>0</width>
+                              <height>0</height>
+                             </size>
+                            </property>
+                            <property name="font">
+                             <font>
+                              <pointsize>9</pointsize>
+                             </font>
+                            </property>
+                            <property name="text">
+                             <string/>
+                            </property>
+                           </widget>
+                          </item>
+                          <item row="2" column="1">
+                           <layout class="QHBoxLayout" name="horizontalLayout_29">
+                            <property name="spacing">
+                             <number>5</number>
+                            </property>
+                            <property name="leftMargin">
+                             <number>2</number>
+                            </property>
+                            <property name="topMargin">
+                             <number>2</number>
+                            </property>
+                            <property name="rightMargin">
+                             <number>2</number>
+                            </property>
+                            <property name="bottomMargin">
+                             <number>2</number>
+                            </property>
+                            <item>
+                             <widget class="QCheckBox" name="cueTrialActuallyStarted_checkBox">
+                              <property name="sizePolicy">
+                               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                                <horstretch>0</horstretch>
+                                <verstretch>0</verstretch>
+                               </sizepolicy>
+                              </property>
+                              <property name="text">
+                               <string/>
+                              </property>
+                             </widget>
+                            </item>
+                           </layout>
+                          </item>
+                          <item row="1" column="0">
+                           <widget class="QLabel" name="label_22">
+                            <property name="sizePolicy">
+                             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                              <horstretch>0</horstretch>
+                              <verstretch>0</verstretch>
+                             </sizepolicy>
+                            </property>
+                            <property name="minimumSize">
+                             <size>
+                              <width>170</width>
+                              <height>18</height>
+                             </size>
+                            </property>
+                            <property name="maximumSize">
+                             <size>
+                              <width>250</width>
+                              <height>16777215</height>
+                             </size>
+                            </property>
+                            <property name="font">
+                             <font>
+                              <pointsize>9</pointsize>
+                             </font>
+                            </property>
+                            <property name="text">
+                             <string>Cue (Trial initiated)</string>
+                            </property>
+                            <property name="alignment">
+                             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                            </property>
+                           </widget>
+                          </item>
+                          <item row="2" column="0">
+                           <widget class="QLabel" name="label_38">
+                            <property name="minimumSize">
+                             <size>
+                              <width>170</width>
+                              <height>18</height>
+                             </size>
+                            </property>
+                            <property name="maximumSize">
+                             <size>
+                              <width>250</width>
+                              <height>16777215</height>
+                             </size>
+                            </property>
+                            <property name="text">
+                             <string>Cue (Trial actually started)</string>
+                            </property>
+                            <property name="alignment">
+                             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                            </property>
+                           </widget>
+                          </item>
+                          <item row="0" column="1">
                            <layout class="QHBoxLayout" name="horizontalLayout_10">
                             <property name="spacing">
                              <number>5</number>
@@ -4360,7 +4404,7 @@ QGroupBox#trial_GroupBox::title {
                             </item>
                            </layout>
                           </item>
-                          <item row="2" column="1">
+                          <item row="1" column="1">
                            <layout class="QHBoxLayout" name="horizontalLayout_9">
                             <property name="spacing">
                              <number>5</number>
@@ -4383,7 +4427,7 @@ QGroupBox#trial_GroupBox::title {
                             <item>
                              <widget class="QCheckBox" name="cueTrial_CheckBox">
                               <property name="sizePolicy">
-                               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                               <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                                 <horstretch>0</horstretch>
                                 <verstretch>0</verstretch>
                                </sizepolicy>
@@ -4409,7 +4453,7 @@ QGroupBox#trial_GroupBox::title {
                             </item>
                            </layout>
                           </item>
-                          <item row="1" column="0">
+                          <item row="0" column="0">
                            <widget class="QLabel" name="label_2">
                             <property name="sizePolicy">
                              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -4420,7 +4464,13 @@ QGroupBox#trial_GroupBox::title {
                             <property name="minimumSize">
                              <size>
                               <width>170</width>
-                              <height>22</height>
+                              <height>18</height>
+                             </size>
+                            </property>
+                            <property name="maximumSize">
+                             <size>
+                              <width>250</width>
+                              <height>16777215</height>
                              </size>
                             </property>
                             <property name="font">
@@ -4436,57 +4486,220 @@ QGroupBox#trial_GroupBox::title {
                             </property>
                            </widget>
                           </item>
-                          <item row="2" column="0">
-                           <widget class="QLabel" name="label_22">
-                            <property name="sizePolicy">
-                             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                              <horstretch>0</horstretch>
-                              <verstretch>0</verstretch>
-                             </sizepolicy>
-                            </property>
-                            <property name="minimumSize">
-                             <size>
-                              <width>170</width>
-                              <height>22</height>
-                             </size>
-                            </property>
-                            <property name="font">
-                             <font>
-                              <pointsize>9</pointsize>
-                             </font>
-                            </property>
-                            <property name="text">
-                             <string>Cue (Trial initiated)</string>
-                            </property>
-                            <property name="alignment">
-                             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                            </property>
-                           </widget>
-                          </item>
-                          <item row="3" column="0">
-                           <widget class="QLabel" name="label_38">
-                            <property name="text">
-                             <string>Cue (Trial actually started)</string>
-                            </property>
-                            <property name="alignment">
-                             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                            </property>
-                           </widget>
-                          </item>
-                          <item row="3" column="1">
-                           <layout class="QHBoxLayout" name="horizontalLayout_29">
-                            <item>
-                             <widget class="QCheckBox" name="cueTrialActuallyStarted_checkBox">
-                              <property name="text">
-                               <string> </string>
-                              </property>
-                             </widget>
-                            </item>
-                           </layout>
-                          </item>
                          </layout>
                         </item>
                        </layout>
+                      </item>
+                      <item>
+                       <widget class="QGroupBox" name="groupBox_2">
+                        <property name="title">
+                         <string>Running</string>
+                        </property>
+                        <property name="flat">
+                         <bool>false</bool>
+                        </property>
+                        <property name="checkable">
+                         <bool>false</bool>
+                        </property>
+                        <layout class="QVBoxLayout" name="verticalLayout_18">
+                         <property name="spacing">
+                          <number>5</number>
+                         </property>
+                         <property name="leftMargin">
+                          <number>5</number>
+                         </property>
+                         <property name="topMargin">
+                          <number>5</number>
+                         </property>
+                         <property name="rightMargin">
+                          <number>5</number>
+                         </property>
+                         <property name="bottomMargin">
+                          <number>5</number>
+                         </property>
+                         <item>
+                          <layout class="QGridLayout" name="gridLayout_5">
+                           <property name="leftMargin">
+                            <number>5</number>
+                           </property>
+                           <property name="topMargin">
+                            <number>5</number>
+                           </property>
+                           <property name="rightMargin">
+                            <number>5</number>
+                           </property>
+                           <property name="bottomMargin">
+                            <number>5</number>
+                           </property>
+                           <item row="1" column="0">
+                            <widget class="QLabel" name="label_40">
+                             <property name="minimumSize">
+                              <size>
+                               <width>0</width>
+                               <height>18</height>
+                              </size>
+                             </property>
+                             <property name="maximumSize">
+                              <size>
+                               <width>170</width>
+                               <height>16777215</height>
+                              </size>
+                             </property>
+                             <property name="text">
+                              <string>Run duration</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="4" column="0">
+                            <widget class="QLabel" name="label_43">
+                             <property name="minimumSize">
+                              <size>
+                               <width>0</width>
+                               <height>18</height>
+                              </size>
+                             </property>
+                             <property name="maximumSize">
+                              <size>
+                               <width>170</width>
+                               <height>16777215</height>
+                              </size>
+                             </property>
+                             <property name="text">
+                              <string>Zero value</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="3" column="0">
+                            <widget class="QLabel" name="label_42">
+                             <property name="minimumSize">
+                              <size>
+                               <width>0</width>
+                               <height>18</height>
+                              </size>
+                             </property>
+                             <property name="maximumSize">
+                              <size>
+                               <width>170</width>
+                               <height>16777215</height>
+                              </size>
+                             </property>
+                             <property name="text">
+                              <string>Reset time</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="0" column="0">
+                            <widget class="QLabel" name="label_39">
+                             <property name="minimumSize">
+                              <size>
+                               <width>0</width>
+                               <height>18</height>
+                              </size>
+                             </property>
+                             <property name="maximumSize">
+                              <size>
+                               <width>170</width>
+                               <height>16777215</height>
+                              </size>
+                             </property>
+                             <property name="text">
+                              <string>Run to initiate</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="2" column="0">
+                            <widget class="QLabel" name="label_41">
+                             <property name="minimumSize">
+                              <size>
+                               <width>0</width>
+                               <height>18</height>
+                              </size>
+                             </property>
+                             <property name="maximumSize">
+                              <size>
+                               <width>170</width>
+                               <height>16777215</height>
+                              </size>
+                             </property>
+                             <property name="text">
+                              <string>Run speed threshold</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="4" column="1">
+                            <widget class="QSpinBox" name="runZeroValue_spinBox">
+                             <property name="enabled">
+                              <bool>false</bool>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="0" column="1">
+                            <widget class="QCheckBox" name="runToInitiate_checkBox">
+                             <property name="text">
+                              <string/>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="1" column="1">
+                            <widget class="QDoubleSpinBox" name="runDuration_doubleSpinBox">
+                             <property name="enabled">
+                              <bool>false</bool>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="3" column="1">
+                            <widget class="QDoubleSpinBox" name="runResetTime_doubleSpinBox">
+                             <property name="enabled">
+                              <bool>false</bool>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="2" column="1">
+                            <widget class="QDoubleSpinBox" name="runSpeedThreshold_doubleSpinBox">
+                             <property name="enabled">
+                              <bool>false</bool>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="5" column="1">
+                            <widget class="QCheckBox" name="runStopToStart_checkBox">
+                             <property name="enabled">
+                              <bool>false</bool>
+                             </property>
+                             <property name="minimumSize">
+                              <size>
+                               <width>0</width>
+                               <height>18</height>
+                              </size>
+                             </property>
+                             <property name="text">
+                              <string/>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="5" column="0">
+                            <widget class="QLabel" name="label_44">
+                             <property name="minimumSize">
+                              <size>
+                               <width>0</width>
+                               <height>18</height>
+                              </size>
+                             </property>
+                             <property name="maximumSize">
+                              <size>
+                               <width>170</width>
+                               <height>16777215</height>
+                              </size>
+                             </property>
+                             <property name="text">
+                              <string>Stop to start</string>
+                             </property>
+                            </widget>
+                           </item>
+                          </layout>
+                         </item>
+                        </layout>
+                       </widget>
                       </item>
                      </layout>
                     </widget>
@@ -7523,8 +7736,6 @@ QGroupBox::title {
   <tabstop>loadTrialOrder_pushButton</tabstop>
   <tabstop>repeatIfIncorrect_CheckBox</tabstop>
   <tabstop>maximumRepeatsIfIncorrect_DoubleSpinBox</tabstop>
-  <tabstop>activeInitiation_checkBox</tabstop>
-  <tabstop>activeInitiationRespRe_checkBox</tabstop>
   <tabstop>checkBox</tabstop>
   <tabstop>doubleSpinBox</tabstop>
   <tabstop>punishDelayLength_SpinBox</tabstop>
@@ -7537,7 +7748,6 @@ QGroupBox::title {
   <tabstop>spinBox_30</tabstop>
   <tabstop>saveAsPreset_Button</tabstop>
   <tabstop>sessionPause_pushButton</tabstop>
-  <tabstop>tabWidget</tabstop>
   <tabstop>sessionAbort_pushButton</tabstop>
   <tabstop>responseWindow_SpinBox</tabstop>
   <tabstop>postStimCancel_CheckBox</tabstop>
@@ -7579,11 +7789,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>251</x>
-     <y>117</y>
+     <y>396</y>
     </hint>
     <hint type="destinationlabel">
      <x>494</x>
-     <y>117</y>
+     <y>396</y>
     </hint>
    </hints>
   </connection>
@@ -7595,11 +7805,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>251</x>
-     <y>117</y>
+     <y>396</y>
     </hint>
     <hint type="destinationlabel">
      <x>736</x>
-     <y>117</y>
+     <y>396</y>
     </hint>
    </hints>
   </connection>
@@ -7611,11 +7821,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>294</x>
-     <y>-309</y>
+     <y>-3</y>
     </hint>
     <hint type="destinationlabel">
      <x>294</x>
-     <y>-286</y>
+     <y>20</y>
     </hint>
    </hints>
   </connection>
@@ -7627,11 +7837,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>294</x>
-     <y>-309</y>
+     <y>-3</y>
     </hint>
     <hint type="destinationlabel">
      <x>294</x>
-     <y>-263</y>
+     <y>43</y>
     </hint>
    </hints>
   </connection>
@@ -7643,11 +7853,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>294</x>
-     <y>-309</y>
+     <y>-3</y>
     </hint>
     <hint type="destinationlabel">
      <x>294</x>
-     <y>-217</y>
+     <y>89</y>
     </hint>
    </hints>
   </connection>
@@ -7659,11 +7869,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>294</x>
-     <y>-309</y>
+     <y>-3</y>
     </hint>
     <hint type="destinationlabel">
      <x>294</x>
-     <y>-194</y>
+     <y>112</y>
     </hint>
    </hints>
   </connection>
@@ -7675,11 +7885,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>294</x>
-     <y>-309</y>
+     <y>-3</y>
     </hint>
     <hint type="destinationlabel">
      <x>294</x>
-     <y>-148</y>
+     <y>158</y>
     </hint>
    </hints>
   </connection>
@@ -7691,11 +7901,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>358</x>
-     <y>-309</y>
+     <y>-3</y>
     </hint>
     <hint type="destinationlabel">
      <x>358</x>
-     <y>-286</y>
+     <y>20</y>
     </hint>
    </hints>
   </connection>
@@ -7707,11 +7917,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>358</x>
-     <y>-309</y>
+     <y>-3</y>
     </hint>
     <hint type="destinationlabel">
      <x>358</x>
-     <y>-263</y>
+     <y>43</y>
     </hint>
    </hints>
   </connection>
@@ -7723,11 +7933,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>358</x>
-     <y>-309</y>
+     <y>-3</y>
     </hint>
     <hint type="destinationlabel">
      <x>358</x>
-     <y>-217</y>
+     <y>89</y>
     </hint>
    </hints>
   </connection>
@@ -7739,11 +7949,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>358</x>
-     <y>-309</y>
+     <y>-3</y>
     </hint>
     <hint type="destinationlabel">
      <x>358</x>
-     <y>-194</y>
+     <y>112</y>
     </hint>
    </hints>
   </connection>
@@ -7755,11 +7965,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>358</x>
-     <y>-309</y>
+     <y>-3</y>
     </hint>
     <hint type="destinationlabel">
      <x>358</x>
-     <y>-148</y>
+     <y>158</y>
     </hint>
    </hints>
   </connection>
@@ -7771,11 +7981,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>421</x>
-     <y>-309</y>
+     <y>-3</y>
     </hint>
     <hint type="destinationlabel">
      <x>421</x>
-     <y>-286</y>
+     <y>20</y>
     </hint>
    </hints>
   </connection>
@@ -7787,11 +7997,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>421</x>
-     <y>-309</y>
+     <y>-3</y>
     </hint>
     <hint type="destinationlabel">
      <x>421</x>
-     <y>-263</y>
+     <y>43</y>
     </hint>
    </hints>
   </connection>
@@ -7803,11 +8013,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>421</x>
-     <y>-309</y>
+     <y>-3</y>
     </hint>
     <hint type="destinationlabel">
      <x>421</x>
-     <y>-217</y>
+     <y>89</y>
     </hint>
    </hints>
   </connection>
@@ -7819,11 +8029,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>421</x>
-     <y>-309</y>
+     <y>-3</y>
     </hint>
     <hint type="destinationlabel">
      <x>421</x>
-     <y>-194</y>
+     <y>112</y>
     </hint>
    </hints>
   </connection>
@@ -7835,11 +8045,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>421</x>
-     <y>-309</y>
+     <y>-3</y>
     </hint>
     <hint type="destinationlabel">
      <x>421</x>
-     <y>-148</y>
+     <y>158</y>
     </hint>
    </hints>
   </connection>
@@ -7851,11 +8061,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>249</x>
-     <y>479</y>
+     <y>974</y>
     </hint>
     <hint type="destinationlabel">
      <x>738</x>
-     <y>479</y>
+     <y>974</y>
     </hint>
    </hints>
   </connection>
@@ -7867,11 +8077,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>586</x>
-     <y>-45</y>
+     <y>261</y>
     </hint>
     <hint type="destinationlabel">
      <x>736</x>
-     <y>-45</y>
+     <y>261</y>
     </hint>
    </hints>
   </connection>
@@ -7883,11 +8093,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>419</x>
-     <y>-45</y>
+     <y>261</y>
     </hint>
     <hint type="destinationlabel">
      <x>568</x>
-     <y>-45</y>
+     <y>261</y>
     </hint>
    </hints>
   </connection>
@@ -7899,11 +8109,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>251</x>
-     <y>-45</y>
+     <y>261</y>
     </hint>
     <hint type="destinationlabel">
      <x>401</x>
-     <y>-45</y>
+     <y>261</y>
     </hint>
    </hints>
   </connection>
@@ -7915,11 +8125,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>251</x>
-     <y>-45</y>
+     <y>261</y>
     </hint>
     <hint type="destinationlabel">
      <x>419</x>
-     <y>-45</y>
+     <y>261</y>
     </hint>
    </hints>
   </connection>
@@ -7931,11 +8141,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>251</x>
-     <y>-45</y>
+     <y>261</y>
     </hint>
     <hint type="destinationlabel">
      <x>586</x>
-     <y>-45</y>
+     <y>261</y>
     </hint>
    </hints>
   </connection>
@@ -7947,11 +8157,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>294</x>
-     <y>-309</y>
+     <y>-3</y>
     </hint>
     <hint type="destinationlabel">
      <x>294</x>
-     <y>-171</y>
+     <y>135</y>
     </hint>
    </hints>
   </connection>
@@ -7963,11 +8173,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>358</x>
-     <y>-309</y>
+     <y>-3</y>
     </hint>
     <hint type="destinationlabel">
      <x>358</x>
-     <y>-171</y>
+     <y>135</y>
     </hint>
    </hints>
   </connection>
@@ -7979,11 +8189,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>421</x>
-     <y>-309</y>
+     <y>-3</y>
     </hint>
     <hint type="destinationlabel">
      <x>421</x>
-     <y>-171</y>
+     <y>135</y>
     </hint>
    </hints>
   </connection>
@@ -7995,11 +8205,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>485</x>
-     <y>-309</y>
+     <y>-3</y>
     </hint>
     <hint type="destinationlabel">
      <x>485</x>
-     <y>-148</y>
+     <y>158</y>
     </hint>
    </hints>
   </connection>
@@ -8011,11 +8221,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>485</x>
-     <y>-309</y>
+     <y>-3</y>
     </hint>
     <hint type="destinationlabel">
      <x>485</x>
-     <y>-171</y>
+     <y>135</y>
     </hint>
    </hints>
   </connection>
@@ -8027,11 +8237,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>485</x>
-     <y>-309</y>
+     <y>-3</y>
     </hint>
     <hint type="destinationlabel">
      <x>485</x>
-     <y>-194</y>
+     <y>112</y>
     </hint>
    </hints>
   </connection>
@@ -8043,11 +8253,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>485</x>
-     <y>-309</y>
+     <y>-3</y>
     </hint>
     <hint type="destinationlabel">
      <x>485</x>
-     <y>-217</y>
+     <y>89</y>
     </hint>
    </hints>
   </connection>
@@ -8059,11 +8269,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>485</x>
-     <y>-309</y>
+     <y>-3</y>
     </hint>
     <hint type="destinationlabel">
      <x>485</x>
-     <y>-263</y>
+     <y>43</y>
     </hint>
    </hints>
   </connection>
@@ -8075,11 +8285,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>485</x>
-     <y>-309</y>
+     <y>-3</y>
     </hint>
     <hint type="destinationlabel">
      <x>485</x>
-     <y>-286</y>
+     <y>20</y>
     </hint>
    </hints>
   </connection>
@@ -8091,11 +8301,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>548</x>
-     <y>-309</y>
+     <y>-3</y>
     </hint>
     <hint type="destinationlabel">
      <x>548</x>
-     <y>-148</y>
+     <y>158</y>
     </hint>
    </hints>
   </connection>
@@ -8107,11 +8317,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>548</x>
-     <y>-309</y>
+     <y>-3</y>
     </hint>
     <hint type="destinationlabel">
      <x>548</x>
-     <y>-171</y>
+     <y>135</y>
     </hint>
    </hints>
   </connection>
@@ -8123,11 +8333,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>548</x>
-     <y>-309</y>
+     <y>-3</y>
     </hint>
     <hint type="destinationlabel">
      <x>548</x>
-     <y>-194</y>
+     <y>112</y>
     </hint>
    </hints>
   </connection>
@@ -8139,11 +8349,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>548</x>
-     <y>-309</y>
+     <y>-3</y>
     </hint>
     <hint type="destinationlabel">
      <x>548</x>
-     <y>-217</y>
+     <y>89</y>
     </hint>
    </hints>
   </connection>
@@ -8155,11 +8365,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>548</x>
-     <y>-309</y>
+     <y>-3</y>
     </hint>
     <hint type="destinationlabel">
      <x>548</x>
-     <y>-263</y>
+     <y>43</y>
     </hint>
    </hints>
   </connection>
@@ -8171,11 +8381,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>548</x>
-     <y>-309</y>
+     <y>-3</y>
     </hint>
     <hint type="destinationlabel">
      <x>548</x>
-     <y>-286</y>
+     <y>20</y>
     </hint>
    </hints>
   </connection>
@@ -8187,11 +8397,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>611</x>
-     <y>-309</y>
+     <y>-3</y>
     </hint>
     <hint type="destinationlabel">
      <x>611</x>
-     <y>-148</y>
+     <y>158</y>
     </hint>
    </hints>
   </connection>
@@ -8203,11 +8413,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>611</x>
-     <y>-309</y>
+     <y>-3</y>
     </hint>
     <hint type="destinationlabel">
      <x>611</x>
-     <y>-171</y>
+     <y>135</y>
     </hint>
    </hints>
   </connection>
@@ -8219,11 +8429,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>611</x>
-     <y>-309</y>
+     <y>-3</y>
     </hint>
     <hint type="destinationlabel">
      <x>611</x>
-     <y>-194</y>
+     <y>112</y>
     </hint>
    </hints>
   </connection>
@@ -8235,11 +8445,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>611</x>
-     <y>-309</y>
+     <y>-3</y>
     </hint>
     <hint type="destinationlabel">
      <x>611</x>
-     <y>-217</y>
+     <y>89</y>
     </hint>
    </hints>
   </connection>
@@ -8251,11 +8461,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>611</x>
-     <y>-309</y>
+     <y>-3</y>
     </hint>
     <hint type="destinationlabel">
      <x>611</x>
-     <y>-263</y>
+     <y>43</y>
     </hint>
    </hints>
   </connection>
@@ -8267,11 +8477,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>611</x>
-     <y>-309</y>
+     <y>-3</y>
     </hint>
     <hint type="destinationlabel">
      <x>611</x>
-     <y>-286</y>
+     <y>20</y>
     </hint>
    </hints>
   </connection>
@@ -8283,11 +8493,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>675</x>
-     <y>-309</y>
+     <y>-3</y>
     </hint>
     <hint type="destinationlabel">
      <x>675</x>
-     <y>-148</y>
+     <y>158</y>
     </hint>
    </hints>
   </connection>
@@ -8299,11 +8509,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>675</x>
-     <y>-309</y>
+     <y>-3</y>
     </hint>
     <hint type="destinationlabel">
      <x>675</x>
-     <y>-171</y>
+     <y>135</y>
     </hint>
    </hints>
   </connection>
@@ -8315,11 +8525,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>675</x>
-     <y>-309</y>
+     <y>-3</y>
     </hint>
     <hint type="destinationlabel">
      <x>675</x>
-     <y>-194</y>
+     <y>112</y>
     </hint>
    </hints>
   </connection>
@@ -8331,11 +8541,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>675</x>
-     <y>-309</y>
+     <y>-3</y>
     </hint>
     <hint type="destinationlabel">
      <x>675</x>
-     <y>-217</y>
+     <y>89</y>
     </hint>
    </hints>
   </connection>
@@ -8347,11 +8557,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>675</x>
-     <y>-309</y>
+     <y>-3</y>
     </hint>
     <hint type="destinationlabel">
      <x>675</x>
-     <y>-263</y>
+     <y>43</y>
     </hint>
    </hints>
   </connection>
@@ -8363,11 +8573,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>675</x>
-     <y>-309</y>
+     <y>-3</y>
     </hint>
     <hint type="destinationlabel">
      <x>675</x>
-     <y>-286</y>
+     <y>20</y>
     </hint>
    </hints>
   </connection>
@@ -8379,11 +8589,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>738</x>
-     <y>-309</y>
+     <y>-3</y>
     </hint>
     <hint type="destinationlabel">
      <x>738</x>
-     <y>-148</y>
+     <y>158</y>
     </hint>
    </hints>
   </connection>
@@ -8395,11 +8605,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>738</x>
-     <y>-309</y>
+     <y>-3</y>
     </hint>
     <hint type="destinationlabel">
      <x>738</x>
-     <y>-171</y>
+     <y>135</y>
     </hint>
    </hints>
   </connection>
@@ -8411,11 +8621,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>738</x>
-     <y>-309</y>
+     <y>-3</y>
     </hint>
     <hint type="destinationlabel">
      <x>738</x>
-     <y>-194</y>
+     <y>112</y>
     </hint>
    </hints>
   </connection>
@@ -8427,11 +8637,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>738</x>
-     <y>-309</y>
+     <y>-3</y>
     </hint>
     <hint type="destinationlabel">
      <x>738</x>
-     <y>-217</y>
+     <y>89</y>
     </hint>
    </hints>
   </connection>
@@ -8443,11 +8653,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>738</x>
-     <y>-309</y>
+     <y>-3</y>
     </hint>
     <hint type="destinationlabel">
      <x>738</x>
-     <y>-286</y>
+     <y>20</y>
     </hint>
    </hints>
   </connection>
@@ -8459,11 +8669,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>738</x>
-     <y>-309</y>
+     <y>-3</y>
     </hint>
     <hint type="destinationlabel">
      <x>738</x>
-     <y>-263</y>
+     <y>43</y>
     </hint>
    </hints>
   </connection>
@@ -8475,11 +8685,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>251</x>
-     <y>14</y>
+     <y>320</y>
     </hint>
     <hint type="destinationlabel">
      <x>736</x>
-     <y>14</y>
+     <y>320</y>
     </hint>
    </hints>
   </connection>
@@ -8491,11 +8701,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>249</x>
-     <y>578</y>
+     <y>1073</y>
     </hint>
     <hint type="destinationlabel">
      <x>738</x>
-     <y>578</y>
+     <y>1073</y>
     </hint>
    </hints>
   </connection>
@@ -8507,11 +8717,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>294</x>
-     <y>-309</y>
+     <y>-3</y>
     </hint>
     <hint type="destinationlabel">
      <x>294</x>
-     <y>-240</y>
+     <y>66</y>
     </hint>
    </hints>
   </connection>
@@ -8523,11 +8733,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>358</x>
-     <y>-309</y>
+     <y>-3</y>
     </hint>
     <hint type="destinationlabel">
      <x>358</x>
-     <y>-240</y>
+     <y>66</y>
     </hint>
    </hints>
   </connection>
@@ -8539,11 +8749,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>421</x>
-     <y>-309</y>
+     <y>-3</y>
     </hint>
     <hint type="destinationlabel">
      <x>421</x>
-     <y>-240</y>
+     <y>66</y>
     </hint>
    </hints>
   </connection>
@@ -8555,11 +8765,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>485</x>
-     <y>-309</y>
+     <y>-3</y>
     </hint>
     <hint type="destinationlabel">
      <x>485</x>
-     <y>-240</y>
+     <y>66</y>
     </hint>
    </hints>
   </connection>
@@ -8571,11 +8781,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>548</x>
-     <y>-309</y>
+     <y>-3</y>
     </hint>
     <hint type="destinationlabel">
      <x>548</x>
-     <y>-240</y>
+     <y>66</y>
     </hint>
    </hints>
   </connection>
@@ -8587,11 +8797,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>611</x>
-     <y>-309</y>
+     <y>-3</y>
     </hint>
     <hint type="destinationlabel">
      <x>611</x>
-     <y>-240</y>
+     <y>66</y>
     </hint>
    </hints>
   </connection>
@@ -8603,11 +8813,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>675</x>
-     <y>-309</y>
+     <y>-3</y>
     </hint>
     <hint type="destinationlabel">
      <x>675</x>
-     <y>-240</y>
+     <y>66</y>
     </hint>
    </hints>
   </connection>
@@ -8619,11 +8829,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>738</x>
-     <y>-309</y>
+     <y>-3</y>
     </hint>
     <hint type="destinationlabel">
      <x>738</x>
-     <y>-240</y>
+     <y>66</y>
     </hint>
    </hints>
   </connection>
@@ -8635,11 +8845,11 @@ QGroupBox::title {
    <hints>
     <hint type="sourcelabel">
      <x>249</x>
-     <y>605</y>
+     <y>1100</y>
     </hint>
     <hint type="destinationlabel">
      <x>738</x>
-     <y>605</y>
+     <y>1100</y>
     </hint>
    </hints>
   </connection>
@@ -8650,12 +8860,12 @@ QGroupBox::title {
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>239</x>
-     <y>501</y>
+     <x>249</x>
+     <y>998</y>
     </hint>
     <hint type="destinationlabel">
-     <x>296</x>
-     <y>501</y>
+     <x>494</x>
+     <y>1001</y>
     </hint>
    </hints>
   </connection>
@@ -8666,12 +8876,92 @@ QGroupBox::title {
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>241</x>
-     <y>494</y>
+     <x>249</x>
+     <y>998</y>
     </hint>
     <hint type="destinationlabel">
-     <x>544</x>
-     <y>497</y>
+     <x>738</x>
+     <y>1001</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>runToInitiate_checkBox</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>runDuration_doubleSpinBox</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>473</x>
+     <y>511</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>472</x>
+     <y>538</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>runToInitiate_checkBox</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>runSpeedThreshold_doubleSpinBox</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>533</x>
+     <y>511</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>533</x>
+     <y>562</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>runToInitiate_checkBox</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>runResetTime_doubleSpinBox</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>473</x>
+     <y>511</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>487</x>
+     <y>586</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>runToInitiate_checkBox</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>runZeroValue_spinBox</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>464</x>
+     <y>511</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>475</x>
+     <y>610</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>runToInitiate_checkBox</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>runStopToStart_checkBox</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>257</x>
+     <y>504</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>253</x>
+     <y>629</y>
     </hint>
    </hints>
   </connection>

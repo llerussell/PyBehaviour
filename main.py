@@ -829,7 +829,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
             self.reactionTimesAx.set_ylim([0, max(counts.max()+1, max(self.reactionTimesAx.get_ylim()))])
             # self.reactionTimesAxd.raw_artist(self.reactionTimeHists[stim_type])
         else:
-            new_size = 10
+            new_size = 8
             opacity = 0.1
 
         # get old data
