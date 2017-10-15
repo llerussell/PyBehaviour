@@ -146,6 +146,7 @@ bool startTrial = false;
 elapsedMillis runningTimer;
 long lastRunTime;
 bool enforceStop = false;
+bool hasStopped = false;
 
 
 //---------------------------------------------------------
@@ -356,6 +357,23 @@ void rxConfig() {
         case 29:
           punishTriggerDuration = atoi(varBuffer);
           break;
+
+        case 30:
+          runToInitiate = atoi(varBuffer);
+          break;
+        case 31:
+          runningTimeTarget = atoi(varBuffer);
+          break;
+        case 32:
+          runningSpeedThresh = atoi(varBuffer);
+          break;
+        case 33:
+          runningTimeReset = atoi(varBuffer);
+          break;
+        case 34:
+          enforceStop = atoi(varBuffer);
+          break;
+
       }
       varBufferIndex = 0;
       varBuffer[varBufferIndex] = '\0';
@@ -481,6 +499,7 @@ void runTrial() {
   }
 
   if (runToInitiate) {
+    hasStopped = false;
     Serial.println("waiting for running");
     while (!startTrial) {
       // initate the 'running' loop
@@ -514,10 +533,16 @@ void runTrial() {
           if (runningTimer >= runningTimeTarget) {
             // has been running long enough, now wait for animal to stop?
             if (enforceStop) {
-
+              while (!hasStopped) {
+                runningVal = analogRead(inputPin);
+                if (runningVal <= analogZero + runningSpeedThresh) {
+                  hasStopped = true;
+                }
+              }
             }
-            isRunning = false;
-            startTrial = true;
+          
+          isRunning = false;
+          startTrial = true;
           }
 
         taskManager.execute();

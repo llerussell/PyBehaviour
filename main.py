@@ -307,6 +307,16 @@ class TrialRunner(QObject):
             str(int(p['rewardDuration']*1000)) + ';' \
             'PUNISH_TRIGGER_DURATION:' + \
             str(int(p['punishTriggerDuration']*1000)) + ';' \
+            'RUN_TO_INITIATE:' + \
+            str(int(p['runToInitiate'])) + ';' \
+            'RUN_DURATION:' + \
+            str(int(p['runDuration']*1000)) + ';' \
+            'RUN_SPEED_THRESHOLD:' + \
+            str(int(p['runSpeedThreshold'])) + ';' \
+            'RUN_RESET_TIME:' + \
+            str(int(p['runResetTime']*1000)) + ';' \
+            'RUN_STOP_TO_START:' + \
+            str(int(p['runStopToStart'])) + ';' \
             '>'
 
         # write config string to arduino

@@ -836,9 +836,9 @@ QGroupBox#trial_GroupBox::title {
                   <property name="geometry">
                    <rect>
                     <x>0</x>
-                    <y>0</y>
+                    <y>-263</y>
                     <width>737</width>
-                    <height>1387</height>
+                    <height>1363</height>
                    </rect>
                   </property>
                   <property name="sizePolicy">
@@ -4550,25 +4550,6 @@ QGroupBox#trial_GroupBox::title {
                              </property>
                             </widget>
                            </item>
-                           <item row="4" column="0">
-                            <widget class="QLabel" name="label_43">
-                             <property name="minimumSize">
-                              <size>
-                               <width>0</width>
-                               <height>18</height>
-                              </size>
-                             </property>
-                             <property name="maximumSize">
-                              <size>
-                               <width>170</width>
-                               <height>16777215</height>
-                              </size>
-                             </property>
-                             <property name="text">
-                              <string>Zero value</string>
-                             </property>
-                            </widget>
-                           </item>
                            <item row="3" column="0">
                             <widget class="QLabel" name="label_42">
                              <property name="minimumSize">
@@ -4588,22 +4569,17 @@ QGroupBox#trial_GroupBox::title {
                              </property>
                             </widget>
                            </item>
-                           <item row="0" column="0">
-                            <widget class="QLabel" name="label_39">
-                             <property name="minimumSize">
-                              <size>
-                               <width>0</width>
-                               <height>18</height>
-                              </size>
+                           <item row="1" column="1">
+                            <widget class="QDoubleSpinBox" name="runDuration_doubleSpinBox">
+                             <property name="enabled">
+                              <bool>false</bool>
                              </property>
-                             <property name="maximumSize">
-                              <size>
-                               <width>170</width>
-                               <height>16777215</height>
-                              </size>
-                             </property>
-                             <property name="text">
-                              <string>Run to initiate</string>
+                            </widget>
+                           </item>
+                           <item row="3" column="1">
+                            <widget class="QDoubleSpinBox" name="runResetTime_doubleSpinBox">
+                             <property name="enabled">
+                              <bool>false</bool>
                              </property>
                             </widget>
                            </item>
@@ -4626,31 +4602,10 @@ QGroupBox#trial_GroupBox::title {
                              </property>
                             </widget>
                            </item>
-                           <item row="4" column="1">
-                            <widget class="QSpinBox" name="runZeroValue_spinBox">
-                             <property name="enabled">
-                              <bool>false</bool>
-                             </property>
-                            </widget>
-                           </item>
                            <item row="0" column="1">
                             <widget class="QCheckBox" name="runToInitiate_checkBox">
                              <property name="text">
                               <string/>
-                             </property>
-                            </widget>
-                           </item>
-                           <item row="1" column="1">
-                            <widget class="QDoubleSpinBox" name="runDuration_doubleSpinBox">
-                             <property name="enabled">
-                              <bool>false</bool>
-                             </property>
-                            </widget>
-                           </item>
-                           <item row="3" column="1">
-                            <widget class="QDoubleSpinBox" name="runResetTime_doubleSpinBox">
-                             <property name="enabled">
-                              <bool>false</bool>
                              </property>
                             </widget>
                            </item>
@@ -4661,7 +4616,7 @@ QGroupBox#trial_GroupBox::title {
                              </property>
                             </widget>
                            </item>
-                           <item row="5" column="1">
+                           <item row="4" column="1">
                             <widget class="QCheckBox" name="runStopToStart_checkBox">
                              <property name="enabled">
                               <bool>false</bool>
@@ -4677,7 +4632,26 @@ QGroupBox#trial_GroupBox::title {
                              </property>
                             </widget>
                            </item>
-                           <item row="5" column="0">
+                           <item row="0" column="0">
+                            <widget class="QLabel" name="label_39">
+                             <property name="minimumSize">
+                              <size>
+                               <width>0</width>
+                               <height>18</height>
+                              </size>
+                             </property>
+                             <property name="maximumSize">
+                              <size>
+                               <width>170</width>
+                               <height>16777215</height>
+                              </size>
+                             </property>
+                             <property name="text">
+                              <string>Run to initiate</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item row="4" column="0">
                             <widget class="QLabel" name="label_44">
                              <property name="minimumSize">
                               <size>
@@ -8930,22 +8904,6 @@ QGroupBox::title {
     <hint type="destinationlabel">
      <x>487</x>
      <y>586</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>runToInitiate_checkBox</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>runZeroValue_spinBox</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>464</x>
-     <y>511</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>475</x>
-     <y>610</y>
     </hint>
    </hints>
   </connection>
