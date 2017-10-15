@@ -527,25 +527,34 @@ void runTrial() {
           else {  // animal is running
             lastRunTime = runningTimer;
             runningAccumulator = runningAccumulator + runningVal;
-//            Serial.println(runningTimer);
+            //            Serial.println(runningTimer);
           }
 
           if (runningTimer >= runningTimeTarget) {
+            Serial.println("run enough");
             // has been running long enough, now wait for animal to stop?
+            hasStopped = false;
             if (enforceStop) {
+              Serial.println("now waiting to stop running");
               while (!hasStopped) {
                 runningVal = analogRead(inputPin);
-                if (runningVal <= analogZero + runningSpeedThresh) {
-                  hasStopped = true;
-                }
+                  if (runningVal <= analogZero + runningSpeedThresh) {  // is animal still running?
+                    if (runningTimer - lastRunTime > runningTimeReset) { // has animal run in the past X milliseconds?
+                      hasStopped = true;
+                      isRunning = false;
+                    }
+                  }
+                  else {  // animal is running
+                    lastRunTime = runningTimer;
+                  }
               }
             }
-          
-          isRunning = false;
-          startTrial = true;
+
+            isRunning = false;
+            startTrial = true;
           }
 
-        taskManager.execute();
+          taskManager.execute();
         }
       }
       taskManager.execute();
@@ -620,7 +629,7 @@ void processResponse(int responseNum) {
   cli(); // disable interrupts
 
   timeResponded = millis() - startTime;
-  if (timeResponded > prevTimeResponded) {
+  //if (timeResponded > prevTimeResponded) {
     newDataString = "";
     newDataString.concat(responseNum);
     newDataString.concat(":");
@@ -660,7 +669,7 @@ void processResponse(int responseNum) {
         }
       }
     }
-  }
+  //}
   prevTimeResponded = timeResponded;
   SREG = SaveSREG; // restore the interrupt flag
 }
