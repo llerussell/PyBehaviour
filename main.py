@@ -317,6 +317,8 @@ class TrialRunner(QObject):
             str(int(p['runResetTime']*1000)) + ';' \
             'RUN_STOP_TO_START:' + \
             str(int(p['runStopToStart'])) + ';' \
+            'RUN_STOP_DURATION:' + \
+            str(int(p['runStopDuration']*1000)) + ';' \
             '>'
 
         # write config string to arduino

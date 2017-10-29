@@ -147,6 +147,8 @@ elapsedMillis runningTimer;
 long lastRunTime;
 bool enforceStop = false;
 bool hasStopped = false;
+long runStopDuration;
+elapsedMillis runStopTimer;
 
 
 //---------------------------------------------------------
@@ -373,6 +375,9 @@ void rxConfig() {
         case 34:
           enforceStop = atoi(varBuffer);
           break;
+        case 35:
+          runStopDuration = atoi(varBuffer);
+          break;
 
       }
       varBufferIndex = 0;
@@ -481,22 +486,7 @@ void runTrial() {
 
   tTransmit.enableDelayed();
 
-  // pretrial withold requirement
-  if (withold) {
-    Serial.println("waiting for withold");
-    witholdTimer = 0;
-    inWithold = true;
-    while (inWithold) {
-      taskManager.execute();
 
-      uint8_t SaveSREG = SREG; // save interrupt flag
-      cli(); // disable interrupts
-      if (witholdTimer >= witholdReq) {
-        inWithold = false;
-      }
-      SREG = SaveSREG; // restore the interrupt flag
-    }
-  }
 
   if (runToInitiate) {
     hasStopped = false;
@@ -536,17 +526,22 @@ void runTrial() {
             hasStopped = false;
             if (enforceStop) {
               Serial.println("now waiting to stop running");
+              runStopTimer = 0;
               while (!hasStopped) {
                 runningVal = analogRead(inputPin);
-                  if (runningVal <= analogZero + runningSpeedThresh) {  // is animal still running?
-                    if (runningTimer - lastRunTime > runningTimeReset) { // has animal run in the past X milliseconds?
+                if (runningVal <= analogZero + runningSpeedThresh) {  // is animal still running?
+                  if (runningTimer - lastRunTime > runningTimeReset) { // has animal run in the past X milliseconds?
+                    if (runStopTimer >= runStopDuration) {
                       hasStopped = true;
                       isRunning = false;
                     }
                   }
-                  else {  // animal is running
-                    lastRunTime = runningTimer;
-                  }
+                }
+
+                else {  // animal is running
+                  lastRunTime = runningTimer;
+                  runStopTimer = 0;
+                }
               }
             }
 
@@ -560,6 +555,24 @@ void runTrial() {
       taskManager.execute();
     }
   }
+
+  // pretrial withold requirement
+  if (withold) {
+    Serial.println("waiting for withold");
+    witholdTimer = 0;
+    inWithold = true;
+    while (inWithold) {
+      taskManager.execute();
+
+      uint8_t SaveSREG = SREG; // save interrupt flag
+      cli(); // disable interrupts
+      if (witholdTimer >= witholdReq) {
+        inWithold = false;
+      }
+      SREG = SaveSREG; // restore the interrupt flag
+    }
+  }
+
 
   // deliver trial cue
   if (trialActuallyStartedCue) {
@@ -630,45 +643,45 @@ void processResponse(int responseNum) {
 
   timeResponded = millis() - startTime;
   //if (timeResponded > prevTimeResponded) {
-    newDataString = "";
-    newDataString.concat(responseNum);
-    newDataString.concat(":");
-    newDataString.concat(timeResponded);
-    newDataString.concat("|");
-    dataString.concat(newDataString);
+  newDataString = "";
+  newDataString.concat(responseNum);
+  newDataString.concat(":");
+  newDataString.concat(timeResponded);
+  newDataString.concat("|");
+  dataString.concat(newDataString);
 
-    if (inWithold) { // include here active initiation trial if response is required
-      witholdTimer = 0;
-    }
-    else if ((timeResponded < responseWindowStartTime) && (postStimCancel)) {  // if post stim delay, cancel trial
-      cancelled = true;
-      tEndTrial.enable();
-    }
-    else if (inResponseWindow) {
-      if (!responded) {
-        firstResponse = responseNum;
-        responded = true;
-        if (responseNum == responseRequired) {  // correct choice
-          if ((!rewarded) && !(incorrect && !secondChance)) {
-            tRewardOn.enable();
-            txResults();
-          }
+  if (inWithold) { // include here active initiation trial if response is required
+    witholdTimer = 0;
+  }
+  else if ((timeResponded < responseWindowStartTime) && (postStimCancel)) {  // if post stim delay, cancel trial
+    cancelled = true;
+    tEndTrial.enable();
+  }
+  else if (inResponseWindow) {
+    if (!responded) {
+      firstResponse = responseNum;
+      responded = true;
+      if (responseNum == responseRequired) {  // correct choice
+        if ((!rewarded) && !(incorrect && !secondChance)) {
+          tRewardOn.enable();
+          txResults();
         }
-        else {  // else must be incorrect
-          incorrect = true;
-          if ((!punished) && (!rewarded)) {
-            if (punishTrigger) {
-              tPunishOn.enable();
-            }
-            if (punishDelay) {
-              currentTime = millis() - startTime;
-              tEndTrial.setInterval(trialDuration - currentTime + punishLength);
-            }
-            txResults();
+      }
+      else {  // else must be incorrect
+        incorrect = true;
+        if ((!punished) && (!rewarded)) {
+          if (punishTrigger) {
+            tPunishOn.enable();
           }
+          if (punishDelay) {
+            currentTime = millis() - startTime;
+            tEndTrial.setInterval(trialDuration - currentTime + punishLength);
+          }
+          txResults();
         }
       }
     }
+  }
   //}
   prevTimeResponded = timeResponded;
   SREG = SaveSREG; // restore the interrupt flag
@@ -859,5 +872,3 @@ void testPin(int pinNumber, int pinDuration) {
   delay(pinDuration);
   digitalWrite(pinNumber, LOW);
 }
-
-
