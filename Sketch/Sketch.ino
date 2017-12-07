@@ -219,11 +219,11 @@ void rxConfig() {
             varIndex++;
             switch (varIndex) {
               case 1:
-                testChanNum = atoi(varBuffer);
-                break;
+              testChanNum = atoi(varBuffer);
+              break;
               case 2:
-                testChanDur = atoi(varBuffer);
-                break;
+              testChanDur = atoi(varBuffer);
+              break;
             }
             varBufferIndex = 0;
             varBuffer[varBufferIndex] = '\0';
@@ -273,111 +273,111 @@ void rxConfig() {
 
       switch (varIndex) {
         case 1:
-          stimChan = atoi(varBuffer) - 1;
-          break;
+        stimChan = atoi(varBuffer) - 1;
+        break;
         case 2:
-          stimVariation = atoi(varBuffer);
-          break;
+        stimVariation = atoi(varBuffer);
+        break;
         case 3:
-          responseRequired = atoi(varBuffer);
-          break;
+        responseRequired = atoi(varBuffer);
+        break;
         case 4:
-          rewardChan = atoi(varBuffer) - 1;
-          break;
+        rewardChan = atoi(varBuffer) - 1;
+        break;
         case 5:
-          trialStartCue = atoi(varBuffer);
-          break;
+        trialStartCue = atoi(varBuffer);
+        break;
         case 6:
-          trialActuallyStartedCue = atoi(varBuffer);
-          break;
+        trialActuallyStartedCue = atoi(varBuffer);
+        break;
         case 7:
-          stimStartCue = atoi(varBuffer);
-          break;
+        stimStartCue = atoi(varBuffer);
+        break;
         case 8:
-          responseWindowCue = atoi(varBuffer);
-          break;
+        responseWindowCue = atoi(varBuffer);
+        break;
         case 9:
-          responseWindowCueStartTime = atoi(varBuffer);
-          break;
+        responseWindowCueStartTime = atoi(varBuffer);
+        break;
         case 10:
-          withold = atoi(varBuffer);
-          break;
+        withold = atoi(varBuffer);
+        break;
         case 11:
-          witholdReq = atoi(varBuffer);
-          break;
+        witholdReq = atoi(varBuffer);
+        break;
         case 12:
-          stimStartTime = atoi(varBuffer);
-          break;
+        stimStartTime = atoi(varBuffer);
+        break;
         case 13:
-          stimStopTime = atoi(varBuffer);
-          break;
+        stimStopTime = atoi(varBuffer);
+        break;
         case 14:
-          responseWindowStartTime = atoi(varBuffer);
-          break;
+        responseWindowStartTime = atoi(varBuffer);
+        break;
         case 15:
-          responseWindowStopTime = atoi(varBuffer);
-          break;
+        responseWindowStopTime = atoi(varBuffer);
+        break;
         case 16:
-          trialDuration = atoi(varBuffer);
-          break;
+        trialDuration = atoi(varBuffer);
+        break;
         case 17:
-          autoReward = atoi(varBuffer);
-          break;
+        autoReward = atoi(varBuffer);
+        break;
         case 18:
-          autoRewardStartTime = atoi(varBuffer);
-          break;
+        autoRewardStartTime = atoi(varBuffer);
+        break;
         case 19:
-          punishTrigger = atoi(varBuffer);
-          break;
+        punishTrigger = atoi(varBuffer);
+        break;
         case 20:
-          punishChan = atoi(varBuffer) - 1;
-          break;
+        punishChan = atoi(varBuffer) - 1;
+        break;
         case 21:
-          punishDelay = atoi(varBuffer);
-          break;
+        punishDelay = atoi(varBuffer);
+        break;
         case 22:
-          punishLength = atoi(varBuffer);
-          break;
+        punishLength = atoi(varBuffer);
+        break;
         case 23:
-          rewardRemoval = atoi(varBuffer);
-          break;
+        rewardRemoval = atoi(varBuffer);
+        break;
         case 24:
-          rewardRemovalDelay = atoi(varBuffer);
-          break;
+        rewardRemovalDelay = atoi(varBuffer);
+        break;
         case 25:
-          cueChan = atoi(varBuffer) - 1;
-          break;
+        cueChan = atoi(varBuffer) - 1;
+        break;
         case 26:
-          postStimCancel = atoi(varBuffer);
-          break;
+        postStimCancel = atoi(varBuffer);
+        break;
         case 27:
-          secondChance = atoi(varBuffer);
-          break;
+        secondChance = atoi(varBuffer);
+        break;
         case 28:
-          rewardDuration = atoi(varBuffer);
-          break;
+        rewardDuration = atoi(varBuffer);
+        break;
         case 29:
-          punishTriggerDuration = atoi(varBuffer);
-          break;
+        punishTriggerDuration = atoi(varBuffer);
+        break;
 
         case 30:
-          runToInitiate = atoi(varBuffer);
-          break;
+        runToInitiate = atoi(varBuffer);
+        break;
         case 31:
-          runningTimeTarget = atoi(varBuffer);
-          break;
+        runningTimeTarget = atoi(varBuffer);
+        break;
         case 32:
-          runningSpeedThresh = atoi(varBuffer);
-          break;
+        runningSpeedThresh = atoi(varBuffer);
+        break;
         case 33:
-          runningTimeReset = atoi(varBuffer);
-          break;
+        runningTimeReset = atoi(varBuffer);
+        break;
         case 34:
-          enforceStop = atoi(varBuffer);
-          break;
+        enforceStop = atoi(varBuffer);
+        break;
         case 35:
-          runStopDuration = atoi(varBuffer);
-          break;
+        runStopDuration = atoi(varBuffer);
+        break;
 
       }
       varBufferIndex = 0;
@@ -589,6 +589,7 @@ void runTrial() {
   comString.concat(now);
   comString.concat(">");
   Serial.println(comString);
+  prevTimeResponded = 0;
   enableTasks();
   while (trialRunning) {
     taskManager.execute();
@@ -642,48 +643,48 @@ void processResponse(int responseNum) {
   cli(); // disable interrupts
 
   timeResponded = millis() - startTime;
-  //if (timeResponded > prevTimeResponded) {
-  newDataString = "";
-  newDataString.concat(responseNum);
-  newDataString.concat(":");
-  newDataString.concat(timeResponded);
-  newDataString.concat("|");
-  dataString.concat(newDataString);
+  if (timeResponded > prevTimeResponded) {
+    newDataString = "";
+    newDataString.concat(responseNum);
+    newDataString.concat(":");
+    newDataString.concat(timeResponded);
+    newDataString.concat("|");
+    dataString.concat(newDataString);
 
-  if (inWithold) { // include here active initiation trial if response is required
-    witholdTimer = 0;
-  }
-  else if ((timeResponded < responseWindowStartTime) && (postStimCancel)) {  // if post stim delay, cancel trial
-    cancelled = true;
-    tEndTrial.enable();
-  }
-  else if (inResponseWindow) {
-    if (!responded) {
-      firstResponse = responseNum;
-      responded = true;
-      if (responseNum == responseRequired) {  // correct choice
-        if ((!rewarded) && !(incorrect && !secondChance)) {
-          tRewardOn.enable();
-          txResults();
+    if (inWithold) { // include here active initiation trial if response is required
+      witholdTimer = 0;
+    }
+    else if ((timeResponded < responseWindowStartTime) && (postStimCancel)) {  // if post stim delay, cancel trial
+      cancelled = true;
+      tEndTrial.enable();
+    }
+    else if (inResponseWindow) {
+      if (!responded) {
+        firstResponse = responseNum;
+        responded = true;
+        if (responseNum == responseRequired) {  // correct choice
+          if ((!rewarded) && !(incorrect && !secondChance)) {
+            tRewardOn.enable();
+            txResults();
+          }
         }
-      }
-      else {  // else must be incorrect
-        incorrect = true;
-        if ((!punished) && (!rewarded)) {
-          if (punishTrigger) {
-            tPunishOn.enable();
+        else {  // else must be incorrect
+          incorrect = true;
+          if ((!punished) && (!rewarded)) {
+            if (punishTrigger) {
+              tPunishOn.enable();
+            }
+            if (punishDelay) {
+              currentTime = millis() - startTime;
+              tEndTrial.setInterval(trialDuration - currentTime + punishLength);
+            }
+            txResults();
           }
-          if (punishDelay) {
-            currentTime = millis() - startTime;
-            tEndTrial.setInterval(trialDuration - currentTime + punishLength);
-          }
-          txResults();
         }
       }
     }
-  }
-  //}
-  prevTimeResponded = timeResponded;
+}
+prevTimeResponded = timeResponded;
   SREG = SaveSREG; // restore the interrupt flag
 }
 
