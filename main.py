@@ -40,7 +40,7 @@ import serial
 from PyQt5.QtCore import QObject, pyqtSignal, QThread, QTimer
 from PyQt5.QtWidgets import (QComboBox, QCheckBox, QLineEdit, QSpinBox,
                              QDoubleSpinBox, QFileDialog, QApplication,
-                             QDesktopWidget, QMainWindow, QMessageBox)
+                             QDesktopWidget, QMainWindow, QMessageBox, QRadioButton)
 from PyQt5.QtGui import QIcon
 from GUI import GUI, serial_ports
 import pickle
@@ -241,11 +241,32 @@ class TrialRunner(QObject):
         pre_stim_delay = np.random.uniform(pre_stim_delay_min, pre_stim_delay_max)
         trials['results'][trial_num]['pre_stim_delay'] = pre_stim_delay
 
+
         # get random post stim delay (if enabled)
         post_stim_delay_min = p['postStimDelay'] - p['postStimDelayRandomise']
         post_stim_delay_max = p['postStimDelay'] + p['postStimDelayRandomise']
         post_stim_delay = np.random.uniform(post_stim_delay_min, post_stim_delay_max)
         trials['results'][trial_num]['post_stim_delay'] = post_stim_delay
+
+
+        stim_start = pre_stim_delay
+        stim_stop = stim_start + p['stimLength']
+
+        response_start = pre_stim_delay + post_stim_delay
+        response_stop = response_start + p['responseWindow']
+        response_cue_start = response_start
+
+        auto_reward_start = pre_stim_delay + p['autoRewardDelay']
+
+        # do trigger timings
+        do_trigger = p['triggers'][this_stim_idx]
+        trigger_start = 0
+        if p['triggerRelativeStim']:
+            trigger_start = stim_start + p['triggerTiming']
+        else:
+            trigger_start = response_start + p['triggerTiming']
+
+
 
         # construct arduino config string. Format = <KEY:value;KEY:value;>
         config_string = '<' + \
@@ -266,25 +287,25 @@ class TrialRunner(QObject):
             'RESP_CUE:' + \
             str(int(p['cueResponse'])) + ';' \
             'RESP_CUE_START:' + \
-            str(int(p['responseCueStart']*1000)) + ';' \
+            str(int(response_start*1000)) + ';' \
             'WITHOLD:' + \
             str(int(p['witholdBeforeStim'])) + ';' \
             'WITHOLD_REQ:' + \
             str(int(withold_req*1000)) + ';' \
             'STIM_START:' + \
-            str(int(p['stimStart']*1000)) + ';' \
+            str(int(stim_start*1000)) + ';' \
             'STIM_STOP:' + \
-            str(int(p['stimStop']*1000)) + ';' \
+            str(int(stim_stop*1000)) + ';' \
             'RESP_START:' + \
-            str(int(p['responseStart']*1000)) + ';' \
+            str(int(response_start*1000)) + ';' \
             'RESP_STOP:' + \
-            str(int(p['responseStop']*1000)) + ';' \
+            str(int(response_stop*1000)) + ';' \
             'TRIAL_DURATION:' + \
             str(int(p['trialDuration']*1000)) + ';' \
             'AUTO_REWARD:' + \
             str(int(auto_reward)) + ';' \
             'AUTO_REWARD_START:' + \
-            str(int(p['autoRewardStart']*1000)) + ';' \
+            str(int(auto_reward_start*1000)) + ';' \
             'PUNISH_TRIGGER:' + \
             str(int(p['punishTrigger'])) + ';' \
             'PUNISH_CHAN:' + \
@@ -319,6 +340,10 @@ class TrialRunner(QObject):
             str(int(p['runStopToStart'])) + ';' \
             'RUN_STOP_DURATION:' + \
             str(int(p['runStopDuration']*1000)) + ';' \
+            'DO_TRIGGER:' + \
+            str(int(do_trigger)) + ';' \
+            'TRIGGER_START:' + \
+            str(int(trigger_start*1000)) + ';' \
             '>'
 
         # write config string to arduino
@@ -1267,7 +1292,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
 
             t0 = time.time()
             # extract gui values
-            widgets = (QComboBox, QCheckBox, QLineEdit, QSpinBox, QDoubleSpinBox)
+            widgets = (QComboBox, QCheckBox, QLineEdit, QSpinBox, QDoubleSpinBox, QRadioButton)
             groups = (self.session_GroupBox, self.arduino_GroupBox,
                       self.trial_GroupBox, self.plotOptions_groupBox)
             for group in groups:
@@ -1285,6 +1310,8 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
                         p[trimmed_name] = int(obj.value())
                     if isinstance(obj, QDoubleSpinBox):
                         p[trimmed_name] = float(obj.value())
+                    if isinstance(obj, QRadioButton):
+                        p[trimmed_name] = float(obj.isChecked())
 
             # process gui values
             stimChannels = [p['stim1'], p['stim2'], p['stim3'], p['stim4'],
@@ -1301,6 +1328,9 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
 
             cueChannels = [p['cueChan1'], p['cueChan2'], p['cueChan3'], p['cueChan4'],
                            p['cueChan5'], p['cueChan6'], p['cueChan7'], p['cueChan8']]
+            
+            triggers = [p['trigger1'], p['trigger2'], p['trigger3'], p['trigger4'],
+                           p['trigger5'], p['trigger6'], p['trigger7'], p['trigger8']]              
 
             punishChannels = [p['punishChan1'], p['punishChan2'], p['punishChan3'], p['punishChan4'],
                               p['punishChan5'], p['punishChan6'], p['punishChan7'], p['punishChan8']]
@@ -1313,6 +1343,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
 
             p['stimChannels'] = [int(idx+1) for idx, val in enumerate(stimChannels) if val]
             p['cueChannels'] = [cueChannels[idx-1] for idx in p['stimChannels']]
+            p['triggers'] = [triggers[idx-1] for idx in p['stimChannels']]
             p['punishChannels'] = [punishChannels[idx-1] for idx in p['stimChannels']]
             p['respRequired'] = [respRequired[idx-1] for idx in p['stimChannels']]
             p['rewardChannels'] = [rewardChannels[idx-1] for idx in p['stimChannels']]
@@ -1361,6 +1392,12 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         p['responseStop'] = p['responseStart'] + p['responseWindow']
         p['autoRewardStart'] = p['startToStimDelay'] + p['autoRewardDelay']
 
+        # do trigger timings
+        if p['triggerRelativeStim']:
+            p['triggerStart'] = p['stimStart'] + p['triggerTiming']
+        else:
+            p['triggerStart'] = p['responseStart'] + p['triggerTiming']
+
     def updateTrialConfigPlot(self):
         self.withold_line.set_width(p['witholdBeforeStimPlotVal'])
 
@@ -1377,6 +1414,9 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
 
         self.response_cue_rectangle.set_width(p['cueResponse'] * 0.1)
         self.response_cue_rectangle.set_x(p['witholdBeforeStimPlotVal'] + p['responseCueStart'])
+
+        self.trigger_rectangle.set_width(np.any(p['triggers']) * 0.1)
+        self.trigger_rectangle.set_x(p['witholdBeforeStimPlotVal'] + p['triggerStart'])
 
         self.stim_rectangle.set_x(p['witholdBeforeStimPlotVal'] + p['stimStart'])
         self.stim_rectangle.set_width(p['stimLength'])
@@ -1494,6 +1534,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         self.trial_cue_rectangle = patches.Rectangle([0, 0], 0, 0.9, fc=[1, .7, 0], ec='none')
         self.trial_actually_started_cue_rectangle = patches.Rectangle([0, 0], 0, 0.9, fc=[1, .7, 0], ec='none')
         self.stim_cue_rectangle = patches.Rectangle([0, 0], 0, 0.9, fc=[1, .7, 0], ec='none')
+        self.trigger_rectangle = patches.Rectangle([0, 0], 0, 0.9, fc=[1,0.1,0.9], ec='none')
         self.response_cue_rectangle = patches.Rectangle([0, 0], 0, 0.9, fc=[1, .7, 0], ec='none')
         self.stim_rectangle = patches.Rectangle([0, 0], 0, 1, fc=[.3, .3, .3], ec='none')
         self.resp_rectangle = patches.Rectangle([0, 0], 0, 0.9, fc=[.8, .8, .8], ec='none')
@@ -1504,6 +1545,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         self.trialConfigAx.add_patch(self.resp_rectangle)
         self.trialConfigAx.add_patch(self.reward_rectangle)
         self.trialConfigAx.add_patch(self.trial_cue_rectangle)
+        self.trialConfigAx.add_patch(self.trigger_rectangle)
         self.trialConfigAx.add_patch(self.trial_actually_started_cue_rectangle)
         self.trialConfigAx.add_patch(self.stim_cue_rectangle)
         self.trialConfigAx.add_patch(self.response_cue_rectangle)
@@ -1633,7 +1675,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
 
 
     def saveAsPreset(self):
-        widgets = (QComboBox, QCheckBox, QLineEdit, QSpinBox, QDoubleSpinBox)
+        widgets = (QComboBox, QCheckBox, QLineEdit, QSpinBox, QDoubleSpinBox, QRadioButton)
         for obj in self.trial_GroupBox.findChildren(widgets):
             name = str(obj.objectName())
             if isinstance(obj, QComboBox):
@@ -1647,6 +1689,8 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
                 self.trial_config[name] = int(obj.value())
             if isinstance(obj, QDoubleSpinBox):
                 self.trial_config[name] = float(obj.value())
+            if isinstance(obj, QRadioButton):
+                self.trial_config[name] = bool(obj.isChecked())
         filepath = str(QFileDialog.getSaveFileName(self, 'Save as preset...', 'Configs', 'Config file (*.cfg)')[0])
         json.dump(self.trial_config, open(filepath, 'w'), sort_keys=True, indent=4)
         filename = os.path.basename(filepath)
@@ -1661,7 +1705,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         filepath = os.path.join(config_directory, filename + '.cfg')
         if os.path.exists(filepath):
             self.trial_config = json.load(open(filepath, 'r'))
-            widgets = (QComboBox, QCheckBox, QLineEdit, QSpinBox, QDoubleSpinBox)
+            widgets = (QComboBox, QCheckBox, QLineEdit, QSpinBox, QDoubleSpinBox, QRadioButton)
             for obj in self.trial_GroupBox.findChildren(widgets):
                 name = str(obj.objectName())
 
@@ -1684,6 +1728,10 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
                     if isinstance(obj, QDoubleSpinBox):
                         value = self.trial_config[name]
                         obj.setValue(value)  # restore lineEditFile
+                    if isinstance(obj, QRadioButton):
+                        value = self.trial_config[name]
+                        if value is not None:
+                            obj.setChecked(value)  # restore checkbox
                 except:
                     continue
             self._gui_ready = True

@@ -14,6 +14,8 @@
 Task tTransmit;
 Task tCueOn;
 Task tCueOff;
+Task tTriggerOn;
+Task tTriggerOff;
 Task tStimStart;
 Task tStimStop;
 Task tResponseWindowOpen;
@@ -37,10 +39,11 @@ const int stimPin[] = {30, 31, 32, 33, 34, 35, 36, 37};
 const int rewardPin[] = {4, 5};
 const int rewardRemovalPin[] = {8, 9};
 const int punishPin[] = {6, 7};
-const int cuePin[] = {10, 11};
+const int cuePin[] = {10, 11};  // 11 is now used for trigger... need to find another one for cue.
 const int stimVariationPin[] = {14, 15, 16, 17};
 const int responseWindowPin = 12;
 const int trialRunningPin = 13;  // LED
+const int triggerPin = 11;
 
 // serial communication
 char incomingByte;
@@ -92,6 +95,8 @@ bool postStimCancel;
 bool secondChance;
 int rewardDuration;
 int punishTriggerDuration;
+bool doTrigger;
+int triggerStart;
 
 // session/trial states
 bool configReceived = false;
@@ -379,6 +384,13 @@ void rxConfig() {
         runStopDuration = atoi(varBuffer);
         break;
 
+        case 36:
+        doTrigger = atoi(varBuffer);
+        break;
+        case 37:
+        triggerStart = atoi(varBuffer);
+        break;
+
       }
       varBufferIndex = 0;
       varBuffer[varBufferIndex] = '\0';
@@ -393,12 +405,7 @@ void rxConfig() {
   if (configStringStarted && configStringEnded) {
     // received a whole < > packet
     configReceived = true;
-
-    String ConfigString = "{";
-    ConfigString.concat("withold_req:");
-    ConfigString.concat(witholdReq);
-    ConfigString.concat("}");
-    Serial.println(ConfigString);
+    Serial.println("configured");
   }
 }
 
@@ -409,6 +416,8 @@ void configTrial() {
   tTransmit.set(50, -1, &txData);
   tCueOn.set(0, 0, &cueOn);
   tCueOff.set(50, 0, &cueOff);
+  tTriggerOn.set(triggerStart, 1, &triggerOn);
+  tTriggerOff.set(triggerStart+50, 1, &triggerOff);
   tStimStart.set(stimStartTime, 1, &stimOn);
   tStimStop.set(stimStopTime, 1, &stimOff);
   tResponseWindowOpen.set(responseWindowStartTime, 1, &responseWindowOpen);
@@ -421,22 +430,6 @@ void configTrial() {
   tPunishOn.set(0, 1, &punishOn);
   tPunishOff.set(punishTriggerDuration, 1, &punishOff);
   tEndTrial.set(trialDuration, 1, &stopTasks);
-
-  // tTransmit.disableOnLastIteration(true);
-  // tCueOn.disableOnLastIteration(false);
-  // tCueOff.disableOnLastIteration(false);
-  // tStimStart.disableOnLastIteration(true);
-  // tStimStop.disableOnLastIteration(true);
-  // tResponseWindowOpen.disableOnLastIteration(true);
-  // tResponseWindowClose.disableOnLastIteration(true);
-  // tRewardOn.disableOnLastIteration(true);
-  // tRewardOff.disableOnLastIteration(true);
-  // tAutoReward.disableOnLastIteration(true);
-  // tRewardRemovalOn.disableOnLastIteration(true);
-  // tRewardRemovalOff.disableOnLastIteration(true);
-  // tPunishOn.disableOnLastIteration(true);
-  // tPunishOff.disableOnLastIteration(true);
-  // tEndTrial.disableOnLastIteration(true);
 
   taskManager.addTask(tRewardOn); // pseudo priority
   taskManager.addTask(tTransmit);
@@ -453,12 +446,14 @@ void configTrial() {
   taskManager.addTask(tEndTrial);
   taskManager.addTask(tCueOn);
   taskManager.addTask(tCueOff);
+  taskManager.addTask(tTriggerOn);
+  taskManager.addTask(tTriggerOff);
+
   taskManager.disableAll();
 
   dataString = "";
 
   trialConfigured = true;
-  //Serial.println("{CONFIGURED}");
 }
 
 void runTrial() {
@@ -558,7 +553,7 @@ void runTrial() {
 
   // pretrial withold requirement
   if (withold) {
-    Serial.println("waiting for withold");
+    Serial.println("waiting for withold...");
     witholdTimer = 0;
     inWithold = true;
     while (inWithold) {
@@ -624,6 +619,11 @@ void enableTasks() {
   if (autoReward) {
     tAutoReward.enableDelayed();
   }
+
+  if (doTrigger) {
+    tTriggerOn.enableDelayed();
+    tTriggerOff.enableDelayed();
+  }
 }
 
 void response1() {
@@ -663,7 +663,7 @@ void processResponse(int responseNum) {
         firstResponse = responseNum;
         responded = true;
         if (responseNum == responseRequired) {  // correct choice
-          if ((!rewarded) && !(incorrect && !secondChance)) {
+          if (!rewarded) {
             tRewardOn.enable();
             txResults();
           }
@@ -720,6 +720,17 @@ void stimOff() {
   digitalWrite(stimPin[stimChan], LOW);
   Serial.println("stim off");
 }
+
+
+void triggerOn() {
+  digitalWrite(triggerPin, HIGH);
+  Serial.println("TRIGGER");
+}
+
+void triggerOff() {
+  digitalWrite(triggerPin, LOW);
+}
+
 
 void rewardOn() {
   digitalWrite(rewardPin[rewardChan], HIGH);
@@ -865,9 +876,9 @@ void resetConfig() {
 }
 
 void testPin(int pinNumber, int pinDuration) {
-  Serial.print("Test pin: ");
+  Serial.print("Pin: ");
   Serial.print(pinNumber);
-  Serial.print(", Test duration: ");
+  Serial.print(", duration: ");
   Serial.println(pinDuration);
   digitalWrite(pinNumber, HIGH);
   delay(pinDuration);
