@@ -3,7 +3,7 @@
 '''
 PyBehaviour
 (c) 2015 Lloyd Russell
-v2017.04.06
+v2019.09.06
 '''
 
 
@@ -203,6 +203,7 @@ class TrialRunner(QObject):
         # get response required
         resp_req = p['respRequired'][this_stim_idx]
         trials['results'][trial_num]['response_required'] = resp_req
+        require_x_resps = p['RequireXResponses']
 
         # resonse-cancels-trial (post stim delay)
         post_stim_cancel = p['postStimCancel']
@@ -344,6 +345,8 @@ class TrialRunner(QObject):
             str(int(do_trigger)) + ';' \
             'TRIGGER_START:' + \
             str(int(trigger_start*1000)) + ';' \
+            'REQUIRE_X_RESPS:' + \
+            str(int(require_x_resps)) + ';' \
             '>'
 
         # write config string to arduino

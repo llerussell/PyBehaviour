@@ -2,7 +2,7 @@
 // PyBehaviour            //
 // (c) 2015 Lloyd Russell //
 ////////////////////////////
-// 2017.03.17.1
+// 2019.09.06.1
 
 #include "elapsedMillis.h"
 #include "TaskScheduler.h"
@@ -97,6 +97,8 @@ int rewardDuration;
 int punishTriggerDuration;
 bool doTrigger;
 int triggerStart;
+int requireXResps;
+int numCorrectCounter = 0;
 
 // session/trial states
 bool configReceived = false;
@@ -391,6 +393,10 @@ void rxConfig() {
         triggerStart = atoi(varBuffer);
         break;
 
+        case 38:
+        requireXResps = atoi(varBuffer);
+        break;
+
       }
       varBufferIndex = 0;
       varBuffer[varBufferIndex] = '\0';
@@ -659,17 +665,19 @@ void processResponse(int responseNum) {
       tEndTrial.enable();
     }
     else if (inResponseWindow) {
-      if (!responded) {
+
         firstResponse = responseNum;
         responded = true;
         if (responseNum == responseRequired) {  // correct choice
-          if (!rewarded) {
+          numCorrectCounter = numCorrectCounter + 1;
+          if ((numCorrectCounter >= requireXResps) && !rewarded) {
             tRewardOn.enable();
             txResults();
           }
         }
         else {  // else must be incorrect
           incorrect = true;
+          numCorrectCounter = 0;
           if ((!punished) && (!rewarded)) {
             if (punishTrigger) {
               tPunishOn.enable();
@@ -681,7 +689,7 @@ void processResponse(int responseNum) {
             txResults();
           }
         }
-      }
+      
     }
 }
 prevTimeResponded = timeResponded;
@@ -873,6 +881,7 @@ void resetConfig() {
   prevTimeResponded = 0;
   isRunning = false;
   startTrial = false;
+  numCorrectCounter = 0;
 }
 
 void testPin(int pinNumber, int pinDuration) {
