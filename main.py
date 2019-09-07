@@ -1239,7 +1239,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
                         if p['controlFirstStimStim']:
                             p['trialOrder'][0:p['firstXStims']] = int(p['firstStim'])
                         if p['controlFirstStimVariation']:
-                            p['trialVariations'][0:p['firstXStims']] = int(p['firstStimVariation'])
+                            p['trialVariations'][0:p['firstXStims']] = int(p['firstStimVariation']-1)
 
                     self.plotTrialOrder()
 
