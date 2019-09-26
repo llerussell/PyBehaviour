@@ -634,7 +634,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
 
         global plot_data
         plot_data = {}
-        plot_data['offsets'] = np.empty(0)
+        plot_data['offsets'] = np.empty([0,2])
 
         # self.raster_current_trial.set_data([0,0])
         self.raster_current_trial.set_xdata(self.rasterFigAx.get_xlim())
@@ -843,7 +843,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
             y = self.CurrentTrialSorted
 
             # update plot_data dictionary record
-            plot_data['offsets'] = np.append(plot_data['offsets'], [x, trial_num+1])
+            plot_data['offsets'] = np.vstack((plot_data['offsets'], [x, trial_num+1]))
 
         elif state == 'PRETRIAL':
             plot_series = self.preTrialRaster_responses
@@ -878,7 +878,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         old_colours = plot_series.get_array()
 
         # make new data
-        new_xy      = np.append(old_xy,      [x,y])
+        new_xy      = np.vstack((old_xy,      [x,y]))
         new_sizes   = np.append(old_sizes,   new_size)
         new_colours = np.append(old_colours, ID)
 
@@ -1497,9 +1497,9 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         self.trialOrderAx = self.trialOrderFig.add_axes([0, 0.25, 1, 0.75])
         self.trialOrderAx2 = self.trialOrderFig.add_axes([0, 0, 1, 0.25])
         self.trialOrderAx.axis('off')
-        self.trialOrderAx.hold(True)
+        #self.trialOrderAx.hold(True)
         self.trialOrderAx2.axis('off')
-        self.trialOrderAx2.hold(True)
+        #self.trialOrderAx2.hold(True)
         self.trialOrder_verticalLayout.addWidget(self.trialOrderCanvas)
 
         # trial order ribbon (results tab)
@@ -1511,11 +1511,11 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         self.trialOrderLiveTabAx2 = self.trialOrderLiveTabFig.add_axes([0, 0.33, 1, 0.33])  # var order
         self.trialOrderLiveTabAx3 = self.trialOrderLiveTabFig.add_axes([0, 0, 1, 0.33])  # progress
         self.trialOrderLiveTabAx.axis('off')
-        self.trialOrderLiveTabAx.hold(True)
+        #self.trialOrderLiveTabAx.hold(True)
         self.trialOrderLiveTabAx2.axis('off')
-        self.trialOrderLiveTabAx2.hold(True)
+        #self.trialOrderLiveTabAx2.hold(True)
         self.trialOrderLiveTabAx3.axis('off')
-        self.trialOrderLiveTabAx3.hold(True)
+        #self.trialOrderLiveTabAx3.hold(True)
 
         self.trialNumMarkerIm = self.trialOrderLiveTabAx3.imshow(np.zeros([1,1]), vmin=-1, vmax=1, cmap='bwr', interpolation='none', aspect='auto')
         self.live_trialorder = self.trialOrderLiveTabAx.imshow(np.zeros([1,1]), interpolation='none', cmap=self.cmap_stims, vmin=1, vmax=8, aspect='auto')
@@ -1529,7 +1529,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         self.trialConfigCanvas.setFixedHeight(50)
         self.trialConfigAx = self.trialConfigFig.add_axes([0, 0, 1, 1])
         self.trialConfigAx.axis('off')
-        self.trialConfigAx.hold(True)
+        #self.trialConfigAx.hold(True)
 
         # make the shapes
         self.withold_line = patches.Rectangle([0, 0], 0, 0.05, ec=[.8, .8, .8], linewidth=0, zorder=0, fill=None, hatch='||')
@@ -1564,7 +1564,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         self.preTrialRasterFigCanvas = FigureCanvas(self.preTrialRasterFig)  # a canvas holds a figure
         self.preTrialResponseVerticalLayout.addWidget(self.preTrialRasterFigCanvas)
         self.preTrialRasterFigAx = self.preTrialRasterFig.add_axes([0.15, 0.5, .72, 0.1])
-        self.preTrialRasterFigAx.hold(True)
+        #self.preTrialRasterFigAx.hold(True)
         self.preTrialRasterFigAx.axis('on')
         self.preTrialRasterFigAx.get_yaxis().set_visible(False)
         self.preTrialRasterFigAx.set_xlim([0,1])
@@ -1582,7 +1582,7 @@ class MainWindow(QMainWindow, GUI.Ui_MainWindow):
         self.rasterFigAx = self.rasterFig.add_axes([0.15, 0.25, 0.72, 0.7])
         self.rasterFig.set_facecolor('white')
         self.rasterFigAx.set_title('Responses', loc='left')
-        self.rasterFigAx.hold(True)
+        #self.rasterFigAx.hold(True)
 
         self.raster_respwin = patches.Rectangle([0, 0], 0, 0, fc=[0, 0, 0, 0.05], ec='none', zorder=1)
         self.raster_stimlength = patches.Rectangle([0, 0], 0, 0, fc=[0, 0, 0, 0.05], ec='none', zorder=3)
@@ -1919,7 +1919,7 @@ if __name__ == '__main__':
     trials['correct_tally'] = 0  # not currently used, but will be used for auto incrementing
 
     plot_data = {}
-    plot_data['offsets'] = []
+    plot_data['offsets'] = np.empty([0, 2])
 
     arduino = {}
     arduino['connected'] = False
